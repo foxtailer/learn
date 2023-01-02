@@ -1,5 +1,6 @@
 # homePC add
 # home laptop add
+# Mary laptop add
 
 turn_on = True
 resources = {"Water":{"value":1000, "unit":"ml"}, "Milk":{"value":300, "unit":"ml"},\
