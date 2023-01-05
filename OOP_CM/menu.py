@@ -36,7 +36,7 @@ class Menu:
     def find_drink(self, order_name):
         for item in self.menu:
             if item.name == order_name:
-                return True
+                return item
         else:
             print("Not available :(")
 

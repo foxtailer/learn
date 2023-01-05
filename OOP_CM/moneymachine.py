@@ -26,6 +26,8 @@ class MoneyMachine:
                 print("Sorry that's not enough money. Money refunded.")
             elif amount > cost:
                 print(f"Here is ${amount - cost:.2f} dollars in change.")
+                self.money_amount += cost
                 return True
             else:
+                self.money_amount += cost
                 return True
