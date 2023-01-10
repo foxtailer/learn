@@ -1,5 +1,6 @@
 from turtle import Screen, Turtle
 from snake import Snake
+import time
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -11,6 +12,7 @@ x = Snake()
 while True:
     x.move()
     screen.update()
+    time.sleep(0.2)
 
 
 

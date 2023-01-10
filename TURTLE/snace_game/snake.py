@@ -15,6 +15,8 @@ class Snake:
             #bone.shapesize(stretch_len = 20, stretch_wid = 20)
     
     def move(self):
-        for bone in self.body:
-            bone.forward(5)
+        for index in range(len(self.body) - 1, 0, -1):
+            self.body[index].goto(self.body[index - 1].pos())
+        self.body[0].forward(20)
+        self.body[0].left(90)
 
