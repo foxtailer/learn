@@ -29,11 +29,16 @@ while is_on:
     if snake.body[0].distance(food.pos()) < 15:
         food.refresh()
         scoreboard.resume()
+        snake.extend()
     
     if snake.body[0].xcor() < - 290 or snake.body[0].xcor() > 290 or snake.body[0].ycor() > 290 or snake.body[0].ycor() < -290:
         scoreboard.gameover()
         is_on = False
 
+    for segment in snake.body[1:]:
+        if snake.body[0].distance(segment) < 10:
+            scoreboard.gameover()
+            is_on = False
 
 
 screen.exitonclick()
