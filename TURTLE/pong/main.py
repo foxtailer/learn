@@ -9,6 +9,7 @@ screen.bgcolor("black")
 screen.title("PONG")
 screen.setup(SCREEN_W, SCREEN_H)
 
-paddle_1 = Paddle()
+paddle_1 = Paddle('r',(SCREEN_H, SCREEN_W))
+paddle_2 = Paddle('l',(SCREEN_H, SCREEN_W))
 
 screen.exitonclick()
