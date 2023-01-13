@@ -9,6 +9,7 @@ class Paddle(Turtle):
         self.color("white")
         self.shapesize(stretch_len=1, stretch_wid=5)
         self.penup()
+        self.speed(10)
         if self.side == "l":
             self.goto(-(screen_size[1]/2-10), 0)
         elif self.side == "r":
@@ -16,8 +17,8 @@ class Paddle(Turtle):
 
     def go_up(self):
         new_y = self.ycor() + 20
-        self.setx(new_y)
+        self.sety(new_y)
 
-    def go_ddown(self):
+    def go_down(self):
         new_y = self.ycor() - 20
-        self.setx(new_y)
+        self.sety(new_y)
