@@ -8,6 +8,7 @@ SCREEN_X = 600
 SCREEN_Y = 600
 game_on = True
 game_speed = 0.5
+cars_amount = 10
 
 screen = Screen()
 turtle = Runer()
@@ -21,8 +22,9 @@ screen.listen()
 screen.onkeypress(turtle.run, "Up")
 
 cars = []
-for _ in range(50):
-    cars.append(Car(screen.screensize()))
+def cars_init():
+    for _ in range(cars_amount):
+        cars.append(Car(screen.screensize()))
 
 # Turtle object settings
 turtle.penup()
@@ -34,9 +36,12 @@ turtle.goto(0, -(SCREEN_Y/2-20))
 def lvl_up():
     scorebord.resume()
     turtle.goto(0, -(SCREEN_Y/2-20))
-    global game_speed
+    global game_speed, cars_amount
     game_speed *= 0.9
+    cars_amount += 5
+    cars_init()
 
+cars_init()
 
 while game_on:
     time.sleep(game_speed)
