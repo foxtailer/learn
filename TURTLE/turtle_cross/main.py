@@ -50,6 +50,9 @@ while game_on:
         car.move()
         if car.xcor() < -SCREEN_X/2:
             car.restart()
+        if car.distance(turtle) < 20:
+            scorebord.gameover()
+            game_on = False
 
     if turtle.ycor() > SCREEN_Y / 2:
         lvl_up()
