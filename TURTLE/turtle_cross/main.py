@@ -7,7 +7,7 @@ from scorebord import ScoreBoard
 SCREEN_X = 600
 SCREEN_Y = 600
 game_on = True
-game_speed = 0.1
+game_speed = 0.5
 
 screen = Screen()
 turtle = Runer()
@@ -20,7 +20,9 @@ screen.title("Cross Game")
 screen.listen()
 screen.onkeypress(turtle.run, "Up")
 
-car = Car(screen.screensize())
+cars = []
+for _ in range(10):
+    cars.append(Car(screen.screensize()))
 
 # Turtle object settings
 turtle.penup()
@@ -39,7 +41,8 @@ def lvl_up():
 while game_on:
     time.sleep(game_speed)
     screen.update()
-    car.move()
+    for car in cars:
+        car.move()
 
     if turtle.ycor() > SCREEN_Y / 2:
         lvl_up()
