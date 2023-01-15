@@ -17,7 +17,11 @@ class Car(turtle.Turtle):
         self.shapesize(1,2)
         self.shape("square")
         self.setheading(180)
-        self.goto(random.randint(self.x_max + 20, self.x_max + 150), random.randint(self.y_min-40, self.y_max-40))  # 40 it's a "save gone" at start and end runer position
+        self.goto(random.randint(self.x_max + 20, self.x_max + 700), random.randint(self.y_min-100, self.y_max+100))  # 40 it's a "save gone" at start and end runer position
 
     def move(self):
         self.forward(10)
+
+    def restart(self):
+        self.goto(random.randint(self.x_max + 20, self.x_max + 700), random.randint(self.y_min-100, self.y_max+100))  # 40 it's a "save gone" at start and end runer position
+

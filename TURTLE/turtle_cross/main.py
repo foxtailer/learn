@@ -21,7 +21,7 @@ screen.listen()
 screen.onkeypress(turtle.run, "Up")
 
 cars = []
-for _ in range(10):
+for _ in range(50):
     cars.append(Car(screen.screensize()))
 
 # Turtle object settings
@@ -43,6 +43,8 @@ while game_on:
     screen.update()
     for car in cars:
         car.move()
+        if car.xcor() < -SCREEN_X/2:
+            car.restart()
 
     if turtle.ycor() > SCREEN_Y / 2:
         lvl_up()
