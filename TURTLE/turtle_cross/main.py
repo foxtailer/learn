@@ -26,13 +26,6 @@ def cars_init():
     for _ in range(cars_amount):
         cars.append(Car(screen.screensize()))
 
-# Turtle object settings
-turtle.penup()
-turtle.shape("turtle")
-turtle.color("black")
-turtle.setheading(90)
-turtle.goto(0, -(SCREEN_Y/2-20))
-
 def lvl_up():
     scorebord.resume()
     turtle.goto(0, -(SCREEN_Y/2-20))

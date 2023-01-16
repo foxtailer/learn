@@ -13,7 +13,8 @@ class Car(turtle.Turtle):
         self.y_max = fild[1]/2
         self.y_min = -(fild[1]/2)
         self.penup()
-        self.color(rgb_colors[random.randint(0, len(rgb_colors)-1)])
+        #self.color(rgb_colors[random.randint(0, len(rgb_colors)-1)])
+        self.color(random.choice(rgb_colors))
         self.shapesize(1,2)
         self.shape("square")
         self.setheading(180)
