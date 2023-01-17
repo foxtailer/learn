@@ -33,13 +33,15 @@ while is_on:
         snake.extend()
     
     if snake.body[0].xcor() < - 290 or snake.body[0].xcor() > 290 or snake.body[0].ycor() > 290 or snake.body[0].ycor() < -290:
-        scoreboard.gameover()
-        is_on = False
+        scoreboard.compare()
+        del snake
+        snake = Snake()
 
     for segment in snake.body[1:]:
         if snake.body[0].distance(segment) < 10:
-            scoreboard.gameover()
-            is_on = False
+            scoreboard.compare()
+            del snake
+            snake = Snake()
 
 
 screen.exitonclick()
