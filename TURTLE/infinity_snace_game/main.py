@@ -34,14 +34,16 @@ while is_on:
     
     if snake.body[0].xcor() < - 290 or snake.body[0].xcor() > 290 or snake.body[0].ycor() > 290 or snake.body[0].ycor() < -290:
         scoreboard.compare()
-        del snake
-        snake = Snake()
+        snake.reset()
+        snake.create_snake()
+        
 
     for segment in snake.body[1:]:
         if snake.body[0].distance(segment) < 10:
             scoreboard.compare()
-            del snake
-            snake = Snake()
+            snake.reset()
+            snake.create_snake()
+            
 
 
 screen.exitonclick()

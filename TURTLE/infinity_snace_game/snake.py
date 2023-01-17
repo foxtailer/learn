@@ -22,6 +22,11 @@ class Snake:
         bone.color("white")
         bone.goto(position)
         self.body.append(bone)
+    
+    def reset(self):
+        for bone in self.body:
+            bone.goto(1000, 1000)
+        self.body.clear()
 
     def up(self):
         if self.body[0].heading() != 270:
