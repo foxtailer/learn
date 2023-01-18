@@ -7,7 +7,18 @@
     #Hint2: This method will also help you: https://www.w3schools.com/python/ref_string_replace.asp
         #Hint3: THis method will help you: https://www.w3schools.com/python/ref_string_strip.asp
 
-with open("input\\Letters\\starting_letter.txt") as data:
+with open(r"E:\git\learn\Mail Merge Project Start\Input\Letters\starting_letter.txt") as data:
     letter_blueprint = data.read()
 
-print(letter_blueprint)
+with open(r"E:\git\learn\Mail Merge Project Start\Input\Names\invited_names.txt") as data:
+    #names = data.read().split("\n")
+    names = data.readlines()
+
+# for name in names:
+#     x = f"list_for_{name.strip()}.txt"
+#     pash = "E:\git\learn\Mail Merge Project Start\Output\ReadyToSend\"
+
+#     with open(pash, "w") as data:
+#         data.write(letter_blueprint.replace("[name]", name.strip()))
+
+
