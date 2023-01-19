@@ -14,11 +14,10 @@ with open(r"E:\git\learn\Mail Merge Project Start\Input\Names\invited_names.txt"
     #names = data.read().split("\n")
     names = data.readlines()
 
-# for name in names:
-#     x = f"list_for_{name.strip()}.txt"
-#     pash = "E:\git\learn\Mail Merge Project Start\Output\ReadyToSend\"
 
-#     with open(pash, "w") as data:
-#         data.write(letter_blueprint.replace("[name]", name.strip()))
+for name in names:
+   temp = letter_blueprint.replace("[name]", name.strip())
+   with open(f"E:\\git\\learn\\Mail Merge Project Start\\Output\\ReadyToSend\\for_{name.strip()}.txt", "w") as data:
+        data.write(temp)
 
 
