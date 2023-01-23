@@ -2,11 +2,15 @@ from turtle import Turtle, Screen
 import random
 screen = Screen()
 screen.setup(800, 400)
-user_choise = screen.textinput(title="Raice Game", prompt="Make your choice, what color of winning turtle: \nred, green, blue, yellow, purple")
 
 t_colors = ["red", "green", "blue", "yellow", "purple"]
 turtles = []
 
+while True:
+    user_choise = screen.textinput(title="Raice Game", prompt="Make your choice, what color of winning turtle: \nred, green, blue, yellow, purple")
+    if user_choise in t_colors:
+        break
+    
 def spawn(t_list):
     field_width = screen.screensize()[1] - 50 * 2  # 50 is a border x 
     distance = field_width / len(t_list)

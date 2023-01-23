@@ -23,4 +23,6 @@ print(data["temp"])
 print(data.temp)
 
 #get data from row
-print(data[data.temp != 14])
+#print(data[data.temp != 14])
+print(type(data[data.temp == 24].day))
+print(data[data.temp == 24].day.to_list()[0])
