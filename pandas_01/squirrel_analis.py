@@ -6,5 +6,5 @@ colors["Gray"] = len(data[data["Primary Fur Color"] == "Gray"])
 colors["Cinnamon"] = len(data[data["Primary Fur Color"] == "Cinnamon"])
 colors["Black"] = len(data[data["Primary Fur Color"] == "Black"])
 
-pd_colors = pd.DataFrame(colors, index=3)
+pd_colors = pd.DataFrame([colors])
 print(pd_colors)
