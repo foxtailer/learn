@@ -8,3 +8,8 @@ passed_student = {key:value for (key , value) in students_score.items() if value
 
 print(passed_student)
 
+# Task: create dict where key is word from sentence and value is len of this word
+sentence = "What is the Airspeed Velocity of an Unladen Swallow?"
+result = {word : len(word) for word in sentence.split()}
+print(result)
+
