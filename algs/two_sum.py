@@ -24,3 +24,16 @@ for i in LIST:
     and (j, i) not in result:
         result.append((i, j))
 print(result)
+
+# 3
+result = []
+temp = []
+for i in LIST:
+    j = SUMM - i
+    if j not in temp:
+        temp.append(i)
+    else:
+        result.append((i, j))
+print(result)
+
+# 4
