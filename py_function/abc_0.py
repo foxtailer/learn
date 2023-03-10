@@ -9,6 +9,8 @@ class ImpleventAbs:
 
 custom_obj = ImpleventAbs("HELLO")
 
+print(dir(-9))
+print("******")
 print(abs(-9))
 print(abs(-39.8))
 print(abs(custom_obj))
