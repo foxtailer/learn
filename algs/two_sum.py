@@ -14,6 +14,16 @@ for i in LIST:
             result.append((i, j))
 print(result)
 
+# 1.2
+result = []
+for i in range(len(LIST) - 1):
+    first_num = LIST[i]
+    for j in range(i + 1, len(LIST)):
+        second_num = LIST[j]
+        if first_num + second_num == SUMM:
+            result.append((first_num, second_num))
+print(result)
+
 # 2
 result = []
 for i in LIST:
@@ -37,3 +47,18 @@ for i in LIST:
 print(result)
 
 # 4
+result = []
+S_LIST = sorted(LIST)
+L = 0
+R = len(S_LIST) - 1
+while L < R:
+    curent_sum = S_LIST[L] + S_LIST[R]
+    if curent_sum  == SUMM:
+        result.append((S_LIST[L], S_LIST[R]))
+        L += 1
+        R -= 1
+    elif curent_sum < SUMM:
+        L += 1
+    elif curent_sum > SUMM:
+        R -= 1
+print(result)
