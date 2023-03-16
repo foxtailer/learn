@@ -15,16 +15,18 @@ def tryy():
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
-def start_timer(minutes=5):
+def start_timer(minutes=5 * 60):
     countdown(minutes)
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def countdown(minutes):
-    # a = minutes // 10
-    # b = minutes % 10
-    # c = 5
-    # d = 9
-    # canvas.itemconfig(timer_text, text = f"{a}{b} : {c}{d}")
-    canvas.itemconfig(timer_text, text=minutes)
+    min = minutes // 60
+    sec = minutes % 60
+    if min < 10:
+        min = "0" + str(min)
+    if sec < 10:
+        sec == f"0{sec}"
+        
+    canvas.itemconfig(timer_text, text=f"{min} : {sec}")
     if minutes > 0:
         window.after(1000, countdown, minutes - 1)
 # ---------------------------- UI SETUP ------------------------------- #
@@ -33,7 +35,7 @@ window.title("Pomodoro")
 window.minsize(300, 300)
 window.config(padx=10, pady=10, bg=YELLOW)
 
-bg_img = tk.PhotoImage(file=r"C:\Users\User\Desktop\glovo\git\learn\tkinter\pomodoro\tomato.png")
+bg_img = tk.PhotoImage(file=r"E:\YD\git\learn\tkinter\pomodoro\tomato.png")
 canvas = tk.Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 canvas.create_image(105, 112, image=bg_img)
 timer_text = canvas.create_text(110, 130, text="00:00", fill="grey", font=("Arial", 24, "bold"))
