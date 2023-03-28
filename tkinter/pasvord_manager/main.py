@@ -2,6 +2,9 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
+
+g_data = {}
 
 def insert_field():
     y = generate()
@@ -27,18 +30,35 @@ def save_data():
     email = mail_name.get()
     password = pass_entry.get()
 
+    read_js()
+    g_data.update({website:{'email':email, 'password':password}})
+
     if website and password:
         its_ok = messagebox.askokcancel(title=website, message=f'Email: {email}\n\
-            Pass: {password}')
+        Pass: {password}')
         
         if its_ok:
-            with open(r"C:\Users\User\Desktop\glovo\git\learn\tkinter\pasvord_manager\data.txt", "a") as data:
-                data.write(f"{website} | {email} | {password}\n")
+            with open(r"C:\Users\User\Desktop\glovo\git\learn\tkinter\pasvord_manager\data.json", "w") as data:
+                #data.write(f"{website} | {email} | {password}\n")
+                json.dump(g_data, data, indent=4)
                 website_name.delete(0, END)
                 pass_entry.delete(0, END)
     else:
         messagebox.showerror(title='Error!', message='All fields must be full.')
 
+def read_js():
+    global g_data
+    with open(r"C:\Users\User\Desktop\glovo\git\learn\tkinter\pasvord_manager\data.json", "r") as data:
+        g_data = json.load(data)
+
+def show():
+    read_js()
+    kay = website_name.get()
+    if g_data.get(kay, 0):
+        messagebox.showinfo(title=kay, message=f"Email: {g_data[kay]['email']} \n Pasword{g_data[kay]['password']}")
+    else:
+        messagebox.showerror(message=f"{kay} not in mamory!")
+        
 window = Tk()
 window.config(padx=20, pady=20)
 window.title("Pasvord manager")
@@ -54,6 +74,8 @@ website_lbl.grid(column=0, row=1)
 website_name = Entry(width=35)
 website_name.focus()
 website_name.grid(column=1, row=1, columnspan=2)
+find_btn = Button(text="Find", command=show)
+find_btn.grid(column=2, row=1)
 
 # Email
 mail_lbl = Label(text="Email/Username:")
