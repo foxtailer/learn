@@ -41,3 +41,18 @@ def add2(x, y):
 print(add2(3, 5))
 print(add2(1, 2))
 print(add2(2, 1))
+
+print("888888")
+
+def cache(fn):
+  res=None
+  def wrapper(a,b):
+    nonlocal res
+    res = res or fn(a,b)
+    return res 
+  return wrapper
+
+
+@cache
+def add(a,b):
+  return a+b
