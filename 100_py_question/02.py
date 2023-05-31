@@ -20,4 +20,11 @@ def factorial(n):
     else:
         return n * factorial(n - 1)
 
-print(factorial(x))
+print('02', factorial(x))
+
+#03
+result = 1
+while x:
+    result *= x
+    x -= 1
+print('03', result)

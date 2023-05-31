@@ -1,4 +1,5 @@
-#With a given integral number n, write a program to generate a dictionary that contains (i, i*i) such that is an integral number between 1 and n (both included). and then the program should print the dictionary.
+#With a given integral number n, write a program to generate a dictionary that contains (i, i*i) such that is an integral number
+# between 1 and n (both included). and then the program should print the dictionary.
 #Suppose the following input is supplied to the program:
 #8
 #Then, the output should be:
@@ -13,4 +14,8 @@ def main():
   print(calculate(x))
   
 def calculate(n):
-  
+  return {i:i*i for i in range(1, n+1)}
+
+main()
+
+print(dict(enumerate([i*i for i in range(1, 10)], 1)))
