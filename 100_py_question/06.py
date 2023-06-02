@@ -25,6 +25,6 @@ user_data = input("Pls write a numbers for calculate: ")
 C = 50
 H = 30
 
-result = [str(math.sqrt((2 * C * int(D)) / H)) for D in user_data.split(",")]
+result = [str(round(math.sqrt((2 * C * int(D)) / H))) for D in user_data.split(",")]
 
 print(", ".join(result))
