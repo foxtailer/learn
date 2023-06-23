@@ -5,4 +5,3 @@ st = Student()
 st.name = 'ivan'
 
 print(st.name)
-
