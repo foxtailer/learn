@@ -1,4 +1,2 @@
-x = iter("djdj")
-
-for i in x:
-    print(i)
+with range(10) as r:
+    print(ty(r))
