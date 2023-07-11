@@ -1,2 +1,3 @@
-with range(10) as r:
-    print(ty(r))
+for i in range(5000):
+    for j in range(50000):
+        print(i,j)
