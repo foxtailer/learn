@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lamg="en">
+    <head>
+        <title>descendant</title>
+        <!-- li child of ul
+        ul li - for not just children, but 
+        aply to li dipper nested descendant(grandchildren)
+        -->
+        <style>
+            ul > li {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <ol>
+            <li>list item one</li>
+            <li>list item two</li>
+            <li>list item three</li>
+            <ul>
+                <li>sublist</li>
+                <li>sublist</li>
+            </ul>
+            <li>list item three</li>
+        </ol>
+    </body>
+</html>
