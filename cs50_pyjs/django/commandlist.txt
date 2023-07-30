@@ -1,0 +1,11 @@
+pip3 install django
+django-admin startproject DREAMLAND
+#  Navigate to DREAMLAND
+python manage.py runserver
+#  Now we create a django project
+#  Next step is create django app
+python manage.py startapp hello
+#  Go to django settings and add hello to installed app list
+#  Go to hello views and add views
+#  Create urls file inside hello
+#  Add hello url to project url file
