@@ -14,3 +14,6 @@ def page2(request):
 def greet(request, name):
     return HttpResponse(f'Hello, {name.capitalize()}')
 
+def main(request):
+    return render(request, 'hello/main.html')
+
