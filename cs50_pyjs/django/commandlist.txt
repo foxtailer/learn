@@ -1,7 +1,6 @@
 pip3 install django
 django-admin startproject DREAMLAND
 #  Navigate to DREAMLAND
-python manage.py runserver
 #  Now we create a django project
 #  Next step is create django app
 python manage.py startapp hello
