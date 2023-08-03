@@ -11,8 +11,13 @@ def page1(request):
 def page2(request):
     return HttpResponse('Hello Zoy')
 
+# def greet(request, name):
+#     return HttpResponse(f'Hello, {name.capitalize()}')
+
 def greet(request, name):
-    return HttpResponse(f'Hello, {name.capitalize()}')
+    return render(request, "hello/greet.html", {
+        "name": name.capitalize(),
+    })
 
 def main(request):
     return render(request, 'hello/main.html')
