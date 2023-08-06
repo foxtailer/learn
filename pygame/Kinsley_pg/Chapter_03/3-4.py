@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import * 
 from sys import exit 
 
-background_image_filename = 'sushiplate.jpg' 
+background_image_filename = r'E:\GIT\learn\pygame\Kinsley_pg\Chapter_03\sushiplate.jpg' 
 
 pygame.init() 
 screen = pygame.display.set_mode((640, 480), 0, 32) 
@@ -17,7 +17,7 @@ while True:
                pygame.quit()
                exit() 
           if event.type == KEYDOWN: 
-               if event.key == K_f: 
+               if event.key == K_UP: 
                     Fullscreen = not Fullscreen  
                if Fullscreen:
                     print('1')

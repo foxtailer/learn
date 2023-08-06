@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import * 
 from sys import exit
 
-background_image_filename = 'sushiplate.jpg'  
+background_image_filename = r'E:\GIT\learn\pygame\Kinsley_pg\Chapter_03\sushiplate.jpg'  
 SCREEN_SIZE = (640, 480) 
 message="    This is a demonstration of the scrolly message script. " 
  
