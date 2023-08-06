@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import * 
 from sys import exit 
 
-background_image_filename = 'sushiplate.jpg' 
+background_image_filename = r'learn\pygame\Kinsley_pg\Chapter_03\sushiplate.jpg' 
 
 pygame.init() 
 screen = pygame.display.set_mode((640, 480), 0, 32) 
