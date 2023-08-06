@@ -1,6 +1,6 @@
 
-background_image_filename = r'E:\GIT\learn\pygame\Kinsley_pg\Chapter_03\sushiplate.jpg'  
-mouse_image_filename = r'E:\GIT\learn\pygame\Kinsley_pg\Chapter_03\fugu.png' 
+background_image_filename = r'C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\Chapter_03\sushiplate.jpg'  
+mouse_image_filename = r'C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\Chapter_03\fugu.png' 
  
 import pygame 
 from pygame.locals import * 
