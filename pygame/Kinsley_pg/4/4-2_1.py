@@ -1,10 +1,15 @@
 import pygame
 from pygame.locals import *
 from sys import exit
+import time
 
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480), 0, 32)
+font = pygame.font.SysFont("arial", 20)
+copy_btn_main = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_bright = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_dark = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
 
 # Creates images with smooth gradients
 def create_scales(height):
@@ -27,17 +32,17 @@ def create_scales(height):
 
 def darker_color(color, value=0.5):
     red, green, blue = color
-    red = red*value
-    green = green*value
-    blue = blue*value
+    red = int(red*value)
+    green = int(green*value)
+    blue = int(blue*value)
     return red, green, blue
 
 
 def brighter_color(color, value=1.5):
     red, green, blue = color
-    red = min(red*value, 255)
-    green = min(green*value, 255)
-    blue = min(blue*value, 255)
+    red = int(min(red*value, 255))
+    green = int(min(green*value, 255))
+    blue = int(min(blue*value, 255))
     return red, green, blue
 
 
@@ -64,6 +69,14 @@ while True:
             if y > component*80 and y < (component+1)*80:
                 color[component] = int((x/639.)*255.)
                 pygame.display.set_caption("PyGame Color Test - "+str(tuple(color)))
+        
+        # Check copy btn click
+        if cbm.collidepoint(x,y):
+            print("Main")
+        if cbd.collidepoint(x,y):
+            print("dark")
+        if cbb.collidepoint(x,y):
+            print("bright") 
 
     # Draw a circle for each slider to represent the currentsetting
     for component in range(3):
@@ -72,6 +85,24 @@ while True:
 
     pygame.draw.rect(screen, tuple(color), (170, 240, 300, 240))
     pygame.draw.rect(screen, darker_color(color), (0, 240, 170, 240))
-    pygame.draw.rect(screen, brighter_color(color), (470, 240, 170, 240))
+    pygame.draw.rect(screen, brighter_color(color), (470, 240, 170, 240))   
+
+    # Color captions
+    main_color_text = font.render(str(tuple(color)), True, (0, 0, 0))
+    darker_color_text = font.render(str(darker_color(color)), True, (0, 0, 0))
+    brighter_color_text = font.render(str(brighter_color(color)), True, (0, 0, 0))
+
+    screen.blit(main_color_text, (250, 245))
+    screen.blit(darker_color_text, (25, 245))
+    screen.blit(brighter_color_text, (495, 245))
+
+    # Blit copy_buttons
+    cbm = Rect((440,242), (29,30))
+    cbd = Rect((140,242), (29,30))
+    cbb = Rect((615,242), (29,30))
+    screen.blit(copy_btn_main, (440,242))
+    screen.blit(copy_btn_dark, (140,242))
+    screen.blit(copy_btn_bright, (615,242))
 
     pygame.display.update()
+    time.sleep(0.1)
