@@ -10,7 +10,7 @@ async def main():
     data = await api.fetch_data()
     print("Data", data)
 
-    await send_data("Mario")
+    await asyncio.gather(send_data("Mario"), send_data("Luigi"))
 
 
 if __name__ == "__main__":
