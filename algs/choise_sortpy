@@ -1,0 +1,25 @@
+def choise_sort(A):
+    '''sort list A using choises'''
+    N = len(A)
+    for pos in range(0, N-1):
+        for k in range(pos+1, N):
+            if A[k] < A[poa]:
+                A[k], A[pos] = A[pos], A[k]
+
+
+def test_sort(sort_alg):
+    print('test 1')
+    A = [2,5,4,3,1,8]
+    sort_alg(A)
+    print('Ok' if A == sorted(A) else 'Fail')
+
+    print('test 1')
+    A = [2,5,4,3,1,8]
+    sort_alg(A)
+    print('Ok' if A == sorted(A) else 'Fail')
+
+    print('test 1')
+    A = [2,5,4,3,1,8]
+    sort_alg(A)
+    print('Ok' if A == sorted(A) else 'Fail')
+
