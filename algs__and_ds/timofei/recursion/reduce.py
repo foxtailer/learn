@@ -1,4 +1,4 @@
-def add(a, b): return a + b;
+def add(a, b): return a + b
 
 def reduce(fn, *terms, initial=0):
     if terms:
