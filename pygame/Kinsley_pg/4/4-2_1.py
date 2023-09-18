@@ -5,11 +5,11 @@ import time
 
 pygame.init()
 
-screen = pygame.display.set_mode((640, 480), 0, 32)
+screen = pygame.display.set_mode((640, 700), 0, 32)
 font = pygame.font.SysFont("arial", 20)
-copy_btn_main = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
-copy_btn_bright = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
-copy_btn_dark = pygame.image.load(r"C:\Users\User\Desktop\git\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_main = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_bright = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_dark = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
 
 # Creates images with smooth gradients
 def create_scales(height):
@@ -83,6 +83,7 @@ while True:
         pos = ( int((color[component]/255.)*639), component*80+40 )
         pygame.draw.circle(screen, (255, 255, 255), pos, 20)
 
+    # Darker brighter areas
     pygame.draw.rect(screen, tuple(color), (170, 240, 300, 240))
     pygame.draw.rect(screen, darker_color(color), (0, 240, 170, 240))
     pygame.draw.rect(screen, brighter_color(color), (470, 240, 170, 240))   
@@ -103,6 +104,12 @@ while True:
     screen.blit(copy_btn_main, (440,242))
     screen.blit(copy_btn_dark, (140,242))
     screen.blit(copy_btn_bright, (615,242))
+
+    # Lerp areas
+    pygame.draw.rect(screen, (255, 255, 255), (0, 480, 640, 50))
+    pygame.draw.rect(screen, (0,100,0), (0, 530, 170, 240))
+    pygame.draw.rect(screen, (100,0,0), (170, 530, 300, 240))
+    pygame.draw.rect(screen, (20,40,40), (470, 530, 170, 240))
 
     pygame.display.update()
     time.sleep(0.1)
