@@ -1,7 +1,6 @@
-i = 0
-for _ in range(256):
-    for _ in range(256):
-        for _ in range(256):
-            i += 1
+import asyncio
 
-print(i)
+async def mu(num):
+    print(num+1)
+
+asyncio.run(mu(2))
