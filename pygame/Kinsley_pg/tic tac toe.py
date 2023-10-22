@@ -37,18 +37,14 @@ def makeMove(board, letter, move):
     board[move] = letter
 
 def isWinner(bo, le):
-    # Given a board and a player's letter, this function returns True if
-    that player has won.
-    # We use "bo" instead of "board" and "le" instead of "letter" so we
-    don't have to type as much.
-    return ((bo[7] == le and bo[8] == le and bo[9] == le) or # Across the
-    top
+    # Given a board and a player's letter, this function returns True if that player has won.
+    # We use "bo" instead of "board" and "le" instead of "letter" so we don't have to type as much.
+    return ((bo[7] == le and bo[8] == le and bo[9] == le) or # Across thetop
     (bo[4] == le and bo[5] == le and bo[6] == le) or # Across the middle
     (bo[1] == le and bo[2] == le and bo[3] == le) or # Across the bottom
     (bo[7] == le and bo[4] == le and bo[1] == le) or # Down the left side
     (bo[8] == le and bo[5] == le and bo[2] == le) or # Down the middle
-    (bo[9] == le and bo[6] == le and bo[3] == le) or # Down the right
-    side
+    (bo[9] == le and bo[6] == le and bo[3] == le) or # Down the right side
     (bo[7] == le and bo[5] == le and bo[3] == le) or # Diagonal
     (bo[9] == le and bo[5] == le and bo[1] == le)) # Diagonal
 
@@ -94,87 +90,86 @@ def getComputerMove(board, computerLetter):
     # Here is the algorithm for our Tic-Tac-Toe AI:
     # First, check if we can win in the next move.
     for i in range(1, 10):
-    boardCopy = getBoardCopy(board)
+        boardCopy = getBoardCopy(board)
     if isSpaceFree(boardCopy, i):
-    makeMove(boardCopy, computerLetter, i)
+        makeMove(boardCopy, computerLetter, i)
     if isWinner(boardCopy, computerLetter):
-    return i
+        return i
 
     # Check if the player could win on their next move and block them.
     for i in range(1, 10):
-    boardCopy = getBoardCopy(board)
+        boardCopy = getBoardCopy(board)
     if isSpaceFree(boardCopy, i):
-    makeMove(boardCopy, playerLetter, i)
+        makeMove(boardCopy, playerLetter, i)
     if isWinner(boardCopy, playerLetter):
-    return i
+        return i
 
     # Try to take one of the corners, if they are free.
     move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
     if move != None:
-    return move
+        return move
 
     # Try to take the center, if it is free.
     if isSpaceFree(board, 5):
-    return 5
+        return 5
 
     # Move on one of the sides.
     return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 def isBoardFull(board):
-# Return True if every space on the board has been taken. Otherwise,
-return False.
-for i in range(1, 10):
-if isSpaceFree(board, i):
-return False
-return True
+# Return True if every space on the board has been taken. Otherwise, return False.
+    for i in range(1, 10):
+        if isSpaceFree(board, i):
+            return False
+    return True
 
 
 print('Welcome to Tic-Tac-Toe!')
 
 while True:
-# Reset the board.
-theBoard = [' '] * 10
-playerLetter, computerLetter = inputPlayerLetter()
-turn = whoGoesFirst()
-print('The ' + turn + ' will go first.')
-gameIsPlaying = True
+    # Reset the board.
+    theBoard = [' '] * 10
+    playerLetter, computerLetter = inputPlayerLetter()
+    turn = whoGoesFirst()
+    print('The ' + turn + ' will go first.')
+    gameIsPlaying = True
 
-while gameIsPlaying:
-if turn == 'player':
-# Player's turn
-drawBoard(theBoard)
-move = getPlayerMove(theBoard)
-makeMove(theBoard, playerLetter, move)
+    while gameIsPlaying:
+        if turn == 'player':
+            # Player's turn
+            drawBoard(theBoard)
+            move = getPlayerMove(theBoard)
+            makeMove(theBoard, playerLetter, move)
 
-if isWinner(theBoard, playerLetter):
-drawBoard(theBoard)
-print('Hooray! You have won the game!')
-gameIsPlaying = False
-else:
-if isBoardFull(theBoard):
-drawBoard(theBoard)
-print('The game is a tie!')
-break
-else:
-turn = 'computer'
+        if isWinner(theBoard, playerLetter):
+            drawBoard(theBoard)
+            print('Hooray! You have won the game!')
+            gameIsPlaying = False
+        else:
+            if isBoardFull(theBoard):
+                drawBoard(theBoard)
+                print('The game is a tie!')
+                break
+            else:
+                turn = 'computer'
 
-else:
-# Computer's turn
-move = getComputerMove(theBoard, computerLetter)
-makeMove(theBoard, computerLetter, move)
+        else:
+            # Computer's turn
+            move = getComputerMove(theBoard, computerLetter)
+            makeMove(theBoard, computerLetter, move)
 
-if isWinner(theBoard, computerLetter):
-drawBoard(theBoard)
-print('The computer has beaten you! You lose.')
-gameIsPlaying = False
-else:
-if isBoardFull(theBoard):
-drawBoard(theBoard)
-print('The game is a tie!')
-break
-else:
-turn = 'player'
+        if isWinner(theBoard, computerLetter):
+            drawBoard(theBoard)
+            print('The computer has beaten you! You lose.')
+            gameIsPlaying = False
+        else:
+            if isBoardFull(theBoard):
+                drawBoard(theBoard)
+                print('The game is a tie!')
+                break
+            else:
+                turn = 'player'
 
-print('Do you want to play again? (yes or no)')
-if not input().lower().startswith('y'):
-break
+        print('Do you want to play again? (yes or no)')
+        if not input().lower().startswith('y'):
+            break
