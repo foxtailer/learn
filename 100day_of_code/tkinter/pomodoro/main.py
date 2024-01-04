@@ -35,7 +35,7 @@ window.title("Pomodoro")
 window.minsize(300, 300)
 window.config(padx=10, pady=10, bg=YELLOW)
 
-bg_img = tk.PhotoImage(file=r"E:\YD\git\learn\tkinter\pomodoro\tomato.png")
+bg_img = tk.PhotoImage(file=r"C:\Users\yaroslav\Desktop\python\GIT\learn\100day_of_code\tkinter\pomodoro\tomato.png")
 canvas = tk.Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 canvas.create_image(105, 112, image=bg_img)
 timer_text = canvas.create_text(110, 130, text="00:00", fill="grey", font=("Arial", 24, "bold"))

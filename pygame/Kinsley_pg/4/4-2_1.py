@@ -7,9 +7,9 @@ pygame.init()
 
 screen = pygame.display.set_mode((640, 700), 0, 32)
 font = pygame.font.SysFont("arial", 20)
-copy_btn_main = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
-copy_btn_bright = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
-copy_btn_dark = pygame.image.load(r"E:\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_main = pygame.image.load(r"C:\Users\yaroslav\Desktop\python\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_bright = pygame.image.load(r"C:\Users\yaroslav\Desktop\python\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
+copy_btn_dark = pygame.image.load(r"C:\Users\yaroslav\Desktop\python\GIT\learn\pygame\Kinsley_pg\img\copy_.png").convert()
 
 # Creates images with smooth gradients
 def create_scales(height):
