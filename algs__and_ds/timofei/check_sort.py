@@ -1,3 +1,4 @@
+
 def check_sort(A, ascending=True):
     """Check if list is sortod O(len(A))"""
     flag = True

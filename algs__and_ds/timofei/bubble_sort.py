@@ -6,6 +6,19 @@ def bubble_sort(A):
             if A[k] > A[k+1]:
                 A[k], A[k+1] = A[k+1], A[k]
 
+
+def buble_sort2(A):
+    right_boundery = len(A)-1
+    sorted = False
+
+    while not sorted:
+        sorted = True
+        for i in range(right_boundery):
+            if A[i]>A[i+1]:
+                A[i],A[i+1] = A[i+1],A[i]
+                sorted = False
+        right_boundery-=1
+
 def test_sort(sort_alg):
 
     print("Test", sort_alg.__doc__)
@@ -28,4 +41,4 @@ def test_sort(sort_alg):
 
 if __name__ == "__main__":
     test_sort(bubble_sort)
-
+    test_sort(buble_sort2)
