@@ -7,4 +7,7 @@ def counter_gen():
 counter = counter_gen()
 
 while True:
-    print(next(counter))
+   print(next(counter))
+
+# for i in counter:
+#     print(i)
