@@ -3,7 +3,7 @@ from flask_restful import Resource, Api
 from flask_jwt import JWT, jwt_required
 
 from sequrity import authenticate, identity
-
+ 
 app = Flask(__name__)
 app.secret_key = "kotik"
 api = Api(app)

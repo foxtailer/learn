@@ -8,10 +8,10 @@ def heigh_tree(A):
     if (A==None):
         return 0
     else:
-        ldepth = heigh_tree(A.left)
-        rdepth = heigh_tree(A.right)
+        ldepth = heigh_tree(A.left)   # first step
+        rdepth = heigh_tree(A.right)  # second
 
-        if ldepth > rdepth:
+        if ldepth > rdepth: # third
             return 1+ldepth
         else:
             return 1+rdepth
