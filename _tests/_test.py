@@ -1,1 +1,6 @@
-print(next(filter(lambda x:x["name"] == "1", [{"name":"2"}]), None))
+import calendar
+import datetime
+
+cal = calendar.Calendar()
+a=True
+print(cal.monthdayscalendar(1992,11), str(datetime.date.today().year))

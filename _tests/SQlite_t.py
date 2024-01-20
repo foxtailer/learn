@@ -9,7 +9,7 @@ cursor.execute(create_table)
 
 user = (1, "admin", "admin")
 insert_query = "INSERT INTO users VALUES (?,?,?)"
-cursor.execute(insert_query, user)
+# cursor.execute(insert_query, user)
 
 users = [
     (1, "admin", "admin"),
