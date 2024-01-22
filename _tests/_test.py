@@ -1,6 +1,8 @@
-import calendar
-import datetime
+from flask import Flask, render_template
+import calendar, datetime
+import random
 
-cal = calendar.Calendar()
-a=True
-print(cal.monthdayscalendar(1992,11), str(datetime.date.today().year))
+
+_date = datetime.date.today()
+
+print(_date)
