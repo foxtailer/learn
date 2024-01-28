@@ -1,8 +1,7 @@
-from flask import Flask, render_template
-import calendar, datetime
-import random
+import asyncio
 
+async def gg(n):
+    await asyncio.sleep(n)
+    print(f"gg{n}")
 
-_date = datetime.date.today()
-
-print(_date)
+print(gg(4))
