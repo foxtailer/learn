@@ -14,7 +14,7 @@
 # print(temperature[1:])
 #_________________________________
 import pandas
-data = pandas.read_csv(r"E:\git\learn\day_25\weather-data.csv")
+data = pandas.read_csv(r"/home/aska/Documents/GIT/learn/100day_of_code/pandas_01/weather-data.csv")
 temp_list = data["temp"].to_list()
 print("average", sum(temp_list)/len(temp_list))
 
