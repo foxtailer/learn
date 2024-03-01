@@ -1,0 +1,39 @@
+body {
+    text-align: center;
+    background-color: #c2bc99;
+    margin: 50px;
+    background-image: url("img/bg.jpg");
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
+
+h1, p {
+    font-family: "Protest Revolution", sans-serif;
+    font-size: 3em;
+}
+
+p {
+    color: #8b0a0a;
+    font-size: 1.5em;
+}
+
+#go {
+    font-size: 1.3em;  
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+li, ol {
+    text-align: left;
+    font-family: "Protest Revolution", sans-serif;
+}

@@ -1,3 +1,3 @@
-x = [1,2,3,4,5,6,7,8]
-z = [i for i in x[1::2]]
-print(z)
+x = {1:"AA",2:"a",3:"Bb"}
+my_dict = {key:value.lower() for key, value in x.items()}
+print(1 in x)
