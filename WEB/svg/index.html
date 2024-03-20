@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    body {
+      padding: 50px;
+      background: gray;
+    }
+    .box {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+    }
+
+    svg {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #000;
+      margin-bottom: 50px;
+    }
+
+    .svg-tect {
+      overflow: visible;
+    }
+
+    .rect {
+      stroke: brown;
+      stroke-width: 10px;
+      fill: none;
+      stroke-dasharray: 700;
+      stroke-dashoffset: 700;
+      transition: all 1s ease-in-out;
+    }
+
+    .svg-rect:hover .rect {
+      stroke-dashoffset: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <svg class="svg svg-rect">
+      <rect class="rect" width="200" height="200" fill="#1b1b1b" x="10" y="10"
+      rx="10" ry="30" ></rect>
+    </svg>
+
+    <svg class="svg">
+      <circle r="100" fill="red" cx="50%" cy="50%" stroke="gold" stroke-width="200"
+      stroke-dasharray="20" stroke-dashoffset="16"/>
+    </svg>
+      
+    <svg class="svg">
+      <ellipse rx="100" ry="50" fill="gold" cx="50%" cy="50%" />
+    </svg>
+
+    <svg class="svg"></svg>
+
+    <svg class="svg"></svg>
+
+    <svg class="svg"></svg>
+  </div>
+</body>
+</html>

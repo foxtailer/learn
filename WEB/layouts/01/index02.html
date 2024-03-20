@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *, *::after, *::before {
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+    }
+
+
+
+    .clearfix::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    
+    .wrapper {
+      margin: 20px auto;
+      width: 80%;
+      background-color: #fed3d3;
+    }
+
+    .wrapper * {
+      background-color: grey;
+      margin-bottom: 10px;
+    }
+
+    .logo-nav {
+      height: 40px;
+      padding: 10px 50px;
+    }
+
+    .logo {
+      float: left;
+    }
+
+    .nav {
+      float: right;
+    }
+    .main {
+      /* display: flex;
+      justify-content: space-between;*/
+      background-color: transparent; 
+    
+    }
+
+    .main div {
+      /* flex-grow: 1;
+      margin: 0;
+      text-align: center;
+      flex-shrink: 1; */
+      float: left;
+      width: 30%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .main .two {
+      /* margin: 0 10px; */
+      margin: 0 5%;
+    }
+
+    .header,
+    .footer {
+      height: 70px;
+      text-align: center;
+    }
+
+    .text {
+      height: 60px;
+      text-align: center;
+    }
+
+    .main {
+      height: 120px;
+    }
+
+
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo-nav">
+      <div class="logo">Logo</div>
+      <div class="nav">Navigation</div>
+    </div>
+
+    <div class="header">Header/Banner</div>
+
+    <div class="text">Texcxt area</div>
+
+    <div class="main">
+      <div class="one">Box 1</div>
+      <div class="two">Box 2</div>
+      <div class="thre">Box 3</div>
+    </div>
+
+    <div class="footer">Footer</div>
+  </div>
+</body>
+</html>

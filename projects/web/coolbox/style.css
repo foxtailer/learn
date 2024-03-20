@@ -1,0 +1,17 @@
+html {
+  background-color: #646262;
+}
+div {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background-color: #fff;
+  text-align: center;
+  position: relative;
+}
+p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
