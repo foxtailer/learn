@@ -1,4 +1,4 @@
-const swiper = new Swiper('.swiper', {
+const swiper = new Swiper('.top__swiper', {
   // Optional parameters
   //direction: 'vertical',
   loop: true,
@@ -16,8 +16,8 @@ const swiper = new Swiper('.swiper', {
 });
 
 var swiper2 = new Swiper(".about__slider", {
-  slidesPerView: 3,
-  spaceBetween: 30,
+  slidesPerView: 4,
+  spaceBetween: 20,
   freeMode: true,
   navigation: {
     nextEl: '.swiper-button-next',

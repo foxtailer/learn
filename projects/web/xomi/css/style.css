@@ -1,0 +1,159 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #000000;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+
+  outline: 0;
+  outline-offset: 0;
+}
+
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- header ---- */
+
+.header {
+  padding-top: 3px;
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  padding-right: 73px;
+}
+
+.menu__list {
+  display: flex; 
+  align-content: center;
+  gap: 50px;
+}
+
+.menu__link {
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.menu__link:hover {
+  margin-left: -20px;
+  padding: 41px 20px;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+/* ---- previev ----- */
+
+.previev {
+  padding-top: 97px;
+}
+
+.previev__inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.previev__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.previev__column--left {
+  padding-top: 72px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 5px;
+  padding-right: 31px;
+
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 77px;
+
+}
+
+.subtitle {
+  max-width: 420px;
+  padding-bottom: 104px;
+  font-size: 32px;
+  line-height: 39px;
+  color: #6F6F6F;
+}
+
+.previev__text {
+  max-width: 420px;
+}
+
+.previev__text--second {
+  padding-top: 20px;
+  padding-bottom: 80px;
+}
+
+.link {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 10px;
+  font-size: 20px;
+  line-height: 24px;
+  padding: 28px 80px;
+  width: 420px;
+  height: 80px;
+  color: #ffffff;
+  background-color: #000;
+}
+
+.link:hover {
+  background-color: #ff4040;
+  box-shadow: -1px 7px 14px 3px rgba(0,0,0,0.3);
+}

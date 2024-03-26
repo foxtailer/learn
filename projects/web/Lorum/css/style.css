@@ -136,10 +136,19 @@ a {
 .main-slider__btns {
   display: flex;
   align-items: center;
-  gap: 23px;
+  /* gap: 23px;
+  background-image: url("../img/Frame\ 14.svg");
+  background-repeat: repeat-x;
+  background-position: center; */
+}
+
+.line-conteiner {
+  display: inline-block;
+  height: 20px;
   background-image: url("../img/Frame\ 14.svg");
   background-repeat: repeat-x;
   background-position: center;
+  flex-grow: 1;
 }
 
 .main-slider__left,
@@ -154,6 +163,7 @@ a {
 
 .main-slider__left {
   background-image: url("../img/icon-left-black.svg");
+  margin-right: 10px;
 }
 
 .main-slider__right {
