@@ -38,3 +38,7 @@ img[src$="png"] {
 p:not(.item) {
   background-color: rgb(218, 217, 217);
 }
+
+.itemm + .itemm {
+  color:red;
+}
