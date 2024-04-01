@@ -25,7 +25,7 @@ body {
 }
 
 .conteiner {
-  max-width: 1170px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px
 }
@@ -70,18 +70,17 @@ a {
 
 .header-inner {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 27px 135px 32px;
-  padding-top: 27px;
-  padding-bottom: 32px;
+  padding: 3px 5px 0;
 }
 
 .menu {
-  margin-left: auto;
+  min-width: 765px;
 }
 
 .menu-list {
-  width: 635px;
+  margin-right: 135px;
   list-style: none;
   display: flex;
   justify-content: space-between;
@@ -517,4 +516,9 @@ footer h4 {
   align-items: flex-end;
   gap: 40px;
   flex-wrap: wrap;
+}
+
+
+@media (max-width:1111px) {
+  
 }

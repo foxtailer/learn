@@ -65,18 +65,18 @@ ul {
 .header__inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .menu {
-  display: flex;
-  align-items: center;
   padding-right: 73px;
+  height: 100%;
 }
 
 .menu__list {
   display: flex; 
   align-content: center;
-  gap: 50px;
+  align-items: stretch;
 }
 
 .menu__link {
@@ -86,7 +86,6 @@ ul {
 }
 
 .menu__link:hover {
-  margin-left: -20px;
   padding: 41px 20px;
   color: #ffffff;
   background-color: #000000;
@@ -488,4 +487,29 @@ ul {
 
 .footer__copy {
   text-decoration: underline;
+}
+
+
+@media (max-width: 1000px) {
+  .menu {
+    padding: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .header__inner {
+    display: block;
+    text-align: center;
+  }
+
+  .menu {
+    padding-top: 30px;
+    justify-content: space-around;
+  }
+
+  .menu__list {
+    display: flex; 
+    align-content: center;
+    gap: normal;
+  }
 }
