@@ -71,10 +71,6 @@ a {
 
 /* #############################################-MAIN-HEADER-######################################################## */
 
-.main-header {
-    margin-bottom: 75px;
-}
-
 .logo {
     padding-top: 20%;      /*  !??? */
 }
@@ -345,8 +341,9 @@ main {
     background-position: 0 0;
     background-repeat: repeat;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    margin-top: 50px;
+    padding: 30px 0;
+
 
     display: block;
 }
@@ -602,4 +599,128 @@ main {
 
 /* ------------------------------------------------------PRICE------------------------------------------------- */
 
+.inner-page-conteiner h2 {
+    margin-top: 60px;
+    margin-bottom: 30px;
 
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.inner-page-conteiner h3 {
+    margin-top: 60px;
+    margin-bottom: 30px;
+
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.inner-page-conteiner p {
+    margin: 14px 0;
+}
+
+.inner-page-conteiner h2 + h3 {
+    margin-top: 30px;
+}
+
+.inner-page-conteiner table {
+    border-collapse: collapse;
+}
+
+.inner-page-conteiner td {
+    padding: 10px 15px;
+    border: 2px solid #000;
+}
+
+.inner-page-conteiner .big-heading {
+    font-size: 48px;
+    line-height: 48px;
+    text-align: center;
+
+    margin-top: 55px;
+    margin-bottom: 65px;
+
+    display: flex;
+    align-items: center;
+}
+
+.big-heading::before,
+.big-heading::after {
+    content: "";
+
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    width: 50px;
+    height: 2px;
+
+    background-color: #000;
+}
+
+.big-heading::before {
+    margin-right: 25px;
+}
+
+.big-heading::after {
+    margin-left: 25px;
+}
+
+.custom-list-1 {
+    margin: 14px 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.custom-list-1 li {
+    position: relative;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.custom-list-1 li::before {
+    content: "";
+
+    position: absolute;
+    top: 8px;
+    left: 0;
+
+    width: 8px;
+    height: 8px;
+
+    background-color: #000;
+    transform: rotate(45deg);
+}
+
+.custom-table-1 {
+    width: 100%;
+}
+
+.custom-table-1 td{
+    width: 50%;
+}
+
+.custom-table-1 td:last-child {
+    text-align: center;
+}
+
+.inner-columns {
+    display: flex;
+    margin: 60px 0;
+    justify-content: space-between;
+}
+
+.inner-columns-left,
+.inner-columns-right {
+    width: 460px;
+
+}
+
+.inner-columns-left *:first-child,
+.inner-columns-right *:first-child {
+    margin-top: 0;
+}
+
+.modal-show {
+    display: block;
+}

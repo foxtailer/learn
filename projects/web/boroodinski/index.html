@@ -180,11 +180,11 @@
     <form class="login-form" method="post" action="www.gg.wp">
       <p>
         <label class="visually-hidden" for="user-login">Логин</label>
-        <input class="login-icon-user" id="user-login" name="login" placeholder="Логин" type="email">
+        <input class="login-icon-user" id="user-login" name="login" placeholder="Логин" type="email" required>
       </p>
       <p>
         <label class="visually-hidden" for="user-password">Пароль</label>
-        <input class="login-icon-password" id="user-password" name="password" placeholder="Пароль" type="password">
+        <input class="login-icon-password" id="user-password" name="password" placeholder="Пароль" type="password" required>
       </p>
       <p class="login-help">
         <label class="login-checkbox">
@@ -208,5 +208,33 @@
       <span class="visually-hidden">Закрыть</span>
     </button>
   </section>
+
+  <script>
+    var link = document.querySelector(".login-link")
+    var popup = document.querySelector(".modal-login")
+    var close = document.querySelector(".modal-close")
+    var namee = popup.querySelector("[name=login]")
+    var pass = popup.querySelector("[name=password]")
+    var storage = localStorage.getItem("login")
+
+    link.addEventListener("click", function(evt){
+      popup.classList.add("modal-show");
+      if (storage) {
+        login.value = storage
+        pass.focus();
+      }
+      else {
+        //evt.preventDefault();
+        namee.focus();
+      }
+      
+    });
+
+    close.addEventListener("click", function(evt){
+      evt.preventDefault();
+      localStorage.setItem("login", login.value)
+      popup.classList.remove("modal-show");
+    });
+  </script>
 </body>
 </html>
