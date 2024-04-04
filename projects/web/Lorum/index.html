@@ -11,11 +11,14 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
     rel="stylesheet">
 
+
+  <link rel="stylesheet" href="css/normolize.css">
   <link rel="stylesheet" href="css/style.css">
   <title>Lorum</title>
 </head>
 
 <body>
+  <div class="wrapper">
     <header class="header">
       <div class="conteiner">
         <div class="header-inner">
@@ -47,38 +50,56 @@
         </div>
       </div>
     </header>
-      <!--  -->
+    <!--  -->
     <main>
       <h1 class="visually-hidden">"Digital project" studio web page </h1>
 
       <section class="main-slider">
         <div class="conteiner">
-          <div class="main-slider-container">
-            <div class="main-slider-side">
-              <h2 class="main-slider__title">Project<span class="project-name">Lorum</span></h2>
+          <div class="slider-container">
+            <div class="slider__controls">
+              <h2 class="page-title">Project<span class="page-title--bold">Lorum</span></h2>
 
-              <menu class="mein-slider-menu">
-                <div class="main-slider__btns">
-                  <button class="main-slider__left"></button>
-                  <button class="main-slider__right main-slider__btn--evailable"></button>
+              <menu class="slider-menu">
+                <div class="slider__btns">
+                  <button class="slider__left" id="slider__left" onclick="moveSlide('-')"></button>
+                  <button class="slider__right slider__btn--evailable" id="slider__right" onclick="moveSlide('+')"></button>
                   <span class="line-conteiner"></span>
                 </div>
 
                 <div class="img-index">
                   <div class="curent-numder__wrapper">
                     <span class="img-index-current--first">0</span>
-                    <span class="img-index-current--last">1</span>
+                    <span class="img-index-current--last" id="img-index-current--last">1</span>
                   </div>
                   <span class="img-index-sep"></span>
-                  <span class="img-index-max">03</span>
+                  <span class="img-index-max" id="img-index-max">00</span>
                 </div>
               </menu>
             </div>
 
-            <div class="main-slider-content">
-              <img class="main-slider-content-img" src="img/m-slider-1.jpg" alt="modern  style white bilding"
+            <div class="slider-content">
+              <div class="slider-content__img">
+                <img class="main-slider-content-img" src="img/m-slider-1.jpg" alt="modern  style white bilding"
                 width="770px" height="830px">
-              <a class="link main-slider__link" href="#">View Project</a>
+              </div>
+
+              <div class="slider-content__img">
+                <img class="main-slider-content-img" src="img/m-slider-2.jpg" alt="modern  style white bilding"
+                width="770px" height="830px">
+              </div>
+
+              <div class="slider-content__img">
+                <img class="main-slider-content-img" src="img/m-slider-3.jpg" alt="modern  style white bilding"
+                width="770px" height="830px">
+              </div>
+
+              <div class="slider-content__img">
+                <img class="main-slider-content-img" src="img/m-slider-3.jpg" alt="modern  style white bilding"
+                width="770px" height="830px">
+              </div>
+
+              <a class="link link--white main-slider__link" href="#">View Project</a>
             </div>
           </div>
 
@@ -103,7 +124,7 @@
                 Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                 galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
                 but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              <a class="link about__link" href="#">read more</a>
+              <a class="link link--white about__link" href="#">read more</a>
             </div>
           </div>
         </div>
@@ -165,10 +186,10 @@
                 <label for="contacts-message" class="visually-hidden">Message</label>
                 <input type="text" id="contacts-message" name="message" value="" placeholder="Message">
               </p>
-  
+
               <button class="link contacts__link" type="submit">read more</button>
             </form>
-  
+
             <img class="contact__img" src="img/contact-img.jpg" alt="" width="750px" height="370px">
           </div>
         </div>
@@ -199,7 +220,7 @@
 
             <dl>
               <dt class="contacts-item"><span class="visually-hidden">Adress</span>
-                <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="11" height="16" viewBox="0 0 11 16"  xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M1.50814 9.2492L1.51345 9.25698L5.5 15.1116L9.48655 9.25698L9.49186 9.2492L9.49745 9.24161C10.2363 8.23991 10.5723 6.879 10.4871 5.5225C10.4019 4.16584 9.89922 2.86989 9.03258 1.98859C7.08079 0.00382429 3.91955 0.00377946 1.96742 1.98859L1.50814 9.2492ZM1.50814 9.2492L1.50255 9.24161M1.50814 9.2492L1.50255 9.24161M1.50255 9.24161C0.763724 8.23991 0.42775 6.879 0.51291 5.5225M0.51291 5.5225C0.598079 4.16585 1.10077 2.86991 1.9674 1.98862L0.51291 5.5225ZM3.23807 5.53836C3.23807 6.82627 4.26679 7.88453 5.55356 7.88453C6.84032 7.88453 7.86905 6.82627 7.86905 5.53836C7.86905 4.25045 6.84032 3.19219 5.55356 3.19219C4.26679 3.19219 3.23807 4.25045 3.23807 5.53836Z"
                     stroke="white" />
@@ -288,5 +309,8 @@
       <hr>
       <p class="copyright">© 2019 All Rights Reserved.</p>
     </footer>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
