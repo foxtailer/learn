@@ -1,0 +1,62 @@
+/* General styles - put these straight into your stylesheet */
+
+html {
+  box-sizing: border-box;
+  font-family: 'Helvetica neue', Arial, 'sans serif';
+  font-size: 10px;
+  background-color: #ccc;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.user-card {
+  max-width: 400px;
+  margin: 5em auto;
+  background-color: red;
+  border: 0.2em solid black;
+  border-radius: 1.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-adress {
+  padding: 15px;
+}
+.user-name{
+  padding: 10px;
+}
+
+.user-contacts {
+ background-color: #b82c2c;
+}
+.user-photo{
+  width: 130px;
+  height: 130px;
+  float: right;
+}
+
+footer p {
+  padding: 15px;
+}

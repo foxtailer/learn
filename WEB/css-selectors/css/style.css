@@ -1,0 +1,44 @@
+#wrapper {
+  padding: 30px;
+}
+
+#wrapper * {
+  margin: 10px;
+}
+
+.text + p {
+  color: red;
+}
+
+.text ~ p {
+  border-bottom: 1px solid #000;
+}
+
+/* only st deep child */
+.list > li { 
+  border: 1px solid #000;
+}
+
+input[type="text"] {
+  background-color: green;
+}
+
+a[href*="link"] {
+  color: yellow;
+}
+
+a[href^="link"] {
+  color: red;
+}
+
+img[src$="png"] {
+  border: 2px solid brown;
+}
+
+p:not(.item) {
+  background-color: rgb(218, 217, 217);
+}
+
+.itemm + .itemm {
+  color:red;
+}
