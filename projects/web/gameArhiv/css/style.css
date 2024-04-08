@@ -126,6 +126,7 @@ footer {
 
   .game-cards {
     overflow-y: scroll;
+    /* scroll-snap-type: y mandatory; */
   } 
 
  .game-card {
@@ -136,6 +137,8 @@ footer {
   border-radius: 2px;
   outline: 2px solid #696969;
   background-color: #f88c5b;
+
+  /* scroll-snap-align: center; */
 
   display: flex;
   gap: 20px;
@@ -150,11 +153,17 @@ footer {
  }
 
  .play-btn {
+  display: block;
+  text-decoration: none;
   margin: 40px 0 20px;
   width: 150px;
   height: 50px;
+  border: 3px solid black;
   border-radius: 5px;
-  cursor: pointer;
+  background-color: #ebe8e8;
+  color: #000;
+  text-align: center;
+  line-height: 45px;
  }
 
  .play-btn:hover {

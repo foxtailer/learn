@@ -539,6 +539,10 @@ ul {
   .menu__link {
     padding: 20px 5px;
   }
+  .previev__list {
+    padding: 0;
+    justify-content: space-around;
+  }
 }
 
 @media (max-width: 350px) {

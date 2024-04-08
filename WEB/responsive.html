@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      width: 100%;
+      margin: 0;
+    }
+
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: purple;
+    }
+
+    /* auto-fill */
+    .container {
+      margin-top: 50px;
+      display: grid;  
+      grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+      gap: 20px;
+      background-color: #fff;
+      grid-auto-rows: 300px;
+    }
+
+    /* portrait/landscape
+       ***      *****
+       ***      *****
+       ***
+    */
+    @media (orientation: landscape) {
+      .box {
+        height: 100px;
+      }
+    }
+
+    @media (200px <= width <= 500px) {
+      .box {
+        background-color: red;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hello World!</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi reiciendis, sit numquam soluta asperiores dicta cum
+    enim. Similique officia, quasi, quidem eos soluta quod nobis, asperiores fuga a eaque accusantium.</p>
+  <div class="box"></div>
+
+  <div class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+</body>
+
+</html>

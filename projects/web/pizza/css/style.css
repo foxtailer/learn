@@ -1,5 +1,8 @@
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  font-size: 62.5%;
 }
 
 *,
@@ -8,6 +11,7 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
+  text-transform: capitalize;
 }
 
 html,
@@ -17,6 +21,7 @@ body {
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: #f7f7f7;
 }
 
 .wrapper {
@@ -30,7 +35,7 @@ body {
   margin: 0 auto;
 }
 
-.main {
+main {
   flex-grow: 1;
 }
 
@@ -56,4 +61,32 @@ a {
   outline-offset: 0;
 }
 
-/* ------- */
+/* Header */
+
+.header {
+  z-index: 1000;
+}
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.navigation {
+  flex-grow: 1;
+}
+
+.user-nav__list,
+.main-nav__list {
+  list-style: none;
+  display: flex;
+}
+
+.user-nav__list {
+  justify-content: end;
+}
+
+.main-nav__item--bascet {
+  flex-grow: 1;
+  text-align: right;
+}
