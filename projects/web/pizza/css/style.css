@@ -44,6 +44,7 @@ a {
   color: inherit;
 }
 
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -66,14 +67,28 @@ a {
 .header {
   z-index: 1000;
 }
+
 .header__inner {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 }
 
+.logo-img {
+  max-width: 100%;
+  min-width: 100%;
+}
 .navigation {
   flex-grow: 1;
+  font-size: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .user-nav__list,
@@ -82,11 +97,148 @@ a {
   display: flex;
 }
 
+.main-nav__list {
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.user-nav {
+  font-size: 2rem;
+  color: #fff;
+  background-color: rgb(55, 55, 55);
+  padding: 0.2em 2em;
+}
+
 .user-nav__list {
   justify-content: end;
 }
 
-.main-nav__item--bascet {
-  flex-grow: 1;
+.area {
+  padding: 0.5em 1em;
+}
+
+.main-nav__item--basket {
+  margin-left: auto;
+  border-radius: 1.5em;
   text-align: right;
+  border: 1px solid #000;
+}
+
+.main-nav__item {
+  margin-top: 0.5em;
+}
+
+.main-nav__link {
+  padding: 0.5em 1em;
+}
+
+.main-nav__link--basket {
+  position: relative;
+  padding: 0.5em;
+}
+
+.main-nav__link--basket svg {
+  position: relative;
+  top: 0.1em;
+}
+
+.main-nav__item--active:hover {
+  transform: scale(1.15);
+}
+
+.user-nav__item:hover svg,
+.user-nav__item:focus svg {
+  transform: scale(1.3);
+}
+
+.user-nav__phone {
+  text-decoration: underline;
+}
+
+.corrency {
+  font-size: 0.5em;
+}
+
+.order-btn {
+  padding: 0.2em 1em;
+  border-radius: 1.5em;
+}
+
+.order-btn:hover {
+  background-color: tomato;
+}
+
+/* Header Dropdown */
+
+.drop-btn {
+  cursor: pointer;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover,
+.dropdown a:focus {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+
+
+@media(max-width: 600px) {
+  html {
+    font-size: 50%;
+  }
+  .user-nav {
+    padding: 0.2em 1em;
+  }
+  .area {
+    padding: 0.2em 0.5em;
+  }
+}
+
+@media(max-width: 500px) {
+ .main-nav__list {
+  display: none;
+ }
+ .logo {
+  flex-basis: 30%;
+ }
+}
+
+@media(max-width: 420px) {
+  html {
+    font-size: 40%;
+  }
+  .user-nav {
+    padding: 0.2em 0.5em;
+  }
+  .main-nav__link--basket svg {
+    width: 15px;
+    height: 15px;
+  }
 }

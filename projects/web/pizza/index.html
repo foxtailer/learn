@@ -17,6 +17,60 @@
 
 <body>
   <header class="header">
+    <nav class="user-nav">
+      <ul class="user-nav__list">
+        <li class="user-nav__item">
+          <label class="area" for="">
+            <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff" class="bi bi-telephone-fill">
+              <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+            </svg>
+            <a class="user-nav__phone" id="user-nav__phone" href="tel:+0996705678">099-670-5678</a>
+          </label>
+        </li>
+
+        <li class="user-nav__item">
+          <div class="dropdown">
+            <label class="area" for="lang-btn">
+              <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z" fill="#fff"/>
+              </svg>
+              <button class="drop-btn" id="lang-btn" onclick="langDropdown()">eng</button>
+            </label>
+            <div class="dropdown-content" id="lang-dropdown">
+              <a href="#">eng</a>
+              <a href="#">rus</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="user-nav__item">
+          <div class="dropdown">
+            <label class="area" for="location-btn">
+              <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff" class="bi bi-geo-alt-fill">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+              </svg>
+              <button class="drop-btn" id="location-btn" onclick="locationDropdown()">Osaka</button>
+            </label>
+            <div class="dropdown-content" id="location-dropdown">
+              <a href="#">Osaka</a>
+              <a href="#">Kioto</a>
+              <a href="#">Tokio</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="user-nav__item">
+          <label class="area" for="">
+            <span class="visually-hidden">user login</span>
+            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="6" r="4" fill="#fff"/>
+              <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" fill="#fff"/>
+            </svg>
+          </label>
+        </li>
+      </ul>
+    </nav>
+
     <div class="container">
       <div class="header__inner">
         <a class="logo" href="#">
@@ -24,34 +78,33 @@
         </a>
         
         <div class="navigation">
-          <nav class="user-nav">
-            <ul class="user-nav__list">
-              <li class="user-nav__item">099-670-5678</li>
-              <li class="user-nav__item">eng</li>
-              <li class="user-nav__item">Osaka</li>
-              <li class="user-nav__item">O</li>
-            </ul>
-          </nav>
-
           <nav class="main-nav">
             <ul class="main-nav__list">
-              <li class="main-nav__item">
+              <li class="main-nav__item main-nav__item--active">
                 <a class="main-nav__link" href="">menu</a>
               </li>
-              <li class="main-nav__item">
+              <li class="main-nav__item main-nav__item--active">
                 <a class="main-nav__link" href="">news</a>
               </li>
-              <li class="main-nav__item">
+              <li class="main-nav__item main-nav__item--active">
                 <a class="main-nav__link" href="">about</a>
               </li>
-              <li class="main-nav__item">
+              <li class="main-nav__item main-nav__item--active">
                 <a class="main-nav__link" href="">contacts</a>
               </li>
-              <li class="main-nav__item main-nav__item--bascet">
-                <a class="main-nav__link" href="">00</a>
-                <button class="order-btn">order</button>
-              </li>
             </ul>
+            <div class="main-nav__item main-nav__item--basket">
+              <a class="main-nav__link main-nav__link--basket" href="">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4C10.4508 4 9.0799 5.00309 8.61115 6.47966L7.81104 9H8.49995H15.5H16.1889L15.3888 6.47966C14.92 5.00309 13.5491 4 12 4ZM18.2872 9L17.295 5.8745C16.5626 3.56734 14.4206 2 12 2C9.57933 2 7.43733 3.56734 6.7049 5.8745L5.71268 9H3.34789C2.00585 9 1.04464 10.2956 1.43384 11.58L2.55808 15.29L3.94596 19.87C4.32928 21.135 5.49529 22 6.81704 22H9.99995H14H17.1829C18.5046 22 19.6706 21.135 20.0539 19.87L21.4418 15.29L22.5661 11.58C22.9553 10.2956 21.9941 9 20.652 9H18.2872ZM6.4444 11H3.34789L4.25698 14H8.03615L7.62706 11H6.4444ZM9.64557 11L10.0547 14H13.9452L14.3543 11H9.64557ZM16.3728 11L15.9638 14H19.7429L20.652 11H17.5555H16.3728ZM19.1369 16H15.691L15.1456 20H17.1829C17.6235 20 18.0121 19.7117 18.1399 19.29L19.1369 16ZM13.1271 20L13.6725 16H10.3274L10.8728 20H13.1271ZM8.85434 20L8.30888 16H4.86304L5.86001 19.29C5.98778 19.7117 6.37646 20 6.81704 20H8.85434Z" fill="#000000"/>
+                </svg>
+
+                <span class="amount">
+                  350 <span class="corrency">грн</span>
+                </span>
+              </a>
+              <button class="order-btn">Order</button>
+            </div>
           </nav>
         </div>
       </div>

@@ -1,6 +1,13 @@
-x = {1:"AA",2:"a",3:"Bb"}
-my_dict = {key:value.lower() for key, value in x.items()}
-print(1 in x)
+def solution(s):
+    if len(s)2 == 0:
+        return [s[x:x+2] for x in range(0,len(s),2)]
+    else:
+        s = s+"_"
+        return [s[x:x+2] for x in range(0,len(s),2)]
 
-gg:int = 14
-print(gg)
+
+print(solution("asdfadsf"))
+print(solution("asdfads"))
+print(solution(""))
+print(solution("x"))
+
