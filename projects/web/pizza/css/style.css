@@ -25,6 +25,7 @@ body {
 }
 
 .wrapper {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -331,6 +332,24 @@ a {
     transform: translateY(-0.7em) rotate(135deg);
   }
 }
+
+/* Footer */
+
+.footer {
+  background-color: rgb(55, 55, 55);
+}
+
+.social {
+  margin: 2em auto;
+}
+
+.social-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+}
+
 
 @media(max-width: 600px) {
   html {
