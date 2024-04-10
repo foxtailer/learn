@@ -1,3 +1,5 @@
+// Dropdown language and location buttons
+
 function langDropdown() {
   document.getElementById("lang-dropdown").classList.toggle("show");
 }
@@ -5,7 +7,6 @@ function langDropdown() {
 function locationDropdown() {
   document.getElementById("location-dropdown").classList.toggle("show");
 }
-
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
@@ -19,4 +20,28 @@ window.onclick = function(event) {
       }
     }
   }
+}
+
+// Menu btn hide and animation
+
+const menuIcon = document.getElementById("menu-btn");
+const lines = document.querySelectorAll(".no-animation")
+let navigation = document.querySelector(".main-nav__list")
+
+menuIcon.addEventListener("click", ()=> {
+  menuIcon.classList.toggle("active");
+  navigation.classList.toggle("active");
+
+  lines.forEach((line) => {
+    line.classList.remove("no-animation");
+  });
+});
+
+window.onscroll = () => {
+  menuIcon.classList.remove("active");
+  navigation.classList.remove("active");
+
+  lines.forEach((line) => {
+    line.classList.remove("no-animation");
+  });
 }
