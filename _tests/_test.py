@@ -1,13 +1,10 @@
-def solution(s):
-    if len(s)2 == 0:
-        return [s[x:x+2] for x in range(0,len(s),2)]
-    else:
-        s = s+"_"
-        return [s[x:x+2] for x in range(0,len(s),2)]
-
-
-print(solution("asdfadsf"))
-print(solution("asdfads"))
-print(solution(""))
-print(solution("x"))
-
+def tower_builder(n_floors):
+    line_width = int(n_floors/2 * (1 + (1 + (n_floors-1)*2)))
+    result = []
+    floor = "*"
+    
+    for _ in range(n_floors):
+        result.append(floor.center(line_width, " "))
+        floor += "*"*2
+    return result
+print(tower_builder(3))

@@ -16,14 +16,67 @@
 
     main {
       flex-grow: 1;
+      background-color: tomato;
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      background-color: gray;
+    }
+
+    .item {
+      width: 200px;
+      height: 200px;
+      background-color: black;
+      margin: 5px;
+    }
+
+    .flex {
+      display: flex;
+      gap: 80px;
+    }
+
+    .up-flex {
+      display: flex;
+      gap: 80px;
+    }
+    .neighbor {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      margin: 5px;
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
-    <header>header</header>
-    <main>main</main>
-    <footer>footer</footer>
+    <header>
+
+      <div class="container">
+
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        main
+
+        <div class="up-flex">
+          <div class="flex">
+            <div class="item"></div>
+            <div class="item"></div>
+          </div>
+
+          <div class="neighbor"></div>
+        </div>
+
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        footer
+      </div>
+    </footer>
   </div>
 </body>
 </html>
