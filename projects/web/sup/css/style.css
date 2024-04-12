@@ -52,6 +52,10 @@ a {
   color: inherit;
 }
 
+img {
+  object-fit: cover;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -407,6 +411,73 @@ a {
   align-items: flex-end;
 }
 
-.buy__img {
+/* Technology */
 
+.technology {
+  margin-bottom: 150px;
+}
+
+.technology__top {
+  background-image: url(../img/techno-bg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.technology__top-inner {
+  min-height: 110vh;
+  position: relative;
+}
+
+.technology__top--title {
+  margin-bottom: 60px;
+}
+
+.technology__play-btn {
+  position: absolute;
+  top: 500px;
+  left: 770px;
+}
+
+.technology__top-box {
+  max-width: 470px;
+  position: absolute;
+  left: 0;
+  bottom: 85px;
+}
+
+.technology__list {
+  padding-left: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.technology__item {
+  padding-left: 24px;
+}
+
+.technology__item + .technology__item {
+  padding-top: 15px;
+}
+
+.min-galery__inner {
+  display: flex;
+  gap: 70px;
+  margin-top: 115px;
+}
+
+.min-galery__text {
+  width: 350px;
+}
+
+.min-galery__images {
+  display: grid;
+  gap: 30px 24px;
+  grid-template-columns: 482px 208px;
+  grid-template-rows: 432px 300px;
+  transform: translateY(-50%);
+}
+
+.min-galery__img--first {
+  grid-column: 1/3;
 }
