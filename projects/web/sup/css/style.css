@@ -284,6 +284,7 @@ img {
 .info__text-contant {
   display: flex;
   gap: 80px;
+  z-index: 10;
 }
 
 .info__top-text {
@@ -648,6 +649,9 @@ img {
   html { 
     font-size: 60%;
   }
+  .info__specs-item {
+    display: block;
+  }
 }
 
 @media(max-width:450px) {
@@ -657,9 +661,6 @@ img {
   }
   .header__btn {
     width: 70%;
-  }
-  .header__content {
-    align-items: flex-start;
   }
 }
 
