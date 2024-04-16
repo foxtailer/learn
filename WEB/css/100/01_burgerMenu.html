@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .container {
+      margin: 100px auto;
+      background-color: blueviolet;
+      width: 500px;
+      height: 500px;
+      display: grid;
+      place-content: center;
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      cursor: pointer;
+    }
+
+    .line-one,
+    .line-two,
+    .line-three {
+      width: 100px;
+      height: 40px;
+      background-color: #000;
+    }
+
+    .active .line-one {
+      animation: animate-line-one 0.7s forwards;
+    }
+
+    .active .line-two {
+      animation: animate-line-two 0.3s forwards;
+    }
+
+    .active .line-three {
+      animation: animate-line-three 0.7s forwards;
+    }
+
+    /*  */
+    .line-one {
+      animation: animate-line-one-rev 0.7s forwards;
+    }
+
+    .line-two {
+      animation: animate-line-two-rev 0.7s forwards;
+    }
+
+    .line-three {
+      animation: animate-line-three-rev 0.7s forwards;
+    }
+
+    .no-animation {
+      animation: none;
+    }
+
+    @keyframes animate-line-one {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(150%);
+      }
+
+      100% {
+        transform: translateY(150%) rotate(45deg);
+      }
+    }
+
+    @keyframes animate-line-two {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+    }
+
+    @keyframes animate-line-three {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-150%);
+      }
+
+      100% {
+        transform: translateY(-150%) rotate(135deg);
+      }
+    }
+
+    /*  */
+
+    @keyframes animate-line-one-rev {
+      100% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(31px);
+      }
+
+      0% {
+        transform: translateY(31px) rotate(45deg);
+      }
+    }
+
+    @keyframes animate-line-two-rev {
+      100% {
+        opacity: 1;
+      }
+
+      0% {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+    }
+
+    @keyframes animate-line-three-rev {
+      100% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-31px);
+      }
+
+      0% {
+        transform: translateY(-31px) rotate(135deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="menu-btn" id="menu-btn">
+      <div class="line-one no-animation"></div>
+      <div class="line-two no-animation"></div>
+      <div class="line-three no-animation"></div>
+    </div>
+  </div>
+
+  <script>
+    const menuIcon = document.getElementById("menu-btn");
+    const lines = document.querySelectorAll(".no-animation");
+    //let navigation = document.querySelector(".main-nav__list")
+
+    menuIcon.addEventListener("click", () => {
+      menuIcon.classList.toggle("active");
+      //navigation.classList.toggle("active");
+
+      lines.forEach((line) => {
+        line.classList.remove("no-animation");
+      });
+    });
+
+    // window.onscroll = () => {
+    //   menuIcon.classList.remove("active");
+    //   //navigation.classList.remove("active");
+
+    //   lines.forEach((line) => {
+    //     line.classList.remove("no-animation");
+    //   });
+    // };
+  </script>
+</body>
+
+</html>

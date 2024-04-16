@@ -192,4 +192,5 @@ footer {
 
  .game-card__previev {
   border: 2px solid black;
+  object-fit: cover;
  }
