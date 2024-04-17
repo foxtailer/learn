@@ -20,6 +20,7 @@ body {
   font-family: "PT Sans Narrow", sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 18px;
 }
 
 .wrapper {
@@ -30,7 +31,7 @@ body {
 
 .container {
   max-width: 980px;
-  padding: 0 1rem;
+  padding: 0 2rem;
   margin: 0 auto;
 }
 
@@ -71,13 +72,14 @@ a {
 /* Header */
 
 .header {
-  height: 100vh;
+  height: 720px;
   background: #000 url(../img/desctop/back-desktop.jpg) no-repeat;
   background-size: cover;
   color: #fff;
 }
 
-.nav_wrapper {
+.nav__wrapper {
+  background-color: #000;
   position: relative;
 }
 
@@ -101,6 +103,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 57px;
+  z-index: 10;
 }
 
 .logo {
@@ -115,8 +118,6 @@ a {
 }
 
 .nav__inner {
-  background-color: #000;
-  padding: 0 120px;
   display: flex;
   justify-content: space-between;
 }
@@ -215,6 +216,118 @@ a {
   animation: none;
 }
 
+/* Adventages */
+
+.adventages-bot {
+  width: 100%;
+}
+
+.stat__item {
+  padding: 32px 0 30px 34px;
+}
+
+.stat__item:nth-child(1) {
+  background-color: #fff;
+  color: #000;
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+
+  padding: 37px 22px 30px 40px;
+  position: relative;
+}
+.stat__item:nth-child(1) .stat__text {
+  padding-top: 50px;
+}
+.stat__item:nth-child(1)::before {
+  content: "";
+  width: 23px;
+  height: 23px;
+  background-image: url(../img/triangle.png);
+  position: absolute;
+  left: -23px;
+  top: 23px;
+}
+
+.stat__item:nth-child(2) {
+  background-color: #404040;
+}
+
+.stat__item:nth-child(3) {
+  background-color: #353535;
+}
+
+.stat__item:nth-child(4) {
+  background-color: #4e4e4e;
+}
+
+.stat__item:nth-child(5) {
+  background-color: #404040;
+}
+
+.stat {
+  color: #fff;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-auto-flow: column;
+
+  margin-top: -180px;
+}
+
+.stat__first {
+  color: #000;
+  background-color: #fff;
+}
+
+.stat__title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.marker {
+  display: inline-block;
+  color: #cacaca;
+  padding-top: 40px;
+}
+
+.value {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.key {
+  padding-top: 20px;
+}
+
+.adventages__list {
+  padding-top: 80px;
+  padding-bottom: 30px;
+  text-align: center;
+  color: #fff;
+  display: flex;
+}
+
+.adventages__item {
+  padding: 0 44px;
+}
+
+.adventages__title {
+  padding: 40px 0 23px;
+  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.adventages__text {
+  font-size: 20px;
+  line-height: 27px;
+}
+
 @keyframes animate-line-one {
   0% {
     transform: rotate(0deg);
@@ -302,6 +415,9 @@ a {
 .nav__inner {
   padding: 0 60px;
 }
+.value {
+  font-size: 56px;
+}
 }
 
 @media(max-width:768px) {
@@ -313,6 +429,7 @@ a {
   }
   .header {
     background: #000 url(../img/tablet/back-tablet.jpg) no-repeat;
+    height: 470px;
   }
   .logo {
     background-image: url(../img/tablet/logo-tablet.png);
@@ -320,11 +437,55 @@ a {
   .nav {
     gap: 30px;
   }
+
+  /* Adventages */
+  .stat {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat__item:nth-child(1) {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    padding: 36px 22px 17px 40px;
+  }
+  .stat__info-wrapper {
+    display: flex;
+    gap: 55px;
+  }
+  .stat__item:nth-child(1) .stat__text {
+    padding-top: 0;
+  }
+  .marker {
+    padding-top: 20px;
+  }
+  .site-nav__link, .user-login {
+    padding: 10px;
+  }
+  .adventages__list {
+    flex-direction: column;
+    text-align: left;
+    padding-top: 0;
+  }
+  .adventages__item + .adventages__item {
+    border-top: 1px solid #4e4e4e;
+  }
+  .adventages__item {
+    display: flex;
+    gap: 32px;
+    padding: 40px 44px;
+  }
+  .adventages__img {
+    object-fit: contain;
+  }
 }
 
 @media(max-width:560px) {
+  .container {
+    padding: 0;
+  }
   .header {
     background-image: none;
+    height: 135px;
   }
   .menu-btn {
     display: flex;
@@ -340,7 +501,7 @@ a {
     height: 50px;
     margin-top: 5px;
   }
-  .nav_wrapper {
+  .nav__wrapper {
     margin-top: 5px;
   }
   .nav {
@@ -354,6 +515,8 @@ a {
     background-color: #826550;
     padding: 0;
     width: 80%;
+    z-index: 100;
+    position: relative;
   }
   .active {
     border: none;
@@ -382,4 +545,38 @@ a {
     background-color: #755a46;
     color: #fff;
   }
+
+  /* Adventages */
+  .stat {
+    margin-top: 0;
+  }
+  .stat__info-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .marker {
+    display: none;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 15px;
+  }
+  .value {
+    font-size: 40px;
+  }
+  .key {
+    flex-basis: 60%;
+  }
+  .adventages__item {
+    display: block;
+    text-align: center;
+  }
 }
+

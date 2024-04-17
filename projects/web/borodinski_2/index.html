@@ -17,8 +17,9 @@
 <body>
   <div class="wrapper">
     <header class="header">
-        <nav class="nav">
-          <div class="nav_wrapper">
+      <nav class="nav">
+        <div class="nav__wrapper">
+          <div class="container">
             <div class="menu-btn" id="menu-btn">
               <div class="line-one no-animation"></div>
               <div class="line-two no-animation"></div>
@@ -27,12 +28,17 @@
 
             <div class="nav__inner" id="nav__inner">
               <ul class="site-nav">
-                <li class="site-nav__item"><a class="site-nav__link " href="#"><span class="underline active">Главная</span></a></li>
-                <li class="site-nav__item"><a class="site-nav__link" href="#"><span class="underline">Наши роботы</span></a></li>
-                <li class="site-nav__item"><a class="site-nav__link" href="#"><span class="underline">Записаться</span></a></li>
-                <li class="site-nav__item"><a class="site-nav__link" href="#"><span class="underline">Контакты</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link " href="#"><span
+                      class="underline active">Главная</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span class="underline">Наши
+                      роботы</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span
+                      class="underline">Записаться</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span
+                      class="underline">Контакты</span></a>
+                </li>
               </ul>
-  
+
               <button class="user-login">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                   <path
@@ -49,13 +55,91 @@
               </button>
             </div>
           </div>
+        </div>
 
-          <a class="logo" href="#"></a>
-        </nav>
+        <a class="logo" href="#"></a>
+      </nav>
     </header>
 
     <main class="main">
+      <section class="adventages">
+        <div class="container">
+          <div class="adventages__inner">
+            <ul class="stat">
+              <li class="stat__item">
+                <div class="stat__info-wrapper">
+                  <h3 class="stat__title">Стрижка у насэто выгодно!</h3>
+                  <p class="stat__text">Мужская стрижка требует точного подхода. Обратимся к статистике:</p>
+                </div>
 
+                <span class="marker">* — приведённые данные ложь</span>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">1 500 *</p>
+                <p class="key">рублей вложений</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">7 200</p>
+                <p class="key">секунд времени мастера</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">50 000 *</p>
+                <p class="key">лайков и комплиментов</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">90 000</p>
+                <p class="key">постриженных волос</p>
+              </li>
+            </ul>
+
+            <ul class="adventages__list">
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-1.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">БЫСТРО</h3>
+
+                  <p class="adventages__text">
+                    Мы делаем свою работу быстро! Два часа пролетят незаметно и вы — счастливый обладатель стильной
+                    стрижки-минутки
+                  </p>
+                </div>
+              </li>
+
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-2.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">КРУТО</h3>
+
+                  <p class="adventages__text">
+                    Забудьте, как вы стриглись раньше. Мы сделаем из вас звезду футбола или кино.
+                    Во всяком случае внешне.
+                  </p>
+                </div>
+              </li>
+
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-3.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">ДОРОГО</h3>
+
+                  <p class="adventages__text">
+                    Наши мастера — профессионалы своего делаи не могут стоить дёшево. К тому же, разве цена не даёт
+                    определённый статус?
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <img class="adventages-bot" src="img/angle-bot.png" alt="">
+      </section>
     </main>
 
     <footer class="footer">
