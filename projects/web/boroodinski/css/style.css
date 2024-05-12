@@ -5,7 +5,7 @@
     margin: -1px;
     border: 0;
     padding: 0;
-    
+
     white-space: nowrap;
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
@@ -13,7 +13,7 @@
 
     outline: 0;
     outline-offset: 0;
-  }
+}
 
 body {
     margin: 0;
@@ -72,7 +72,8 @@ a {
 /* #############################################-MAIN-HEADER-######################################################## */
 
 .logo {
-    padding-top: 20%;      /*  !??? */
+    padding-top: 20%;
+    /*  !??? */
 }
 
 .active-page {
@@ -122,7 +123,7 @@ a {
 .site-navigation a:hover,
 .site-navigation a:focus,
 .user-navigation a:hover,
-.user-navigation a:focus{
+.user-navigation a:focus {
     background-color: #242424;
 }
 
@@ -255,8 +256,8 @@ main {
     text-transform: none;
 }
 
-.gallery figure{
-    padding: 0px; 
+.gallery figure {
+    padding: 0px;
     margin: 0px;
 
     height: 164px;
@@ -276,7 +277,7 @@ main {
 }
 
 .contacts address,
-.contacts address{
+.contacts address {
     font-style: inherit;
     margin: 0;
     margin-bottom: 15px;
@@ -298,7 +299,7 @@ main {
     margin-bottom: 10px;
 }
 
-.appointment-item label{
+.appointment-item label {
     display: block;
     margin-bottom: 9px;
     margin-left: 15px;
@@ -321,8 +322,9 @@ main {
     margin: 0;
     width: 100%;
 }
-.appointment-item input:focus{
-   border-color: #663d15;
+
+.appointment-item input:focus {
+    border-color: #663d15;
 }
 
 .inner-page {
@@ -332,6 +334,7 @@ main {
     background-position: 0 0;
     background-repeat: repeat;
 }
+
 /* #############################################-FOOTER-######################################################## */
 
 .main-footer {
@@ -389,7 +392,7 @@ main {
 }
 
 .social-button:hover path,
-.social-button:focus path{
+.social-button:focus path {
     fill: #000000;
 }
 
@@ -433,7 +436,7 @@ main {
 .modal-login {
     top: 120px;
     left: 50%;
-    
+
     width: 300px;
     margin-left: -230px;
     padding: 50px 80px;
@@ -619,7 +622,7 @@ main {
     margin: 14px 0;
 }
 
-.inner-page-conteiner h2 + h3 {
+.inner-page-conteiner h2+h3 {
     margin-top: 30px;
 }
 
@@ -696,7 +699,7 @@ main {
     width: 100%;
 }
 
-.custom-table-1 td{
+.custom-table-1 td {
     width: 50%;
 }
 

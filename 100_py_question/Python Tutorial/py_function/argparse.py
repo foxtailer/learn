@@ -1,6 +1,6 @@
-import argparse3
+import argparse
 
-parser = argparse3.ArgumentParser()
+parser = argparse.ArgumentParser()
 
 parser.add_argument('-n')
 args = parser.parse_args()
