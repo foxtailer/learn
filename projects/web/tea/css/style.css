@@ -105,6 +105,27 @@ a {
   gap: 65px;
   margin-left: 85px;
 }
+.menu__list-show {
+  display: block !important;
+  background-color: #fff;
+  text-align: center;
+  width: 360px;
+  padding-top: 60px;
+  margin: 0 !important; 
+
+  position: absolute;
+  top: 0;
+  left: calc(50% - 180px);
+}
+
+.mobile-plus-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background-color: #F7F2EA;
+  height: 60px;
+}
 
 .menu__btn {
   background-color: #fff;
@@ -130,7 +151,7 @@ a {
 .top {
   background-image: url(../img/top-bg.jpg);
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: bottom left;
   background-size: cover;
   color: #fff;
   font-family: "Cormorant", serif;
