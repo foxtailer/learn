@@ -140,6 +140,35 @@ a {
   background-color: #000;
 }
 
+.menu__item {
+  padding: 15px 0;
+}
+.menu__item:last-child {
+  padding-bottom: 0;
+}
+
+.mobile-plus {
+  padding: 40px 0;
+  margin-inline: 30px;
+  border-top: 2px solid #F7F2EA;
+}
+.mobile-plus__item {
+  padding: 18px 0;
+}
+
+.menu__close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+}
+.menu__item--mobile {
+  display: none;
+}
+
 .user__actions {
   display: flex;
   align-items: center;
@@ -234,6 +263,10 @@ a {
   }
   .header__inner {
     padding: 0 50px;
+  }
+  .menu__close-btn,
+  .menu__item--mobile {
+    display: initial;
   }
 }
 
