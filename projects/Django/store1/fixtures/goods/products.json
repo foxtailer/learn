@@ -1,0 +1,44 @@
+[
+  {
+    "model": "goods.products",
+    "pk": 1,
+    "fields": {
+      "name": "Чайный столик и три стула",
+      "slug": "chajnyj-stolik-i-tri-stula",
+      "description": "Комплект из трёх стульев и дизайнерский столик для гостинной комнаты.",
+      "image": "",
+      "price": "150.00",
+      "discount": "0.00",
+      "quantity": 0,
+      "category": 5
+    }
+  },
+  {
+    "model": "goods.products",
+    "pk": 2,
+    "fields": {
+      "name": "Чайный столик и два стула",
+      "slug": "chajnyj-stolik-i-dva-stula",
+      "description": "Набор из стола и двух стульев в минималистическом стиле.",
+      "image": "",
+      "price": "93.00",
+      "discount": "0.00",
+      "quantity": 0,
+      "category": 7
+    }
+  },
+  {
+    "model": "goods.products",
+    "pk": 3,
+    "fields": {
+      "name": "Кухонный стол с встройкой",
+      "slug": "kuhonnyj-stol-s-vstrojkoj",
+      "description": "Кухонный стол со встроенной плитой и раковиной. Много полок и вообще красивый.",
+      "image": "",
+      "price": "4.00",
+      "discount": "0.00",
+      "quantity": 0,
+      "category": 3
+    }
+  }
+]

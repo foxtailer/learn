@@ -12,6 +12,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
   <link rel="stylesheet" href="css/normolize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/contacts.css">
   <title>Gaeta Pizza</title>
 </head>
 
@@ -32,7 +33,7 @@
                   <a class="user-nav__phone" id="user-nav__phone" href="tel:+0996705678">099-670-5678</a>
                 </label>
               </li>
-      
+
               <li class="user-nav__item">
                 <div class="dropdown">
                   <label class="area" for="lang-btn">
@@ -49,7 +50,7 @@
                   </div>
                 </div>
               </li>
-      
+
               <li class="user-nav__item">
                 <div class="dropdown">
                   <label class="area" for="location-btn">
@@ -66,7 +67,7 @@
                   </div>
                 </div>
               </li>
-      
+
               <li class="user-nav__item">
                 <label class="area" for="">
                   <span class="visually-hidden">user login</span>
@@ -82,13 +83,13 @@
           </nav>
         </div>
       </div>
-  
+
       <div class="container">
         <div class="header__inner">
-          <a class="logo" href="#">
+          <a class="logo" href="index.html">
             <img class="logo-img" src="img/logo-01.svg" alt="">
           </a>
-  
+
           <div class="navigation">
             <nav class="main-nav">
               <ul class="main-nav__list">
@@ -101,11 +102,11 @@
                 <li class="main-nav__item">
                   <a class="main-nav__link" href="about.html">about</a>
                 </li>
-                <li class="main-nav__item">
-                  <a class="main-nav__link" href="contacts.html">contacts</a>
+                <li class="main-nav__item main-nav__item--active">
+                  <a class="main-nav__link" href="#">contacts</a>
                 </li>
               </ul>
-  
+
               <div class="main-nav__item--basket">
                 <a class="main-nav__link main-nav__link--basket" href="">
                   <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,14 +114,14 @@
                       d="M12 4C10.4508 4 9.0799 5.00309 8.61115 6.47966L7.81104 9H8.49995H15.5H16.1889L15.3888 6.47966C14.92 5.00309 13.5491 4 12 4ZM18.2872 9L17.295 5.8745C16.5626 3.56734 14.4206 2 12 2C9.57933 2 7.43733 3.56734 6.7049 5.8745L5.71268 9H3.34789C2.00585 9 1.04464 10.2956 1.43384 11.58L2.55808 15.29L3.94596 19.87C4.32928 21.135 5.49529 22 6.81704 22H9.99995H14H17.1829C18.5046 22 19.6706 21.135 20.0539 19.87L21.4418 15.29L22.5661 11.58C22.9553 10.2956 21.9941 9 20.652 9H18.2872ZM6.4444 11H3.34789L4.25698 14H8.03615L7.62706 11H6.4444ZM9.64557 11L10.0547 14H13.9452L14.3543 11H9.64557ZM16.3728 11L15.9638 14H19.7429L20.652 11H17.5555H16.3728ZM19.1369 16H15.691L15.1456 20H17.1829C17.6235 20 18.0121 19.7117 18.1399 19.29L19.1369 16ZM13.1271 20L13.6725 16H10.3274L10.8728 20H13.1271ZM8.85434 20L8.30888 16H4.86304L5.86001 19.29C5.98778 19.7117 6.37646 20 6.81704 20H8.85434Z"
                       fill="#000000" />
                   </svg>
-  
+
                   <span class="amount">
                     350 <span class="corrency">грн</span>
                   </span>
                 </a>
                 <button class="order-btn">Order</button>
               </div>
-  
+
               <div class="menu-btn" id="menu-btn">
                 <div class="line-one no-animation"></div>
                 <div class="line-two no-animation"></div>
@@ -131,11 +132,96 @@
         </div>
       </div>
     </header>
-  
+
     <main class="main">
+      <div class="container">
+        <div class="contacts-top">
+          <h1 class="contacts__title">Контакты</h1>
+
+          <div class="select-box">
+            <div class="select-option">
+              <input type="text" placeholder="Osaka" id="soValue" readonly>
+            </div>
+            <div class="content">
+              <div class="search">
+                <input type="text" id="optionSearch" placeholder="City">
+              </div>
+              <ul class="options">
+                <li>Osaka</li>
+                <li>Kioto</li>
+                <li>Tokio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts-inner">
+          <div class="contacts-top">
+            <div class="contacts__img-box">
+              <img class="contacts__previev" src="img/contacts-1.jpg" alt="">
+            </div>
   
+            <ul class="contacts__list">
+              <li class="contacts__item">
+                <p class="contacts__item-title">Адрес:</p>
+                <p class="contacts__item-text">Украина, Одесса,<br>
+                  ул. Транспортная, 10 <br>
+                  65039</p>
+              </li>
+  
+              <li class="contacts__item">
+                <p class="contacts__item-title">Телефоны:</p>
+                <p class="contacts__item-text">
+                  <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+                  <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+                  <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+                </p>
+              </li>
+  
+              <li class="contacts__item">
+                <p class="contacts__item-title">Почта:</p>
+                <a class="contacts__item-text" href="mailto:info@odessa.kinolog.com.ua">info@odessa.kinolog.com.ua</a>
+              </li>
+  
+              <li class="contacts__item">
+                <p class="contacts__item-title">время работы:</p>
+                <p class="contacts__item-text">Понедельник — Воскресенье <br> 10:00 — 18:00</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contacts__map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d29918.541860035915!2d30.928671992511596!3d48.48625323089458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sua!4v1713792203341!5m2!1sen!2sua"
+              style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <img src="img/map.jpg" alt="">
+          </div>
+
+          <div class="subscribe">
+            <div class="subscribe__img-box">
+              <img src="img/cont-form.jpg" alt="">
+            </div>
+            <div class="subscribe__contact-form">
+                <h3>Hello!</h3>
+                <p class="subscribe__imfo">Subscribe for news and be the first who take a <strong>limited access</strong>.
+                  and get a surprise for <strong>your burthday</strong>!</p>
+                <form action="" method="post" class="">
+                  <input type="text" name="name" placeholder="Name">
+                  <input type="email" name="email" placeholder="Email">
+                  <input type="tel" name="phone" placeholder="Phone">
+                  <label>Birthday:
+                    <input type="date" name="birthday">
+                  </label>
+
+                  <button type="submit" data-action="submit">Invia</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-  
+
     <footer class="footer">
       <div class="container"></div>
       <hr>
@@ -176,8 +262,44 @@
         </div>
       </div>
     </footer>
-  </div>                 
+  </div>
   <script src="js/main.js"></script>
+  <script>
+    const selectBox = document.querySelector('.select-box')
+    const selectOption = document.querySelector('.select-option')
+    const soValue = document.querySelector('#soValue')
+    const optionSearch = document.querySelector('#optionSearch')
+    const options = document.querySelector('.options')
+    const optionList = document.querySelectorAll('.options li')
+
+    selectOption.addEventListener('click', function(){
+      selectBox.classList.toggle('select-box--active');
+    })
+
+    optionList.forEach(function(optionListSingle){
+      optionListSingle.addEventListener('click', function(){
+        text = this.textContent;
+        soValue.value = text;
+        selectBox.classList.remove('select-box--active');
+      })
+    })
+
+    optionSearch.addEventListener('keyup', function(){
+      var filter, li, i, textValue;
+      filter = optionSearch.value.toUpperCase();
+      li = options.getElementsByTagName('li');
+
+      for(i = 0; i < li.length; i++){
+        liCount = li[i];
+        textValue = liCount.textContent || liCount.innerText;
+        if(textValue.toUpperCase().indexOf(filter) > -1){
+          li[i].style.display = '';
+        }else{
+          li[i].style.display = 'none'
+        }
+      }
+    })
+  </script>
 </body>
 
 </html>
