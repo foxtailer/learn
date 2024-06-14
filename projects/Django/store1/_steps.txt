@@ -1,14 +1,14 @@
 1. django-admin createproject projectname
 2. python manage.py runserver [port number]
-Folder with sama nama as project inside root folder - like core of project.
+Folder with same name as project inside root folder - like core of project.
 core_folder/settings.py=>BASE_DIR = path_to/root_project_folder (D:user/documents/django-projects/store1)
 3. python manage.py startapp [app name]
 4. Register app in core_folder/settings.py INSTALLED_APPS = [<there>]
 
-user -> urls -> vievs -> models -> db
-                      -> templates
+user <-> urls <-> vievs <-> models <-> db
+                        <-> templates
 
-5. Create view function(contreller) in app_name/views.py
+5. Create view function(controller) in app_name/views.py
 6. Register the views in urlpatterns = [] inside core/urls.py
 7. pass context(dict) variable in render view function
-8. Inside templates get access to context:keys using plaseholder {{key}} 
+8. Inside templates get access to context:keys using plaseholder {{key}}

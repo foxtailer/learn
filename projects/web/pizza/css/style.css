@@ -367,6 +367,32 @@ ul {
   opacity: 0.6;
 }
 
+/* Main */
+
+.sort-radio-group {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.item {
+  width: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.item:hover {
+  -webkit-box-shadow: 2px 3px 18px 6px rgba(0,0,0,0.56);
+  -moz-box-shadow: 2px 3px 18px 6px rgba(0,0,0,0.56);
+  box-shadow: 2px 3px 18px 6px rgba(0,0,0,0.56);
+}
+
+.item-photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
 
 @media(max-width: 600px) {
   html {

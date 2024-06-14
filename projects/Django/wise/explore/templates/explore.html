@@ -14,9 +14,19 @@
 {% endblock %}
 
 {% block main %}
-<p class="wisdom">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illo aut numquam eaque labore
-  perspiciatis sunt, ad minus molestiae! Doloremque sint nisi tempore? Sit, explicabo. Accusamus autem iure
-  debitis sit.</p>
+<div class="wisdom_inner">
+  <p class="wisdom">{{wisdom}}</p>
+  <button class="wisdom__next">
+    <svg height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.448 478.448" xml:space="preserve">
+      <g>
+        <g>
+          <polygon style="fill:#010002;" points="131.659,0 100.494,32.035 313.804,239.232 100.494,446.373 131.65,478.448 377.954,239.232" />
+        </g>
+      </g>
+    </svg>
+  </button>
+</div>
 {% endblock %}
 
 {% block bottom-menu__items %}
@@ -33,8 +43,7 @@
 </li>
 <li class="bottom-menu__item">
   <button class="bottom-menu__btn">
-    <svg fill="#000000" width="30px" height="30px" viewBox="0 0 1920 1920"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg fill="#000000" width="30px" height="30px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M1585.963 1920 960.48 1544.711 335 1920V170.586C335 76.536 411.536 0 505.586 0h909.79c94.05 0 170.587 76.536 170.587 170.586V1920Z"
         fill-rule="evenodd" />
@@ -43,8 +52,7 @@
 </li>
 <li class="bottom-menu__item">
   <a class="bottom-menu__link" href="write.html">
-    <svg fill="#000000" width="30px" height="30px" viewBox="0 0 32 32" version="1.1"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg fill="#000000" width="30px" height="30px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
       <title>pen1</title>
       <path
         d="M29.024 6.499l-2.467 2.467-3.523-3.523 2.467-2.467c0.973-0.973 2.551-0.973 3.523 0s0.973 2.55 0 3.523zM27.614 9.317c0.195-0.194 0.511-0.194 0.705 0 0.195 0.195 0.195 0.511 0 0.705l-9.16 9.161c-0.195 0.194-0.511 0.194-0.705 0s-0.194-0.51 0-0.704l5.99-5.99-4.934-4.934 2.114-2.113 4.933 4.933 1.057-1.058zM19.511 8.966l3.523 3.523-14.094 14.094-3.523-3.523 14.094-14.094zM2.246 29.754l2.466-5.989 3.523 3.523-5.989 2.466z">

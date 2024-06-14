@@ -106,3 +106,23 @@ main {
   width: clamp(250px, 85vw, 1200px);
   height: 80vh;
 }
+
+.wisdom_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.wisdom__next {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.main-index__inner {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
