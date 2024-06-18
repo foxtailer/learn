@@ -408,6 +408,23 @@
 
     print((lambda: "b is minimum", lambda: "a is minimum")[a < b]())
 
+  ShortHand Ternary
+  In python there is also the shorthand ternary tag which is a shorter version of the normal ternary operator you have seen above.
+
+  >>> True or "Some"
+  True
+  >>>
+  >>> False or "Some"
+  'Some'
+
+  >>> def my_function(real_name, optional_display_name=None):
+  >>>     optional_display_name = optional_display_name or real_name
+  >>>     print(optional_display_name)
+  >>> my_function("John")
+  John
+  >>> my_function("Mike", "anonymous123")
+  anonymous123
+
 
 -- CONTROL FLOV
 
@@ -870,6 +887,29 @@
     two is Green.
     three is Blue.
 
+ #######################
+
+  def test_args_kwargs(arg1, arg2, arg3):
+    print("arg1:", arg1)
+    print("arg2:", arg2)
+    print("arg3:", arg3)
+
+  Now you can use *args or **kwargs to pass arguments to this little function. Here’s how to do it:
+
+  # first with *args
+  >>> args = ("two", 3, 5)
+  >>> test_args_kwargs(*args)
+  arg1: two
+  arg2: 3
+  arg3: 5
+
+  # now with **kwargs:
+  >>> kwargs = {"arg3": 3, "arg2": "two", "arg1": 5}
+  >>> test_args_kwargs(**kwargs)
+  arg1: 5
+  arg2: two
+  arg3: 3
+
 
 -- COMMON METHODS
 
@@ -1180,6 +1220,7 @@
   class Employee(Person, SomeMixin):
     pass
 
+
 -- COMPREHENTIONS
 
  Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the following 4 types of comprehension:
@@ -1309,7 +1350,10 @@ events might not run faster at all.
 -- CONCURENCY
 -- PARALELISM
 -- MULTIPROCESSING
+-- GIL
 -- TESTING
+  pytest
+  unittest
 -- BUILD AND MANIPULATE PAKEGES
 -- CYTHON
 
@@ -1337,11 +1381,22 @@ events might not run faster at all.
 -- DESIGN PATTERNS
 -- HTTP/HTTPS
 -- TCP/UDP
+
+
 -- GIT
+ git flow
 -- LINUX
 -- MATH
 -- STATISTIC
+
+
 -- DJANGO
+ app lifecicle
+ model inheritance
+ manager
+ logging
+ microservises
+
 -- FLASK
 -- DOCKER
 -- REST API
