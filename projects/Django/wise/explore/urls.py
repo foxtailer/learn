@@ -1,6 +1,10 @@
 from django.urls import path
-from . import views
+from explore import views
+
+app_name = 'explore'
 
 urlpatterns = [
-    path('explore/', views.explore, name='explore'),
+    path('', views.explore, name='index'),
+    path('get-random-wisdom/', views.get_random_wisdom, name='get_random_wisdom'),
+    path('add-wisdom/', views.add_wisdom, name='add_wisdom'),
 ]

@@ -115,14 +115,41 @@ main {
   flex-direction: column;
 }
 
-.wisdom__next {
+.wisdom__next,
+.wisdom__prev {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
 .main-index__inner {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 50px;
+}
+
+.main-index__link--my {
+  grid-row: 2 / 3;
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.my-wisdom__controls {
+  display: flex;
+  gap: 50px;
+}
+
+.my-wisdom__page {
+  width: 50px;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  padding-left: 5px;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.my-wisdom__page:focus {
+  outline: none;
+  border-bottom: 2px solid #000000;
 }
