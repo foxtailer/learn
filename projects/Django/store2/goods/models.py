@@ -32,3 +32,9 @@ class Product(models.Model):
 
   def __str__(self) -> str:
     return self.name
+  
+  def display_id(self):
+    return f"{self.id:05}"
+  
+  def sell_price(self):
+    return round(self.price - (self.price/100) * self.discount, 2)
