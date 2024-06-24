@@ -1,5 +1,5 @@
 """
-URL configuration for wise project.
+URL configuration for locallibrary project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,14 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
+
+# from django.conf import settings
+# from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('explore/', include('explore.urls', namespace='explore')),
-    path('letters/', include('letters.urls', namespace='letters')),
-    path('write', include('write.urls', namespace='write')),
-    path('', include('main.urls', namespace='main')),
-    path('my', include('my.urls', namespace='my')),
-    path('members/', include('django.contrib.auth.urls')),
-    path('members/', include('members.urls')),
+    path('catalog/', include('catalog.urls')),
+    path('', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]
+
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
