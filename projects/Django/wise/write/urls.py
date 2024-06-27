@@ -5,4 +5,5 @@ app_name = 'write'
 
 urlpatterns = [
     path('', views.write, name='index'),
+    path('addwise/', views.addwise, name='addwise'),
 ]

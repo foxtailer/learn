@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('explore/', include('explore.urls', namespace='explore')),
     path('letters/', include('letters.urls', namespace='letters')),
-    path('write', include('write.urls', namespace='write')),
+    path('write/', include('write.urls', namespace='write')),
     path('', include('main.urls', namespace='main')),
     path('my', include('my.urls', namespace='my')),
     path('members/', include('django.contrib.auth.urls')),

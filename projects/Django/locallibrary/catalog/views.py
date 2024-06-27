@@ -1,9 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
-
-def catalog(request):
+def index(request):
   context = {
-    'gg': 123
+    'test': 'test'
   }
   return render(request, 'index0.html', context)

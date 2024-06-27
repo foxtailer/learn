@@ -84,43 +84,30 @@
           .then(response => response.json())
           .then(data => {
             console.log(data)  //  CONSOLE! DEL
-              document.getElementById('wisdom').innerText = data.wisdom;
+              document.getElementById('wisdom').innerText = data.wisdom +" "+ data.wisdom_id +" "+ data.wisdom_author;
           })
           .catch(error => console.error('Error:', error));
   });
 
-  {% comment %} document.addEventListener('DOMContentLoaded', function() {
-    const userId = 'USER_ID_HERE';  // Replace with dynamic user ID
-
-    document.getElementById('new-wisdom-btn').addEventListener('click', function() {
-        fetch("{% url 'explore:get_random_wisdom' %}")
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('wisdom').innerText = data.wisdom;
-                document.getElementById('wisdom').setAttribute('data-wisdom-id', data.wisdom_id);
-            });
-    });
-
-    document.getElementById('add-wisdom-btn').addEventListener('click', function() {
-        const wisdomId = document.getElementById('wisdom').getAttribute('data-wisdom-id');
-
-        fetch("{% url 'explore:add_wisdom' %}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
+  $(document).ready(function(){
+    $('#add-wisdom-btn').click(function(){
+        //const quoteId = $(this).data('quote-id');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "explore:like" %}',
+            //'wisdom_id': quoteId,
+            //'csrfmiddlewaretoken': '{{ csrf_token }}'
+            data: {
+              'wisdom_id': 1,
+              'csrfmiddlewaretoken': 'gg'
             },
-            body: `wisdom_id=${wisdomId}&user_id=${userId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('wisdom addd successfully!');
-            } else {
-                alert('Error liking the wisdom.');
+            success: function(response){
+                if(response.status === 'liked'){
+                    alert('You liked the quote!');
+                }
             }
         });
     });
-}); {% endcomment %}
+  });
 </script>
 {% endblock  %}
