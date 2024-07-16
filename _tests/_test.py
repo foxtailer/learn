@@ -1,2 +1,7 @@
-dict = {True:'one', 1:'two',1.0:'three'}
-print(dict)
+class A:
+
+    def say_hello(self):
+        print('Hello!')
+
+a = A
+A.say_hello(a)

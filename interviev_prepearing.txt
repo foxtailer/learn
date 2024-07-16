@@ -1257,6 +1257,9 @@
     pass
 
 
+-- MRO (diamond  problem)
+
+
 -- COMPREHENTIONS
 
  Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the following 4 types of comprehension:
@@ -1384,8 +1387,248 @@
   iteration	     O(n)
 
 
+-- CLOSURE
+
+  In Python, a closure is a function that retains access to its lexical scope, even after the scope has finished 
+  executing. In simpler terms, a closure "remembers" the variables that were in its surrounding scope when it was 
+  created, even if that scope no longer exists.
+
+  How Closures Work
+  Closures are created when a nested function captures variables from its enclosing scope. Here's an example:
+
+      def outer_function(msg):
+          def inner_function():
+              print(msg)
+          return inner_function
+
+      closure = outer_function("Hello, World!")
+      closure()  # Output: Hello, World!
+
+  The outer_function creates a variable msg and a function inner_function that uses msg.
+  inner_function is returned as a function object.
+  Saving the Environment:
+
+  When outer_function is called with the argument "Hello, World!", it returns inner_function, which retains the value of msg.
+  The variable msg remains in memory even after outer_function has finished executing.
+  Calling the Closure:
+
+  When closure() is called, it executes inner_function, which uses the saved value of msg.
+  Features and Practical Applications of Closures:
+  Modifying Enclosed Variables:
+  To modify values of variables within a closure, use the nonlocal keyword:
+
+      def outer_function(msg):
+          count = 0
+          def inner_function():
+              nonlocal count
+              count += 1
+              print(f"{msg}, called {count} times")
+          return inner_function
+
+      closure = outer_function("Hello")
+      closure()  # Output: Hello, called 1 times
+      closure()  # Output: Hello, called 2 times
+
+  Function Factories:
+  Closures are often used to create functions with fixed parameters.
+
+      def power_factory(exp):
+          def power(base):
+              return base ** exp
+          return power
+
+      square = power_factory(2)
+      cube = power_factory(3)
+
+      print(square(4))  # Output: 16
+      print(cube(2))    # Output: 8
+  Decorators:
+  Decorators in Python also use closures to add functionality to functions.
+
+      def simple_decorator(func):
+          def wrapper():
+              print("Something is happening before the function is called.")
+              func()
+              print("Something is happening after the function is called.")
+          return wrapper
+
+      @simple_decorator
+      def say_hello():
+          print("Hello!")
+
+  say_hello()
+  # Output:
+  # Something is happening before the function is called.
+  # Hello!
+  # Something is happening after the function is called.
+  Conclusion
+  Closures are a powerful feature in Python that allows functions to retain state between calls. 
+  They provide flexibility and can greatly simplify code, especially when working with higher-order functions and decorators.
+
+
 -- DECORATORS
+
+  Decorators are a very powerful and useful tool in Python since it allows programmers to modify the behaviour 
+ of a function or class. Decorators allow us to wrap another function in order to extend the behaviour of the 
+ wrapped function, without permanently modifying it. In Python, functions are first class objects which means 
+ that functions in Python can be used or passed as arguments. 
+  In Decorators, functions are taken as the argument into another function and then called inside the wrapper function.
+
+
+    @gfg_decorator
+    def hello_decorator():
+        print("Gfg")
+
+    '''Above code is equivalent to -
+      def hello_decorator():
+          print("Gfg")
+          
+      hello_decorator = gfg_decorator(hello_decorator)
+    '''
+
+
+    # defining a decorator
+    def hello_decorator(func):
+        # inner1 is a Wrapper function in 
+        # which the argument is called
+        
+        # inner function can access the outer local
+        # functions like in this case "func"
+        def inner1():
+            print("Hello, this is before function execution")
+
+            # calling the actual function now
+            # inside the wrapper function.
+            func()
+
+            print("This is after function execution")
+            
+        return inner1
+
+    # defining a function, to be called inside wrapper
+    def function_to_be_used():
+        print("This is inside the function !!")
+
+    # passing 'function_to_be_used' inside the
+    # decorator to control its behaviour
+    function_to_be_used = hello_decorator(function_to_be_used)
+
+    # calling the function
+    function_to_be_used()
+
+    Output: 
+    Hello, this is before function execution
+    This is inside the function !!
+    This is after function execution
+
+
+    def hello_decorator(func):
+    def inner1(*args, **kwargs):
+        
+        print("before Execution")
+        
+        # getting the returned value
+        returned_value = func(*args, **kwargs)
+        print("after Execution")
+        
+        # returning the value to the original frame
+        return returned_value
+        
+    return inner1
+
+
+    # adding decorator to the function
+    @hello_decorator
+    def sum_two_numbers(a, b):
+        print("Inside the function")
+        return a + b
+
+    a, b = 1, 2
+
+    # getting the value through return of the function
+    print("Sum =", sum_two_numbers(a, b))
+    Output: 
+
+    before Execution
+    Inside the function
+    after Execution
+    Sum = 3
+
+
+    # code for testing decorator chaining 
+    def decor1(func): 
+        def inner(): 
+            x = func() 
+            return x * x 
+        return inner 
+
+    def decor(func): 
+        def inner(): 
+            x = func() 
+            return 2 * x 
+        return inner 
+
+    @decor1   #2
+    @decor    #1
+    def num(): 
+        return 10
+
+    @decor
+    @decor1
+    def num2():
+        return 10
+      
+    print(num()) 
+    print(num2())
+    Output:
+
+    400
+    200
+
 -- GENERATORS
+
+ A generator function in Python is defined like a normal function, but whenever it needs to generate a 
+ value, it does so with the yield keyword rather than return.
+ Python Generator functions return a generator object that is iterable, i.e., can be used as an Iterator. 
+ Generator objects are used either by calling the next method of the generator object or using the generator 
+ object in a “for in” loop.
+
+    def fibonacci_gen():
+    yield 0
+    yield 1
+    prev_prev, prev = 0, 1
+
+    while True:
+      result = prev + prev_prev
+      prev_prev, prev = prev, result
+      yield result
+
+    g = fibonacci_gen() #  Return generator
+    for i in g:
+      print(i)
+
+ Generetor enter in function run throw lines until meet yield. When yield occured
+ function return some value and remember line of execution. After next next() call 
+ renerator returns to that line it remember.
+
+    def interleave_gen(a,b):
+      a = iter(a)
+      b = iter(b)
+      while True:
+        yield next(a)
+        yield next(b)
+
+
+ Python Generator Expression
+  In Python, generator expression is another way of writing the generator function. It uses the Python list 
+  comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
+
+  Generator Expression Syntax
+  The generator expression in Python has the following Syntax:
+
+    (expression for item in iterable)
+
+
 -- CONTEXT MENEGER(WITH)
 -- METACLASSES
 
@@ -1394,13 +1637,167 @@
 
   The threads may be running on different processors, but they will only be running one at a time.
   Tasks that spend much of their time waiting for external events are generally good candidates
-for threading. Problems that require heavy CPU computation and spend little time waiting for external
-events might not run faster at all.
+  for threading. Problems that require heavy CPU computation and spend little time waiting for external
+  events might not run faster at all.
+
+  1. Threads
+  Definition: A thread is the smallest unit of a process that can be scheduled for execution. Threads
+   allow a program to perform multiple operations concurrently in the same process space.
+
+   Key Points:
+  Lightweight: Threads share the same memory space, making them lightweight compared to processes.
+  Shared Resources: Since threads share memory and other resources, they can communicate more efficiently 
+    than processes. However, this can also lead to issues like race conditions and deadlocks.
+  Concurrency: Threads enable concurrent execution of tasks within the same program.
+
+  2. Process
+  Definition: A process is an instance of a program that is being executed. It contains the program code 
+  and its current activity.
+
+   Key Points:
+  Isolation: Each process has its own memory space, which isolates it from other processes. This makes 
+   processes more secure but more resource-intensive.
+  Context Switching: Switching between processes is more costly in terms of resources than switching between 
+   threads.
+  Parallelism: Processes can run in parallel on multi-core systems.
+
+   3. Thread Pool
+  Definition: A thread pool is a collection of pre-initialized threads that stand ready to be given work. 
+  This approach helps manage a large number of concurrent tasks efficiently.
+
+   Key Points:
+  Resource Management: Thread pools manage the allocation of threads, reducing the overhead of creating and 
+   destroying threads frequently.
+  Concurrency: Thread pools improve performance by reusing existing threads instead of creating new ones.
+  Examples: Thread pools are often used in server applications to handle incoming requests.
+
+   4. Parallelism
+  Definition: Parallelism involves executing multiple tasks simultaneously to increase performance. It leverages 
+  multiple processors or cores to perform computations more quickly.
+
+   Key Points:
+  True Parallelism: Requires hardware with multiple processing units (e.g., multi-core processors).
+  Task Parallelism: Different tasks or threads are executed simultaneously.
+  Data Parallelism: The same task is executed on different chunks of data simultaneously.
+
+  Yes, concurrency and threading are indeed ways to achieve the simulation of parallelism in a single-CPU 
+  environment. Here's how they work and how they simulate parallelism:
+
+  Concurrency
+  Concurrency involves multiple tasks making progress within overlapping time periods. It does not necessarily 
+  mean tasks are running simultaneously; instead, it means tasks are being managed in such a way that they appear 
+  to be executed simultaneously.
+
+  Time-Slicing: The operating system divides CPU time into slices and allocates these slices to various tasks. 
+  By rapidly switching between tasks, it creates the illusion that tasks are running at the same time.
+  Task Switching: The system saves the state of a task before switching to another, allowing it to resume where 
+  it left off later.
+  Threading
+  Threading is a technique that allows a program to execute multiple threads within a single process. Each thread 
+  represents a separate path of execution.
+
+  Multithreading: Multiple threads can be created within a process to perform different tasks. While only one thread 
+  can run at a time on a single CPU (due to the Global Interpreter Lock in CPython), the rapid context switching 
+  between threads gives the appearance of simultaneous execution.
+  How Concurrency and Threading Simulate Parallelism
+  On a single-CPU system, true parallel execution (multiple tasks running simultaneously) is not possible. However, 
+  concurrency and threading simulate parallelism through the following mechanisms:
+
+  Context Switching:
+
+  The CPU switches between different tasks or threads very quickly, saving and restoring their states. This switching 
+  happens so rapidly that it appears as if tasks are running in parallel.
+  Non-blocking I/O:
+
+  For I/O-bound tasks, using asynchronous programming or non-blocking I/O operations allows the CPU to switch to 
+  another task while waiting for I/O operations to complete. This efficient use of CPU time improves overall performance 
+  and responsiveness.
+
+  5. Multiprocessing
+  Definition: Multiprocessing refers to using two or more CPUs within a single computer system to perform tasks 
+  simultaneously.
+
+  Key Points:
+  Process-based Parallelism: Involves running multiple processes in parallel, each on different CPU cores.
+  Isolation: Processes do not share memory, which prevents interference but requires inter-process communication 
+   mechanisms.
+  Scalability: Multiprocessing can efficiently utilize multiple CPUs for parallel execution of tasks.
+
+   Relative Terms and Concepts
+  Concurrency vs. Parallelism: Concurrency refers to the execution of multiple tasks in overlapping time periods 
+  (not necessarily simultaneously), while parallelism refers to tasks running at the same time.
+  GIL (Global Interpreter Lock): In CPython, the GIL prevents multiple native threads from executing Python 
+  bytecodes at once. This means Python threads are not fully parallel and are more suited for I/O-bound tasks 
+  rather than CPU-bound tasks.
+  Asyncio: A Python library for writing concurrent code using the async/await syntax, designed for I/O-bound and 
+   high-level structured network code.
+
+  Example in Python
+  Here's a simple example to illustrate the use of threads and processes in Python:
+
+    import threading
+    import multiprocessing
+
+    # Function to be executed by threads/processes
+    def worker(name):
+        print(f'Worker {name}')
+
+    # Using threads
+    threads = []
+    for i in range(5):
+        t = threading.Thread(target=worker, args=(i,))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    # Using processes
+    processes = []
+    for i in range(5):
+        p = multiprocessing.Process(target=worker, args=(i,))
+        processes.append(p)
+        p.start()
+
+    for p in processes:
+        p.join()
 
 -- CONCURENCY
 -- PARALELISM
 -- MULTIPROCESSING
+
+
 -- GIL
+
+  Python Global Interpreter Lock (GIL) is a type of process lock which is used by python whenever it deals 
+  with processes. Generally, Python only uses only one thread to execute the set of written statements. This 
+  means that in python only one thread will be executed at a time. The performance of the single-threaded process 
+  and the multi-threaded process will be the same in python and this is because of GIL in python. We can not achieve 
+  multithreading in python because we have global interpreter lock which restricts the threads and works as a single thread 
+  only one thread can execute Python bytecode at a time.
+  This lock is necessary because Python's memory management is not thread-safe.
+
+  What problem did the GIL solve for Python :
+
+  Python has something that no other language has that is a reference counter. With the help of the reference counter,
+  we can count the total number of references that are made internally in python to assign a value to a data object. 
+  Due to this counter, we can count the references and when this count reaches to zero the variable or data object will 
+  be released automatically. The GIL prevents multiple threads from executing simultaneously in the interpreter, which 
+  avoids race conditions and data corruption. Without the GIL, every object access would need to be protected by locks, 
+  which would significantly complicate the interpreter's implementation and potentially degrade performance.
+
+  Multiprocessing: One common workaround is to use the multiprocessing module instead of threading. The multiprocessing
+  module creates separate processes, each with its own Python interpreter and memory space, bypassing the GIL 
+  and allowing true parallelism.
+
+
+-- RAISE CONDITION
+
+  A race condition happens when two or more threads (or processes) access shared resources concurrently and the final 
+  outcome of the execution depends on the specific timing or interleaving of their execution. This can lead to inconsistent 
+  or incorrect results, especially if the shared resources are not properly synchronized.
+
+
 -- TESTING
   pytest
   unittest
@@ -1412,19 +1809,189 @@ events might not run faster at all.
 -- ALGORITMS
 -- DS
 
+  -queue
+
+  Operations associated with queue are: 
+    Enqueue: Adds an item to the queue. If the queue is full, then it is said to be an Overflow condition – Time Complexity : O(1)
+    Dequeue: Removes an item from the queue. The items are popped in the same order in which they are pushed. If the queue is 
+      empty, then it is said to be an Underflow condition – Time Complexity : O(1)
+    Front: Get the front item from queue – Time Complexity : O(1)
+    Rear: Get the last item from queue – Time Complexity : O(1)
+
+  FIFO
+  enqueue -> (rear)|||||||(front) -> dequeue
+
+    from collections import deque
+    q = deque()
+    q.append('a')
+    q.append('b')
+    q.append('c')
+    print("Initial queue")
+    print(q)
+    print("\nElements dequeued from the queue")
+    print(q.popleft())
+    print(q.popleft())
+    print(q.popleft())
+
+    print("\nQueue after removing elements")
+    print(q)
+
+    
+    class Node:
+ 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+ 
+    # A class to represent a queue
+    
+    # The queue, front stores the front node
+    # of LL and rear stores the last node of LL
+    
+    
+    class Queue:
+    
+        def __init__(self):
+            self.front = self.rear = None
+    
+        def isEmpty(self):
+            return self.front == None
+    
+        # Method to add an item to the queue
+        def EnQueue(self, item):
+            temp = Node(item)
+    
+            if self.rear == None:
+                self.front = self.rear = temp
+                return
+            self.rear.next = temp
+            self.rear = temp
+    
+        # Method to remove an item from queue
+        def DeQueue(self):
+    
+            if self.isEmpty():
+                return
+            temp = self.front
+            self.front = temp.next
+    
+            if(self.front == None):
+                self.rear = None
+    
+    
+    # Driver Code
+    if __name__ == '__main__':
+        q = Queue()
+        q.EnQueue(10)
+        q.EnQueue(20)
+        q.DeQueue()
+        q.DeQueue()
+        q.EnQueue(30)
+        q.EnQueue(40)
+        q.EnQueue(50)
+        q.DeQueue()
+        print("Queue Front : " + str(q.front.data if q.front != None else -1))
+        print("Queue Rear : " + str(q.rear.data if q.rear != None else -1))
+
 
 -- BEST PRACTICES
 
-  DRY
+  - DRY
     Don't repeat yourself
 
-  KISS
+  - KISS
     Keep It Simple, Smart
 
-  YAGNI
+  - YAGNI
     You Ain't Gonna Need It
 
-  SOLID
+  - SOLID
+
+  Single Responsibility Principle (SRP)
+  Open/Closed Principle
+  Liskov’s Substitution Principle (LSP)
+  Interface Segregation Principle (ISP)
+  Dependency Inversion Principle (DIP)
+
+  1. Single Responsibility Principle
+  This principle states that “A class should have only one reason to change” which means every class should 
+  have a single responsibility or single job or single purpose. In other words, a class should have only one 
+  job or purpose within the software system.
+
+  Let’s understand Single Responsibility Principle using an example:
+
+  Imagine a baker who is responsible for baking bread. The baker’s role is to focus on the task of baking bread, 
+  ensuring that the bread is of high quality, properly baked, and meets the bakery’s standards.
+
+  However, if the baker is also responsible for managing the inventory, ordering supplies, serving customers, and 
+  cleaning the bakery, this would violate the SRP.
+  Each of these tasks represents a separate responsibility, and by combining them, the baker’s focus and effectiveness 
+  in baking bread could be compromised.
+  To adhere to the SRP, the bakery could assign different roles to different individuals or teams. For example, there 
+  could be a separate person or team responsible for managing the inventory, another for ordering supplies, another for 
+  serving customers, and another for cleaning the bakery.
+
+  2. Open/Closed Principle
+  This principle states that “Software entities (classes, modules, functions, etc.) should be open for extension, but 
+  closed for modification” which means you should be able to extend a class behavior, without modifying it.
+
+  Let’s understand Open/Closed Principle using an example:
+
+  Imagine you have a class called PaymentProcessor that processes payments for an online store. Initially, the 
+  PaymentProcessor class only supports processing payments using credit cards. However, you want to extend its functionality 
+  to also support processing payments using PayPal.
+
+  Instead of modifying the existing PaymentProcessor class to add PayPal support, you can create a new class called PayPalPaymentProcessor 
+  that extends the PaymentProcessor class. This way, the PaymentProcessor class remains closed for modification but open for extension,
+   adhering to the Open-Closed Principle
+
+  3. Liskov’s Substitution Principle
+  The principle was introduced by Barbara Liskov in 1987 and according to this principle “Derived or child classes must be 
+  substitutable for their base or parent classes“. This principle ensures that any class that is the child of a parent class 
+  should be usable in place of its parent without any unexpected behavior.
+
+  Let’s understand Liskov’s Substitution Principle using an example:
+
+  One of the classic examples of this principle is a rectangle having four sides. A rectangle’s height can be any value 
+  and width can be any value. A square is a rectangle with equal width and height. So we can say that we can extend the 
+  properties of the rectangle class into square class.
+
+  In order to do that you need to swap the child (square) class with parent (rectangle) class to fit the definition of a 
+  square having four equal sides but a derived class does not affect the behavior of the parent class so if you will do 
+  that it will violate the Liskov Substitution Principle.
+
+  4. Interface Segregation Principle
+  This principle is the first principle that applies to Interfaces instead of classes in SOLID and it is similar to the 
+  single responsibility principle. It states that “do not force any client to implement an interface which is irrelevant 
+  to them“. Here your main goal is to focus on avoiding fat interface and give preference to many small client-specific 
+  interfaces. You should prefer many client interfaces rather than one general interface and each interface should have a 
+  specific responsibility.
+
+  Let’s understand Interface Segregation Principle using an example:
+
+  Suppose if you enter a restaurant and you are pure vegetarian. The waiter in that restaurant gave you the menu card 
+  which includes vegetarian items, non-vegetarian items, drinks, and sweets.
+
+  In this case, as a customer, you should have a menu card which includes only vegetarian items, not everything which 
+  you don’t eat in your food. Here the menu should be different for different types of customers.
+  The common or general menu card for everyone can be divided into multiple cards instead of just one. Using this 
+  principle helps in reducing the side effects and frequency of required changes.
+
+  5. Dependency Inversion Principle
+  The Dependency Inversion Principle (DIP) is a principle in object-oriented design that states that “High-level modules 
+  should not depend on low-level modules. Both should depend on abstractions“. Additionally, abstractions should not depend 
+  on details. Details should depend on abstractions.
+
+  In simpler terms, the DIP suggests that classes should rely on abstractions (e.g., interfaces or abstract classes) rather 
+  than concrete implementations.
+  This allows for more flexible and decoupled code, making it easier to change implementations without affecting other 
+  parts of the codebase.
+  Let’s understand Dependency Inversion Principle using an example:
+
+  In a software development team, developers depend on an abstract version control system (e.g., Git) to manage and track changes 
+  to the codebase. They don’t depend on specific details of how Git works internally.
+
+  This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
 
 
 -- PROBLEM SOLVING
@@ -1432,6 +1999,24 @@ events might not run faster at all.
 -- HTTP/HTTPS
 -- TCP/UDP
 
+
+Serialization
+Serialization is the process of converting an object into a format that can be easily stored or transmitted. This format is typically 
+a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
+
+Common Serialization Formats:
+JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
+and generate for machines.
+XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
+ human-readable and machine-readable.
+YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
+languages and is often used for configuration files.
+Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
+compared to text-based formats.
+
+Deserialization
+Deserialization is the reverse process of serialization. It converts the byte stream or string back into a copy of the original object. 
+This allows the object to be reconstructed and used in the application as if it were the original.
 
 -- GIT
  help
@@ -1578,7 +2163,45 @@ events might not run faster at all.
 
 -- FLASK
 -- DOCKER
+
+
 -- REST API
+
+  R epresentational S tate T ransfer (REST) is an architectural style that defines a set of constraints 
+  to be used for creating web services. REST API is a way of accessing web services in a simple and flexible 
+  way without having any processing.
+
+  REST technology is generally preferred to the more robust Simple Object Access Protocol (SOAP) technology 
+  because REST uses less bandwidth, simple and flexible making it more suitable for internet usage. It’s used 
+  to fetch or give some information from a web service. All communication done via REST API uses only HTTP request.
+
+  Working: A request is sent from client to server in the form of a web URL as HTTP GET or POST or PUT or DELETE 
+  request. After that, a response comes back from the server in the form of a resource which can be anything like 
+  HTML, XML, Image, or JSON. But now JSON is the most popular format being used in Web Services.
+
+  In HTTP there are five methods that are commonly used in a REST-based Architecture i.e., POST, GET, PUT, PATCH, 
+  and DELETE. These correspond to create, read, update, and delete (or CRUD) operations respectively. There are 
+  other methods which are less frequently used like OPTIONS and HEAD.
+  (CRUD stands for Create, Read/Retrieve, Update, and Delete and these are the four basic operations that 
+  we perform on persistence storage.)
+
+
+-- ACID 
+
+  -Atomicity: Atomicity ensures that a transaction is treated as a single, indivisible unit of work. Either all 
+  the operations within the transaction are completed successfully, or none of them are. If any part of the 
+  transaction fails, the entire transaction is rolled back to its original state, ensuring data consistency and integrity.
+  -Consistency: Consistency ensures that a transaction takes the database from one consistent state to another consistent 
+  state. The database is in a consistent state both before and after the transaction is executed. Constraints, such as 
+  unique keys and foreign keys, must be maintained to ensure data consistency.
+  -Isolation: Isolation ensures that multiple transactions can execute concurrently without interfering with each other. 
+  Each transaction must be isolated from other transactions until it is completed. This isolation prevents dirty reads, 
+  non-repeatable reads, and phantom reads.
+  -Durability: Durability ensures that once a transaction is committed, its changes are permanent and will survive any 
+  subsequent system failures. The transaction’s changes are saved to the database permanently, and even if the system crashes, 
+  the changes remain intact and can be recovered.
+
+  
 -- MYSQL
 -- PANDAS
 -- Matplotlib
