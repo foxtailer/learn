@@ -1,0 +1,2216 @@
+*******BEGINER********
+
+-- VARIABLES
+
+ Variables are containers for storing data values. A variable is created the moment you first assign a value to it(name).
+  - name refers to or holds a reference to a concrete object. Python
+ objects are concrete pieces of information that live in specific memory positions on computer.
+
+ In Python, everything is treated as an object. Every object has these three attributes:
+
+    Identity(ID) – This refers to the address that the object refers to in the computer’s memory.
+      Unique and constant for the object during its lifetime. You can obtain using the id() function.
+    Type(class) – This refers to the kind of object that is created. For example- integer, list, string etc.
+      You can get the type of an object using the type() function.
+    Value – This refers to the value stored by the object. For example – List=[1,2,3] would hold the numbers 1,2 and 3
+ While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
+
+ (name = variable) --(referense) ----> (id)-( object)
+
+ To sum up, every time we assign variables Python undertakes the three following steps:
+
+    1 Create an object in memory that holds the value
+    2 If the variable name does not already exist in the namespace, go ahead and create it
+    3 Assign the reference to the object (in memory) to the variable
+
+  A variable, is a symbolic name in a system table that holds links (i.e. references) to objects. In other words,
+ references are pointers from variables to objects(hold the location of objects). In Python though, variables do not have a type. Therefore,
+ it is possible to assign objects of different type to the same variable name, as shown below.
+
+ Behaves as a value that is contains
+
+	x = 5
+	y = "John"
+	print(x) >>> 5
+	print(y) >>> John
+
+ Variables do not need to be declared with any particular type, and can even change type after they have been set.
+ Python makes extensive use of a type system known as duck typing. The system is based on objects behaviors and interfaces.
+ "If it walks like a duck and it quacks like a duck, then it must be a duck."
+ Duck typing is a type system where an object is considered compatible with a given type if it has all the methods and 
+ attributes(API) that the type requires.
+
+	x = 4       # x is of type int
+	x = "Sally" # x is now of type str
+
+ If you want to specify the data type of a variable, this can be done with casting.
+
+	x = str(3)    # x will be '3'
+    y = int(3)    # y will be 3
+    z = float(3)  # z will be 3.0
+
+  When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish.
+ This value can be an integer, a string or of any other type. Apart from the value, objects also come with a couple of
+ header fields. These fields include the type of the object as well as its reference counter which is used by the Garbage
+ Collector to determine whether it is fine to reclaim the memory of unused objects. And since Python objects are capable of
+ knowing their own type, variables don’t have to remember this piece of information.
+
+  In Python, it is possible for multiple variables to reference the same object. This behaviour is called a "shared reference".
+ For example, consider the code below
+
+    a = 1
+    b = a
+
+ Note:
+    a = 1
+    b = a
+    a = 'Hello World'
+  And it is important to highlight that in this case, the value of variable b remains unchanged.
+ object 1 stil exist cose b reffer to it. refer a to 1 remove and a start refer to Hello World
+
+  Note:
+  As we have seen in the previous example, the last assignment a = a — 1 won’t modify the object itself since integer object type
+ is immutable. This means that every time we want to change the value of an immutable object type (such as integer or string),
+ Python is going to create a fresh object that holds the required value. For immutable types this is straight-forward and makes the
+ alteration variables quite safe since it does not impact the values of existing objects as in-place changes are not applicable on
+ immutable object types.
+
+  Mutable object types enable in-place changes which means that when their value is modified, there is an impact on all variables
+ referencing that object. Such object types include lists, dictionaries and sets.
+
+    list_1 = [1, 2, 3]
+    list_2 = list_1
+    list_1[0] = 0
+
+    print(list_1)
+    print(list_2)
+    >>> [0, 2, 3]
+    >>> [0, 2, 3]
+
+  Copy obj:
+  Python comes with a built-in package called copy that offers functionality for copying objects. The two copy types are
+ shallow and deep and their difference relates to whether you have to deal compound objects, that is objects containing
+ other objects — for instance a list of dictionaries, or list of lists.
+
+    import copy
+    a = [1, 3, 4, 7]
+    b = copy.copy(a)
+    b[0] = -1
+    print(a)
+    print(b)
+    >>> [1, 3, 4, 7]
+    >>> [-1, 3, 4, 7]
+
+  However, shallow copies won’t do the trick when you have a compound object with nested mutable types — for instance a list
+ of lists. In the example below, we can see that if we take a shallow copy of a list of lists, a change of the original list
+ a or the original compound object c , the result will have effect on the copied list d:
+
+    import copy
+    a = [1, 3, 5, 7]
+    b = [2, 4, 6, 8]
+    c = [a, b]
+    d = copy.copy(c)
+    a[0] = -1
+    c[0][1] = -3
+    print(d)
+    >>> [[-1, -3, 5, 7], [2, 4, 6, 8]]
+
+  This is because a shallow copy does not create a new object for the nested instances but instead, it copies their reference
+ to the original object. In most of the cases we typically need to create a new object even for nested instances so that the
+ copied compound object is completely independent to the old one. In Python this is called a deep copy.
+
+    import copy
+    a = [1, 3, 5, 7]
+    b = [2, 4, 6, 8]
+    c = [a, b]
+    d = copy.deepcopy(c)
+    a[0] = -1
+    c[0][1] = -3
+    print(d)
+    >>> [[1, 3, 5, 7], [2, 4, 6, 8]]
+
+ id() - give us the object identity.
+ is - compare id's.
+ == compare value.
+ 
+    import copy
+
+    some_list = [1, [2], 3]
+    print(some_list is copy.copy(some_list)) # False
+    print(some_list[1] is copy.copy(some_list)[1]) # True
+
+
+-- MUTABLE/IMMUTABLE
+
+  Mutable objects are those that allow you to change their value or data in place
+ without affecting the object’s identity. In contrast, immutable objects don’t allow
+ this kind of operation. You’ll just have the option of creating new objects of the
+ same type with different values.
+
+ Objects of built-in type that are mutable are:
+
+    Lists
+    Sets
+    Dictionaries
+    User-Defined Classes (It purely depends upon the user to define the characteristics)
+
+  Objects of built-in type that are immutable are:
+    Numbers (Integer, Rational, Float, Decimal, Complex & Booleans)
+    Strings
+    Tuples
+    Frozen Sets
+    User-Defined Classes (It purely depends upon the user to define the characteristics)
+
+
+-- ASSIGNMENT IN PYTHON
+
+ Basic form:
+ This form is the most common form.
+
+    student = 'Geeks'
+    print(student) >> Geeks
+
+ Tuple assignment:
+
+    # equivalent to: (x, y) = (50, 100)
+    x, y = 50, 100
+
+    print('x = ', x) >> x = 50
+    print('y = ', y) >> y = 100
+
+ List assignment:
+ This works in the same way as the tuple assignment.
+
+    [x, y] = [2, 4]
+
+    print('x = ', x) >> x = 2
+    print('y = ', y) >> y = 4
+
+ Sequence assignment
+
+    a, b, c = 'HEY'
+
+    print('a = ', a) >> a = H
+    print('b = ', b) >> b = E
+    print('c = ', c) >> c = Y
+
+ Extended Sequence unpacking:
+ It allows us to be more flexible in how we select portions of a sequence to assign.
+
+    p, *q = 'Hello'
+
+    print('p = ', p) >> p = H
+    print('q = ', q) >> q = ['e', 'l', 'l', 'o']
+
+    *a, b = 'Hello'
+
+    a >> ['H', 'e', 'l', 'l']
+    b >> ['o']
+
+ Multiple- target assignment:
+
+    x = y = 75
+
+    print(x, y) >> 75 75
+
+ In this form, Python assigns a reference to the same object (the object which is rightmost) to all
+ the target on the left.
+
+ Augmented assignment :
+ The augmented assignment is a shorthand assignment that combines an expression and an assignment.
+
+    x = 2
+
+    # equivalent to: x = x + 1
+    x += 1
+
+    print(x) >> 3
+
+ There are several other augmented assignment forms:
+ -=, **=, &=, etc.
+
+
+-- CONDITION (BOOL COND. CHAIN COND.)
+
+  Python supports the usual logical conditions from mathematics:
+
+    Equals: a == b
+    Not Equals: a != b
+    Less than: a < b
+    Less than or equal to: a <= b
+    Greater than: a > b
+    Greater than or equal to: a >= b
+
+ These conditions can be used in several ways, most commonly in "if statements" and loops.
+
+ Chained conditionals are simply a "chain" or a combination or multiple conditions.
+ We can combine conditions using the following three key words:
+
+    - and
+    - or
+    - not
+
+  The and keyword allows us to check if two conditions are true. If they are both
+ true then the entire condition is true. If one or both of them are false then the
+ entire condition is false.
+
+  The or keyword allows us to check if one of two conditions is true. If one or both
+ of the conditions are true then then entire condition will be true. If both of the
+ conditions are false then the entire condition is false.
+
+  The not keyword allows us to check if an entire condition is false. If the condition
+ is false it will result in a true value. If the condition is true it will give us a
+ false value (you can think of it as reversing the condition).
+
+    True and False  # This gives False
+    True and True   # This gives True
+    False and False # This gives False
+
+    True or False   # This gives True
+    True or True    # This gives True
+    False or False  # This gives False
+
+    not True        # This gives False
+    not False       # This gives True
+
+ We can also combine the use of these keywords to create longer conditions:
+
+    (True or False) and False  # This is False
+    False and True and True    # This is False
+    (True or False) and True   # This is True
+    True and not(False)        # This is True
+
+    not(1 > 2 and 2-7 == -5)   # This is True
+
+
+-- OPERATORS
+
+ Operators are used to perform operations on variables and values.
+ Python divides the operators in the following groups:
+
+    Arithmetic operators
+    Assignment operators
+    Comparison operators
+    Logical operators
+    Identity operators
+    Membership operators
+    Bitwise operators
+
+ Ariphmetic
+
+    +	Addition	x + y
+    -	Subtraction	x - y
+    *	Multiplication	x * y
+    /	Division	x / y
+    %	Modulus	x % y
+    **	Exponentiation	x ** y
+    //	Floor division	x // y
+
+ Assignment
+
+    =	  x = 5	    x = 5
+    +=	x += 3	  x = x + 3
+    -=	x -= 3	  x = x - 3
+    *=	x *= 3	  x = x * 3
+    /=	x /= 3	  x = x / 3
+    %=	x %= 3	  x = x % 3
+    //=	x //= 3	  x = x // 3
+    **=	x **= 3	  x = x ** 3
+    &=	x &= 3	  x = x & 3
+    |=	x |= 3	  x = x | 3
+    ^=	x ^= 3	  x = x ^ 3
+    >>=	x >>= 3	  x = x >> 3
+    <<=	x <<= 3	  x = x << 3
+
+ Comparison
+
+    ==	Equal	x == y
+    !=	Not equal	x != y
+    >	Greater than	x > y
+    <	Less than	x < y
+    >=	Greater than or equal to	x >= y
+    <=	Less than or equal to	x <= y
+
+ Logical
+
+    and 	Returns True if both statements are true	x < 5 and  x < 10
+    or	Returns True if one of the statements is true	x < 5 or x < 4
+    not	Reverse the result, returns False if the result is true  not(x < 5 and x < 10)
+
+    not evaluates argument to bolean.
+    or and and returns one of the parameter.
+
+    or if first is True return first, else return second
+    and if first is False return first, else return second
+
+ Identity
+
+    is 	Returns True if both variables are the same object	x is y
+    is not	Returns True if both variables are not the same object	x is not y
+
+ Membership
+
+    in 	Returns True if a sequence with the specified value is present in the object	x in y
+    not in	Returns True if a sequence with the specified value is not present in the object	x not in y
+
+ Bitwise
+
+    & 	AND	Sets each bit to 1 if both bits are 1	x & y
+    |	OR	Sets each bit to 1 if one of two bits is 1	x | y
+    ^	XOR	Sets each bit to 1 if only one of two bits is 1	x ^ y
+    ~	NOT	Inverts all the bits	~x
+    <<	Zero fill left shift	Shift left by pushing zeros in from the right and let the leftmost bits fall off	x << 2
+    >>	Signed right shift	Shift right by pushing copies of the leftmost bit in from the left, and let the rightmost bits fall off	x >> 2
+
+ The precedence order is described in the table below, starting with the highest precedence at the top:
+
+    ()	Parentheses
+    **	Exponentiation
+    +x  -x  ~x	Unary plus, unary minus, and bitwise NOT
+    *  /  //  %	Multiplication, division, floor division, and modulus
+    +  -	Addition and subtraction
+    <<  >>	Bitwise left and right shifts
+    &	Bitwise AND
+    ^	Bitwise XOR
+    |	Bitwise OR
+    ==  !=  >  >=  <  <=  is  is not  in  not in 	Comparisons, identity, and membership operators
+    not	Logical NOT
+    and	AND
+    or	OR
+  If two operators have the same precedence, the expression is evaluated from left to right.
+
+ Ternary Operator in Python
+
+ In Python, Ternary Operator determines if a condition is true or false and then returns the appropriate value as the result.
+
+    Syntax: true_value if condition else false_value
+
+  Ternary Operator in Nested If else
+ The ternary operator can also be used in Python nested if-else statement. the syntax for the same is as follows:
+
+    Syntax: true_value  if condition1 else (true_value if condition2  else false_value)
+
+    a = 10
+    b = 20
+
+    print("Both are equal" if a == b else "a is greater" if a > b else "b is greater")
+
+  Ternary Operator using Python Tuple
+ The ternary operator can also be written by using Python tuples. In this case we declare the False and True values inside a tuple at index 0 and 1 respectively. Based on the condition, if the result is False, that is 0 the value at index 0 gets executed. If the condition results in True, the value at index 1 of the tuple is executed.
+
+    Syntax: (false_value, true_value) [condition]
+
+    a = 10
+    b = 20
+
+    print(("b is minimum(0 False)", "a is minimum(1 True)") [a < b])
+
+  Ternary Operator using Python Dictionary
+    print({True: "a is minimum", False: "b is minimum"} [a < b])
+
+  Ternary Operator using Python Lambda
+    a = 10
+    b = 20
+
+    print((lambda: "b is minimum", lambda: "a is minimum")[a < b]())
+
+  ShortHand Ternary
+  In python there is also the shorthand ternary tag which is a shorter version of the normal ternary operator you have seen above.
+
+  >>> True or "Some"
+  True
+  >>>
+  >>> False or "Some"
+  'Some'
+
+  >>> def my_function(real_name, optional_display_name=None):
+  >>>     optional_display_name = optional_display_name or real_name
+  >>>     print(optional_display_name)
+  >>> my_function("John")
+  John
+  >>> my_function("Mike", "anonymous123")
+  anonymous123
+
+
+-- CONTROL FLOV
+
+ A program’s control flow is the order in which the program’s code executes.
+ The control flow of a Python program is regulated by conditional statements, loops, and function calls.
+
+ Python has three types of control structures:
+
+    Sequential - default mode
+    Selection - used for decisions and branching
+    Repetition - used for looping, i.e., repeating a piece of code multiple times.
+
+  Sequential statements are a set of statements whose execution process happens in a sequence.
+ The problem with sequential statements is that if the logic has broken in any one of the lines,
+ then the complete source code execution will break.
+
+  The selection statement allows a program to test several conditions and execute instructions
+ based on which condition is true.
+
+ Some Decision Control Statements are:
+
+    Simple if
+    if-else
+    nested if
+    if-elif-else
+
+  Simple if: If statements are control flow statements that help us to run a particular code, but
+ only when a certain condition is met or satisfied. A simple if only has one condition to check.
+
+    n = 10
+    if n % 2 == 0:
+        print("n is an even number")
+    print('end')
+
+  if-else: The if-else statement evaluates the condition and will execute the body of if if the
+ test condition is True, but if the condition is False, then the body of else is executed.
+
+    n = 5
+    if n % 2 == 0:
+        print("n is even")
+    else:
+        print("n is odd")
+    print('end')
+
+ nested if: Nested if statements are an if statement inside another if statement.
+
+    a = 5
+    b = 10
+    c = 15
+    if a > b:
+        if a > c:
+            print("a value is big")
+        else:
+            print("c value is big")
+    elif b > c:
+        print("b value is big")
+    else:
+        print("c is big")
+
+  if-elif-else: The if-elif-else statement is used to conditionally execute a statement
+ or a block of statements.
+
+    x = 15
+    y = 12
+    if x == y:
+        print("Both are Equal")
+    elif x > y:
+        print("x is greater than y")
+    else:
+        print("x is smaller than y")
+
+  A repetition statement is used to repeat a group(block) of programming instructions.
+ In Python, we generally have two loops/repetitive statements:
+
+    for loop
+    while loop
+
+  for loop: A for loop is used to iterate over a sequence that is either a list, tuple,
+ dictionary, or a set. We can execute a set of statements once for each item in a list,
+ tuple, or dictionary.
+
+    lst = [1, 2, 3, 4, 5]
+    for i in range(len(lst)):
+        print(lst[i], end = " ")
+
+    for j in range(0,10):
+        print(j, end = " ")
+
+  while loop: In Python, while loops are used to execute a block of statements repeatedly
+ until a given condition is satisfied. Then, the expression is checked again and,
+ if it is still true, the body is executed again. This continues until the expression
+ becomes false.
+
+    m = 5
+    i = 0
+    while i < m:
+        print(i, end = " ")
+        i = i + 1
+    print("End")
+
+ The else clause is only executed when your while condition becomes false. If you break
+ out of the loop, or if an exception is raised, it won’t be executed.
+
+    count = 0
+    while (count < 3):
+        count = count + 1
+        print("Hello Geek")
+    else:
+        print("In Else Block")
+
+
+-- TRY/EXEPT
+
+    The try block lets you test a block of code for errors.
+    The except block lets you handle the error.
+    The else block lets you execute code when there is no error.
+    The finally block lets you execute code, regardless of the result of the try- and except blocks.
+
+ You can define as many exception blocks as you want, e.g. if you want to execute a special
+ block of code for a special kind of error:
+
+    try:
+        print(x)
+    except NameError:
+        print("Variable x is not defined")
+    except:
+        print("Something else went wrong")
+
+ The raise keyword is used to raise an exception.
+ You can define what kind of error to raise, and the text to print to the user.
+
+    x = "hello"
+
+    if not type(x) is int:
+        raise TypeError("Only integers are allowed")
+
+    ***********
+
+    try:
+        f = open("demofile.txt")
+        try:
+            f.write("Lorum Ipsum")
+        except:
+            print("Something went wrong when writing to the file")
+        finally:
+            f.close()
+    except:
+        print("Something went wrong when opening the file")
+
+ Here is the list of default Python exceptions with descriptions:
+
+    AssertionError: raised when the assert statement fails.
+    EOFError: raised when the input() function meets the end-of-file condition.
+    AttributeError: raised when the attribute assignment or reference fails.
+    TabError: raised when the indentations consist of inconsistent tabs or spaces.
+    ImportError: raised when importing the module fails.
+    IndexError: occurs when the index of a sequence is out of range
+    KeyboardInterrupt: raised when the user inputs interrupt keys (Ctrl + C or Delete).
+    RuntimeError: occurs when an error does not fall into any category.
+    NameError: raised when a variable is not found in the local or global scope.
+    MemoryError: raised when programs run out of memory.
+    ValueError: occurs when the operation or function receives an argument with the right type but the wrong value.
+    ZeroDivisionError: raised when you divide a value or variable with zero.
+    SyntaxError: raised by the parser when the Python syntax is wrong.
+    IndentationError: occurs when there is a wrong indentation.
+    SystemError: raised when the interpreter detects an internal erro
+
+ All pyhton exeptions: https://docs.python.org/3/library/exceptions.html
+
+
+-- ITERABLES
+
+  An iterable is an object capable of returning its members one by one. Said in other words,
+ an iterable is anything that you can loop over with a for loop in Python.
+
+  Sequences are a very common type of iterable. Some examples for built-in sequence types are
+ lists, strings, and tuples.
+
+  “Under the hood”, an iterable is any Python object with an __iter__() method or with
+ a __getitem__() method that implements Sequence semantics.
+
+ Here are some useful built-in functions that accept iterables as arguments:
+
+    list, tuple, dict, set: construct a list, tuple, dictionary, or set, respectively, from the contents of an iterable
+    sum: sum the contents of an iterable.
+    sorted: return a list of the sorted contents of an interable
+    any: returns True and ends the iteration immediately if bool(item) was True for any item in the iterable.
+    all: returns True only if bool(item) was True for all items in the iterable.
+    max: return the largest value in an iterable.
+    min: return the smallest value in an iterable.
+
+  Python provides an extremely useful functionality, known as iterable unpacking,
+ which allows us to write the simple, elegant code:
+
+    >>> my_list = [7, 9, 11]
+    >>> x, y, z = my_list
+    >>> print(x, y, z)
+    7 9 11
+
+  The built-in enumerate function allows us to iterate over an iterable, while keeping
+ track of the iteration count. In general, the enumerate function accepts an iterable as
+ an input, and returns a new iterable that produces a tuple of the iteration-count and the
+ corresponding item from the original iterable.
+
+    >>> for entry in enumerate("abcd"):
+           print(entry)
+
+    (0, 'a')
+    (1, 'b')
+    (2, 'c')
+    (3, 'd')
+
+    # using the `enumerate` function to keep iteration-count
+    none_indices = []
+
+    # note the use of iterable unpacking!
+    for iter_cnt, item in enumerate([2, None, -10, None, 4, 8]):
+        if item is None:
+            none_indices.append(iter_cnt)
+
+    # `none_indices` now stores: [1, 3]
+
+
+--ITERATOR
+
+  Python’s iterators and iterables are two different but related tools that come in handy
+ when you need to iterate over a data stream or container. Iterators power and control
+ the iteration process, while iterables typically hold data that you want to iterate over one
+ value at a time.
+  An iterator is an object that contains a countable number of values.
+ An iterator is an object that can be iterated upon, meaning that you can traverse
+ through all the values. Technically, in Python, an iterator is an object which implements
+ the iterator protocol, which consist of the methods __iter__() and __next__().
+
+  Lists, tuples, dictionaries, and sets are all iterable objects. They are iterable
+ containers which you can get an iterator from. All these objects have a iter() method
+ which is used to get an iterator:
+
+    mytuple = ("apple", "banana", "cherry")
+    myit = iter(mytuple)
+
+    print(next(myit))
+    print(next(myit))
+    print(next(myit))
+
+    apple
+    banana
+    cherry
+
+ The for loop actually creates an iterator object and executes the next() method for each loop.
+
+ Note: Every iterator is also an iterable, but not every iterable is an iterator in Python.
+
+
+-- BUILD IN DATA STRUCTURES
+
+    Numeric data types: int, float, complex, long(in python 2)
+    String data types: str  (string is a sequence of characters)
+    Sequence types: list, tuple, range
+    Binary types: bytes, bytearray, memoryview
+    Mapping data type: dict
+    Boolean type: bool
+    Set data types: set, frozenset
+
+  -List is an ordered sequence of some data written using square brackets([]) and commas(,).
+  -Tuple is another data type which is a sequence of data similar to a list. But it is immutable.
+ That means data in a tuple is write-protected. Data in a tuple is written using parenthesis and commas.
+  -Dictionary is an unordered sequence of data of key-value pair form. It is similar to the
+ hash table type. Dictionaries are written within curly braces in the form key:value.
+
+ *In Python, an object is considered hashable if it has a hash value that remains constant during its 
+ lifetime. Hashable objects must implement the __hash__() and __eq__() methods. The hash value of an 
+ object is used in hashing algorithms, such as those implemented by dictionaries and sets, to quickly 
+ compare keys and store/retrieve values.
+
+  Hashtable
+
+   A hash table is a data structure that implements an associative array abstract data type, a structure 
+  that can map keys to values. A hash table uses a hash function to compute an index, also called a hash 
+  code, into an array of buckets or slots, from which the desired value can be found.
+
+  Hash tables must support 3 fundamental operations:
+
+    Insert(key,value) -> Adds an item to the hash table.
+    get(key) -> Fetches the value with the help of the given key.
+    delete(key) -> Removes a value with the help of the given key.
+
+  These operations should ideally execute in O(1) time.
+
+  In a hash table, every key is unique. We should use this data structure when the ordering and sorting 
+  of data is not needed, because the order of data is not retained here.
+
+  The hash function can produce an index that has already been used in the table, which is called a collision.
+
+  A collision can be handled using various techniques:
+  Separate Chaining Technique
+  Open Addressing technique
+
+
+-- FUNCTIONS
+
+   A function is a block of code which only runs when it is called.
+   You can pass data, known as parameters, into a function.
+   A function can return data as a result.
+
+   Parameters or Arguments?
+
+  The terms parameter and argument can be used for the same thing: information that are passed into a function.
+
+  From a function's perspective:
+   A parameter is the variable listed inside the parentheses in the function definition.
+   An argument is the value that is sent to the function when it is called.
+
+  Python uses the mechanism pass arguments by sharing object reference during function calls.
+  Name of variable reserve in local scope and refer to some object
+
+  Function side effect
+
+  Function is said to have a side effect if it changes anything outside of its function definition like
+ changing arguments passed to the function or changing a global variable. For example:
+
+    def fn_side_effects(fruits):
+        print(f"Fruits before change - {fruits} id - {id(fruits)}")
+        fruits += ["pear", "banana"]
+        print(f"Fruits after change - {fruits} id - {id(fruits)}")
+
+    fruit_list = ["apple", "orange"]
+    print(f"Fruits List before function call - {fruit_list} id - {id(fruit_list)}")
+    fn_side_effects(fruit_list)
+    print(f"Fruits List after function call - {fruit_list} id - {id(fruit_list)}")
+
+    # Output
+    Fruits List before function call - ['apple', 'orange'] id - 1904767477056
+    Fruits before change - ['apple', 'orange'] id - 1904767477056
+    Fruits after change - ['apple', 'orange', 'pear', 'banana'] id - 1904767477056
+    Fruits List after function call - ['apple', 'orange', 'pear', 'banana'] id - 1904767477056
+
+  So this function clearly has side effect due to below reasons:
+   Id value argument and parameter are exactly the same.
+   Argument has additional values added after the function call.
+
+  Function without side effect
+  def fn_no_side_effects(fruits):
+    print(f"Fruits before change - {fruits} id - {id(fruits)}")
+    fruits = fruits + ["pear", "banana"]
+    print(f"Fruits after change - {fruits} id - {id(fruits)}")
+
+  fruit_list = ["apple", "orange"]
+  print(f"Fruits List before function call - {fruit_list} id - {id(fruit_list)}")
+  fn_no_side_effects(fruit_list)
+  print(f"Fruits List after function call - {fruit_list} id - {id(fruit_list)}")
+
+  # output
+  Fruits List before function call - ['apple', 'orange'] id - 2611623765504
+  Fruits before change - ['apple', 'orange'] id - 2611623765504
+  Fruits after change - ['apple', 'orange', 'pear', 'banana'] id - 2611625160320
+  Fruits List after function call - ['apple', 'orange'] id - 2611623765504
+
+  Order of arguments
+
+  We have the following argument types at our disposal:
+
+    – positional arguments – matched from left to right
+    – keyword arguments – matched by name
+    – default arguments – assigned default values if omitted in function call
+    – * arguments – iterables unpacked into individual positional arguments
+    – ** arguments – dictionaries unpacked into individual keyword arguments
+
+ The default values are evaluated at the point of function definition in the defining scope, so that
+
+    i = 5
+
+    def f(arg=i):
+        print(arg)
+
+    i = 6
+    f()
+
+    will print 5.
+
+  Important warning: The default value is evaluated only once. This makes a difference when the default 
+ is a mutable object such as a list, dictionary, or instances of most classes. For example, the following 
+ function accumulates the arguments passed to it on subsequent calls:
+
+    def f(a, L=[]):
+        L.append(a)
+        return L
+
+    print(f(1))
+    print(f(2))
+    print(f(3))
+
+    This will print
+
+    [1]
+    [1, 2]
+    [1, 2, 3]
+
+ If you don’t want the default to be shared between subsequent calls, you can write the function like this instead:
+
+    def f(a, L=None):
+        if L is None:
+            L = []
+        L.append(a)
+        return L
+
+  Function annotations 
+
+  Are completely optional metadata information about the types used by user-defined functions.
+ Annotations are stored in the __annotations__ attribute of the function as a dictionary and have no effect on 
+ any other part of the function.
+
+    def f(ham: str, eggs: str = 'eggs') -> str:
+        print("Annotations:", f.__annotations__)
+        print("Arguments:", ham, eggs)
+        return ham + ' and ' + eggs
+    
+    >>> f('spam')
+    Annotations: {'ham': <class 'str'>, 'return': <class 'str'>, 'eggs': <class 'str'>}
+    Arguments: spam eggs
+    'spam and eggs'
+
+ Documentation Strings
+
+ The first line should always be a short, concise summary of the object’s purpose. This line should begin with a capital 
+ letter and end with a period.
+ If there are more lines in the documentation string, the second line should be blank, visually separating the summary 
+ from the rest of the description. The following lines should be one or more paragraphs describing the object’s calling 
+ conventions, its side effects, etc.
+
+
+-- NAMESPACE 
+ Namespace in python use LEGB(local, enclosing, global, built-in) rule
+
+  str = 'global'
+  def outer():
+      str = 'enclosing'
+      def inner():
+          str = 'local'
+ 
+ We use the nonlocal keyword to create nonlocal variables. For example
+
+    # outside function 
+    def outer():
+        message = 'local'
+
+        # nested function  
+        def inner():
+
+            # declare nonlocal variable
+            nonlocal message
+
+            message = 'nonlocal'
+            print("inner:", message)
+
+        inner()
+        print("outer:", message)
+
+    outer()
+
+-- *ARGS **KWARGS
+
+ *args is simply shortened for arguments. It is used as an argument when we are not sure how many arguments should we 
+ pass in the function. By using *args, you are allowed to pass any number of arguments when calling a function.
+
+    def friends(*args):
+        print(args)
+
+    friends("Sachin", "Rishu", "Yashwant", "Abhishek")
+    >>>('Sachin', 'Rishu', 'Yashwant', 'Abhishek')
+
+ We got Tuple because when we use *args the function will get the arguments as tuple.
+ There is one exception: when passing regular arguments and *args as parameters to a function, never pass *args before regular arguments.
+
+ But unlike *args, **kwargs takes keyword or named arguments.
+ The type of **kwargs is Dictionary i.e., the arguments accepted as key-value.
+ Note: We cannot pass **kwargs before *args in the function definition otherwise, we’ll get a SyntaxError.
+
+    def hello(write, **kwargs):
+        print(write)
+        for key, value in kwargs.items():
+            print(f"{key} is {value}.")
+    write = "RGB stands for:"
+    hello(write, One = "Red", two = "Green", three = "Blue")
+    Output
+
+    Python
+    RGB stands for:
+    One is Red.
+    two is Green.
+    three is Blue.
+
+ #######################
+
+  def test_args_kwargs(arg1, arg2, arg3):
+    print("arg1:", arg1)
+    print("arg2:", arg2)
+    print("arg3:", arg3)
+
+  Now you can use *args or **kwargs to pass arguments to this little function. Here’s how to do it:
+
+  # first with *args
+  >>> args = ("two", 3, 5)
+  >>> test_args_kwargs(*args)
+  arg1: two
+  arg2: 3
+  arg3: 5
+
+  # now with **kwargs:
+  >>> kwargs = {"arg3": 3, "arg2": "two", "arg1": 5}
+  >>> test_args_kwargs(**kwargs)
+  arg1: 5
+  arg2: two
+  arg3: 3
+
+
+-- COMMON METHODS
+
+*****INTERMEDIATE******
+
+
+-- OOP
+
+  Object-oriented programming (OOP) is a method of structuring a program by bundling related
+ properties and behaviors into individual objects. Conceptually, objects are like the components
+ of a system.
+
+  OOPs Concepts in Python
+    Class
+    Objects
+
+    Polymorphism
+    Encapsulation
+    Inheritance
+    Data Abstraction
+
+  - A class contains the blueprints or the prototype from which the objects are being created.
+ It is a logical entity that contains some attributes and methods.
+
+  - The object is an entity that has a state and behavior associated with it. It may be any real-world
+ object like a mouse, keyboard, chair, table, pen, etc. Integers, strings, floating-point numbers,
+ even arrays, and dictionaries, are all objects.
+    State: It is represented by the attributes of an object. It also reflects the properties of an object.
+    Behavior: It is represented by the methods of an object. It also reflects the response of an object to other objects.
+    Identity: It gives a unique name to an object and enables one object to interact with other objects.
+
+ - Inheritance is the capability of one class to derive or inherit the properties from another class. The class that derives
+ properties is called the derived class or child class and the class from which the properties are being derived is called
+ the base class or parent class. The benefits of inheritance are:
+
+    It represents real-world relationships well.
+    It provides the reusability of a code. We don’t have to write the same code again and again. Also, it allows us to
+    add more features to a class without modifying it.
+    It is transitive in nature, which means that if class B inherits from another class A, then all the subclasses of
+    B would automatically inherit from class A.
+
+   Types of Inheritance
+ Single Inheritance: Single-level inheritance enables a derived class to inherit characteristics from a single-parent class.
+ Multilevel Inheritance: Multi-level inheritance enables a derived class to inherit properties from an immediate parent class which
+ in turn inherits properties from his parent class.
+ Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from a parent class.
+ Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base class.
+
+        # Python code to demonstrate how parent constructors
+        # are called.
+
+        # parent class
+        class Person(object):
+
+            # __init__ is known as the constructor
+            def __init__(self, name, idnumber):
+                self.name = name
+                self.idnumber = idnumber
+
+            def display(self):
+                print(self.name)
+                print(self.idnumber)
+
+            def details(self):
+                print("My name is {}".format(self.name))
+                print("IdNumber: {}".format(self.idnumber))
+
+        # child class
+        class Employee(Person):
+            def __init__(self, name, idnumber, salary, post):
+                self.salary = salary
+                self.post = post
+
+                # invoking the __init__ of the parent class
+                Person.__init__(self, name, idnumber)
+
+            def details(self):
+                print("My name is {}".format(self.name))
+                print("IdNumber: {}".format(self.idnumber))
+                print("Post: {}".format(self.post))
+
+
+        # creation of an object variable or an instance
+        a = Employee('Rahul', 886012, 200000, "Intern")
+
+        # calling a function of the class Person using
+        # its instance
+        a.display()
+        a.details()
+        Output
+        Rahul
+        886012
+        My name is Rahul
+        IdNumber: 886012
+        Post: Intern
+
+  Inheritanse is a mechanism that allows you to create a hierarchy of classes that share a set
+ of properties and methods by deriving a class from another class. Inheritance is the
+ acapability of one class to derive or inherit the properties from another class.
+
+ Subclassing (Calling constructor of parent class(superclass))
+
+ Python program to demonstrate error if we forget to invoke __init__() of the parent
+
+ class Person(object):
+    # Constructor
+    def __ini8t__(self, name):
+
+        self.name = name
+    # To get name
+    def getName(self):
+        return self.name
+    # To check if this person is an employee
+    def isEmployee(self):
+        return False
+
+ # Inherited or Subclass (Note Person in bracket)
+ class Employee(Person):
+     # Here we return true
+     def isEmployee(self):
+        return True
+
+ # Driver code
+
+ emp = Person("Geek1")  # An Object of Person
+ print(emp.getName(), emp.isEmployee())
+ emp = Employee("Geek2")  # An Object of Employee
+ print(emp.getName(), emp.isEmployee)
+
+  The super() function is a built-in function that
+ returns the objects that represent the parent class. It allows
+ to access the parent class’s methods and attributes in the child class.
+
+ # parent class
+ class Person():
+
+   def __init__(self, name, age):
+     self.name = name
+     self.age = age
+
+   def display(self):
+     print(self.name, self.age)
+
+ # child class
+
+ class Student(Person):
+   def __init__(self, name, age, dob):
+     self.sName = name
+     self.sAge = age
+     self.dob = dob
+     # inheriting the properties of parent class
+     super().__init__("Rahul", age)
+
+   def displayInfo(self):
+     print(self.sName, self.sAge, self.dob)
+
+ obj = Student("Mayank", 23, "16-03-2000")
+ obj.display()
+ obj.displayInfo()
+
+ There are 5 different types of inheritance in Python.
+ They are as follows:
+
+  Single inheritance: When a child class inherits from only one parent
+ class, it is called single inheritance. We saw an example above.
+  Multiple inheritances: When a child class inherits from multiple parent
+ classes, it is called multiple inheritances.
+  Multilevel inheritance: When we have a child and grandchild relationship. This
+ means that a child class will inherit from its parent class, which in turn is
+ inheriting from its parent class.
+
+  Private members of the parent class
+ We don’t always want the instance variables of the parent class to be inherited by
+ the child class i.e. we can make some of the instance variables of the parent class
+ private, which won’t be available to the child class.
+
+ class C(object):
+    def __init__(self):
+        self.c = 21
+        # d is private instance variable
+        self.__d = 42
+
+ class D(C):
+    def __init__(self):
+        self.e = 84
+        C.__init__(self)
+
+ object1 = D()
+ # produces an error as d is private instance variable
+ print(object1.c)
+ print(object1.__d)
+
+  - Polymorphism simply means having many forms. For example, we need to determine if the given species of birds
+ fly or not, using polymorphism we can do this using a single function.
+ In Python, polymorphism allows objects of different classes to be treated as objects of a common super class. 
+ It is the ability to present the same interface for differing underlying forms (data types).
+
+    Method Overriding: This occurs when a subclass provides a specific implementation for a method that is already 
+    defined in its superclass. The method in the subclass overrides the method in the superclass.
+
+    Method Overloading: This is the ability to define multiple methods with the same name but different parameters. 
+    Python does not support method overloading in the same way as languages like Java or C++. Instead, it uses default 
+    arguments and variable-length arguments.
+
+    Duck Typing: Python follows the principle of "duck typing" where the type or class of an object is less important 
+    than the methods it defines. If an object implements the necessary methods, it can be used in that context.
+
+    Polymorphic Functions: These are functions that can take objects of different types and apply the same operation on them.
+
+             class Bird:
+
+                def intro(self):
+                    print("There are many types of birds.")
+
+                def flight(self):
+                    print("Most of the birds can fly but some cannot.")
+
+            class sparrow(Bird):
+
+                def flight(self):
+                    print("Sparrows can fly.")
+
+            class ostrich(Bird):
+
+                def flight(self):
+                    print("Ostriches cannot fly.")
+
+            obj_bird = Bird()
+            obj_spr = sparrow()
+            obj_ost = ostrich()
+
+            obj_bird.intro()
+            obj_bird.flight()
+
+            obj_spr.intro()
+            obj_spr.flight()
+
+            obj_ost.intro()
+            obj_ost.flight()
+
+            Output
+            There are many types of birds.
+            Most of the birds can fly but some cannot.
+            There are many types of birds.
+            Sparrows can fly.
+            There are many types of birds.
+            Ostriches cannot fly.
+
+ - Encapsulation is one of the fundamental concepts in object-oriented programming (OOP). It describes the idea
+ of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables
+ and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
+ variable can only be changed by an object’s method. Those types of variables are known as private variables.
+
+             # Python program to
+            # demonstrate private members
+
+            # Creating a Base class
+            class Base:
+                def __init__(self):
+                    self.a = "GeeksforGeeks"
+                    self.__c = "GeeksforGeeks"
+
+            # Creating a derived class
+            class Derived(Base):
+                def __init__(self):
+
+                    # Calling constructor of
+                    # Base class
+                    Base.__init__(self)
+                    print("Calling private member of base class: ")
+                    print(self.__c)
+
+
+            # Driver code
+            obj1 = Base()
+            print(obj1.a)
+
+            # Uncommenting print(obj1.c) will
+            # raise an AttributeError
+
+            # Uncommenting obj2 = Derived() will
+            # also raise an AtrributeError as
+            # private member of base class
+            # is called inside derived class
+            Output
+            GeeksforGeeks
+
+ - Data Abstraction
+  It hides unnecessary code details from the user. Also,  when we do not want to give out sensitive parts of our
+ code implementation and this is where data abstraction came.
+ Data Abstraction in Python can be achieved by creating abstract classes.
+
+
+-- MIXIN 
+  A mixin is a class that provides method implementations for reuse by multiple related child classes. However, 
+  the inheritance is not implying an is-a relationship.
+  A mixin doesn’t define a new type. Therefore, it is not intended for direction instantiation.
+  A mixin bundles a set of methods for reuse. Each mixin should have a single specific behavior, implementing closely related methods.
+  Typically, a child class uses multiple inheritance to combine the mixin classes with a parent class.
+  Since Python doesn’t define a formal way to define mixin classes, it’s a good practice to name mixin classes with the suffix Mixin.
+
+  class Person():
+    pass
+
+  class SomeMixin():  # ass functionality to class
+    pass 
+
+  class Employee(Person, SomeMixin):
+    pass
+
+
+-- MRO (diamond  problem)
+
+
+-- COMPREHENTIONS
+
+ Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the following 4 types of comprehension:
+
+    List Comprehensions
+    Dictionary Comprehensions
+    Set Comprehensions
+    Generator Comprehensions
+
+    output_list = [output_exp for var in input_list if (var satisfies this condition)]
+    dict_using_comp = {key:value for (key, value) in zip(state, capital)}
+
+
+-- LAMBDA MAP/FILTER/ZIP
+
+ A lambda function is a small anonymous function.
+ A lambda function can take any number of arguments, but can only have one expression.
+
+    lambda arguments : expression
+    The expression is executed and the result is returned
+
+    >>>lambda x: x + 1
+    function 0000000x321
+    >>> (lambda x: x + 1)(2)
+    3
+
+    >>> add_one = lambda x: x + 1
+    >>> add_one(2)
+    3
+
+    >>> full_name = lambda first, last: f'Full name: {first.title()} {last.title()}'
+    >>> full_name('guido', 'van rossum')
+    'Full name: Guido Van Rossum'
+
+    x = {
+      1:3,
+      2:2,
+      3:1
+    }
+    max(x, key=lambda y: x[y])  # Max item not by keys but by values
+  
+  map aply function to each element in collection and return Generator
+  
+  filter aply function to  each element in colection and if function return true
+  element stay in colection else not. return generator.
+
+  zip run throw collections at the same time until some of them dont have eny items
+  end create tuple on each iteration.
+
+-- ADVENSED CLASS
+-- DANDER METHOD
+-- PIP/PYPI
+-- ENVIROMENT
+-- MAKING OWN MODULE
+-- VIRTUAL ENVIRONMENT
+
+  A virtual environment is (amongst other things):
+
+    - Used to contain a specific Python interpreter and software libraries and binaries which are needed to support a project 
+    (library or application). These are by default isolated from software in other virtual environments and Python interpreters 
+    and libraries installed in the operating system.
+    - Contained in a directory, conventionally either named venv or .venv in the project directory, or under a container directory 
+    for lots of virtual environments, such as ~/.virtualenvs.
+    - Not checked into source control systems such as Git.
+    - Considered as disposable – it should be simple to delete and recreate it from scratch. You don’t place any project code 
+    in the environment.
+    - Not considered as movable or copyable – you just recreate the same environment in the target location.
+
+    python -m venv /path/to/new/virtual/environment
+
+******ADVENCED*******
+
+-- POETRY
+
+ is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends 
+ on and it will manage (install/update) them for you.
+ Alternative for pip package manager. Pip download packagees from Pypi.
+
+
+-- BIG O NOTATION
+
+  An algorithm is little more than a series of steps required to perform some task. If we treat each step as a basic unit of 
+ computation, then an algorithm’s execution time can be expressed as the number of steps required to solve the problem.
+  Two factors that computer scientists love to model mathematically, though, are how long a program will take to run, and how much space 
+ (typically, memory) it will use. We call these time and space efficiency
+
+    f(n)	Name
+
+    1 - Constant
+    log n - Logarithmic
+    n - Linear
+    n log n - Log Linear
+    n**2 - ​​Quadratic
+    ​​n**3 - Cubic
+    ​​2**n - Exponential
+
+  Operation performanse
+  
+ LIST
+ Operation          Big O 
+
+ index[]            O(1)
+ index assignment   O(1)
+ append             O(1)
+ pop()              O(1)
+ pop(i)             O(n)
+ insert(i, item)    O(n)
+ del operator	      O(n)
+ iteration	        O(n)
+ contains (in)	    O(n)
+ get slice [x:y]	  O(k)
+ del slice	        O(n)
+ reverse            O(n)
+ concatenate	      O(k)
+ sort	              O(n log n)
+ multiply	          O(nk)
+
+ DICT
+ Operation	Big O Efficiency
+  copy	         O(n)
+  get item	     O(1)
+  set item	     O(1)
+  delete item	   O(1)
+  contains (in)	 O(1)
+  iteration	     O(n)
+
+
+-- CLOSURE
+
+  In Python, a closure is a function that retains access to its lexical scope, even after the scope has finished 
+  executing. In simpler terms, a closure "remembers" the variables that were in its surrounding scope when it was 
+  created, even if that scope no longer exists.
+
+  How Closures Work
+  Closures are created when a nested function captures variables from its enclosing scope. Here's an example:
+
+      def outer_function(msg):
+          def inner_function():
+              print(msg)
+          return inner_function
+
+      closure = outer_function("Hello, World!")
+      closure()  # Output: Hello, World!
+
+  The outer_function creates a variable msg and a function inner_function that uses msg.
+  inner_function is returned as a function object.
+  Saving the Environment:
+
+  When outer_function is called with the argument "Hello, World!", it returns inner_function, which retains the value of msg.
+  The variable msg remains in memory even after outer_function has finished executing.
+  Calling the Closure:
+
+  When closure() is called, it executes inner_function, which uses the saved value of msg.
+  Features and Practical Applications of Closures:
+  Modifying Enclosed Variables:
+  To modify values of variables within a closure, use the nonlocal keyword:
+
+      def outer_function(msg):
+          count = 0
+          def inner_function():
+              nonlocal count
+              count += 1
+              print(f"{msg}, called {count} times")
+          return inner_function
+
+      closure = outer_function("Hello")
+      closure()  # Output: Hello, called 1 times
+      closure()  # Output: Hello, called 2 times
+
+  Function Factories:
+  Closures are often used to create functions with fixed parameters.
+
+      def power_factory(exp):
+          def power(base):
+              return base ** exp
+          return power
+
+      square = power_factory(2)
+      cube = power_factory(3)
+
+      print(square(4))  # Output: 16
+      print(cube(2))    # Output: 8
+  Decorators:
+  Decorators in Python also use closures to add functionality to functions.
+
+      def simple_decorator(func):
+          def wrapper():
+              print("Something is happening before the function is called.")
+              func()
+              print("Something is happening after the function is called.")
+          return wrapper
+
+      @simple_decorator
+      def say_hello():
+          print("Hello!")
+
+  say_hello()
+  # Output:
+  # Something is happening before the function is called.
+  # Hello!
+  # Something is happening after the function is called.
+  Conclusion
+  Closures are a powerful feature in Python that allows functions to retain state between calls. 
+  They provide flexibility and can greatly simplify code, especially when working with higher-order functions and decorators.
+
+
+-- DECORATORS
+
+  Decorators are a very powerful and useful tool in Python since it allows programmers to modify the behaviour 
+ of a function or class. Decorators allow us to wrap another function in order to extend the behaviour of the 
+ wrapped function, without permanently modifying it. In Python, functions are first class objects which means 
+ that functions in Python can be used or passed as arguments. 
+  In Decorators, functions are taken as the argument into another function and then called inside the wrapper function.
+
+
+    @gfg_decorator
+    def hello_decorator():
+        print("Gfg")
+
+    '''Above code is equivalent to -
+      def hello_decorator():
+          print("Gfg")
+          
+      hello_decorator = gfg_decorator(hello_decorator)
+    '''
+
+
+    # defining a decorator
+    def hello_decorator(func):
+        # inner1 is a Wrapper function in 
+        # which the argument is called
+        
+        # inner function can access the outer local
+        # functions like in this case "func"
+        def inner1():
+            print("Hello, this is before function execution")
+
+            # calling the actual function now
+            # inside the wrapper function.
+            func()
+
+            print("This is after function execution")
+            
+        return inner1
+
+    # defining a function, to be called inside wrapper
+    def function_to_be_used():
+        print("This is inside the function !!")
+
+    # passing 'function_to_be_used' inside the
+    # decorator to control its behaviour
+    function_to_be_used = hello_decorator(function_to_be_used)
+
+    # calling the function
+    function_to_be_used()
+
+    Output: 
+    Hello, this is before function execution
+    This is inside the function !!
+    This is after function execution
+
+
+    def hello_decorator(func):
+    def inner1(*args, **kwargs):
+        
+        print("before Execution")
+        
+        # getting the returned value
+        returned_value = func(*args, **kwargs)
+        print("after Execution")
+        
+        # returning the value to the original frame
+        return returned_value
+        
+    return inner1
+
+
+    # adding decorator to the function
+    @hello_decorator
+    def sum_two_numbers(a, b):
+        print("Inside the function")
+        return a + b
+
+    a, b = 1, 2
+
+    # getting the value through return of the function
+    print("Sum =", sum_two_numbers(a, b))
+    Output: 
+
+    before Execution
+    Inside the function
+    after Execution
+    Sum = 3
+
+
+    # code for testing decorator chaining 
+    def decor1(func): 
+        def inner(): 
+            x = func() 
+            return x * x 
+        return inner 
+
+    def decor(func): 
+        def inner(): 
+            x = func() 
+            return 2 * x 
+        return inner 
+
+    @decor1   #2
+    @decor    #1
+    def num(): 
+        return 10
+
+    @decor
+    @decor1
+    def num2():
+        return 10
+      
+    print(num()) 
+    print(num2())
+    Output:
+
+    400
+    200
+
+-- GENERATORS
+
+ A generator function in Python is defined like a normal function, but whenever it needs to generate a 
+ value, it does so with the yield keyword rather than return.
+ Python Generator functions return a generator object that is iterable, i.e., can be used as an Iterator. 
+ Generator objects are used either by calling the next method of the generator object or using the generator 
+ object in a “for in” loop.
+
+    def fibonacci_gen():
+    yield 0
+    yield 1
+    prev_prev, prev = 0, 1
+
+    while True:
+      result = prev + prev_prev
+      prev_prev, prev = prev, result
+      yield result
+
+    g = fibonacci_gen() #  Return generator
+    for i in g:
+      print(i)
+
+ Generetor enter in function run throw lines until meet yield. When yield occured
+ function return some value and remember line of execution. After next next() call 
+ renerator returns to that line it remember.
+
+    def interleave_gen(a,b):
+      a = iter(a)
+      b = iter(b)
+      while True:
+        yield next(a)
+        yield next(b)
+
+
+ Python Generator Expression
+  In Python, generator expression is another way of writing the generator function. It uses the Python list 
+  comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
+
+  Generator Expression Syntax
+  The generator expression in Python has the following Syntax:
+
+    (expression for item in iterable)
+
+
+-- CONTEXT MENEGER(WITH)
+-- METACLASSES
+
+
+-- THREAD
+
+  The threads may be running on different processors, but they will only be running one at a time.
+  Tasks that spend much of their time waiting for external events are generally good candidates
+  for threading. Problems that require heavy CPU computation and spend little time waiting for external
+  events might not run faster at all.
+
+  1. Threads
+  Definition: A thread is the smallest unit of a process that can be scheduled for execution. Threads
+   allow a program to perform multiple operations concurrently in the same process space.
+
+   Key Points:
+  Lightweight: Threads share the same memory space, making them lightweight compared to processes.
+  Shared Resources: Since threads share memory and other resources, they can communicate more efficiently 
+    than processes. However, this can also lead to issues like race conditions and deadlocks.
+  Concurrency: Threads enable concurrent execution of tasks within the same program.
+
+  2. Process
+  Definition: A process is an instance of a program that is being executed. It contains the program code 
+  and its current activity.
+
+   Key Points:
+  Isolation: Each process has its own memory space, which isolates it from other processes. This makes 
+   processes more secure but more resource-intensive.
+  Context Switching: Switching between processes is more costly in terms of resources than switching between 
+   threads.
+  Parallelism: Processes can run in parallel on multi-core systems.
+
+   3. Thread Pool
+  Definition: A thread pool is a collection of pre-initialized threads that stand ready to be given work. 
+  This approach helps manage a large number of concurrent tasks efficiently.
+
+   Key Points:
+  Resource Management: Thread pools manage the allocation of threads, reducing the overhead of creating and 
+   destroying threads frequently.
+  Concurrency: Thread pools improve performance by reusing existing threads instead of creating new ones.
+  Examples: Thread pools are often used in server applications to handle incoming requests.
+
+   4. Parallelism
+  Definition: Parallelism involves executing multiple tasks simultaneously to increase performance. It leverages 
+  multiple processors or cores to perform computations more quickly.
+
+   Key Points:
+  True Parallelism: Requires hardware with multiple processing units (e.g., multi-core processors).
+  Task Parallelism: Different tasks or threads are executed simultaneously.
+  Data Parallelism: The same task is executed on different chunks of data simultaneously.
+
+  Yes, concurrency and threading are indeed ways to achieve the simulation of parallelism in a single-CPU 
+  environment. Here's how they work and how they simulate parallelism:
+
+  Concurrency
+  Concurrency involves multiple tasks making progress within overlapping time periods. It does not necessarily 
+  mean tasks are running simultaneously; instead, it means tasks are being managed in such a way that they appear 
+  to be executed simultaneously.
+
+  Time-Slicing: The operating system divides CPU time into slices and allocates these slices to various tasks. 
+  By rapidly switching between tasks, it creates the illusion that tasks are running at the same time.
+  Task Switching: The system saves the state of a task before switching to another, allowing it to resume where 
+  it left off later.
+  Threading
+  Threading is a technique that allows a program to execute multiple threads within a single process. Each thread 
+  represents a separate path of execution.
+
+  Multithreading: Multiple threads can be created within a process to perform different tasks. While only one thread 
+  can run at a time on a single CPU (due to the Global Interpreter Lock in CPython), the rapid context switching 
+  between threads gives the appearance of simultaneous execution.
+  How Concurrency and Threading Simulate Parallelism
+  On a single-CPU system, true parallel execution (multiple tasks running simultaneously) is not possible. However, 
+  concurrency and threading simulate parallelism through the following mechanisms:
+
+  Context Switching:
+
+  The CPU switches between different tasks or threads very quickly, saving and restoring their states. This switching 
+  happens so rapidly that it appears as if tasks are running in parallel.
+  Non-blocking I/O:
+
+  For I/O-bound tasks, using asynchronous programming or non-blocking I/O operations allows the CPU to switch to 
+  another task while waiting for I/O operations to complete. This efficient use of CPU time improves overall performance 
+  and responsiveness.
+
+  5. Multiprocessing
+  Definition: Multiprocessing refers to using two or more CPUs within a single computer system to perform tasks 
+  simultaneously.
+
+  Key Points:
+  Process-based Parallelism: Involves running multiple processes in parallel, each on different CPU cores.
+  Isolation: Processes do not share memory, which prevents interference but requires inter-process communication 
+   mechanisms.
+  Scalability: Multiprocessing can efficiently utilize multiple CPUs for parallel execution of tasks.
+
+   Relative Terms and Concepts
+  Concurrency vs. Parallelism: Concurrency refers to the execution of multiple tasks in overlapping time periods 
+  (not necessarily simultaneously), while parallelism refers to tasks running at the same time.
+  GIL (Global Interpreter Lock): In CPython, the GIL prevents multiple native threads from executing Python 
+  bytecodes at once. This means Python threads are not fully parallel and are more suited for I/O-bound tasks 
+  rather than CPU-bound tasks.
+  Asyncio: A Python library for writing concurrent code using the async/await syntax, designed for I/O-bound and 
+   high-level structured network code.
+
+  Example in Python
+  Here's a simple example to illustrate the use of threads and processes in Python:
+
+    import threading
+    import multiprocessing
+
+    # Function to be executed by threads/processes
+    def worker(name):
+        print(f'Worker {name}')
+
+    # Using threads
+    threads = []
+    for i in range(5):
+        t = threading.Thread(target=worker, args=(i,))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    # Using processes
+    processes = []
+    for i in range(5):
+        p = multiprocessing.Process(target=worker, args=(i,))
+        processes.append(p)
+        p.start()
+
+    for p in processes:
+        p.join()
+
+-- CONCURENCY
+-- PARALELISM
+-- MULTIPROCESSING
+
+
+-- GIL
+
+  Python Global Interpreter Lock (GIL) is a type of process lock which is used by python whenever it deals 
+  with processes. Generally, Python only uses only one thread to execute the set of written statements. This 
+  means that in python only one thread will be executed at a time. The performance of the single-threaded process 
+  and the multi-threaded process will be the same in python and this is because of GIL in python. We can not achieve 
+  multithreading in python because we have global interpreter lock which restricts the threads and works as a single thread 
+  only one thread can execute Python bytecode at a time.
+  This lock is necessary because Python's memory management is not thread-safe.
+
+  What problem did the GIL solve for Python :
+
+  Python has something that no other language has that is a reference counter. With the help of the reference counter,
+  we can count the total number of references that are made internally in python to assign a value to a data object. 
+  Due to this counter, we can count the references and when this count reaches to zero the variable or data object will 
+  be released automatically. The GIL prevents multiple threads from executing simultaneously in the interpreter, which 
+  avoids race conditions and data corruption. Without the GIL, every object access would need to be protected by locks, 
+  which would significantly complicate the interpreter's implementation and potentially degrade performance.
+
+  Multiprocessing: One common workaround is to use the multiprocessing module instead of threading. The multiprocessing
+  module creates separate processes, each with its own Python interpreter and memory space, bypassing the GIL 
+  and allowing true parallelism.
+
+
+-- RAISE CONDITION
+
+  A race condition happens when two or more threads (or processes) access shared resources concurrently and the final 
+  outcome of the execution depends on the specific timing or interleaving of their execution. This can lead to inconsistent 
+  or incorrect results, especially if the shared resources are not properly synchronized.
+
+
+-- TESTING
+  pytest
+  unittest
+-- BUILD AND MANIPULATE PAKEGES
+-- CYTHON
+
+***** ADDITIONAL ******
+
+-- ALGORITMS
+-- DS
+
+  -queue
+
+  Operations associated with queue are: 
+    Enqueue: Adds an item to the queue. If the queue is full, then it is said to be an Overflow condition – Time Complexity : O(1)
+    Dequeue: Removes an item from the queue. The items are popped in the same order in which they are pushed. If the queue is 
+      empty, then it is said to be an Underflow condition – Time Complexity : O(1)
+    Front: Get the front item from queue – Time Complexity : O(1)
+    Rear: Get the last item from queue – Time Complexity : O(1)
+
+  FIFO
+  enqueue -> (rear)|||||||(front) -> dequeue
+
+    from collections import deque
+    q = deque()
+    q.append('a')
+    q.append('b')
+    q.append('c')
+    print("Initial queue")
+    print(q)
+    print("\nElements dequeued from the queue")
+    print(q.popleft())
+    print(q.popleft())
+    print(q.popleft())
+
+    print("\nQueue after removing elements")
+    print(q)
+
+    
+    class Node:
+ 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+ 
+    # A class to represent a queue
+    
+    # The queue, front stores the front node
+    # of LL and rear stores the last node of LL
+    
+    
+    class Queue:
+    
+        def __init__(self):
+            self.front = self.rear = None
+    
+        def isEmpty(self):
+            return self.front == None
+    
+        # Method to add an item to the queue
+        def EnQueue(self, item):
+            temp = Node(item)
+    
+            if self.rear == None:
+                self.front = self.rear = temp
+                return
+            self.rear.next = temp
+            self.rear = temp
+    
+        # Method to remove an item from queue
+        def DeQueue(self):
+    
+            if self.isEmpty():
+                return
+            temp = self.front
+            self.front = temp.next
+    
+            if(self.front == None):
+                self.rear = None
+    
+    
+    # Driver Code
+    if __name__ == '__main__':
+        q = Queue()
+        q.EnQueue(10)
+        q.EnQueue(20)
+        q.DeQueue()
+        q.DeQueue()
+        q.EnQueue(30)
+        q.EnQueue(40)
+        q.EnQueue(50)
+        q.DeQueue()
+        print("Queue Front : " + str(q.front.data if q.front != None else -1))
+        print("Queue Rear : " + str(q.rear.data if q.rear != None else -1))
+
+
+-- BEST PRACTICES
+
+  - DRY
+    Don't repeat yourself
+
+  - KISS
+    Keep It Simple, Smart
+
+  - YAGNI
+    You Ain't Gonna Need It
+
+  - SOLID
+
+  Single Responsibility Principle (SRP)
+  Open/Closed Principle
+  Liskov’s Substitution Principle (LSP)
+  Interface Segregation Principle (ISP)
+  Dependency Inversion Principle (DIP)
+
+  1. Single Responsibility Principle
+  This principle states that “A class should have only one reason to change” which means every class should 
+  have a single responsibility or single job or single purpose. In other words, a class should have only one 
+  job or purpose within the software system.
+
+  Let’s understand Single Responsibility Principle using an example:
+
+  Imagine a baker who is responsible for baking bread. The baker’s role is to focus on the task of baking bread, 
+  ensuring that the bread is of high quality, properly baked, and meets the bakery’s standards.
+
+  However, if the baker is also responsible for managing the inventory, ordering supplies, serving customers, and 
+  cleaning the bakery, this would violate the SRP.
+  Each of these tasks represents a separate responsibility, and by combining them, the baker’s focus and effectiveness 
+  in baking bread could be compromised.
+  To adhere to the SRP, the bakery could assign different roles to different individuals or teams. For example, there 
+  could be a separate person or team responsible for managing the inventory, another for ordering supplies, another for 
+  serving customers, and another for cleaning the bakery.
+
+  2. Open/Closed Principle
+  This principle states that “Software entities (classes, modules, functions, etc.) should be open for extension, but 
+  closed for modification” which means you should be able to extend a class behavior, without modifying it.
+
+  Let’s understand Open/Closed Principle using an example:
+
+  Imagine you have a class called PaymentProcessor that processes payments for an online store. Initially, the 
+  PaymentProcessor class only supports processing payments using credit cards. However, you want to extend its functionality 
+  to also support processing payments using PayPal.
+
+  Instead of modifying the existing PaymentProcessor class to add PayPal support, you can create a new class called PayPalPaymentProcessor 
+  that extends the PaymentProcessor class. This way, the PaymentProcessor class remains closed for modification but open for extension,
+   adhering to the Open-Closed Principle
+
+  3. Liskov’s Substitution Principle
+  The principle was introduced by Barbara Liskov in 1987 and according to this principle “Derived or child classes must be 
+  substitutable for their base or parent classes“. This principle ensures that any class that is the child of a parent class 
+  should be usable in place of its parent without any unexpected behavior.
+
+  Let’s understand Liskov’s Substitution Principle using an example:
+
+  One of the classic examples of this principle is a rectangle having four sides. A rectangle’s height can be any value 
+  and width can be any value. A square is a rectangle with equal width and height. So we can say that we can extend the 
+  properties of the rectangle class into square class.
+
+  In order to do that you need to swap the child (square) class with parent (rectangle) class to fit the definition of a 
+  square having four equal sides but a derived class does not affect the behavior of the parent class so if you will do 
+  that it will violate the Liskov Substitution Principle.
+
+  4. Interface Segregation Principle
+  This principle is the first principle that applies to Interfaces instead of classes in SOLID and it is similar to the 
+  single responsibility principle. It states that “do not force any client to implement an interface which is irrelevant 
+  to them“. Here your main goal is to focus on avoiding fat interface and give preference to many small client-specific 
+  interfaces. You should prefer many client interfaces rather than one general interface and each interface should have a 
+  specific responsibility.
+
+  Let’s understand Interface Segregation Principle using an example:
+
+  Suppose if you enter a restaurant and you are pure vegetarian. The waiter in that restaurant gave you the menu card 
+  which includes vegetarian items, non-vegetarian items, drinks, and sweets.
+
+  In this case, as a customer, you should have a menu card which includes only vegetarian items, not everything which 
+  you don’t eat in your food. Here the menu should be different for different types of customers.
+  The common or general menu card for everyone can be divided into multiple cards instead of just one. Using this 
+  principle helps in reducing the side effects and frequency of required changes.
+
+  5. Dependency Inversion Principle
+  The Dependency Inversion Principle (DIP) is a principle in object-oriented design that states that “High-level modules 
+  should not depend on low-level modules. Both should depend on abstractions“. Additionally, abstractions should not depend 
+  on details. Details should depend on abstractions.
+
+  In simpler terms, the DIP suggests that classes should rely on abstractions (e.g., interfaces or abstract classes) rather 
+  than concrete implementations.
+  This allows for more flexible and decoupled code, making it easier to change implementations without affecting other 
+  parts of the codebase.
+  Let’s understand Dependency Inversion Principle using an example:
+
+  In a software development team, developers depend on an abstract version control system (e.g., Git) to manage and track changes 
+  to the codebase. They don’t depend on specific details of how Git works internally.
+
+  This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
+
+
+-- PROBLEM SOLVING
+-- DESIGN PATTERNS
+-- HTTP/HTTPS
+-- TCP/UDP
+
+
+Serialization
+Serialization is the process of converting an object into a format that can be easily stored or transmitted. This format is typically 
+a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
+
+Common Serialization Formats:
+JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
+and generate for machines.
+XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
+ human-readable and machine-readable.
+YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
+languages and is often used for configuration files.
+Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
+compared to text-based formats.
+
+Deserialization
+Deserialization is the reverse process of serialization. It converts the byte stream or string back into a copy of the original object. 
+This allows the object to be reconstructed and used in the application as if it were the original.
+
+-- GIT
+ help
+  git <command> --help  # Откроет информацию по запрашиваемой команде
+  git commit --help  # Пример
+
+ init
+  git init  # Создать репозиторий. (Сделать текущую директорию новым репозиторием)
+  git init <name>  # Создать репозиторий в текущей директории с именем <name>
+  git init basic-git  # Пример
+
+ clone
+  git clone <remote-url>
+  git clone https://github.com/LpilinAlexandr/basic-git.git  # Пример через http
+  git clone git@github.com:LpilinAlexandr/basic-git.git  # Пример через ssh
+
+ remote
+  git remote set-url origin https://github.com/LpilinAlexandr/basic-git123.git  # Изменить в origin remote адрес
+  git remote add test https://github.com/LpilinAlexandr/basic-git123.git  # Установить новый remote адрес
+  git remote -v  # Посмотреть список всех remote адресов
+
+ config
+  git config -l # Список текущих настроек
+  git config --global -l  # Список глобальных настроек
+  git config --local -l  # Список локальных настроек репозитория
+  git config --global user.name Name  # Установить имя пользователя в глобальной области
+  git config --global user.email email@example.com # Установить email пользователя в глобальной области
+  git config --unset <var> # Удалить переменную из настроек
+  git config alias.<your-alias> <command>  # Создание алиаса для команды
+  git config alias.st status  # Пример: теперь сможем писать git st вместо git status
+  git config --global core.autocrlf <input|false|true>  # Настройка параметра окончания строки.
+
+ status
+  git status
+  git status -s  # Статус в короткой форме
+
+ add | restore | rm
+  git add <path>  # Добавить в индекс всю директорию или файл по указанному пути
+  git add .  # Добавить всё в текущей директории
+  git restore --staged <path>  # Исключает из индекса добавленную директорию или файл по указанному пути
+  git restore <path>  # Отменить изменения в указанном месте 
+  git rm  # Фактически то же самое, что и удаление файла/директории
+  
+ stash
+  git stash -m 'my stash name'  # Спрячет все изменения в стеш 
+  git stash pop  # Достанет последние изменения из стеша, удалив его оттуда. По дефолту 0
+  git stash apply  # Достанет последние изменения из стеша, сохранив его. По дефолту 0
+  git stash list  # Посмотреть список всех стешей
+  git stash show <stash>  # Посмотреть стеш. По дефолту 0
+  git stash drop <stash>  # Удалить стеш. По дефолту 0
+
+ commit
+  git commit -m 'Заголовок коммита'  # Сделать коммит
+  git commit -m 'Заголовок коммита' -m 'Текст под заголовком коммита'  # Сделать коммит с заголовком и доп. текстом
+
+  git commit <path> -m 'Заголовок'  # Закоммитить выбранный каталог
+
+  git commit --amend [-m] # Закоммитить изменения в предыдущий коммит
+  git commit --amend  --no-edit # Закоммитить изменения в предыдущий коммит без редактирования заголовка и описания
+
+ log
+  git log  # Посмотреть логи по порядку
+  git log <branch-name>  # Посмотреть логи по конкретной ветке
+  git log --grep <pattern>  # Поиск коммитов с подходящей подстрокой
+  git log --invert-grep <pattern>  # Поиск коммитов, не входящих в подстроку
+  git log --oneline  # Список логов, каждый в одной строке
+
+ revert
+  git revert <commit>  # Отменить коммит
+  git revert -n <commit>  # Отменить коммит и оставить изменения в индексе
+ 
+ reset
+  git reset <commit>  # Сбросить коммиты в индекс до указанного коммита
+  --soft  # Изменения сбрасываются в индекс (Дефолтное значение)
+  --hard  # Изменения удаляются
+  git reset --soft HEAD~  # Сбросить последний коммит в индекс
+  git reset --hard HEAD~4  # Убить последние 4 коммита
+
+ # squash life-hack
+  git reset --soft HEAD~3  # Сбрасываем 3 последних коммита в 1
+  git commit -m 'Обьединили 3 коммита'  # Коммитим заново, тем самым объединяя 3 коммита в 1
+
+ cherry-pick
+  git cherry-pick <commit>  # Перенести коммит в HEAD текущей ветки
+  git cherry-pick -n <commit>  # Перенести коммит в HEAD текущей ветки, но не делать коммит
+
+ branch
+  git branch  # Посмотреть список локальных веток
+  git branch <branch-name> # Создать новую ветку от текущей ветки
+  git branch -a  # Посмотреть полный список веток вместе с remotes
+  git branch -m  # Переименовать ветку
+  git branch -d / -D  # Удалить ветку. Мягкое и жесткое удаление
+
+ switch | checkout
+  git checkout <branch> | <commit>  # Переключиться на ветку или коммит по его хешу
+  git checkout -b <new_branch>  # Отбранчеваться от текущей ветки в новую ветку и сразу переключиться на нее со всеми изменениями
+
+  git switch <branch> | <commit> # Переключиться на ветку или коммит по его хешу
+  git switch -c <new_branch>  # Отбранчеваться от текущей ветки в новую ветку и сразу переключиться на нее со всеми изменениями
+
+ merge
+  git merge <branch>  # Слить изменения из ветки <branch> в текущую ветку
+  git merge --continue  # Продолжить слияние в случае решения конфликтов
+  git merge --abort  # Отменить merge
+ 
+ rebase
+  git rebase <commit>  # Встать коммитами текущей ветки на выбранный коммит 
+  git rebase <branch>  # Встать коммитами текущей ветки на выбранную ветку
+  git rebase --continue  # Продолжить слияние в случае решения конфликтов
+  git rebase --abort  # Отменить rebase
+ 
+ fetch
+  git fetch # Запросить все изменения из origin 
+  git fetch <remote> # Запросить все изменения из remote
+  git fetch <remote> --prune # Запросить все изменения из remote и синхронизировать их
+ 
+ pull
+  git pull origin <branch>  # Стянуть из remote актуальную ветку <branch> (По умолчанию режим merge)
+  git pull origin <branch> --rebase  # Стянуть из remote актуальную ветку в режиме rebase
+ 
+ push
+  git push <remote> <branch>  # Отправить локальную ветку на remote 
+  git push -f <remote> <branch>  # Отправить принудительно локальную ветку на remote, перезаписав её 
+  git push -u <remote> <branch>  # Отправляем локальную ветку на remote и устанавливаем отслеживание
+ 
+ reflog
+  git reflog  # Показать историю
+  git reflog <branch> # Показать историю по конкретной ветке
+
+ git flow
+
+ 
+-- LINUX
+-- MATH
+-- STATISTIC
+
+
+-- DJANGO
+ app lifecicle
+ model inheritance
+ manager
+ logging
+ microservises
+
+-- FLASK
+-- DOCKER
+
+
+-- REST API
+
+  R epresentational S tate T ransfer (REST) is an architectural style that defines a set of constraints 
+  to be used for creating web services. REST API is a way of accessing web services in a simple and flexible 
+  way without having any processing.
+
+  REST technology is generally preferred to the more robust Simple Object Access Protocol (SOAP) technology 
+  because REST uses less bandwidth, simple and flexible making it more suitable for internet usage. It’s used 
+  to fetch or give some information from a web service. All communication done via REST API uses only HTTP request.
+
+  Working: A request is sent from client to server in the form of a web URL as HTTP GET or POST or PUT or DELETE 
+  request. After that, a response comes back from the server in the form of a resource which can be anything like 
+  HTML, XML, Image, or JSON. But now JSON is the most popular format being used in Web Services.
+
+  In HTTP there are five methods that are commonly used in a REST-based Architecture i.e., POST, GET, PUT, PATCH, 
+  and DELETE. These correspond to create, read, update, and delete (or CRUD) operations respectively. There are 
+  other methods which are less frequently used like OPTIONS and HEAD.
+  (CRUD stands for Create, Read/Retrieve, Update, and Delete and these are the four basic operations that 
+  we perform on persistence storage.)
+
+
+-- ACID 
+
+  -Atomicity: Atomicity ensures that a transaction is treated as a single, indivisible unit of work. Either all 
+  the operations within the transaction are completed successfully, or none of them are. If any part of the 
+  transaction fails, the entire transaction is rolled back to its original state, ensuring data consistency and integrity.
+  -Consistency: Consistency ensures that a transaction takes the database from one consistent state to another consistent 
+  state. The database is in a consistent state both before and after the transaction is executed. Constraints, such as 
+  unique keys and foreign keys, must be maintained to ensure data consistency.
+  -Isolation: Isolation ensures that multiple transactions can execute concurrently without interfering with each other. 
+  Each transaction must be isolated from other transactions until it is completed. This isolation prevents dirty reads, 
+  non-repeatable reads, and phantom reads.
+  -Durability: Durability ensures that once a transaction is committed, its changes are permanent and will survive any 
+  subsequent system failures. The transaction’s changes are saved to the database permanently, and even if the system crashes, 
+  the changes remain intact and can be recovered.
+
+  
+-- MYSQL
+-- PANDAS
+-- Matplotlib
+
+
+
+*hardcode - to put information into a software program so that it cannot be easily changed by a user.
+Write value just in code instead of using variable.
+
+*Pseudocode is an artificial and informal language that helps programmers develop algorithms. Pseudocode
+is a "text-based" detail (algorithmic) design tool. The rules of Pseudocode are reasonably straightforward.
+All statements showing "dependency" are to be indented. These include while, do, for, if, switch.

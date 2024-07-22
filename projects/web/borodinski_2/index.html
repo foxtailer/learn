@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/normolize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>BORODINSKI</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <nav class="nav">
+        <div class="nav__wrapper">
+          <div class="container">
+            <div class="menu-btn" id="menu-btn">
+              <div class="line-one no-animation"></div>
+              <div class="line-two no-animation"></div>
+              <div class="line-three no-animation"></div>
+            </div>
+
+            <div class="nav__inner" id="nav__inner">
+              <ul class="site-nav">
+                <li class="site-nav__item"><a class="site-nav__link " href="#"><span
+                      class="underline active">Главная</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span class="underline">Наши
+                      роботы</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span
+                      class="underline">Записаться</span></a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="#"><span
+                      class="underline">Контакты</span></a>
+                </li>
+              </ul>
+
+              <button class="user-login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                  <path
+                    d="M7.31 9.06l-.08.07-1.43 1.46a1.24 1.24 0 0 0-.23.32 1.17 1.17 0 0 0 .19 1.33 1.15 1.15 0 0 0 .95.37 1.18 1.18 0 0 0 .79-.37l1.85-1.86 1.72-1.72a1.15 1.15 0 0 0 .19-.27 1.11 1.11 0 0 0 .12-.6 1 1 0 0 0-.21-.58c-.14-.17-.29-.32-.44-.48L7.34 3.34a1.1 1.1 0 0 0-1-.28 1.12 1.12 0 0 0-.7.41 1.14 1.14 0 0 0-.27.67 1.19 1.19 0 0 0 .39 1l1.5 1.5.08.08H2.1a1.21 1.21 0 0 0-.72.42 1.15 1.15 0 0 0-.24 1 1.12 1.12 0 0 0 .39.62 1.14 1.14 0 0 0 .78.29h5zM12.51 8v3.93a.59.59 0 0 1-.26.5.67.67 0 0 1-.41.11h-1.27a1.18 1.18 0 0 0-.66.42 1.17 1.17 0 0 0 .21 1.67 1.1 1.1 0 0 0 .69.24h1a6 6 0 0 0 .64 0 2.32 2.32 0 0 0 .73-.24 3 3 0 0 0 .62-.42 3.14 3.14 0 0 0 .71-.86 2.88 2.88 0 0 0 .35-1.42v-8.2a2.51 2.51 0 0 0-.26-.9 3.05 3.05 0 0 0-.88-1.07 2.88 2.88 0 0 0-1.78-.62h-1.32a1.15 1.15 0 0 0-.65.37 1.12 1.12 0 0 0-.31.73 1.1 1.1 0 0 0 .18.67 1.13 1.13 0 0 0 1 .56h1.18a.62.62 0 0 1 .55.56v3.94z"
+                    fill="#fff" />
+                  <path
+                    d="M7.31 9.06h-5a1.14 1.14 0 0 1-.78-.29 1.12 1.12 0 0 1-.39-.62 1.15 1.15 0 0 1 .24-1 1.21 1.21 0 0 1 .72-.45h5.24l-.08-.08-1.5-1.5a1.19 1.19 0 0 1-.39-1 1.14 1.14 0 0 1 .27-.67 1.12 1.12 0 0 1 .7-.41 1.1 1.1 0 0 1 1 .28l3.39 3.38c.15.15.3.31.44.48a1 1 0 0 1 .21.58 1.11 1.11 0 0 1-.12.6 1.15 1.15 0 0 1-.19.27l-1.72 1.75-1.84 1.86a1.18 1.18 0 0 1-.79.37 1.15 1.15 0 0 1-.95-.37 1.17 1.17 0 0 1-.19-1.33 1.24 1.24 0 0 1 .23-.32l1.43-1.44.08-.07z"
+                    fill="#fff" />
+                  <path
+                    d="M12.51 8V4.06a.62.62 0 0 0-.51-.57h-1.18a1.13 1.13 0 0 1-1-.56 1.1 1.1 0 0 1-.18-.67 1.12 1.12 0 0 1 .36-.75 1.15 1.15 0 0 1 .65-.37h1.32a2.88 2.88 0 0 1 1.78.62 3.05 3.05 0 0 1 .85 1.04 2.51 2.51 0 0 1 .26.9v8.2a2.88 2.88 0 0 1-.35 1.42 3.14 3.14 0 0 1-.71.86 3 3 0 0 1-.62.42 2.32 2.32 0 0 1-.73.24 5.94 5.94 0 0 1-.64 0h-1a1.1 1.1 0 0 1-.69-.24 1.17 1.17 0 0 1-.21-1.6 1.18 1.18 0 0 1 .66-.42h1.27a.67.67 0 0 0 .41-.11.59.59 0 0 0 .26-.5V8.04z"
+                    fill="#fff" />
+                </svg>
+                <span class="user-login__text">Вход</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <a class="logo" href="#"></a>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="adventages">
+        <div class="container">
+          <div class="adventages__inner">
+            <ul class="stat">
+              <li class="stat__item">
+                <div class="stat__info-wrapper">
+                  <h3 class="stat__title">Стрижка у насэто выгодно!</h3>
+                  <p class="stat__text">Мужская стрижка требует точного подхода. Обратимся к статистике:</p>
+                </div>
+
+                <span class="marker">* — приведённые данные ложь</span>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">1 500 *</p>
+                <p class="key">рублей вложений</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">7 200</p>
+                <p class="key">секунд времени мастера</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">50 000 *</p>
+                <p class="key">лайков и комплиментов</p>
+              </li>
+
+              <li class="stat__item">
+                <p class="value">90 000</p>
+                <p class="key">постриженных волос</p>
+              </li>
+            </ul>
+
+            <ul class="adventages__list">
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-1.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">БЫСТРО</h3>
+
+                  <p class="adventages__text">
+                    Мы делаем свою работу быстро! Два часа пролетят незаметно и вы — счастливый обладатель стильной
+                    стрижки-минутки
+                  </p>
+                </div>
+              </li>
+
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-2.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">КРУТО</h3>
+
+                  <p class="adventages__text">
+                    Забудьте, как вы стриглись раньше. Мы сделаем из вас звезду футбола или кино.
+                    Во всяком случае внешне.
+                  </p>
+                </div>
+              </li>
+
+              <li class="adventages__item">
+                <img class="adventages__img" src="img/advantage-3.png" alt="">
+
+                <div class="adventages__text-container">
+                  <h3 class="adventages__title">ДОРОГО</h3>
+
+                  <p class="adventages__text">
+                    Наши мастера — профессионалы своего делаи не могут стоить дёшево. К тому же, разве цена не даёт
+                    определённый статус?
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <img class="adventages-bot" src="img/angle-bot.png" alt="">
+      </section>
+
+      <section class="news">
+        <div class="container">
+          <div class="news__inner">
+            <h3 class="news__title">Новости и акции</h3>
+
+            <ul class="news__list">
+              <li class="news__card">
+                <div class="news__data">
+                  <span class="day">29</span>
+                  <span class="month">сент</span>
+                </div>
+                <p class="news__text">Нам наконец завезли Ягермайстер! Теперь вы можете пропусить стаканчик во время
+                  стрижки.
+                </p>
+              </li>
+              <hr>
+              <li class="news__card">
+                <div class="news__data">
+                  <span class="day">19</span>
+                  <span class="month">сент</span>
+                </div>
+                <p class="news__text">В нашей команде пополнение, Борис «Бритва» Стригунец, обладатель множества титулов
+                  и наград пополнил наши стройные ряды. Спешите записаться!</p>
+              </li>
+            </ul>
+            <a class="news__link" href="">показать все</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

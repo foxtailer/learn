@@ -18,66 +18,70 @@
 <body>
   <div class="wrapper">
     <header class="header">
-      <nav class="user-nav">
-        <ul class="user-nav__list">
-          <li class="user-nav__item">
-            <label class="area" for="">
-              <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff"
-                class="bi bi-telephone-fill">
-                <path fill-rule="evenodd"
-                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-              </svg>
-              <a class="user-nav__phone" id="user-nav__phone" href="tel:+0996705678">099-670-5678</a>
-            </label>
-          </li>
-  
-          <li class="user-nav__item">
-            <div class="dropdown">
-              <label class="area" for="lang-btn">
-                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
-                    fill="#fff" />
-                </svg>
-                <button class="drop-btn" id="lang-btn" onclick="langDropdown()">eng</button>
-              </label>
-              <div class="dropdown-content" id="lang-dropdown">
-                <a href="#">eng</a>
-                <a href="#">rus</a>
-              </div>
-            </div>
-          </li>
-  
-          <li class="user-nav__item">
-            <div class="dropdown">
-              <label class="area" for="location-btn">
-                <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff"
-                  class="bi bi-geo-alt-fill">
-                  <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                </svg>
-                <button class="drop-btn" id="location-btn" onclick="locationDropdown()">Osaka</button>
-              </label>
-              <div class="dropdown-content" id="location-dropdown">
-                <a href="#">Osaka</a>
-                <a href="#">Kioto</a>
-                <a href="#">Tokio</a>
-              </div>
-            </div>
-          </li>
-  
-          <li class="user-nav__item">
-            <label class="area" for="">
-              <span class="visually-hidden">user login</span>
-              <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="6" r="4" fill="#fff" />
-                <path
-                  d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
-                  fill="#fff" />
-              </svg>
-            </label>
-          </li>
-        </ul>
-      </nav>
+      <div class="user-nav__wrapper">
+        <div class="container">
+          <nav class="user-nav">
+            <ul class="user-nav__list">
+              <li class="user-nav__item">
+                <label class="area" for="">
+                  <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff"
+                    class="bi bi-telephone-fill">
+                    <path fill-rule="evenodd"
+                      d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                  </svg>
+                  <a class="user-nav__phone" id="user-nav__phone" href="tel:+0996705678">099-670-5678</a>
+                </label>
+              </li>
+      
+              <li class="user-nav__item">
+                <div class="dropdown">
+                  <label class="area" for="lang-btn">
+                    <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
+                        fill="#fff" />
+                    </svg>
+                    <button class="drop-btn" id="lang-btn" onclick="langDropdown()">eng</button>
+                  </label>
+                  <div class="dropdown-content" id="lang-dropdown">
+                    <a href="#">eng</a>
+                    <a href="#">rus</a>
+                  </div>
+                </div>
+              </li>
+      
+              <li class="user-nav__item">
+                <div class="dropdown">
+                  <label class="area" for="location-btn">
+                    <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff"
+                      class="bi bi-geo-alt-fill">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                    </svg>
+                    <button class="drop-btn" id="location-btn" onclick="locationDropdown()">Osaka</button>
+                  </label>
+                  <div class="dropdown-content" id="location-dropdown">
+                    <a href="#">Osaka</a>
+                    <a href="#">Kioto</a>
+                    <a href="#">Tokio</a>
+                  </div>
+                </div>
+              </li>
+      
+              <li class="user-nav__item">
+                <label class="area" for="">
+                  <span class="visually-hidden">user login</span>
+                  <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="6" r="4" fill="#fff" />
+                    <path
+                      d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
+                      fill="#fff" />
+                  </svg>
+                </label>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
   
       <div class="container">
         <div class="header__inner">
@@ -88,17 +92,17 @@
           <div class="navigation">
             <nav class="main-nav">
               <ul class="main-nav__list">
-                <li class="main-nav__item main-nav__item--active">
+                <li class="main-nav__item">
                   <a class="main-nav__link" href="">menu</a>
                 </li>
-                <li class="main-nav__item main-nav__item--active">
+                <li class="main-nav__item">
                   <a class="main-nav__link" href="">news</a>
                 </li>
-                <li class="main-nav__item main-nav__item--active">
-                  <a class="main-nav__link" href="">about</a>
+                <li class="main-nav__item">
+                  <a class="main-nav__link" href="about.html">about</a>
                 </li>
-                <li class="main-nav__item main-nav__item--active">
-                  <a class="main-nav__link" href="">contacts</a>
+                <li class="main-nav__item">
+                  <a class="main-nav__link" href="contacts.html">contacts</a>
                 </li>
               </ul>
   
@@ -129,7 +133,42 @@
     </header>
   
     <main class="main">
-  
+      <div class="container">
+        <div class="main-inner">
+          <div class="news-slider">
+
+          </div>
+
+          <div class="sort-radio-group">
+            <label>
+              <span class="sort">Low-price</span>
+              <input type="radio" name="main-filter__sort">
+            </label>
+            <label>
+              <span class="sort">High-price</span>
+              <input type="radio" name="main-filter__sort">
+            </label>
+            <label>
+              <span class="sort">Popular</span>
+              <input type="radio" name="main-filter__sort">
+            </label>
+          </div>
+
+          <div class="main-content">
+            <div class="item">
+              <div class="item-photo">
+                <img src="./img/product.jpg" alt="">
+              </div>
+
+              <div class="item-info"></div>
+
+              <div class="item-menu">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   
     <footer class="footer">

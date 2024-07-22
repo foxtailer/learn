@@ -45,9 +45,9 @@ def bracet_sequence_correct(s:str):
 def str_to_jsn(string:str):
     """
     >>> str_to_jsn('myfun1(arg1=7, arg2=8, arg3=myfun3(barg1="one", barg2="two"))')
-    {"name": "myfun1"," args":[{"name": "arg1",  "value": 7 },{"name": "arg2",  "value": 8 },{"name": "arg3",  "value":{"name": "myfun3","args" : [{"name": "barg1",  "value": "one" },{"name": "barg2",  "value": "two" }]}}]}
+    '{"name": "myfun1", "args": [{"name": "arg1", "value": "7"}, {"name": "arg2", "value": "8"}, {"name": "arg3", "value": {"name": "myfun3", "args": [{"name": "barg1", "value": "one"}, {"name": "barg2", "value": "two"}]}}]}'
     >>> str_to_jsn('myfun1(arg1=7)')
-    {"name": "myfun1"," args":[{"name": "arg1",  "value": 7}]}
+    '{"name": "myfun1", "args": [{"name": "arg1", "value": "7"}]}'
     """
     if not bracet_sequence_correct(string):
         print("Incorect input missing some brackets.")
@@ -69,7 +69,6 @@ def str_to_jsn(string:str):
                 current_arg += char
         if current_arg:
             args.append(current_arg.strip())
-        print(args)
         return args
 
     def parse(input_str):
@@ -81,22 +80,20 @@ def str_to_jsn(string:str):
         parsed_args = []
         for arg in args:
             key_value = arg.split('=')
-            print(key_value)
             if len(key_value) == 2:
                 key, value = key_value
                 parsed_args.append({"name": key.strip(), "value": parse(value.strip())})
             else:
                 parsed_args.append({"name":arg.split("=")[0], "value": parse(arg.strip())})
         return {"name": name, "args": parsed_args}
-
-    return json.dumps(parse(string), indent=2)
+    
+    return json.dumps(parse(string))
 
    
 
 if __name__ == "__main__":
     import doctest          
-    doctest.testmod()
+    doctest.testmod(verbose=True)
 
     input_str = 'myfun1(arg1=7, arg2=8, arg3=myfun3(barg1="one", barg2="two"))'
     output_json = str_to_jsn(input_str)
-    print(output_json)
