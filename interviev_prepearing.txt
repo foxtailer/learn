@@ -2456,3 +2456,24 @@ Write value just in code instead of using variable.
 *Pseudocode is an artificial and informal language that helps programmers develop algorithms. Pseudocode
 is a "text-based" detail (algorithmic) design tool. The rules of Pseudocode are reasonably straightforward.
 All statements showing "dependency" are to be indented. These include while, do, for, if, switch.
+
+VSCode:
+Ctrl shift e - select sidebar
+Ctrl B - close sidebar
+Ctrl 1, 2, 3 - swap or open group
+Ctrl F4 - close last group
+Ctrl j - show/hide terminal
+Ctrl L - select curent line
+Ctrl shift L - select all instans of selected part of file(word)
+Ctrl F2 - select all instanse of word where cursor is
+Alt Enter - select all result after find
+Ctrl G - go to line
+Alt mouse click - add aditional cursor
+Ctrl alt arrow up/down - add cursor
+Ctrl U - undo cursor insert
+alt arrow - mowe curent line
+Shift alt arrow - copy line/block
+
+Windows
+W+d - dosctop
+W+t - tascbar
