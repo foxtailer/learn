@@ -1,5 +1,6 @@
 last_fn = None
 
+
 def log(fn):
     def wrapper(a,b):
         print(a)
@@ -10,8 +11,10 @@ def log(fn):
     
     return wrapper
 
+
 def round_result(places):
     def decorator(fn):
+
         def wrapper(a,b):
             return round(fn(a,b), places)
         

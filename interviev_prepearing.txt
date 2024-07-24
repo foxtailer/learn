@@ -2,17 +2,24 @@
 
 -- VARIABLES
 
- Variables are containers for storing data values. A variable is created the moment you first assign a value to it(name).
+ Variables are containers for storing data values. A variable is created the 
+ moment you first assign a value to it(name).
   - name refers to or holds a reference to a concrete object. Python
- objects are concrete pieces of information that live in specific memory positions on computer.
+ objects are concrete pieces of information that live in specific memory 
+ positions on computer.
 
- In Python, everything is treated as an object. Every object has these three attributes:
+ In Python, everything is treated as an object. Every object has these three 
+ attributes:
 
-    Identity(ID) – This refers to the address that the object refers to in the computer’s memory.
-      Unique and constant for the object during its lifetime. You can obtain using the id() function.
-    Type(class) – This refers to the kind of object that is created. For example- integer, list, string etc.
+    Identity(ID) – This refers to the address that the object refers to in the 
+    computer’s memory.
+      Unique and constant for the object during its lifetime. You can obtain 
+      using the id() function.
+    Type(class) – This refers to the kind of object that is created. For example 
+    - integer, list, string etc.
       You can get the type of an object using the type() function.
-    Value – This refers to the value stored by the object. For example – List=[1,2,3] would hold the numbers 1,2 and 3
+    Value – This refers to the value stored by the object. For example – List=[1,2,3] 
+    would hold the numbers 1,2 and 3
  While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
 
  (name = variable) --(referense) ----> (id)-( object)
@@ -507,6 +514,24 @@
 
     for loop
     while loop
+
+  Definite Loop
+  A definite loop is a loop that runs a predetermined number of times. The number of iterations 
+  is known before the loop starts. This type of loop is often used when the exact number of 
+  iterations is required and is specified explicitly.
+
+  Characteristics:
+    Fixed iterations: The loop runs a set number of times.
+    Example: for loops in many programming languages where the range is specified.
+
+  Indefinite Loop
+  An indefinite loop, on the other hand, runs an unknown number of times. The number of iterations is 
+  not known beforehand and depends on some condition being met during the execution of the loop. This 
+  type of loop continues to execute until a certain condition is satisfied.
+
+  Characteristics:
+    Condition-based: The loop runs based on a condition that is evaluated during each iteration.
+    Example: while loops in many programming languages where the loop continues until the condition is false.
 
   for loop: A for loop is used to iterate over a sequence that is either a list, tuple,
  dictionary, or a set. We can execute a set of statements once for each item in a list,
@@ -1329,6 +1354,7 @@
     - Not considered as movable or copyable – you just recreate the same environment in the target location.
 
     python -m venv /path/to/new/virtual/environment
+    python3 -m venv myenv --python=/usr/bin/python3.8
 
 ******ADVENCED*******
 
@@ -1894,6 +1920,59 @@
         print("Queue Rear : " + str(q.rear.data if q.rear != None else -1))
 
 
+-- MODULES AND PACKEGES
+  The module is a simple Python file that contains collections of functions and global variables and with having a .py 
+  extension file. It is an executable file and to organize all the modules we have the concept called Package in Python. 
+  There are actually three different ways to define a module in Python:
+
+    A module can be written in Python itself.
+    A module can be written in C and loaded dynamically at run-time, like the re (regular expression) module.
+    A built-in module is intrinsically contained in the interpreter, like the itertools module.
+
+  A module’s contents are accessed the same way in all three cases: with the import statement.
+
+  The cool thing about modules  written in Python is that they are exceedingly straightforward to build. 
+  All you need to do is create a file that contains legitimate Python code and then give the file a name with 
+  a .py extension. That’s  it! No special syntax is necessary.
+
+  When the interpreter executes the above import module statement, it searches for mod.py in a list of 
+  directories assembled from the following sources:
+
+   The directory from which the input script was run or the current directory if the interpreter is being run interactively
+   The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH 
+  is OS-dependent but should mimic the PATH environment variable.)
+   An installation-dependent list of directories configured at the time Python is installed
+  The resulting search path is accessible in the Python variable sys.path, which is obtained from a module named sys:
+
+  >>> import sys
+  >>> sys.path
+  ['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
+  'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
+  'C:\\Python36', 'C:\\Python36\\lib\\site-packages']
+
+
+  modify sys.path at run-time so that it contains module directory.
+  >>> sys.path.append(r'C:\Users\john')
+  >>> sys.path
+  ['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
+  'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
+  'C:\\Python36', 'C:\\Python36\\lib\\site-packages', 'C:\\Users\\john']
+  >>> import mod
+
+
+  Once a module has been imported, you can determine the location where it was found with the module’s __file__ attribute:
+  >>> import mod
+  >>> mod.__file__
+  'C:\\Users\\john\\mod.py'
+
+  >>> import mod
+  >>> mod
+  <module 'mod' from 'C:\\Users\\john\\Documents\\Python\\doc\\mod.py'>
+
+    The package is a simple directory having collections of modules. This directory contains Python 
+  modules and also having __init__.py file by which the interpreter interprets it as a Package. 
+  The package is simply a namespace. The package also contains sub-packages inside it. 
+
 -- BEST PRACTICES
 
   - DRY
@@ -1996,6 +2075,19 @@
 
 -- PROBLEM SOLVING
 -- DESIGN PATTERNS
+
+
+-- OSI
+
+  - Application Layer: Applications create the data.
+  - Presentation Layer: Data is formatted and encrypted.
+  - Session Layer: Connections are established and managed.
+  - Transport Layer: Data is broken into segments for reliable delivery.
+  - Network Layer: Segments are packaged into packets and routed.
+  - Data Link Layer: Packets are framed and sent to the next device.
+  - Physical Layer: Frames are converted into bits and transmitted physically.
+
+
 -- HTTP/HTTPS
 -- TCP/UDP
 
@@ -2150,6 +2242,152 @@ This allows the object to be reconstructed and used in the application as if it 
 
  
 -- LINUX
+
+command --help
+
+ls -l -a
+
+cat file-name.txt  (Show file content)
+cat >> file-name.txt  (Start input text to append it to the end of file Ctrl + d to finish)
+cat file1 >> file2  (Concatenate files)
+
+mv file1 file-n destination
+
+rm [name -r *.txt]  
+cp file destination
+
+find path -name file.exmpl
+find . -name file.exmpl
+find . -name "*.exmpl" 
+-iname for ignore case in name
+find . -type d -name dir-name  (Look for directories)
+
+adduser name
+deluser name
+passwd name  (Change password of user)
+cat /etc/passwd  (File contein info about all user in sistem)
+
+Groups eatch uses has 1 primary group (Same as the name of user) and up to 15 secondary groups
+each file own by user primary group.
+addgroup group-name
+delgroup group-name
+usermod -a -G group-name user-name
+  -a (Append)
+  -G (Group)
+groups user-name  (Show to whot groups user belong)
+gpasswd -d user-name group-name  (Remove user from group)
+visudo  (Modify file where permissions of group writen)
+/usr/bin/top  (Path to top command)
+/etc/group  
+su  (Switch user)
+
+Esc :wq  (Mast known command in Linux)
+
+which command  (Show where command is)
+
+cmod [who] [+,-,=] [permission(s)] filename
+cmod a+w file
+cmod a+w file
+cmod -R a+w directory  (Add write permission foa all users to all files in directori recursivly)
+d--- --- ---   permissions for user | permissions for group | permissions for all user in sistem
+d directory
+l link
+- file
+
+u - User
+g - Group
+o - Other
+a - All
+
+chmod g+w, o-rw, a+x file
+chmod -x file  (Remove execute permission from all groups)
+
+top
+htop
+ps  (root user proceses by default ps a to show all)
+ps aux
+You can kill process by id(PID) or name(COMMAND). Send signal to the process
+killall name
+kill id
+apt install something
+
+ifconfig  (Show info about network devises)
+ip -4 addr
+netstat
+curl adress  (Send request to adress)
+curl -X POST --data "some=data&some2=data2" adress
+ping adress
+
+le ~/.ssh/id_rsa*  (Look for RSA keys)
+ssh-keygen -b 4096  (Generate RSA keys)
+ssh-copy-id root@000.000.000.000
+
+
+-- REGULAR EXPRESSION
+
+Character	  Legend	                                             Example	                Sample Match
+\d	        Most engines: one digit from 0 to 9	                 file_\d\d	              file_25
+
+\w	        Most engines: "word character": ASCII                \w-\w\w\w	              A-b_1
+              letter, digit or underscore	
+
+\s	        Most engines: "whitespace character":                a\sb\sc	                a b
+            space, tab, newline, carriage return,                                         c
+            vertical tab	
+
+\D	        One character that is not a digit as                 \D\D\D	                  ABC
+              defined by your engine's \d	
+
+\W	        One character that is not a word character           \W\W\W\W\W	              *-+=)
+              as defined by your engine's \w
+
+\S	        One character that is not a whitespace               \S\S\S\S	                Yoyo
+              character as defined by your engine's \s	
+
++	          One or more	                                         Version\w-\w+	          Version A-b1_1
+{3}	        Exactly three times	                                 \D{3}	                  ABC
+{2,4}	      Two to four times	                                   \d{2,4}	                156
+{3,}	      Three or more times	                                 \w{3,}	                  regex_tutorial
+*	          Zero or more times	                                 A*B*C*	                  AAACC
+?	          Once or none	                                       plurals?	                plural
+
+.	          Any character except line break	                     a.c	                    abc
+\	          Escapes a special character	\.\*\+\?                 \$\^\/\\	.*+?            $^/\
+
+|	          Alternation / OR operand	                           22|33	                  33
+( … )	      Capturing group	                                     A(nt|pple)	              Apple 
+                                                                                          (captures "pple")
+\1	        Contents of Group 1	                                 r(\w)g\1x	              regex
+\2	        Contents of Group 2	                                 (\d\d)\+(\d\d)=\2\+\1	  12+65=65+12
+(?: … )	    Non-capturing group	                                 A(?:nt|pple)	            Apple
+
+\t	        Tab	                                                 T\t\w{2}	                T     ab
+\r	        Carriage return character	                           see below	
+\n	        Line feed character	                                 see below	
+\r\n	      Line separator on Windows	                           AB\r\nCD	                AB
+                                                                                          CD
+
++	          The + (one or more) is "greedy"	                     \d+	                    12345
+?	          Makes quantifiers "lazy"	                           \d+?	                    1 in 12345
+*	          The * (zero or more) is "greedy"	                   A*	                      AAA
+?	          Makes quantifiers "lazy"	                           A*?	                    empty in AAA
+{2,4}	      Two to four times, "greedy"	                         \w{2,4}	                abcd
+?	          Makes quantifiers "lazy"	                           \w{2,4}?	                ab in abcd
+
+[ … ]	      One of the characters in the brackets	               T[ao]p	                  Tap or Top
+-	          Range indicator	                                     [a-z]	                  One lowercase letter
+[x-y]	      One of the characters in the range from x to y	     [A-Z]+	                  GREAT
+[^x]	      One character that is not x	                         [^a-z]{3}	              A1!
+[\d\D]	    One character that is a digit or a non-digit	       [\d\D]+	                Any characters, inc-
+                                                                                          luding new lines, which the  
+                                                                                          regular dot doesn't match
+
+^	          Start of string or start of line depending           ^abc.*	                  abc (line start)
+            on multiline mode. (But when [^inside brackets], 
+            it means "not")	
+$	          End of string or end of line depending on            .*?the end$	            this is the end
+            multiline mode. Many engine-dependent subtleties.
+
 -- MATH
 -- STATISTIC
 
@@ -2182,8 +2420,12 @@ This allows the object to be reconstructed and used in the application as if it 
   In HTTP there are five methods that are commonly used in a REST-based Architecture i.e., POST, GET, PUT, PATCH, 
   and DELETE. These correspond to create, read, update, and delete (or CRUD) operations respectively. There are 
   other methods which are less frequently used like OPTIONS and HEAD.
-  (CRUD stands for Create, Read/Retrieve, Update, and Delete and these are the four basic operations that 
-  we perform on persistence storage.)
+  (CRUD stands for 
+    Create, 
+    Read/Retrieve, 
+    Update, and 
+    Delete 
+  and these are the four basic operations that we perform on persistence storage.) Http methods POST, GET, PUT/PATCH, DELETE
 
 
 -- ACID 

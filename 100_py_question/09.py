@@ -20,3 +20,4 @@ while True:
 
 for line in lst:
     print(line)
+    
