@@ -2444,7 +2444,32 @@ $	          End of string or end of line depending on            .*?the end$	   
   the changes remain intact and can be recovered.
 
   
--- MYSQL
+-- PSQL
+  psql -U username
+  psql -U username -d mydatabase
+  \l  (list daatabases)
+  \du  (list users)
+  \dt  (db tables)
+  \d table_name
+
+  CREATE DATABASE new_database_name;
+  CREATE USER new_username WITH PASSWORD 'password';
+  GRANT ALL PRIVILEGES ON DATABASE database_name TO new_username;
+  ALTER USER new_username WITH SUPERUSER;
+  ALTER USER new_username WITH CREATEDB;
+
+  psql -h remote_server_address -U your_username -d your_database
+
+  DROP USER username
+  DROP DATABASE database_name;
+
+  home=>: This is the standard prompt in psql. It shows that you are connected to the home 
+    database and psql is ready to accept a new command.
+  home->: This prompt indicates that a command is continued on the next line. 
+  home'>: This prompt appears when you have an open quote in your command. 
+
+
+
 -- PANDAS
 -- Matplotlib
 
