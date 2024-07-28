@@ -625,6 +625,16 @@
 
  All pyhton exeptions: https://docs.python.org/3/library/exceptions.html
 
+  assert:
+  >>> number = 42
+  >>> assert number > 0, f"number greater than 0 expected, got: {number}"
+
+  >>> number = -42
+  >>> assert number > 0, f"number greater than 0 expected, got: {number}"
+  Traceback (most recent call last):
+      ...
+  AssertionError: number greater than 0 expected, got: -42
+
 
 -- ITERABLES
 
