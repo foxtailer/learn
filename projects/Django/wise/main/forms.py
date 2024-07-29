@@ -1,5 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import AbstractUser
 
-class CustomAuthenticationForm(AuthenticationForm):
-    remember_me = forms.BooleanField(required=False)
+class UserLoginForm(AuthenticationForm):
+  username = forms.CharField() 
+  password = forms.CharField()
+
+  class Meta:
+    model = AbstractUser

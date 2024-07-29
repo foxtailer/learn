@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from explore.models import Wisdom, User
+from explore.models import Wisdom
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
