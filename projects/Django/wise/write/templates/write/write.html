@@ -60,7 +60,7 @@
 <form class="write-form" action="addwise/" method="post">
   {% csrf_token %}
   <textarea class="write-form__user-input" name="text"></textarea>
-  <input type="checkbox" id="allow-answer" checked>
+  <input type="checkbox" id="allow-answer" name="answer" checked>
   <label for="allow-answer">Allow answer</label>
 
   <div class="add-btn__wrapper">

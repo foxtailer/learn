@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'explore',
     'letters',
     'members',
+    'taggit',
     'write',
     'main',
     'my',

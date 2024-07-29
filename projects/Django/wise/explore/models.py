@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 import random
 import string
-import random
+
 
 # Function to generate a unique 6-character ID
 # def generate_unique_id():
@@ -21,8 +22,9 @@ class Wisdom(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted')
     text = models.TextField(max_length=1000, verbose_name='text')
     report = models.PositiveIntegerField(default=0, verbose_name='report')
-    accepted = models.ManyToManyField(User, related_name='accepted')
-    reply = models.BooleanField()
+    accepted = models.ManyToManyField(User, related_name='accepted', blank=True)
+    reply = models.BooleanField(default=True)
+    tags = TaggableManager(blank=True)
 
     @classmethod
     def wisdome_choice(cls):

@@ -9,7 +9,12 @@ from django.contrib.auth.decorators import login_required
 @require_GET
 def get_random_wisdom(request):
     random_wisdome = Wisdom.wisdome_choice()  # Assuming get_random is a class method
-    return JsonResponse({'wisdom': random_wisdome.text, 'wisdom_id': random_wisdome.pk, 'wisdom_author': random_wisdome.author.id})
+    #tags = [tag.name for tag in random_wisdome.tags.all()]
+    return JsonResponse({'wisdom': random_wisdome.text, 
+                        'wisdom_id': random_wisdome.pk, 
+                        'wisdom_author': random_wisdome.author.id,
+                        #'tag': tags,
+                        'reply': random_wisdome.reply,})
 
 
 @require_POST

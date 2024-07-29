@@ -59,10 +59,11 @@
 
 {% block main %}
 <div class="wisdom_inner">
-  <p class="wisdom">{{wisdom}}Some test</p>
+  
+  <p class="wisdom" id="wisdom">{{wisdom.0.text}}</p> 
 
   <div class="my-wisdom__controls">
-    <button class="wisdom__prev">
+    <a class="wisdom__prev" id="" {% if wisdom.has_previous %} href="?wisdom={{ wisdom.previous_page_number }}" {% else %} href="" {% endif %}>
       <svg width="30px" height="30px" viewBox="-4.5 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="Dribbble-Light-Preview" transform="translate(-385.000000, -6679.000000)" fill="#000000">
@@ -71,12 +72,12 @@
                 </g>
             </g>
         </g>
-    </svg>
-  </button>
+      </svg>
+    </a>
 
-  <input class="my-wisdom__page" type="text">
+  <input class="my-wisdom__page" id="my-wisdom__page" type="text" placeholder="{{ wisdom.number }}">
 
-  <button class="wisdom__next">
+  <a class="wisdom__next" id="" {% if wisdom.has_next %} href="?wisdom={{ wisdom.next_page_number }}" {% else %} href="" {% endif %}>
     <svg height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.448 478.448" xml:space="preserve">
       <g>
@@ -85,7 +86,54 @@
         </g>
       </g>
     </svg>
-  </button>
+  </a>
   </div>
 </div>
 {% endblock %}
+
+{% block bottom-menu__items %}
+<li class="bottom-menu__item">
+  <button class="bottom-menu__btn" id="">
+    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+        stroke="#323232" stroke-width="2" />
+      <path d="M12 8L12 13" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+      <path d="M12 16V15.9888" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </button>
+</li>
+<li class="bottom-menu__item">
+  <button class="bottom-menu__btn" id="">
+    <svg fill="#000000" width="30px" height="30px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1585.963 1920 960.48 1544.711 335 1920V170.586C335 76.536 411.536 0 505.586 0h909.79c94.05 0 170.587 76.536 170.587 170.586V1920Z"
+        fill-rule="evenodd" />
+    </svg>
+  </button>
+</li>
+{% endblock %}
+
+{% block btn_script %}
+<script>
+  document.getElementById('wisdom__prev').addEventListener('click', function() {
+      fetch("{% url 'my:wisdom_prev' %}")
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('wisdom').innerText = data.wisdom;
+              document.getElementById('my-wisdom__page').placeholder = data.n;
+          })
+          .catch(error => console.error('Error:', error));
+  });
+
+  document.getElementById('wisdom__next').addEventListener('click', function() {
+      fetch("{% url 'my:wisdom_next' %}")
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('wisdom').innerText = data.wisdom;
+              document.getElementById('my-wisdom__page').placeholder = data.n;
+          })
+          .catch(error => console.error('Error:', error));
+  });
+</script>
+{% endblock  %}
