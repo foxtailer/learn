@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
-from users.forms import UserLoginForm, UserRegistrationForm
+from users.forms import UserLoginForm, UserRegistrationForm, ProfileForm
 
 
 def login(request):
@@ -18,7 +19,7 @@ def login(request):
         auth.login(request, user)
         return HttpResponseRedirect(reverse('main:home'))
   else:
-    form = UserLoginForm
+    form = UserLoginForm()
     
   context = {
     'title': 'Home - login',
@@ -37,7 +38,7 @@ def registration(request):
       auth.login(request, user)
       return HttpResponseRedirect(reverse('main:home'))
   else:
-    form = UserRegistrationForm
+    form = UserRegistrationForm()
 
   context = {
     'title': 'Home - registration',
@@ -46,15 +47,26 @@ def registration(request):
 
   return render(request, 'users/registration.html', context)
 
-
+@login_required
 def profile(request):
+  if request.method == 'POST':
+    form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES )
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect(reverse('user:profile'))
+  else:
+    form = ProfileForm(instance=request.user)
+
   context = {
     'title': 'Home - profile',
+    'form': form,
   }
 
   return render(request, 'users/profile.html', context)
 
 
+@login_required
 def logout(request):
   auth.logout(request)
+  messages.success(request, "HOHOHO!")
   return redirect(reverse('main:home'))
