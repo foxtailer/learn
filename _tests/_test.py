@@ -1,7 +1,7 @@
-class A:
+file = open("test.txt", 'a')
+i = 5
+while i != 0:
+   file.write(str(i))
+   i-=1
 
-    def say_hello(self):
-        print('Hello!')
-
-a = A
-A.say_hello(a)
+file.close()

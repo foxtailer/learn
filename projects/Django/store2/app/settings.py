@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'goods',
     'dbtest',
     'users',
+    'carts',
 ]
 
 MIDDLEWARE = [

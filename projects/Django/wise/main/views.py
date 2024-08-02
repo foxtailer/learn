@@ -1,16 +1,24 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
-from main.forms import UserLoginForm
+from main.forms import UserLoginForm, UserRegistrationForm
 
 
 def main(request):
-  return render(request, 'main/main.html')
+  fail = request.GET.get('fail', 'False') == "True"
+
+  context = {
+    'fail': fail,
+  }
+
+  return render(request, 'main/main.html', context)
 
 
-def reg_log(request):
+def login(request):
   form = UserLoginForm(data=request.POST)
   if form.is_valid():
     username = request.POST['username']  
@@ -22,7 +30,6 @@ def reg_log(request):
       return HttpResponseRedirect(reverse('main:index'))
     
   fail = True
-  form = UserLoginForm()
     
   context = {
     'fail': fail,
@@ -30,3 +37,26 @@ def reg_log(request):
   }
 
   return render(request, 'main/main.html', context)
+
+
+def registration(request):
+  if request.method == 'POST':
+    form = UserRegistrationForm(data=request.POST)
+    if form.is_valid():
+      form.save()
+      user = form.instance
+      auth.login(request, user)
+      return HttpResponseRedirect(reverse('main:index'))
+  else:
+    form = UserRegistrationForm()
+
+  context = {
+    'form': form,
+  }
+
+  return render(request, 'main/registration.html', context)
+
+@login_required
+def logout(request):
+  auth.logout(request)
+  return redirect(reverse('main:index'))

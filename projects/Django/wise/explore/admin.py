@@ -1,5 +1,5 @@
 from django.contrib import admin
-from explore.models import User, Wisdom
+from explore.models import Wisdom
 # Register your models here.
 
 admin.site.register(Wisdom)

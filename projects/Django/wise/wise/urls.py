@@ -24,6 +24,4 @@ urlpatterns = [
     path('write/', include('write.urls', namespace='write')),
     path('', include('main.urls', namespace='main')),
     path('my/', include('my.urls', namespace='my')),
-    path('members/', include('django.contrib.auth.urls')),
-    path('members/', include('members.urls')),
 ]

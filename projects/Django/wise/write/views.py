@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from explore.models import Wisdom
-from django.contrib.auth.models import User
+from main.models import User
 
 
 def write(request):

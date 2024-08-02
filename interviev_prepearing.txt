@@ -1273,6 +1273,108 @@
  code implementation and this is where data abstraction came.
  Data Abstraction in Python can be achieved by creating abstract classes.
 
+ - Descriptors
+ In Python, a descriptor is an object attribute with "binding behavior," meaning it can control 
+ how an attribute is accessed, modified, or deleted. Descriptors are a way to customize the behavior 
+ of attributes through methods implemented in a separate class. The descriptor protocol consists of 
+ three methods: __get__, __set__, and __delete__.
+
+  Here's a brief explanation of each method:
+
+  __get__(self, instance, owner): This method is called when the attribute is accessed. 
+    If the attribute is accessed through an instance, instance is the instance of the class. 
+    If the attribute is accessed through the class, instance is None.
+
+  __set__(self, instance, value): This method is called when a value is assigned to the attribute.
+
+  __delete__(self, instance): This method is called when the attribute is deleted.
+
+  Here’s a simple example to illustrate the concept:
+
+    class Descriptor:
+        def __init__(self, name):
+            self.name = name
+
+        def __get__(self, instance, owner):
+            print(f"Getting {self.name}")
+            return instance.__dict__[self.name]
+
+        def __set__(self, instance, value):
+            print(f"Setting {self.name} to {value}")
+            instance.__dict__[self.name] = value
+
+        def __delete__(self, instance):
+            print(f"Deleting {self.name}")
+            del instance.__dict__[self.name]
+
+
+    class MyClass:
+        attribute = Descriptor('attribute')
+
+    obj = MyClass()
+    obj.attribute = 10  # Output: Setting attribute to 10
+    print(obj.attribute)  # Output: Getting attribute \n 10
+    del obj.attribute  # Output: Deleting attribute
+
+  - Property
+  In Python, the @property decorator is used to define methods in a class that act like attributes, 
+  allowing for controlled access to instance variables. This allows you to implement getter, setter, 
+  and deleter methods for an attribute without directly exposing the attribute itself. It is a way to 
+  encapsulate and manage access to the attributes of a class.
+
+  Using @property Decorator
+  Here’s an example that demonstrates how to use the @property decorator:
+
+  class MyClass:
+      def __init__(self, value):
+          self._value = value
+
+      @property
+      def value(self):
+          """The getter method"""
+          return self._value
+
+      @value.setter
+      def value(self, new_value):
+          """The setter method"""
+          if new_value < 0:
+              raise ValueError("Value cannot be negative")
+          self._value = new_value
+
+      @value.deleter
+      def value(self):
+          """The deleter method"""
+          del self._value
+
+  # Usage
+  obj = MyClass(10)
+  print(obj.value)  # Output: 10
+
+  obj.value = 20
+  print(obj.value)  # Output: 20
+
+  # obj.value = -5  # Raises ValueError: Value cannot be negative
+
+  del obj.value
+  # print(obj.value)  # Raises AttributeError: 'MyClass' object has no attribute '_value'
+  Explanation
+  Getter Method:
+
+  @property is used to define the getter method for the value attribute.
+  When obj.value is accessed, the value method is called.
+  Setter Method:
+
+  @value.setter is used to define the setter method for the value attribute.
+  When obj.value = new_value is executed, the value method decorated with @value.setter is called.
+  Deleter Method:
+
+  @value.deleter is used to define the deleter method for the value attribute.
+  When del obj.value is executed, the value method decorated with @value.deleter is called.
+  Benefits of Using @property
+  Encapsulation: You can hide the internal representation of an attribute and control how it is accessed and modified.
+  Validation: You can add validation logic in the setter method to ensure that the data is in the expected format.
+  Read-only Attributes: By only defining a getter method, you can make an attribute read-only.
+
 
 -- MIXIN 
   A mixin is a class that provides method implementations for reuse by multiple related child classes. However, 
