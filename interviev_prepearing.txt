@@ -2512,7 +2512,44 @@ $	          End of string or end of line depending on            .*?the end$	   
  microservises
 
 -- FLASK
+
+
 -- DOCKER
+
+  Docker is a platform that uses containers to run applications. Containers are lightweight, standalone, 
+  and executable units that include everything needed to run a piece of software, such as the code, runtime, 
+  libraries, and system tools.
+
+  The main purpose of Docker is to ensure that applications work seamlessly in any environment, whether 
+  it's a developer's local machine, a test environment, or a production server. This consistency helps 
+  eliminate the "it works on my machine" problem.
+
+  How Docker Works
+  Images: Docker images are read-only templates that contain the instructions to create a container. They 
+  include the application code, dependencies, libraries, and configurations. Images can be based on other 
+  images, allowing you to build layers of functionality.
+
+  Containers: Containers are instances of Docker images. They run applications in an isolated environment, 
+  sharing the host system's kernel but with their own filesystem, network interfaces, and process tree. 
+  Containers are lightweight and start quickly.
+
+  Dockerfile: This is a text file that contains a set of instructions on how to build a Docker image. 
+  It includes commands to install software, copy files, and configure the environment.
+
+  Docker Engine: This is the core part of Docker, responsible for running and managing containers. 
+  It includes a daemon that performs container operations and a client that allows users to interact with the daemon.
+
+  Docker Hub: A cloud-based registry service where Docker users can store and share images. You can use Docker 
+  Hub to find official images for various applications and operating systems.
+
+  Basic Docker Commands
+    docker build: Builds an image from a Dockerfile.
+    docker pull: Downloads an image from a registry (like Docker Hub).
+    docker run: Runs a container from an image.
+    docker ps: Lists running containers.
+    docker stop: Stops a running container.
+    docker rm: Removes a container.
+    docker rmi: Removes an image.
 
 
 -- REST API

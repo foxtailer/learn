@@ -33,4 +33,7 @@ class Wisdom(models.Model):
             return None
         random_index = random.randint(0, count - 1)
         return cls.objects.all()[random_index]
+    
+    def __str__(self):
+        return self.text[:10] + "..."
 

@@ -9,9 +9,18 @@ def write(request):
   return render(request, 'write/write.html')
 
 def addwise(request):
-  #return HttpResponse('gg')
   text = request.POST['text']
-  reply = True if request.POST.get('answer', False) else False
-  wisdom = Wisdom(author=User.objects.get(id=1),text=text, report=0, reply=reply)
-  wisdom.save()
+  if text:
+    reply = True if request.POST.get('answer', False) else False
+    
+    if request.POST['user'] == 'None':
+      user = 1
+    else:
+      user = request.POST['user'] 
+
+    wisdom = Wisdom(author=User.objects.get(id=user),
+                    text=text, 
+                    report=0, 
+                    reply=reply)
+    wisdom.save()
   return HttpResponseRedirect(reverse('write:index'))
