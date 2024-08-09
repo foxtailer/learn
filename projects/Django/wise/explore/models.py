@@ -33,6 +33,12 @@ class Wisdom(models.Model):
             return None
         random_index = random.randint(0, count - 1)
         return cls.objects.all()[random_index]
+
+        # wisdom_ids = cls.objects.values_list('id', flat=True)
+        # if not wisdom_ids:
+        #     return None
+        # random_id = random.choice(wisdom_ids)
+        # return cls.objects.filter(id=random_id).first()
     
     def __str__(self):
         return self.text[:10] + "..."

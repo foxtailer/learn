@@ -9,8 +9,19 @@ import json
 import os
 
 
+# Create a new log file
+script_path = os.path.realpath(__file__)
+script_dir = os.path.dirname(script_path)
+log_id = 1
+while os.path.exists(os.path.join(script_dir, f"log_{log_id}.txt")):
+    log_id += 1
+
+log_file_path = os.path.join(script_dir, f"log_{log_id}.txt")
+log_file = open(log_file_path, "w")
+
+
 # Create SQLite database and tables
-conn = sqlite3.connect('github_repos.db')
+conn = sqlite3.connect(script_dir + 'github_repos.db')
 cursor = conn.cursor()
 
 cursor.execute('''
@@ -192,17 +203,6 @@ def convert_to_number(value):
         return int(float(value.replace('M', '')) * 1000000)
     else:
         return int(value)
-
-
-# Create a new log file
-script_path = os.path.realpath(__file__)
-script_dir = os.path.dirname(script_path)
-log_id = 1
-while os.path.exists(os.path.join(script_dir, f"log_{log_id}.txt")):
-    log_id += 1
-
-log_file_path = os.path.join(script_dir, f"log_{log_id}.txt")
-log_file = open(log_file_path, "w")
 
 
 # Main loop

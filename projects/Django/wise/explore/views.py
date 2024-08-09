@@ -18,17 +18,40 @@ def get_random_wisdom(request):
 
 
 @require_POST
-def like_wisdom(request):
-    # wisdom_id = request.POST.get('wisdom_id')
-    # wisdom = get_object_or_404(Wisdom, id=wisdom_id)
-    # wisdom.accepted.add(request.user)
-    # return JsonResponse({'status': 'liked', 'quote_id': wisdom_id})
-    return HttpResponse('gg')
+def report_wisdom(request):
+    wisdom_id = request.POST.get('wisdom_id')
+    try:
+        wisdom = Wisdom.objects.get(id=wisdom_id)
+        wisdom.report += 1
+        wisdom.save()
+        return JsonResponse({'status': 'success', 'report': wisdom.report})
+    except Wisdom.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Wisdom not found'}, status=404)
 
-def explore(request):
-  wisdom = Wisdom.wisdome_choice()
+
+def explore(request, wisdom_id=10):
+  wisdom = Wisdom.objects.get(pk=wisdom_id)
+  next = Wisdom.wisdome_choice().id
   context = {
-    "wisdom": wisdom
+    "wisdom": wisdom,
+    "next": next,
   }
 
   return render(request, 'explore/explore.html', context)
+
+
+@login_required
+@require_POST
+def accept_wisdom(request):
+    wisdom_id = request.POST.get('wisdom_id')
+    user = request.user
+    
+    try:
+        wisdom = Wisdom.objects.get(id=wisdom_id)
+        if user in wisdom.accepted.all():
+            return JsonResponse({'status': 'error', 'message': 'Already accepted'}, status=400)
+
+        wisdom.accepted.add(user)
+        return JsonResponse({'status': 'success', 'accepted_count': wisdom.accepted.count()})
+    except Wisdom.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Wisdom not found'}, status=404)

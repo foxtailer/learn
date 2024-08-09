@@ -37,32 +37,9 @@
 <div class="wisdom_inner">
   <p class="wisdom" id="wisdom">{{wisdom.text}}</p>
 
-  {% comment %} <button class="show-tags_btn"># &#xfe40;</button>
-  
-  <div class="tags" id="tags">
-    Tags:  
-    <div id="tags-box">
-        {% for tag in wisdom.tags.all %}
-
-            #COMMENT! <a href="{% url 'blog:post_list_by_tag' tag.slug %}" id="tag-link"> 
-
-            <a href="" id="tag-link">
-                {{ tag.name }}
-            </a>    
-            {% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </div>
-  </div> 
-  {% endcomment %}
 
   <div class="control">
-    {% comment %} <button class="search" id="">
-      <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99996 2C9.44768 2 8.99996 2.44772 8.99996 3V4.58178C8.30471 4.86318 7.65844 5.23923 7.07704 5.69365L5.70573 4.90193C5.47605 4.76932 5.20309 4.73338 4.94691 4.80202C4.69073 4.87067 4.47232 5.03827 4.33971 5.26795L2.33971 8.73205C2.06357 9.21034 2.22744 9.82193 2.70573 10.0981L4.07654 10.8895C4.02603 11.2528 3.99997 11.6236 3.99997 12C3.99997 12.3764 4.02603 12.7471 4.07654 13.1105L2.70574 13.9019C2.47605 14.0345 2.30846 14.2529 2.23981 14.5091C2.17117 14.7653 2.2071 15.0382 2.33971 15.2679L4.33971 18.732C4.47232 18.9617 4.69074 19.1293 4.94692 19.198C5.2031 19.2666 5.47605 19.2307 5.70574 19.0981L7.07706 18.3063C7.65846 18.7607 8.30472 19.1368 8.99996 19.4182V21C8.99996 21.5523 9.44768 22 9.99996 22H14C14.5522 22 15 21.5523 15 21V19.4182C15.6952 19.1368 16.3415 18.7607 16.9229 18.3063L18.2942 19.0981C18.5239 19.2307 18.7968 19.2666 19.053 19.198C19.3092 19.1293 19.5276 18.9617 19.6602 18.7321L21.6602 15.268C21.7928 15.0383 21.8288 14.7653 21.7601 14.5091C21.6915 14.253 21.5239 14.0345 21.2942 13.9019L19.9234 13.1105C19.9739 12.7472 20 12.3764 20 12C20 11.6236 19.9739 11.2528 19.9234 10.8895L21.2942 10.0981C21.7725 9.82191 21.9364 9.21032 21.6602 8.73203L19.6602 5.26793C19.5276 5.03824 19.3092 4.87065 19.053 4.802C18.7968 4.73336 18.5239 4.76929 18.2942 4.9019L16.9229 5.69364C16.3415 5.23922 15.6952 4.86318 15 4.58178V3C15 2.44772 14.5522 2 14 2H9.99996ZM11 5.28986V4H13V5.28986C13 5.73228 13.2907 6.12211 13.7147 6.24831C14.6258 6.51947 15.4475 7.00198 16.1223 7.64029C16.4436 7.94424 16.9264 8.00099 17.3095 7.77984L18.4282 7.13395L19.4282 8.866L18.3109 9.51107C17.9281 9.73205 17.7358 10.1781 17.8379 10.6081C17.9437 11.0538 18 11.5197 18 12C18 12.4803 17.9437 12.9462 17.8379 13.3919C17.7358 13.8219 17.9281 14.2679 18.3109 14.4889L19.4282 15.134L18.4282 16.866L17.3094 16.2201C16.9264 15.999 16.4436 16.0557 16.1222 16.3597C15.4475 16.998 14.6258 17.4805 13.7147 17.7516C13.2907 17.8778 13 18.2677 13 18.7101V20H11V18.7101C11 18.2677 10.7092 17.8778 10.2852 17.7516C9.37409 17.4805 8.55246 16.998 7.87767 16.3597C7.55635 16.0557 7.07352 15.999 6.69048 16.2201L5.57176 16.866L4.57176 15.134L5.68905 14.4889C6.0718 14.2679 6.26409 13.8219 6.16201 13.3919C6.05621 12.9462 5.99997 12.4803 5.99997 12C5.99997 11.5197 6.0562 11.0538 6.16201 10.6081C6.26409 10.1781 6.07179 9.73207 5.68905 9.51109L4.57176 8.86603L5.57176 7.13398L6.69046 7.77986C7.07351 8.00101 7.55633 7.94425 7.87766 7.6403C8.55245 7.00199 9.37409 6.51948 10.2852 6.24831C10.7092 6.12211 11 5.73228 11 5.28986ZM9.99998 12C9.99998 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 9.99998 13.1046 9.99998 12ZM12 8C9.79084 8 7.99998 9.79086 7.99998 12C7.99998 14.2091 9.79084 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" fill="#000000"/>
-        </svg>
-    </button> {% endcomment %}
-  
-    <button class="wisdom__next" id="new-wisdom-button">
+    <a class="wisdom__next" id="new-wisdom-button" href="{% url "explore:index" next %}">
       <svg height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.448 478.448" xml:space="preserve">
         <g>
@@ -71,14 +48,14 @@
           </g>
         </g>
       </svg>
-    </button>
+    </a>
   </div>
 </div>
 {% endblock %}
 
 {% block bottom-menu__items %}
 <li class="bottom-menu__item">
-  <button class="bottom-menu__btn">
+  <button class="bottom-menu__btn" id="report_btn" data-wisdom-id="{{ wisdom.id }}">
     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="{% if not user.id %} gray {% else %} #000000 {% endif %}" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
@@ -90,7 +67,7 @@
 </li>
 
 <li class="bottom-menu__item">
-  <button class="bottom-menu__btn" id="">
+  <button class="bottom-menu__btn" id="bookmark_btn" data-wisdom-id="{{ wisdom.id }}">
     <svg fill="{% if not user.id %} gray {% else %} #000000 {% endif %}" width="30px" height="30px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M1585.963 1920 960.48 1544.711 335 1920V170.586C335 76.536 411.536 0 505.586 0h909.79c94.05 0 170.587 76.536 170.587 170.586V1920Z"
@@ -100,15 +77,6 @@
 </li>
 
 <li class="bottom-menu__item" id="answer-link">
-  {% comment %} {% if wisdom.reply %}
-  <a class="bottom-menu__link" href="write.html">
-    <svg width="30px" height="30px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M470.7 20L368.2 49.81l41.5-28.09c-26.2 5.92-59.3 17.5-100.9 36.19l-67.9 70.79L265 79.25c-23.3 12.96-48 29.95-71.8 49.85l-15.8 64.3-3.4-47.6c-23.5 21.6-45.6 45.6-63.9 70.9-19.23 26.5-34.26 54.5-41.79 82.4l-28.12-18.8c2.52 23.7 10.31 44.3 23.09 63.2l-33.62-10.3c7.64 23.5 20.13 38.7 41.25 51-11.83 33.3-17.38 68.1-23.34 102.8l18.4 3.1C87.31 277.4 237.9 141.8 374 81.72l6.9 17.38c-121.7 54.5-216.3 146.5-265.8 279.1 18.1.1 35.8-2.1 52.2-6.3l4.9-60.9 13.1 55.5c10.9-4 20.9-8.8 29.8-14.4l-20.7-43.5 32.8 34.8c8-6.4 14.6-13.6 19.6-21.5 30.4-47.5 62.2-94.7 124.8-134.2l-45.7-16.2 70.1 2.1c11.4-5.8 23.4-12.9 32.5-19.6l-49.7-4 74.7-17.6c5.8-5.8 11.2-11.9 16.1-18 17.3-21.94 29-44.78 26.2-65.55-1.3-10.39-7.5-20.16-17.6-25.63-2.5-1.3-5.2-2.45-7.5-3.22z"/></svg>
-  </a>
-  {% else %}
-  <a class="bottom-menu__link" href="#">
-    <svg width="30px" height="30px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#353535" d="M470.7 20L368.2 49.81l41.5-28.09c-26.2 5.92-59.3 17.5-100.9 36.19l-67.9 70.79L265 79.25c-23.3 12.96-48 29.95-71.8 49.85l-15.8 64.3-3.4-47.6c-23.5 21.6-45.6 45.6-63.9 70.9-19.23 26.5-34.26 54.5-41.79 82.4l-28.12-18.8c2.52 23.7 10.31 44.3 23.09 63.2l-33.62-10.3c7.64 23.5 20.13 38.7 41.25 51-11.83 33.3-17.38 68.1-23.34 102.8l18.4 3.1C87.31 277.4 237.9 141.8 374 81.72l6.9 17.38c-121.7 54.5-216.3 146.5-265.8 279.1 18.1.1 35.8-2.1 52.2-6.3l4.9-60.9 13.1 55.5c10.9-4 20.9-8.8 29.8-14.4l-20.7-43.5 32.8 34.8c8-6.4 14.6-13.6 19.6-21.5 30.4-47.5 62.2-94.7 124.8-134.2l-45.7-16.2 70.1 2.1c11.4-5.8 23.4-12.9 32.5-19.6l-49.7-4 74.7-17.6c5.8-5.8 11.2-11.9 16.1-18 17.3-21.94 29-44.78 26.2-65.55-1.3-10.39-7.5-20.16-17.6-25.63-2.5-1.3-5.2-2.45-7.5-3.22z"/></svg>
-  </a>
-  {% endif %} {% endcomment %}
   <a class="bottom-menu__link" href="#">
     <svg width="30px" height="30px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="{% if not user.id %} gray {% else %} #000000 {% endif %}" d="M470.7 20L368.2 49.81l41.5-28.09c-26.2 5.92-59.3 17.5-100.9 36.19l-67.9 70.79L265 79.25c-23.3 12.96-48 29.95-71.8 49.85l-15.8 64.3-3.4-47.6c-23.5 21.6-45.6 45.6-63.9 70.9-19.23 26.5-34.26 54.5-41.79 82.4l-28.12-18.8c2.52 23.7 10.31 44.3 23.09 63.2l-33.62-10.3c7.64 23.5 20.13 38.7 41.25 51-11.83 33.3-17.38 68.1-23.34 102.8l18.4 3.1C87.31 277.4 237.9 141.8 374 81.72l6.9 17.38c-121.7 54.5-216.3 146.5-265.8 279.1 18.1.1 35.8-2.1 52.2-6.3l4.9-60.9 13.1 55.5c10.9-4 20.9-8.8 29.8-14.4l-20.7-43.5 32.8 34.8c8-6.4 14.6-13.6 19.6-21.5 30.4-47.5 62.2-94.7 124.8-134.2l-45.7-16.2 70.1 2.1c11.4-5.8 23.4-12.9 32.5-19.6l-49.7-4 74.7-17.6c5.8-5.8 11.2-11.9 16.1-18 17.3-21.94 29-44.78 26.2-65.55-1.3-10.39-7.5-20.16-17.6-25.63-2.5-1.3-5.2-2.45-7.5-3.22z"/></svg>
   </a>
@@ -117,61 +85,67 @@
 
 {% block btn_script %}
 <script>
-  document.getElementById('new-wisdom-button').addEventListener('click', function() {
-      fetch("{% url 'explore:get_random_wisdom' %}")
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)  //  CONSOLE! DEL
-              document.getElementById('wisdom').innerText = data.wisdom +" "+ data.wisdom_id +" "+ data.wisdom_author;
-              
-              {% comment %} const box = document.getElementById('tags-box');
-              box.innerHTML = '';
-              box.style.display = 'inherit'; {% endcomment %}
-              
-              if (data.tag && data.tag.length > 0) {
-                data.tag.forEach(function(tag) {
-                    const a = document.createElement('a');
-                    a.innerText = tag;
-                    a.href = "#"; // You can modify this to link to the appropriate tag page
-                    box.appendChild(a);
-                });
-              }
+    document.getElementById('report_btn').addEventListener('click', function() {
+        const wisdomId = this.getAttribute('data-wisdom-id');
+        const button = this;
 
-              {% comment %} if (data.reply) {
-                answer-link -> svg color // TODO
-              } {% endcomment %}
-          })
-          //.catch(error => console.error('Error:', error));
-  });
+        button.disabled = true;
 
-  {% comment %} document.querySelector('.show-tags_btn').addEventListener('click', function() {
-            const tagsDiv = document.getElementById('tags');
-            if (tagsDiv.style.display === 'none' || tagsDiv.style.display === '') {
-                tagsDiv.style.display = 'flex'; // Show the tags div
-            } else {
-                tagsDiv.style.display = 'none'; // Hide the tags div
-            }
-  }); {% endcomment %}
-
-  $(document).ready(function(){
-    $('#add-wisdom-btn').click(function(){
-        //const quoteId = $(this).data('quote-id');
-        $.ajax({
-            type: 'POST',
-            url: '{% url "explore:like" %}',
-            //'wisdom_id': quoteId,
-            //'csrfmiddlewaretoken': '{{ csrf_token }}'
-            data: {
-              'wisdom_id': 1,
-              'csrfmiddlewaretoken': 'gg'
+        fetch('{% url "explore:like" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
             },
-            success: function(response){
-                if(response.status === 'liked'){
-                    alert('You liked the quote!');
-                }
+            body: new URLSearchParams({
+                'wisdom_id': wisdomId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Report incremented. New report count:', data.report);
+            } else {
+                console.error('Error:', data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     });
+
+
+    document.getElementById('bookmark_btn').addEventListener('click', function() {
+      const wisdomId = this.getAttribute('data-wisdom-id');
+      const button = this; // Save reference to the button
+
+      // Disable the button to prevent multiple clicks
+      button.disabled = true;
+
+      fetch('{% url "explore:accept_wisdom" %}', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'X-CSRFToken': '{{ csrf_token }}' // Include the CSRF token for security
+          },
+          body: new URLSearchParams({
+              'wisdom_id': wisdomId
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              console.log('Wisdom accepted. New accepted count:', data.accepted_count);
+              button.textContent = 'Accepted'; // Optionally update the button text
+          } else {
+              console.error('Error:', data.message);
+              button.disabled = false; // Re-enable the button if there's an error
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          button.disabled = false; // Re-enable the button if there's an error
+      });
   });
 </script>
 {% endblock  %}
