@@ -22,6 +22,7 @@ class Wisdom(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted')
     text = models.TextField(max_length=1000, verbose_name='text')
     report = models.PositiveIntegerField(default=0, verbose_name='report')
+    reported_by = models.ManyToManyField(User, related_name='reported_wisdoms', blank=True)
     accepted = models.ManyToManyField(User, related_name='accepted', blank=True)
     reply = models.BooleanField(default=True)
     tags = TaggableManager(blank=True)

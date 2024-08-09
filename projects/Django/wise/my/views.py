@@ -15,7 +15,17 @@ def my(request):
   context = {
     'wisdom': posts
   }
-  print( posts.has_next())
+  return render(request, 'my/my.html', context)
+
+@login_required
+def my_del(request):
+  wisdom = Wisdom.objects.all()
+  paginator = Paginator(wisdom, 1)
+  page_number = request.GET.get('wisdom', 1)
+  posts = paginator.page(page_number)
+  context = {
+    'wisdom': posts
+  }
   return render(request, 'my/my.html', context)
 
 @require_GET

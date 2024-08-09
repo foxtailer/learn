@@ -20,21 +20,26 @@ def get_random_wisdom(request):
 @require_POST
 def report_wisdom(request):
     wisdom_id = request.POST.get('wisdom_id')
+    user = request.user
     try:
         wisdom = Wisdom.objects.get(id=wisdom_id)
         wisdom.report += 1
+        wisdom.reported_by.add(user)
         wisdom.save()
         return JsonResponse({'status': 'success', 'report': wisdom.report})
     except Wisdom.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Wisdom not found'}, status=404)
 
 
-def explore(request, wisdom_id=10):
+def explore(request, wisdom_id=11):
   wisdom = Wisdom.objects.get(pk=wisdom_id)
   next = Wisdom.wisdome_choice().id
+  reported_user_ids = wisdom.reported_by.values_list('id', flat=True)
+
   context = {
     "wisdom": wisdom,
     "next": next,
+    "reported_by":reported_user_ids,
   }
 
   return render(request, 'explore/explore.html', context)

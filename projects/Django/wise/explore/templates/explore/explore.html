@@ -56,7 +56,7 @@
 {% block bottom-menu__items %}
 <li class="bottom-menu__item">
   <button class="bottom-menu__btn" id="report_btn" data-wisdom-id="{{ wisdom.id }}">
-    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="{% if not user.id %} gray {% else %} #000000 {% endif %}" xmlns="http://www.w3.org/2000/svg">
+    <svg id="report_svg" width="30px" height="30px" viewBox="0 0 24 24" fill="{% if not user.id %} gray {% else %} #f7f7f7 {% endif %}" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
         stroke="#323232" stroke-width="2" />
@@ -147,5 +147,20 @@
           button.disabled = false; // Re-enable the button if there's an error
       });
   });
+
+
+  {% for report_user_id in reported_by %}
+    {% if report_user_id == user.id %}
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const button = document.getElementById('report_btn');
+      const svg = document.getElementById('report_svg');
+  
+      if (button && svg) {
+        button.disabled = true; // Disable the button
+        svg.setAttribute('fill', 'red'); // Change SVG fill color to red
+      }
+    });
+    {% endif %}
+  {% endfor %}
 </script>
 {% endblock  %}
