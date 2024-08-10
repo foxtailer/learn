@@ -20,7 +20,7 @@ def get_data(file_name):
     path = os.path.join(script_dir, file_name)
 
     try:
-        df = pd.read_csv(path)
+        df = pd.read_csv(file_name)
         df = df.pivot_table(index=['year', 'month'], columns = 'ticker_new', values='ret')
         df.reset_index(inplace=True)
         return df
@@ -303,7 +303,8 @@ def mv(df, etflist = ['BNDX', 'SPSM', 'SPMD', 'SPLG', 'VWO', 'VEA', 'MUB', 'EMB'
 
 ff_file = 'F-F_Research_Data_Factors.csv'
 etf_file = 'ETF_returns.csv'
-df = get_and_merge(ff_file, etf_file)
+#df = get_and_merge(ff_file, etf_file)
+df = get_and_merge("/home/zoy/vscode/learn/projects/scripts/csv_web_plot/dj_csv_web_plot/media/file_F-F.csv", "/home/zoy/vscode/learn/projects/scripts/csv_web_plot/dj_csv_web_plot/media/file_ETF.csv")
 
 etflist = ['BNDX', 'SPSM', 'SPMD', 'SPLG', 'VWO', 'VEA', 'MUB', 'EMB']
 

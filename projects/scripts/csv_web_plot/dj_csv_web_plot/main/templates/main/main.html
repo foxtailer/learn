@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{test}}</title>
+</head>
+<body>
+    <h1>Upload Files</h1>
+    <form action="{% url "main" %}" method="post" enctype="multipart/form-data" id="uploadForm" style="display: flex; flex-direction: column;">
+        {% csrf_token %}
+
+        <label for="">
+            ETF (year,month,ret,ticker_new)
+            <input type="file" id="file_ETF" name="file_ETF" accept=".csv" />
+        </label>
+
+        <label for="">
+            F-F (,Mkt-RF,SMB,HML,RF)
+            <input type="file" id="file_F-F" name="file_F-F" accept=".csv" />
+        </label>
+        <button type="submit" style="width: 70px;">Submit</button>
+    </form>
+    
+    {% if image_url %}
+        <!-- Display the generated image -->
+        <h2>Generated Image:</h2>
+        <img src="{{ image_url }}" alt="Generated Image">
+    {% endif %}
+    {% comment %} <script>
+            function processFiles() {
+            const file1 = document.getElementById('file_ETF').files[0];
+            const file2 = document.getElementById('file_F-F').files[0];
+
+            if (!file1 || !file2) {
+                alert('Please select both files.');
+                return;
+            }
+
+            // Convert files to JSON
+            Promise.all([fileToJSON(file1), fileToJSON(file2)])
+                .then(([json1, json2]) => {
+                    // Send JSON data to the server
+                    fetch('{% url "main" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ file1: json1, file2: json2 })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        alert('Files successfully uploaded!');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert('An error occurred.');
+                    });
+                })
+                .catch(error => {
+                    console.error('Error converting files:', error);
+                    alert('An error occurred during file conversion.');
+                });
+        }
+
+        function fileToJSON(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const text = reader.result;
+                    const fileType = file.type;
+
+                    if (fileType === 'application/json') {
+                        try {
+                            const json = JSON.parse(text);
+                            resolve(json);
+                        } catch (e) {
+                            reject(new Error('Failed to parse JSON file.'));
+                        }
+                    } else if (fileType === 'text/csv') {
+                        Papa.parse(text, {
+                            header: true,
+                            dynamicTyping: true,
+                            complete: (results) => {
+                                resolve(results.data);
+                            },
+                            error: (error) => {
+                                reject(new Error('Failed to parse CSV file.'));
+                            }
+                        });
+                    } else {
+                        reject(new Error('Unsupported file type.'));
+                    }
+                };
+                reader.onerror = () => reject(new Error('Failed to read file.'));
+                reader.readAsText(file);
+            });
+        }
+
+    </script> {% endcomment %}
+</body>
+</html>
