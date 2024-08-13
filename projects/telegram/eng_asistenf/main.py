@@ -1,24 +1,22 @@
 from aiogram import Bot, types, Dispatcher
 import asyncio
 from aiogram.filters.command import Command
-#from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 import bot_functions
 import random
 import sqlite3
 
+import sys; sys.path.append('/home/zoy/vscode')
+import deps
 
-bot = Bot("", parse_mode='HTML')
+bot = Bot(deps.F)
 dp = Dispatcher()
 
 import json
 import codecs
-with codecs.open(r'E:\GIT\personal\eng\sours\data3.json', 'r', "utf-8") as db:    
-   my_dict = json.load(db)
-ansvers = [item[0] for item in list(my_dict.values())[130:500]]
-startp=0
 
-_path = "E:\\GIT\\projects\\telegram\\eng_asistenf\\"
+
+script_dir = bot_functions.find_path()
 
 """
 test - Play test
@@ -29,6 +27,8 @@ del - Deleate word/words
 start - Start bot
 help - Help/Info
 """
+
+
 @dp.message(Command("help"))
 async def help_commmand(msg: types.Message):
     message = """
@@ -43,6 +43,7 @@ Bot can hold your dictionary and play games with you based on words in this dict
 <code>/add</code> <i>Help,Помощь,I need help.</i>
 Добавит в словарь новую строку:
 <code>3) Help:Помощь (I need help.)</code>
+
 Запятых в предложении примере быть<b>не</b> должно! Попытка добавить уже существующее в \
 словаре слово, перезапишет его. Так можно исправить ошибку.
 
@@ -51,22 +52,27 @@ Bot can hold your dictionary and play games with you based on words in this dict
 Удаляет одно или несколько слов по номеру в списке.
     """
     await bot.send_message(msg.chat.id, message, parse_mode="HTML")
+    await msg.delete()
  
 
 @dp.message(Command("start"))
 async def start_commmand(msg: types.Message):
     
     n = "We hope our bote can help you learn watever you want:)"
-    if await bot_functions.check_user(msg.from_user.first_name):
-        await bot.send_message(msg.chat.id, f"Hello {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.")
+    if await bot_functions.check_user(msg.from_user.first_name, script_dir):
+        await bot.send_message(msg.chat.id, 
+                               f"Hello {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.", 
+                               parse_mode="HTML")
     else:
-        await bot.send_message(msg.chat.id, f"Welcome {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.")
+        await bot.send_message(msg.chat.id, 
+                               f"Welcome {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.", 
+                               parse_mode="HTML")
     await msg.delete()
 
 
 @dp.message(Command("show"))
 async def show_commmand(msg: types.Message, sort="Time"):
-    connection = sqlite3.connect(f"{_path}{msg.chat.first_name}.db")
+    connection = sqlite3.connect(f"{script_dir}{msg.chat.first_name}.db")
     cursor = connection.cursor()
     list_msg = ""
     day = 1
@@ -106,30 +112,36 @@ async def show_commmand(msg: types.Message, sort="Time"):
     await msg.delete()
     connection.close()
 
-@dp.message(Command("add"))
-async def start_commmand(msg: types.Message, command):
-    if command.args and command.args.count(",") == 2:
-        await bot_functions.add_to_udb(msg.from_user.first_name, command.args)
-    else:
-        await bot.send_message(msg.chat.id, f"Pls tipe words you want to add after <b>/add</b> command.\n <code>(/add eng,rus,exsample)</code>", parse_mode="HTML")
 
-@dp.message(Command("addm"))
-async def start_commmand(msg: types.Message, command):
+@dp.message(Command("add"))
+async def add_commmand(msg: types.Message, command):
     if command.args:
-        await bot_functions.addm_to_udb(msg.from_user.first_name, command.args)
+        if await bot_functions.add_to_udb(msg.from_user.first_name, command.args, script_dir):
+            await bot.send_message(msg.chat.id, 
+                               f"Sucsess!",)
+        else:
+            await bot.send_message(msg.chat.id, 
+                               f"Wrong sintax!",)
     else:
-        await bot.send_message(msg.chat.id, f"Pls tipe words you want to add after <b>/addm</b> command.\n <code>(/addm eng,rus,eng,rus,eng,rus)</code>", parse_mode="HTML")
+        await bot.send_message(msg.chat.id, 
+                               f"Pls tipe words you want to add after <b>/add</b> command.\n\n \
+<code>/add eng,rus,exsample</code>\n\n\
+Example can be empty but ',' stil nesesary. To add multiple sets of words, just conect them by coma.\
+Inside example simbol '<b>,</b>' is forbiden!", 
+                               parse_mode="HTML")
+
 
 @dp.message(Command("del"))
 async def del_commmand(msg: types.Message, command):
     if command.args:
-        await bot_functions.del_from_udb(msg.from_user.first_name, command.args)
+        await bot_functions.del_from_udb(msg.from_user.first_name, command.args, script_dir)
     else:
         await bot.send_message(msg.chat.id, "Need argument!")
 
+
 done = 0
 wrong =0
-@dp.message(Command("test"))   #######################################
+@dp.message(Command("test"))
 async def play_test(msg, command):
     global startp, done, wrong
    
@@ -212,6 +224,7 @@ async def play_test(msg, command):
 
 #     await bot.send_message(msg.chat.id, answer, reply_markup=ikb)
 #     await msg.delete()
+
 
 @dp.callback_query()
 async def choice_callback(callback: types.CallbackQuery):
