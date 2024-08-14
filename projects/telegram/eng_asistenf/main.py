@@ -71,43 +71,31 @@ async def start_commmand(msg: types.Message):
 
 
 @dp.message(Command("show"))
-async def show_commmand(msg: types.Message, sort="Time"):
-    connection = sqlite3.connect(f"{script_dir}{msg.chat.first_name}.db")
+async def show_commmand(msg: types.Message, command=None, sort="Time"):
+    connection = sqlite3.connect(f"{script_dir}/{bot_functions.DB_NAME}")
     cursor = connection.cursor()
     list_msg = ""
-    day = 1
 
     #TODO print only selected words by pass arg to command
 
     cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
     curent_dict = cursor.fetchall()
 
-    cursor.execute(f'SELECT active_days FROM {msg.chat.first_name}_inf')
-    user_active_days = cursor.fetchall()
-
     if sort == "Alphabet":
         curent_dict.sort(key=lambda x: x[1])
 
-        for i in user_active_days:
-            list_msg += f"{i[0]} ({day})\n"
-            for j in curent_dict:
-                if j[4] == day:
-                    list_msg += f"<code>{j[1].title()}</code>" + " : " + f"<code>{j[2].title()}</code>\n"
-            day += 1
+        for i in curent_dict:
+            list_msg += f"{i[1]} {i[2]}\n"
+ 
     else:
-        for i in user_active_days:
-            list_msg += f"{i[0]} ({day})\n"
-            for j in curent_dict:
-                if j[4] == day:
-                    list_msg += f"{j[0]}. <code>{j[1].title()}</code>" + " : " + f"<code>{j[2].title()}</code>\n"
-            day += 1
-
+        for i in curent_dict:
+            list_msg += f"{i[1]} {i[2]}\n"
 
     ibtn1 = InlineKeyboardButton(text="Alphabet",callback_data=f"Alphabet")
     ibtn2 = InlineKeyboardButton(text="Time", callback_data=f"Time")
     ibtn3 = InlineKeyboardButton(text="Close", callback_data=f"Close")
     ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3]])
-  
+
     await bot.send_message(msg.chat.id, list_msg, parse_mode="HTML", reply_markup=ikb)
     await msg.delete()
     connection.close()

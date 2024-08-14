@@ -5,26 +5,28 @@ from datetime import datetime
 
 DB_NAME = 'bot_db.db'
 
-async def add_to_udb(user_name, comand_args:str, script_dir):
+async def add_to_udb(user_name: str, comand_args: str, script_dir: str) -> bool:
+    db_path = f"{script_dir}/{DB_NAME}"
+    
+    async with aiosqlite.connect(db_path) as connection:
+        async with connection.cursor() as cursor:
+            today_date = datetime.today().isoformat()[:10]
+            data = comand_args.split(',')
 
-    connection = sqlite3.connect(f"{script_dir}/{DB_NAME}")
-    cursor = connection.cursor()
+            if (len(data) % 3) != 0:
+                return False
 
-    today_date = datetime.today().isoformat()[:10]
+            data_sets = [tuple(data[i:i + 3]) for i in range(0, len(data), 3)]
 
-    data = comand_args.split(',')
+            for i in data_sets:
+                insert_data = (*i, today_date)
+                await cursor.execute(
+                    f'INSERT OR REPLACE INTO {user_name} (eng, rus, example, day) VALUES (?, ?, ?, ?)',
+                    insert_data
+                )
+            
+            await connection.commit()  
 
-    if (len(data) % 3) != 0:
-        return False
-
-    data_sets = [tuple(data[i:i + 3]) for i in range(0, len(data), 3)]
-
-    for i in data_sets:
-        insert_data = *i, today_date
-        cursor.execute(f'INSERT OR REPLACE INTO {user_name} (eng, rus, example, day) VALUES (?, ?, ?, ?)', insert_data)
-
-    connection.commit()
-    connection.close()
     return True
 
 
@@ -95,11 +97,13 @@ def transfer(a, b, name):
     connection.commit()
     connection.close()
 
+
 def find_path():
     script_path = os.path.realpath(__file__)
     script_dir = os.path.dirname(script_path)
 
     return script_dir
+
 
 # from datetime import datetime
 
@@ -134,10 +138,3 @@ if __name__ == '__main__':
         print(f"SQLite error: {e}")
     finally:
         connection.close()
-
-
-    # Fullfill user table
-    import asyncio
-
-    data = 'cat,кот,beautiful cat,believe,вірити,i dont care if you believe in me,again,знову,i just wanna hear your scream again,over,закінчено,game over,around,навколо,beautiful world around us,vargant,бродяга,and vargant ronin Jin,tempestuous,бурный,tempestuous temperament,beheading,обезглавливание,will be executed by beheading,regret,сожаления,feling any regret,held,держать,what held you idiot?,dumplings,пельмени,Hey arent my dumplings ready yet?,frown,хмурится,come on dont give me that frown,governor,губернатор,that blond boy is the son of the prefectural governor,supposed,предпологаемый,whats this supposed to be?,rid,избавлять,go and get rid of that insolent peasant,insolent,наглый,go and get rid of that insolent peasant,peasant,крестьянин,go and get rid of that insolent peasant,fuss,суета,dont make a fuss,interfere,вмешиватся,are you trying to interfere?,bidding,приказы,to serve your lord and do his bidding ... is this honor?,hone,точильный камень,is that what you spend all those years hone your skills for?,worthless,бесполезный,to be blunt I think youre worthless,blunt,прямой тупой,to be blunt I think youre worthless,worth,цена,jeez your lives aint worth squat,squat,приседать,jeez your lives aint worth squat,moron,придурок,what are you some kind of moron,folk,народ,folk s who lay a finger on me pay the price,payroll,зп,my old mans got Yagyu on his payroll right now,recently,недавно,they died just recently,celestial,небесный,the celestial beauty of music,died,помер,they died from,fairytale,казка,pick,вибрати,dreaming,мріяти,scream,кричати,spent,втрачено,deceiving,обманювати,still,досі,tease,дразнити,wrong,неправильно,whaterver,що завгодно,faded,вицвілий,above,вище,wake,розбудити,gone,пішов,wise,мудрий,made,зробив,poor,бідний,stealing,крадіжки,bling men,шикарний чоловік,sick,хворий,'
-    asyncio.run(add_to_udb("Victoria", data, find_path()))
