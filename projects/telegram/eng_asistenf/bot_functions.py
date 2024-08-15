@@ -30,18 +30,22 @@ async def add_to_udb(user_name: str, comand_args: str, script_dir: str) -> bool:
     return True
 
 
-async def del_from_udb(user_name, string, script_dir):
-    data_to_del = tuple(string.strip().lower().split(","))
-    if len(data_to_del) == 1:
-        data_to_del = f"({data_to_del[0]})"
+async def del_from_udb(user_name, command_args, script_dir):
+    try:
+        id_list = tuple(map(int, command_args.strip().split(",")))
+        connection = sqlite3.connect(f"{script_dir}/{DB_NAME}")
+        cursor = connection.cursor()
 
-    connection = sqlite3.connect(f"{script_dir}/{user_name}.db")
-    cursor = connection.cursor()
+        placeholders = ','.join('?' for _ in id_list)
+        query = f'DELETE FROM {user_name} WHERE id IN ({placeholders})'
+        cursor.execute(query, id_list)
 
-    cursor.execute(f'DELETE FROM {user_name} WHERE id IN {data_to_del}')
+        connection.commit()
+        connection.close()
 
-    connection.commit()
-    connection.close()
+        return True
+    except:
+        return False
 
 
 async def create_user(user_name: str, script_dir: str) -> None:

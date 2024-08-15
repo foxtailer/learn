@@ -9,7 +9,7 @@ import sqlite3
 import sys; sys.path.append('/home/zoy/vscode')
 import deps
 
-bot = Bot(deps.F)
+bot = Bot(deps.T)
 dp = Dispatcher()
 
 import json
@@ -17,12 +17,19 @@ import codecs
 
 
 script_dir = bot_functions.find_path()
+show_msg_store = {}
 
 """
-test - Play test
+select_day - Select day you want to practice
+test - Test throw selected day
+test10 - Test with random 10 words
+examples - Test with examples of selected day
+examples10 - Test with examples of random words
+sentense - Guess wond in sentense based on your words
+shaffle - Try to guess shaffled word
+get_example - Give 5 sentence with word
 show - Show dictionary
-add - Add new line in dict
-addm - Add meny lines
+add - Add new words in dict
 del - Deleate word/words
 start - Start bot
 help - Help/Info
@@ -50,6 +57,9 @@ Bot can hold your dictionary and play games with you based on words in this dict
 Команда:
 <code>/del</code> <i>1,2,3</i>
 Удаляет одно или несколько слов по номеру в списке.
+
+Each game-command has 'w' atribute, mean 'write mode', If passed bot dont give
+you a variants of right answer. You need write it by hand.
     """
     await bot.send_message(msg.chat.id, message, parse_mode="HTML")
     await msg.delete()
@@ -72,6 +82,7 @@ async def start_commmand(msg: types.Message):
 
 @dp.message(Command("show"))
 async def show_commmand(msg: types.Message, command=None, sort="Time"):
+    global show_msg_store
     connection = sqlite3.connect(f"{script_dir}/{bot_functions.DB_NAME}")
     cursor = connection.cursor()
     list_msg = ""
@@ -80,23 +91,34 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
 
     cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
     curent_dict = cursor.fetchall()
+    longest_word = len(max(curent_dict, key=lambda x: len(x[1]))[1])
 
     if sort == "Alphabet":
         curent_dict.sort(key=lambda x: x[1])
 
         for i in curent_dict:
-            list_msg += f"{i[1]} {i[2]}\n"
- 
+            list_msg += f"<code>{i[1].capitalize()}</code>: <pre>{' '*longest_word}{i[2]}</pre>\n"
     else:
+        temp_date = ""
+        day_count = 1
         for i in curent_dict:
-            list_msg += f"{i[1]} {i[2]}\n"
+            if i[4] != temp_date:
+                list_msg += '.'" "*10 + i[4] + f" ({day_count})" + "\n"
+                temp_date = i[4]
+                day_count += 1
+            list_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(longest_word-len(i[1]))}{i[2]}\n"
 
     ibtn1 = InlineKeyboardButton(text="Alphabet",callback_data=f"Alphabet")
     ibtn2 = InlineKeyboardButton(text="Time", callback_data=f"Time")
     ibtn3 = InlineKeyboardButton(text="Close", callback_data=f"Close")
     ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3]])
 
-    await bot.send_message(msg.chat.id, list_msg, parse_mode="HTML", reply_markup=ikb)
+    show_msg = await bot.send_message(msg.chat.id, 
+                                      list_msg, 
+                                      parse_mode="HTML", 
+                                      reply_markup=ikb)
+    
+    show_msg_store[msg.chat.id] = show_msg.message_id
     await msg.delete()
     connection.close()
 
@@ -121,10 +143,14 @@ Inside example simbol '<b>,</b>' is forbiden!",
 
 @dp.message(Command("del"))
 async def del_commmand(msg: types.Message, command):
-    if command.args:
-        await bot_functions.del_from_udb(msg.from_user.first_name, command.args, script_dir)
+    if command.args and command.args.replace(',', '').isdigit():
+        if await bot_functions.del_from_udb(msg.from_user.first_name, command.args, script_dir):
+            await bot.send_message(msg.chat.id, "Sucsess.")
+        else:
+            await bot.send_message(msg.chat.id, "Failure.")
     else:
-        await bot.send_message(msg.chat.id, "Need argument!")
+        await bot.send_message(msg.chat.id, "Need number argument! Like this:\n/del 5\nor\n/del 5,7,12")
+    await msg.delete()
 
 
 done = 0
@@ -159,82 +185,35 @@ async def play_test(msg, command):
     await msg.delete()
 
 
-
-# @dp.message(Command("test"))   
-# async def play_test(msg, command):
-
-#     connection = sqlite3.connect(f"{_path}{msg.chat.first_name}.db")
-#     cursor = connection.cursor()
-
-#     if command and command.args:
-#         test_days = command.args.strip()
-#         cursor.execute(f'DELETE FROM {msg.chat.first_name}_test')
-#         cursor.execute(f'INSERT OR IGNORE INTO {msg.chat.first_name}_test (test_days) VALUES (?)', (test_days,))
-#         connection.commit()
-
-#     cursor.execute(f'SELECT test_days FROM {msg.chat.first_name}_test')
-#     test_days = cursor.fetchall()[0][0].split(",")
-#     print(test_days)
-#     if test_days == ['0']:
-#         cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
-#         curent_dict = cursor.fetchall()
-#     else:
-#         placeholders = ','.join(['?' for _ in test_days])
-#         cursor.execute(f'SELECT * FROM {msg.chat.first_name} WHERE day IN ({placeholders})', test_days)
-#         curent_dict = cursor.fetchall()
-
-#     connection.commit()
-#     connection.close()    
-
-#     curent_item = random.choice(curent_dict)
-#     for_for_btns = []
-
-#     curent_dict.remove(curent_item)
-#     wrong_answers = [item[1] for item in curent_dict]
-#     random.shuffle(wrong_answers)
-#     for_for_btns.append((wrong_answers[0], "False"))
-#     for_for_btns.append((wrong_answers[1], "False"))
-#     for_for_btns.append((wrong_answers[2], "False"))
-#     for_for_btns.append((curent_item[1], "True"))
-#     random.shuffle(for_for_btns)
-#     for_btns = dict(for_for_btns)
-
-#     ibtn1 = InlineKeyboardButton(text=f"{list(for_btns.keys())[0]}",callback_data=f"{for_btns[list(for_btns.keys())[0]]}")
-#     ibtn2 = InlineKeyboardButton(text=f"{list(for_btns.keys())[1]}", callback_data=f"{for_btns[list(for_btns.keys())[1]]}")
-#     ibtn3 = InlineKeyboardButton(text=f"{list(for_btns.keys())[2]}",callback_data=f"{for_btns[list(for_btns.keys())[2]]}")
-#     ibtn4 = InlineKeyboardButton(text=f"{list(for_btns.keys())[3]}", callback_data=f"{for_btns[list(for_btns.keys())[3]]}")
-#     ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3,ibtn4]])
-
-#     if isinstance(curent_item[3], str):
-#         answer = f"{curent_item[2].title()}:\n{curent_item[3].replace(curent_item[1], '*'*len(curent_item[1])).capitalize()}"
-#     else:
-#         answer = f"{curent_item[2].title()}:"
-
-#     await bot.send_message(msg.chat.id, answer, reply_markup=ikb)
-#     await msg.delete()
-
-
 @dp.callback_query()
 async def choice_callback(callback: types.CallbackQuery):
-    global done, wrong
-    if callback.data == "Close":
-        callback.message.delete()
+    global done, wrong, show_msg_store
+    user_id = callback.from_user.id
+    
     if callback.data == "True":
         await callback.answer(text="✅")
         #await callback_data.message.answer("/dict")
         await play_test(callback.message, None)
         done += 1
+    elif callback.data == "False":
+        await callback.answer(text="❌", show_alert=True)
+        wrong += 1
+
+    if callback.data == "Close":
+        if user_id in show_msg_store:
+            show_msg_id = show_msg_store[user_id]
+            await bot.delete_message(chat_id=callback.message.chat.id, message_id=show_msg_id)
+            del show_msg_store[user_id]
     elif callback.data == "Alphabet":
         await show_commmand(callback.message, sort="Alphabet")
     elif callback.data == "Time":
         await show_commmand(callback.message)
-    else:
-        await callback.answer(text="❌", show_alert=True)
-        wrong += 1
 
 
 async def main():
-    await dp.start_polling(bot)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot, 
+                           allowed_updates=["message", "edited_message", "callback_query", "inline_query"])
 
 if __name__ == '__main__':
     asyncio.run(main())
