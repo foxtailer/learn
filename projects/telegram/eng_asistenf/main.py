@@ -17,7 +17,7 @@ import codecs
 
 
 script_dir = bot_functions.find_path()
-show_msg_store = {}
+temp = {}
 
 """
 select_day - Select day you want to practice
@@ -82,7 +82,7 @@ async def start_commmand(msg: types.Message):
 
 @dp.message(Command("show"))
 async def show_commmand(msg: types.Message, command=None, sort="Time"):
-    global show_msg_store
+    global temp
     connection = sqlite3.connect(f"{script_dir}/{bot_functions.DB_NAME}")
     cursor = connection.cursor()
     list_msg = ""
@@ -118,7 +118,7 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
                                       parse_mode="HTML", 
                                       reply_markup=ikb)
     
-    show_msg_store[msg.chat.id] = show_msg.message_id
+    temp[msg.chat.id] = {'to_close':show_msg.message_id}
     await msg.delete()
     connection.close()
 
@@ -185,29 +185,85 @@ async def play_test(msg, command):
     await msg.delete()
 
 
+@dp.message(Command("shaffle"))
+async def shuffle_play(msg, word=None):
+    global temp
+    user_name = msg.from_user.first_name
+    
+    if not word:
+        words = await bot_functions.get_word(script_dir, user_name)
+        word = words[0]['eng']
+        temp[msg.chat.id] = {'shuffle_clue': 0, 'shuffle_word': word}
+ 
+    if word:
+        clue = temp[msg.chat.id]['shuffle_clue']
+        #clue = min(len(word), clue)
+
+        char_list = list(word[clue:])
+        random.shuffle(char_list)
+        shuffled_word = '_'.join(char_list)
+
+        if clue >= len(word):
+            shuffled_word = word[:clue].upper()
+        elif clue != 0:
+            shuffled_word = word[:clue].upper() + "_" + shuffled_word
+    
+        ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
+        ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
+
+        shuffle_msg = await bot.send_message(msg.chat.id, shuffled_word, reply_markup=ikb)
+        temp[msg.chat.id]['shuffle_msg'] = shuffle_msg.message_id
+    await msg.delete()
+
+
+@dp.message()
+async def listener(msg: types.Message):
+    global temp
+    shuffle_word = temp[msg.chat.id]['shuffle_word']
+
+    if shuffle_word:
+        if msg.text.lower() == shuffle_word:
+            temp[msg.chat.id]['shuffle_word'] = ''
+            answer = await msg.answer(text="✅", show_alert=True)
+            await asyncio.sleep(2)
+            await bot.delete_message(chat_id=msg.chat.id, message_id=temp[msg.chat.id]['shuffle_msg'])
+            await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
+        else:
+            answer = await msg.answer(text="❌")
+            await asyncio.sleep(2)
+            await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
+
+    await msg.delete()
+
+
 @dp.callback_query()
 async def choice_callback(callback: types.CallbackQuery):
-    global done, wrong, show_msg_store
+    global done, wrong, temp
     user_id = callback.from_user.id
     
     if callback.data == "True":
-        await callback.answer(text="✅")
+        await callback.reply(text="✅")
         #await callback_data.message.answer("/dict")
         await play_test(callback.message, None)
         done += 1
     elif callback.data == "False":
-        await callback.answer(text="❌", show_alert=True)
+        await callback.reply(text="❌", show_alert=True)
         wrong += 1
 
     if callback.data == "Close":
-        if user_id in show_msg_store:
-            show_msg_id = show_msg_store[user_id]
+        if user_id in temp:
+            show_msg_id = temp[user_id]['to_close']
             await bot.delete_message(chat_id=callback.message.chat.id, message_id=show_msg_id)
-            del show_msg_store[user_id]
+            del temp[user_id]
     elif callback.data == "Alphabet":
         await show_commmand(callback.message, sort="Alphabet")
     elif callback.data == "Time":
         await show_commmand(callback.message)
+
+    if callback.data == "shuffle_help":
+        #await bot.delete_message(chat_id=callback.message.chat.id, message_id=temp[user_id]['shuffle_msg'])
+        temp[user_id]['shuffle_clue'] += 1
+        await shuffle_play(callback.message, word=temp[user_id]['shuffle_word'])
 
 
 async def main():

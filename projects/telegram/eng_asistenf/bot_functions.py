@@ -1,7 +1,10 @@
-import sqlite3
 import os
+import random
+import sqlite3
 import aiosqlite
+
 from datetime import datetime
+
 
 DB_NAME = 'bot_db.db'
 
@@ -79,6 +82,37 @@ async def check_user(user_name:str, script_dir)->bool:
                 return False
             else:
                 return True
+
+
+async def get_word(script_dir, user_name, n=1):
+    async with aiosqlite.connect(f"{script_dir}/{DB_NAME}") as db:
+        async with db.cursor() as cursor:
+            await cursor.execute(f"SELECT COUNT(*) FROM {user_name}")
+            row_count = (await cursor.fetchone())[0]
+            
+            if row_count == 0:
+                return None  # No rows in the table
+            
+            num_rows = min(n, row_count)  # Ensure we do not request more rows than available
+            
+            # Generate random offset
+            offsets = [random.randint(0, row_count - 1) for _ in range(num_rows)]
+            
+            rows_as_dicts = []
+            for offset in offsets:
+                # Fetch a single random row with OFFSET
+                query = f"SELECT * FROM {user_name} LIMIT 1 OFFSET {offset}"
+                await cursor.execute(query)
+                row = await cursor.fetchone()
+                
+                if row:
+                    # Get column names
+                    column_names = [description[0] for description in cursor.description]
+                    # Convert row to dictionary
+                    row_as_dict = dict(zip(column_names, row))
+                    rows_as_dicts.append(row_as_dict)
+            
+            return rows_as_dicts
 
 
 def transfer(a, b, name):
