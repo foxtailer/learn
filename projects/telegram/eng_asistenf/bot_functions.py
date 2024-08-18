@@ -115,6 +115,33 @@ async def get_word(script_dir, user_name, n=1):
             return rows_as_dicts
 
 
+async def get_day(script_dir, user_name, day):
+    async with aiosqlite.connect(f"{script_dir}/{DB_NAME}") as db:
+        async with db.execute(f"""
+            SELECT DISTINCT day
+            FROM {user_name}
+            ORDER BY day
+        """) as cursor:
+            days = await cursor.fetchall()
+            
+            if day < 0 or day >= len(days):
+                return
+            
+            # Extract the day value at the specified index
+            target_day = days[day][0]
+        
+        # Fetch rows with the selected day
+        async with db.execute(f"""
+            SELECT id, eng, rus, example, day, lvl
+            FROM {user_name}
+            WHERE day = ?
+            ORDER BY id
+        """, (target_day,)) as cursor:
+            rows = await cursor.fetchall()
+
+            return rows
+        
+
 def transfer(a, b, name):
     connection = sqlite3.connect(a)
     cursor = connection.cursor()

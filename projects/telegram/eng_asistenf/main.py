@@ -36,6 +36,26 @@ help - Help/Info
 """
 
 
+async def play(chat_id):
+    global temp
+    words = temp[chat_id]['day']
+
+    answers = []
+    word = words.pop()
+    answers.append(word)
+    answers += random.sample(words, 3)
+
+    random.shuffle(answers)
+
+    ibtn1 = InlineKeyboardButton(text=f"{answers[0][1]}",callback_data=f"{'True' if answers[0][1]==word[1] else 'False'}")
+    ibtn2 = InlineKeyboardButton(text=f"{answers[1][1]}", callback_data=f"{'True' if answers[1][1]==word[1] else 'False'}")
+    ibtn3 = InlineKeyboardButton(text=f"{answers[2][1]}",callback_data=f"{'True' if answers[2][1]==word[1] else 'False'}")
+    ibtn4 = InlineKeyboardButton(text=f"{answers[3][1]}", callback_data=f"{'True' if answers[3][1]==word[1] else 'False'}")
+    ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3,ibtn4]])
+
+    await bot.send_message(chat_id, word[2], parse_mode="HTML", reply_markup=ikb)
+
+
 @dp.message(Command("help"))
 async def help_commmand(msg: types.Message):
     message = """
@@ -118,7 +138,11 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
                                       parse_mode="HTML", 
                                       reply_markup=ikb)
     
-    temp[msg.chat.id] = {'to_close':show_msg.message_id}
+    if msg.chat.id in temp:
+        temp[msg.chat.id].update({'show':{'to_close': show_msg.message_id}})
+    else:
+        temp[msg.chat.id] = {'show':{'to_close': show_msg.message_id}}
+
     await msg.delete()
     connection.close()
 
@@ -153,35 +177,40 @@ async def del_commmand(msg: types.Message, command):
     await msg.delete()
 
 
-done = 0
-wrong =0
-@dp.message(Command("test"))
-async def play_test(msg, command):
-    global startp, done, wrong
-   
-    curent_item = list(my_dict.keys())[startp]
-    startp += 1
-    for_for_btns = []
-
-    random.shuffle(ansvers)
-    wrong_answers = ansvers[:3]
-    random.shuffle(wrong_answers)
-    for_for_btns.append((wrong_answers[0], "False"))
-    for_for_btns.append((wrong_answers[1], "False"))
-    for_for_btns.append((wrong_answers[2], "False"))
-    for_for_btns.append((my_dict[curent_item][0], "True"))
-    random.shuffle(for_for_btns)
-    for_btns = dict(for_for_btns)
-
-    ibtn1 = InlineKeyboardButton(text=f"{list(for_btns.keys())[0]}",callback_data=f"{for_btns[list(for_btns.keys())[0]]}")
-    ibtn2 = InlineKeyboardButton(text=f"{list(for_btns.keys())[1]}", callback_data=f"{for_btns[list(for_btns.keys())[1]]}")
-    ibtn3 = InlineKeyboardButton(text=f"{list(for_btns.keys())[2]}",callback_data=f"{for_btns[list(for_btns.keys())[2]]}")
-    ibtn4 = InlineKeyboardButton(text=f"{list(for_btns.keys())[3]}", callback_data=f"{for_btns[list(for_btns.keys())[3]]}")
-    ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3,ibtn4]])
-
+@dp.message(Command("select_day"))
+async def select_day(msg: types.Message, command):
+    global temp
     
+    if command.args and command.args.isdigit():
+        day = await bot_functions.get_day(script_dir, msg.from_user.first_name,  int(command.args.strip()))
+       
+        if day:
+            tmp = {'day': day, 'day_size': len(day), 'day_answers': 0}
 
-    await bot.send_message(msg.chat.id, f"{done}/{wrong}\n{curent_item}", reply_markup=ikb)
+            if msg.chat.id in temp:
+                temp[msg.chat.id].update(tmp)
+            else:
+                temp[msg.chat.id] = tmp
+        else:
+           await bot.send_message(msg.chat.id, 
+                                  "Wrong day numder!")
+    else:
+        await bot.send_message(msg.chat.id, 
+                               f"Pls tipe number of day you want to select after command.\n\n \
+<code>/select_day 3</code>\n\n\
+You can finde day number using <code>/show</code> command.", 
+                               parse_mode="HTML")
+        
+    await msg.delete()
+
+
+@dp.message(Command("test"))
+async def test(msg: types.Message):
+    if msg.chat.id in temp and temp[msg.chat.id].get('day'):
+        await play(msg.chat.id)
+    else:
+        await bot.send_message(msg.chat.id, 'Pls select day.')
+
     await msg.delete()
 
 
@@ -193,10 +222,19 @@ async def shuffle_play(msg, word=None):
     if not word:
         words = await bot_functions.get_word(script_dir, user_name)
         word = words[0]['eng']
-        temp[msg.chat.id] = {'shuffle_clue': 0, 'shuffle_word': word}
+
+        shuffle = {'shuffle':{'shuffle_clue': 0, 
+                              'shuffle_word': word,
+                              'shuffle_rus': words[0]['rus'],
+                              'shuffle_ex': words[0]['example']}}
+        
+        if msg.chat.id in temp:
+            temp[msg.chat.id].update(shuffle)
+        else:
+            temp[msg.chat.id] = shuffle
  
     if word:
-        clue = temp[msg.chat.id]['shuffle_clue']
+        clue = temp[msg.chat.id]['shuffle']['shuffle_clue']
         #clue = min(len(word), clue)
 
         char_list = list(word[clue:])
@@ -212,58 +250,70 @@ async def shuffle_play(msg, word=None):
         ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
 
         shuffle_msg = await bot.send_message(msg.chat.id, shuffled_word, reply_markup=ikb)
-        temp[msg.chat.id]['shuffle_msg'] = shuffle_msg.message_id
+        temp[msg.chat.id]['shuffle']['shuffle_msg'] = shuffle_msg.message_id
     await msg.delete()
 
 
 @dp.message()
 async def listener(msg: types.Message):
     global temp
-    shuffle_word = temp[msg.chat.id]['shuffle_word']
 
-    if shuffle_word:
-        if msg.text.lower() == shuffle_word:
-            temp[msg.chat.id]['shuffle_word'] = ''
-            answer = await msg.answer(text="✅", show_alert=True)
-            await asyncio.sleep(2)
-            await bot.delete_message(chat_id=msg.chat.id, message_id=temp[msg.chat.id]['shuffle_msg'])
-            await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
-        else:
-            answer = await msg.answer(text="❌")
-            await asyncio.sleep(2)
-            await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
+    if temp.get(msg.chat.id):
+
+        if temp[msg.chat.id].get('shuffle'):
+            shuffle_word = temp[msg.chat.id]['shuffle']['shuffle_word']
+
+            if msg.text.lower() == shuffle_word:
+                temp[msg.chat.id]['shuffle']['shuffle_word'] = ''
+                answer = await msg.answer(text=f"✅\n{temp[msg.chat.id]['shuffle']['shuffle_rus'].capitalize()}\n\
+{temp[msg.chat.id]['shuffle']['shuffle_ex'].capitalize()}", 
+                                          show_alert=True)
+                await asyncio.sleep(4)
+                await bot.delete_message(chat_id=msg.chat.id, message_id=temp[msg.chat.id]['shuffle']['shuffle_msg'])
+                await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
+            else:
+                answer = await msg.answer(text="❌")
+                await asyncio.sleep(1)
+                await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
 
     await msg.delete()
 
 
 @dp.callback_query()
 async def choice_callback(callback: types.CallbackQuery):
-    global done, wrong, temp
+    global temp
     user_id = callback.from_user.id
     
     if callback.data == "True":
-        await callback.reply(text="✅")
-        #await callback_data.message.answer("/dict")
-        await play_test(callback.message, None)
-        done += 1
+        temp[user_id]['day_answers'] += 1
+
+        amount = temp[user_id]['day_size']
+        right_answer = temp[user_id]['day_answers']
+
+        await callback.message.answer(text=f"✅ {right_answer}/{amount}", show_alert=True)
+        await play(user_id)
+
     elif callback.data == "False":
-        await callback.reply(text="❌", show_alert=True)
-        wrong += 1
+        #await callback.reply(text="❌", show_alert=True)
+        amount = temp[user_id]['day_size']
+        right_answer = temp[user_id]['day_answers']
+        
+        await callback.message.answer(text=f"❌ {right_answer}/{amount}")
+        await play(user_id)
 
     if callback.data == "Close":
         if user_id in temp:
-            show_msg_id = temp[user_id]['to_close']
+            show_msg_id = temp[user_id]['show']['to_close']
             await bot.delete_message(chat_id=callback.message.chat.id, message_id=show_msg_id)
-            del temp[user_id]
+            del temp[user_id]['show']['to_close']
     elif callback.data == "Alphabet":
         await show_commmand(callback.message, sort="Alphabet")
     elif callback.data == "Time":
         await show_commmand(callback.message)
 
     if callback.data == "shuffle_help":
-        #await bot.delete_message(chat_id=callback.message.chat.id, message_id=temp[user_id]['shuffle_msg'])
-        temp[user_id]['shuffle_clue'] += 1
-        await shuffle_play(callback.message, word=temp[user_id]['shuffle_word'])
+        temp[user_id]['shuffle']['shuffle_clue'] += 1
+        await shuffle_play(callback.message, word=temp[user_id]['shuffle']['shuffle_word'])
 
 
 async def main():
