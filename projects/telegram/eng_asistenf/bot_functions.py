@@ -93,12 +93,13 @@ async def get_word(script_dir, user_name, n=1):
             if row_count == 0:
                 return None  # No rows in the table
             
-            num_rows = min(n, row_count)  # Ensure we do not request more rows than available
+            # Generate unique random offsets
+            num_rows = min(n, row_count)
+            offsets = set()
+            while len(offsets) < num_rows:
+                offsets.add(random.randint(0, row_count - 1))
             
-            # Generate random offset
-            offsets = [random.randint(0, row_count - 1) for _ in range(num_rows)]
-            
-            rows_as_dicts = []
+            rows_as_tuples = []
             for offset in offsets:
                 # Fetch a single random row with OFFSET
                 query = f"SELECT * FROM {user_name} LIMIT 1 OFFSET {offset}"
@@ -106,13 +107,9 @@ async def get_word(script_dir, user_name, n=1):
                 row = await cursor.fetchone()
                 
                 if row:
-                    # Get column names
-                    column_names = [description[0] for description in cursor.description]
-                    # Convert row to dictionary
-                    row_as_dict = dict(zip(column_names, row))
-                    rows_as_dicts.append(row_as_dict)
-            
-            return rows_as_dicts
+                    rows_as_tuples.append(row)
+                
+            return rows_as_tuples
 
 
 async def get_day(script_dir, user_name, day):
@@ -138,6 +135,7 @@ async def get_day(script_dir, user_name, day):
             ORDER BY id
         """, (target_day,)) as cursor:
             rows = await cursor.fetchall()
+            random.shuffle(rows)
 
             return rows
         

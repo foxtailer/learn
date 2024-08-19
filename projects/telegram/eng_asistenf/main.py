@@ -36,14 +36,25 @@ help - Help/Info
 """
 
 
-async def play(chat_id):
+async def play(chat_id, user_name):
     global temp
+    
     words = temp[chat_id]['day']
 
     answers = []
     word = words.pop()
     answers.append(word)
-    answers += random.sample(words, 3)
+
+    if len(words) >= 3:
+        answers += random.sample(words, 3)
+    else:
+        flag = True
+        while flag:
+            fake_words = await bot_functions.get_word(script_dir, user_name, 3)
+            if word not in fake_words:
+                flag = False
+        
+        answers += fake_words
 
     random.shuffle(answers)
 
@@ -206,8 +217,10 @@ You can finde day number using <code>/show</code> command.",
 
 @dp.message(Command("test"))
 async def test(msg: types.Message):
+    user_name = msg.from_user.first_name
+    
     if msg.chat.id in temp and temp[msg.chat.id].get('day'):
-        await play(msg.chat.id)
+        await play(msg.chat.id, user_name)
     else:
         await bot.send_message(msg.chat.id, 'Pls select day.')
 
@@ -221,12 +234,12 @@ async def shuffle_play(msg, word=None):
     
     if not word:
         words = await bot_functions.get_word(script_dir, user_name)
-        word = words[0]['eng']
+        word = words[0][1]
 
         shuffle = {'shuffle':{'shuffle_clue': 0, 
                               'shuffle_word': word,
-                              'shuffle_rus': words[0]['rus'],
-                              'shuffle_ex': words[0]['example']}}
+                              'shuffle_rus': words[0][2],
+                              'shuffle_ex': words[0][3]}}
         
         if msg.chat.id in temp:
             temp[msg.chat.id].update(shuffle)
