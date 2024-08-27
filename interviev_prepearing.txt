@@ -2594,6 +2594,9 @@ $	          End of string or end of line depending on            .*?the end$	   
 
   
 -- PSQL
+  sudo -i -u postgres
+  psql
+
   psql -U username
   psql -U username -d mydatabase
   \l  (list daatabases)
@@ -2616,6 +2619,9 @@ $	          End of string or end of line depending on            .*?the end$	   
     database and psql is ready to accept a new command.
   home->: This prompt indicates that a command is continued on the next line. 
   home'>: This prompt appears when you have an open quote in your command. 
+
+  \q
+  exit
 
 
 

@@ -21,7 +21,12 @@ from common.bot_cmds_list import private
 
 # ALLOWED_UPDATES = ['message', 'edited_message', 'callback_query']
 
-bot = Bot(token=os.getenv('TOKEN'), parse_mode=ParseMode.HTML)
+import sys; sys.path.append('/home/zoy/vscode')
+import deps
+TOKEN = deps.F
+bot = Bot(TOKEN)
+
+#bot = Bot(token=os.getenv('TOKEN'), parse_mode=ParseMode.HTML)
 bot.my_admins_list = []
 
 dp = Dispatcher()

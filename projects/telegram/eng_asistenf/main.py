@@ -1,12 +1,16 @@
-from aiogram import Bot, types, Dispatcher
 import asyncio
-from aiogram.filters.command import Command
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-import db_functions
 import random
 import sqlite3
-
 import sys; sys.path.append('/home/zoy/vscode')
+
+from aiogram import Bot, types, Dispatcher
+from aiogram.filters import Command, StateFilter
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+
+import db_functions
+from bot_cmds_list import private
 import deps
 
 
@@ -29,6 +33,10 @@ del - Deleate word/words
 start - Start bot
 help - Help/Info
 """
+
+
+class Games(StatesGroup):
+    shuffle = State()
 
 
 async def play(chat_id, user_name, args):
@@ -291,8 +299,8 @@ async def test(msg: types.Message, command):
     await msg.delete()
 
 
-@dp.message(Command("shaffle"))
-async def shuffle_play(msg, word=None):
+@dp.message(Command("shuffle"))
+async def shuffle_play(msg, state: FSMContext, word=None):
     global temp
     user_name = msg.from_user.first_name
     
@@ -328,11 +336,13 @@ async def shuffle_play(msg, word=None):
 
         shuffle_msg = await bot.send_message(msg.chat.id, shuffled_word, reply_markup=ikb)
         temp[msg.chat.id]['shuffle']['shuffle_msg'] = shuffle_msg.message_id
+
     await msg.delete()
+    await state.set_state(Games.shuffle)
 
 
-@dp.message()
-async def listener(msg: types.Message):
+@dp.message(Games.shuffle)
+async def listener(msg: types.Message, state: FSMContext):
     global temp
 
     if temp.get(msg.chat.id):
@@ -348,6 +358,7 @@ async def listener(msg: types.Message):
                 await asyncio.sleep(2)
                 await bot.delete_message(chat_id=msg.chat.id, message_id=temp[msg.chat.id]['shuffle']['shuffle_msg'])
                 await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
+                await state.clear()
             else:
                 answer = await msg.answer(text="❌")
                 await asyncio.sleep(1)
@@ -361,6 +372,7 @@ async def choice_callback(callback: types.CallbackQuery):
     global temp
     user_id = callback.from_user.id
     
+    # Play 
     if callback.data == "True":
         temp[user_id]['day_answers'] += 1
 
@@ -384,12 +396,13 @@ async def choice_callback(callback: types.CallbackQuery):
         temp[user_id]['x'] = x
         await play(user_id, callback.from_user.first_name, temp[user_id]['test_mod'])
 
+    # Show
     if callback.data == "Close":
         if user_id in temp:
             show_msg_id = temp[user_id]['show']['to_close']
             await bot.delete_message(chat_id=callback.message.chat.id, message_id=show_msg_id)
             del temp[user_id]['show']['to_close']
-            
+
     elif callback.data == "Alphabet":
         await show_commmand(callback.message, sort="Alphabet")
     elif callback.data == "Examples":
@@ -397,13 +410,15 @@ async def choice_callback(callback: types.CallbackQuery):
     elif callback.data == "Time":
         await show_commmand(callback.message)
 
+    # Shuffle
     if callback.data == "shuffle_help":
         temp[user_id]['shuffle']['shuffle_clue'] += 1
-        await shuffle_play(callback.message, word=temp[user_id]['shuffle']['shuffle_word'])
+        await shuffle_play(callback.message, FSMContext(), word=temp[user_id]['shuffle']['shuffle_word'])
 
 
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
+    await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
     await dp.start_polling(bot, 
                            allowed_updates=["message", "edited_message", "callback_query", "inline_query"])
 
