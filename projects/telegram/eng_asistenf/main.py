@@ -1,7 +1,6 @@
 import asyncio
 import random
 import sqlite3
-import sys; sys.path.append('/home/zoy/vscode')
 
 from aiogram import Bot, types, Dispatcher
 from aiogram.filters import Command, StateFilter
@@ -11,6 +10,8 @@ from aiogram.fsm.state import State, StatesGroup
 
 import db_functions
 from bot_cmds_list import private
+
+import sys; sys.path.append('/home/zoy/vscode')
 import deps
 
 
@@ -35,7 +36,7 @@ help - Help/Info
 """
 
 
-class Games(StatesGroup):
+class UserState(StatesGroup):
     shuffle = State()
 
 
@@ -102,7 +103,7 @@ async def play(chat_id, user_name, args):
 @dp.message(Command("help"))
 async def help_commmand(msg: types.Message):
     message = """
-Bot can hold your dictionary and play games with you based on words in this dictionary.
+Bot can hold your dictionary and play UserState with you based on words in this dictionary.
 
 <code>1) Cat:Кот (My beautiful cat.).\n2) Dog:Собака (Wery big dog.).</code>
 
@@ -300,48 +301,35 @@ async def test(msg: types.Message, command):
 
 
 @dp.message(Command("shuffle"))
-async def shuffle_play(msg, state: FSMContext, word=None):
-    global temp
+async def shuffle_play(msg, state:FSMContext):
     user_name = msg.from_user.first_name
+
+    await state.set_state(UserState.shuffle)
+
+    word = await db_functions.get_word(script_dir, user_name)
+    shuffled_word = list(word[0][1])
+    random.shuffle(shuffled_word)
+
+    data = {'shuffle_clue': 0, 
+                'shuffle_word': word[0][1],
+                'shuffle_rus': word[0][2],
+                'shuffle_ex': word[0][3],
+                'shuffled_word':shuffled_word}
     
-    if not word:
-        words = await db_functions.get_word(script_dir, user_name)
-        word = words[0][1]
-
-        shuffle = {'shuffle':{'shuffle_clue': 0, 
-                              'shuffle_word': word,
-                              'shuffle_rus': words[0][2],
-                              'shuffle_ex': words[0][3]}}
-        
-        if msg.chat.id in temp:
-            temp[msg.chat.id].update(shuffle)
-        else:
-            temp[msg.chat.id] = shuffle
- 
-    if word:
-        clue = temp[msg.chat.id]['shuffle']['shuffle_clue']
-        #clue = min(len(word), clue)
-
-        char_list = list(word[clue:])
-        random.shuffle(char_list)
-        shuffled_word = '_'.join(char_list)
-
-        if clue >= len(word):
-            shuffled_word = word[:clue].upper()
-        elif clue != 0:
-            shuffled_word = word[:clue].upper() + "_" + shuffled_word
+    text = '_'.join(shuffled_word)
     
-        ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
-        ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
+    ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
+    ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
 
-        shuffle_msg = await bot.send_message(msg.chat.id, shuffled_word, reply_markup=ikb)
-        temp[msg.chat.id]['shuffle']['shuffle_msg'] = shuffle_msg.message_id
+    shuffle_msg = await bot.send_message(msg.chat.id, text, reply_markup=ikb)
+
+    data['shuffle_msg'] = shuffle_msg.message_id
+    await state.update_data(shuffle=data)
 
     await msg.delete()
-    await state.set_state(Games.shuffle)
 
 
-@dp.message(Games.shuffle)
+@dp.message(UserState.shuffle)
 async def listener(msg: types.Message, state: FSMContext):
     global temp
 
@@ -365,6 +353,52 @@ async def listener(msg: types.Message, state: FSMContext):
                 await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
 
     await msg.delete()
+
+
+@dp.callback_query(UserState.shuffle)
+async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
+    if callback.data == "shuffle_help":
+        data = await state.get_data()
+        data = data['shuffle']
+    
+        data['shuffle_clue'] += 1
+        clue = data['shuffle_clue']
+        word = list(data['shuffle_word'])
+        shuffled_word = data['shuffled_word'].copy()
+
+        if clue < len(word):
+            clue_letters = word[0:clue]
+            
+            for letter in clue_letters:
+                shuffled_word.remove(letter)
+
+            text = '_'.join([letter.upper() for letter in clue_letters] + shuffled_word)
+
+            ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
+            ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
+
+            await bot.edit_message_text(
+                        chat_id=callback.message.chat.id,
+                        message_id=data['shuffle_msg'],
+                        text=text,
+                        reply_markup=ikb)
+            
+            await state.update_data(shuffle=data)
+
+        elif clue == len(word):
+            clue_letters = word[0:clue]
+
+            for letter in clue_letters:
+                shuffled_word.remove(letter)
+
+            text = '_'.join([letter.upper() for letter in clue_letters] + shuffled_word)
+
+            await bot.edit_message_text(
+                        chat_id=callback.message.chat.id,
+                        message_id=data['shuffle_msg'],
+                        text=text)
+            
+            await state.update_data(shuffle=data)
 
 
 @dp.callback_query()
@@ -409,11 +443,6 @@ async def choice_callback(callback: types.CallbackQuery):
         await show_commmand(callback.message, sort="Examples")
     elif callback.data == "Time":
         await show_commmand(callback.message)
-
-    # Shuffle
-    if callback.data == "shuffle_help":
-        temp[user_id]['shuffle']['shuffle_clue'] += 1
-        await shuffle_play(callback.message, FSMContext(), word=temp[user_id]['shuffle']['shuffle_word'])
 
 
 async def main():
