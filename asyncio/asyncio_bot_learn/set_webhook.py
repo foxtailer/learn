@@ -1,10 +1,10 @@
 import requests
 
 # Replace with your bot's token
-BOT_TOKEN = "6917432152:AAE_D5ua9YN4xWCr30ySC-rOvdP0hEpNMcI"
+BOT_TOKEN = ""
 
 # Replace with your webhook URL
-WEBHOOK_URL = "https://foxtailer.pythonanywhere.com/webhook"
+WEBHOOK_URL = ""
 
 # The URL for setting the webhook
 set_webhook_url = f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook"

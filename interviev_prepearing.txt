@@ -2555,6 +2555,8 @@ le ~/.ssh/id_rsa*  (Look for RSA keys)
 ssh-keygen -b 4096  (Generate RSA keys)
 ssh-copy-id root@000.000.000.000
 
+sudo lsof -i :<port_number>
+
 
 -- REGULAR EXPRESSION
 
