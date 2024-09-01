@@ -1900,7 +1900,128 @@
     for p in processes:
         p.join()
 
+
 -- CONCURENCY
+
+  - Asyncio
+
+  Asynchronous functions are defined using the async def syntax.
+  Instead of blocking the execution (like a normal function), an async function allows other tasks to 
+  run while it waits for an operation to complete.
+
+    async def my_async_function():
+        print("Start")
+        await asyncio.sleep(1)
+        print("End")
+    await Keyword:
+
+  The await keyword is used to call an asynchronous function and wait for its result without blocking 
+  the event loop.
+  It can only be used inside async functions.
+ 
+    async def my_async_function():
+        print("Start")
+        await asyncio.sleep(1)  # Waits for 1 second without blocking
+        print("End")
+
+  Event Loop:
+
+  The event loop is the core of the asyncio module, responsible for scheduling and running async functions.
+  You can get the event loop using asyncio.get_event_loop() and run tasks using loop.run_until_complete() or asyncio.run().
+
+    async def my_async_function():
+        print("Start")
+        await asyncio.sleep(1)
+        print("End")
+
+    # Run the async function
+    asyncio.run(my_async_function())
+
+  Tasks:
+
+  Tasks are used to schedule coroutines (async functions) concurrently. They are created using asyncio.create_task().
+  This allows multiple async functions to run "at the same time," meaning they can execute concurrently.
+
+    async def task1():
+        await asyncio.sleep(2)
+        print("Task 1 finished")
+
+    async def task2():
+        await asyncio.sleep(1)
+        print("Task 2 finished")
+
+    async def main():
+        task_1 = asyncio.create_task(task1())
+        task_2 = asyncio.create_task(task2())
+
+        await task_1  # Wait for task 1 to finish
+        await task_2  # Wait for task 2 to finish
+
+    asyncio.run(main())
+
+  Coroutines:
+
+  A coroutine is a function that can pause and resume execution, usually using await.
+  When you use async def, you’re defining a coroutine.
+
+  async def my_coroutine():
+      await asyncio.sleep(1)
+      return "Finished"
+
+  Running Multiple Tasks:
+
+  You can run multiple coroutines concurrently using asyncio.gather() or asyncio.wait().
+
+    async def task1():
+        await asyncio.sleep(2)
+        return "Task 1 finished"
+
+    async def task2():
+        await asyncio.sleep(1)
+        return "Task 2 finished"
+
+    async def main():
+        results = await asyncio.gather(task1(), task2())
+        print(results)
+
+    asyncio.run(main())
+
+  In this example, task1 and task2 will run concurrently, and asyncio.gather() will wait for both to complete 
+  and return their results.
+  Example Scenario:
+  Imagine you’re writing a web scraper that needs to fetch data from multiple websites. Using asyncio, you can 
+  request data from all websites concurrently, instead of waiting for one request to finish before starting the next.
+
+
+    import asyncio
+    import aiohttp
+
+    async def fetch_data(url):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                return await response.text()
+
+    async def main():
+        urls = ['http://example.com', 'http://example.org', 'http://example.net']
+        tasks = [fetch_data(url) for url in urls]
+        results = await asyncio.gather(*tasks)
+        for result in results:
+            print(result)
+
+    asyncio.run(main())
+
+  In this example, the fetch_data function is asynchronous and fetches data from a given URL. Using asyncio.gather(), 
+  you can run multiple fetch operations concurrently, significantly speeding up the overall process.
+
+  Summary:
+  Use async def to define an async function.
+  Use await to pause execution within an async function until the awaited task is complete.
+  Use asyncio.run() to run your async function.
+  Create tasks with asyncio.create_task() to run multiple coroutines concurrently.
+  Use asyncio.gather() to wait for multiple tasks to complete and collect their results.
+  This basic understanding of asyncio should help you start writing concurrent code in Python.
+
+
 -- PARALELISM
 -- MULTIPROCESSING
 

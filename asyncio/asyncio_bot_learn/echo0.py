@@ -13,7 +13,8 @@ dp = Dispatcher()
 
 @dp.message()
 async def echo_message(msg: types.Message):
-    await bot.send_message(msg.from_user.id, msg.text)
+    #await bot.send_message(msg.from_user.id, msg.text)
+    await bot.send_message(msg.from_user.id, f"{msg.from_user.id}")
     await msg.reply(string.ascii_letters)
     await msg.delete()
 
