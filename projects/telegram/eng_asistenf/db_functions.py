@@ -8,46 +8,70 @@ from datetime import datetime
 
 DB_NAME = 'bot_db.db'
 
-async def add_to_udb(user_name: str, comand_args: str, script_dir: str) -> bool:
+async def add_to_db(user_name, command_args, script_dir) -> bool:
     db_path = f"{script_dir}/{DB_NAME}"
-    
-    async with aiosqlite.connect(db_path) as connection:
-        async with connection.cursor() as cursor:
-            today_date = datetime.today().isoformat()[:10]
-            data = comand_args.split(',')
 
-            if (len(data) % 3) != 0:
-                return False
+    try:    
+        async with aiosqlite.connect(db_path) as connection:
+            async with connection.cursor() as cursor:
+                today_date = datetime.today().isoformat()[:10]
+                data = [element.lower().strip() for element in command_args.split(',')]
 
-            data_sets = [tuple(data[i:i + 3]) for i in range(0, len(data), 3)]
+                if (len(data) % 3) != 0:
+                    return False
 
-            for i in data_sets:
-                insert_data = (*i, today_date)
-                await cursor.execute(
-                    f'INSERT OR REPLACE INTO {user_name} (eng, rus, example, day) VALUES (?, ?, ?, ?)',
-                    insert_data
-                )
-            
-            await connection.commit()  
+                data_sets = [tuple(data[i:i + 3]) for i in range(0, len(data), 3)]
 
-    return True
-
-
-async def del_from_udb(user_name, command_args, script_dir):
-    try:
-        id_list = tuple(map(int, command_args.strip().split(",")))
-        connection = sqlite3.connect(f"{script_dir}/{DB_NAME}")
-        cursor = connection.cursor()
-
-        placeholders = ','.join('?' for _ in id_list)
-        query = f'DELETE FROM {user_name} WHERE id IN ({placeholders})'
-        cursor.execute(query, id_list)
-
-        connection.commit()
-        connection.close()
+                for data_set in data_sets:
+                    insert_data = (*data_set, today_date)
+                    await cursor.execute(
+                        f'INSERT OR REPLACE INTO {user_name} (eng, rus, example, day) VALUES (?, ?, ?, ?)',
+                        insert_data
+                    )
+                
+                await connection.commit()  
 
         return True
-    except:
+    except Exception as e:
+        return False
+
+
+async def del_from_db(user_name, command_args: tuple, script_dir):
+    try:
+        if not command_args[0]:
+            id_list = tuple(map(int, command_args[1].strip().split(",")))
+
+            async with aiosqlite.connect(f"{script_dir}/{DB_NAME}") as connection:
+                cursor = await connection.cursor()
+
+                placeholders = ','.join('?' for _ in id_list)
+                query = f'DELETE FROM {user_name} WHERE id IN ({placeholders})'
+                await cursor.execute(query, id_list)
+
+                await connection.commit()
+        else:
+            day_numbers = tuple(map(int, command_args[1].strip().split(",")))
+
+            async with aiosqlite.connect(f"{script_dir}/{DB_NAME}") as connection:
+                cursor = await connection.cursor()
+
+                query = f"SELECT DISTINCT day FROM {user_name}"
+                await cursor.execute(query)
+                unique_days = await cursor.fetchall()
+                unique_days = tuple(day[0] for day in unique_days)
+                
+                day_numbers = [day for day in day_numbers if day > 1 and day <= len(unique_days)]
+
+                days_for_del = [unique_days[day-1] for day in day_numbers]
+                
+                placeholders = ','.join('?' for _ in days_for_del)
+                query = f'DELETE FROM {user_name} WHERE day IN ({placeholders})'
+                await cursor.execute(query, days_for_del)
+
+                await connection.commit()
+
+        return True
+    except Exception as e:
         return False
 
 

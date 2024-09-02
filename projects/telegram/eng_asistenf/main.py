@@ -4,9 +4,10 @@ import sqlite3
 
 from aiogram import Bot, types, Dispatcher
 from aiogram.filters import Command, StateFilter
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+from aiogram.enums.dice_emoji import DiceEmoji
 
 import db_functions
 from bot_cmds_list import private
@@ -146,30 +147,30 @@ async def start_commmand(msg: types.Message):
 
 @dp.message(Command("show"))
 async def show_commmand(msg: types.Message, command=None, sort="Time"):
-    global temp
     list_of_chunks = []
     chunk_msg = ""
-
-    #TODO print only selected words by pass arg to command
 
     connection = sqlite3.connect(f"{script_dir}/{db_functions.DB_NAME}")
     cursor = connection.cursor()
     cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
-    curent_dict = cursor.fetchall()
+    curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
     connection.close()
     
-    longest_word = len(max(curent_dict, key=lambda x: len(x[1]))[1])
-
+    longest_word = max(curent_dict, 
+                       key=lambda x: len(x[1])
+                       )[1]
+    len_of_longest_word = len(longest_word)
+    
     if sort == "Alphabet":
         curent_dict.sort(key=lambda x: x[1])
 
-        for i in curent_dict:
+        for row in curent_dict:
             if len(chunk_msg) < 2500:
-                chunk_msg += f"<code>{i[1].capitalize()}</code>: <pre>{' '*longest_word + i[2]}</pre>\n"
+                chunk_msg += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
             else:
                 list_of_chunks.append(chunk_msg)
                 chunk_msg = ""
-                chunk_msg += f"<code>{i[1].capitalize()}</code>: <pre>{' '*longest_word + i[2]}</pre>\n"
+                chunk_msg += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
 
         list_of_chunks.append(chunk_msg)
 
@@ -190,15 +191,15 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
 
         for i in curent_dict:
             if i[4] != temp_date:
-                chunk_msg += '.'" "*10 + i[4] + f" ({day_count})" + "\n"
+                chunk_msg += ". "*10 + i[4] + f" ({day_count})" + "\n"
                 temp_date = i[4]
                 day_count += 1
             if len(chunk_msg) < 2500:
-                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(longest_word-len(i[1]))}{i[2]}\n"
+                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
             else:
                 list_of_chunks.append(chunk_msg)
                 chunk_msg = ""
-                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(longest_word-len(i[1]))}{i[2]}\n"
+                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
 
         list_of_chunks.append(chunk_msg)
 
@@ -226,7 +227,7 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
 @dp.message(Command("add"))
 async def add_commmand(msg: types.Message, command):
     if command.args:
-        if await db_functions.add_to_udb(msg.from_user.first_name, command.args, script_dir):
+        if await db_functions.add_to_db(msg.from_user.first_name, command.args.strip(), script_dir):
             await bot.send_message(msg.chat.id, 
                                f"Sucsess!",)
         else:
@@ -243,13 +244,21 @@ Inside example simbol '<b>,</b>' is forbiden!",
 
 @dp.message(Command("del"))
 async def del_commmand(msg: types.Message, command):
-    if command.args and command.args.replace(',', '').isdigit():
-        if await db_functions.del_from_udb(msg.from_user.first_name, command.args, script_dir):
-            await bot.send_message(msg.chat.id, "Sucsess.")
-        else:
-            await bot.send_message(msg.chat.id, "Failure.")
+    args = command.args.replace(' ', '').strip()
+
+    if args[0] == 'd' and args[1:].replace(',', '').isdigit():
+        args = ('d', args[1:]) 
+    elif args and args.replace(',', '').isdigit():
+        args = ('', args)
     else:
-        await bot.send_message(msg.chat.id, "Need number argument! Like this:\n/del 5\nor\n/del 5,7,12")
+        await bot.send_message(msg.chat.id, "Need number argument! Like this:\n/del 5\nor\n/del 5,7,12\n\
+To deleate whole day type 'd' before command, like:\n/del d 3")
+
+    if await db_functions.del_from_db(msg.from_user.first_name, args, script_dir):
+        await bot.send_message(msg.chat.id, "Sucsess.")
+    else:
+        await bot.send_message(msg.chat.id, "Failure.")
+
     await msg.delete()
 
 
@@ -321,6 +330,7 @@ async def shuffle_play(msg, state:FSMContext):
     ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
     ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
 
+    #await bot.send_message(msg.chat.id, DiceEmoji.SLOT_MACHINE, reply_markup=None)
     shuffle_msg = await bot.send_message(msg.chat.id, text, reply_markup=ikb)
 
     data['shuffle_msg'] = shuffle_msg.message_id
@@ -331,28 +341,23 @@ async def shuffle_play(msg, state:FSMContext):
 
 @dp.message(UserState.shuffle)
 async def listener(msg: types.Message, state: FSMContext):
-    global temp
+    data = await state.get_data()
+    data = data['shuffle']
 
-    if temp.get(msg.chat.id):
+    shuffle_word = data['shuffle_word']
 
-        if temp[msg.chat.id].get('shuffle'):
-            shuffle_word = temp[msg.chat.id]['shuffle']['shuffle_word']
+    if msg.text.lower() == shuffle_word:
+        btn = KeyboardButton(text="/shuffle")
+        rkb = ReplyKeyboardMarkup(keyboard=[[btn]], resize_keyboard=True)
 
-            if msg.text.lower() == shuffle_word:
-                temp[msg.chat.id]['shuffle']['shuffle_word'] = ''
-                answer = await msg.answer(text=f"✅\n{temp[msg.chat.id]['shuffle']['shuffle_rus'].capitalize()}\n\
-{temp[msg.chat.id]['shuffle']['shuffle_ex'].capitalize()}", 
-                                          show_alert=True)
-                await asyncio.sleep(2)
-                await bot.delete_message(chat_id=msg.chat.id, message_id=temp[msg.chat.id]['shuffle']['shuffle_msg'])
-                await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
-                await state.clear()
-            else:
-                answer = await msg.answer(text="❌")
-                await asyncio.sleep(1)
-                await bot.delete_message(chat_id=msg.chat.id, message_id=answer.message_id)
-
-    await msg.delete()
+        await msg.answer(text=f"✅\n{data['shuffle_word'].capitalize()}: {data['shuffle_rus']}\n\
+{data['shuffle_ex'].capitalize()}",
+reply_markup=rkb)
+        
+        await bot.delete_message(chat_id=msg.chat.id, message_id=data['shuffle_msg'])
+        await state.clear()
+    else:
+        await msg.delete()
 
 
 @dp.callback_query(UserState.shuffle)
@@ -449,7 +454,8 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
     await dp.start_polling(bot, 
-                           allowed_updates=["message", "edited_message", "callback_query", "inline_query"])
+                           allowed_updates=["message", "edited_message", "callback_query", "inline_query"],
+                           polling_timeout=20)
 
 
 if __name__ == '__main__':
