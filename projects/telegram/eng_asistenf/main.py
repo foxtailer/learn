@@ -20,7 +20,6 @@ bot = Bot(deps.F)
 dp = Dispatcher()
 
 script_dir = db_functions.find_path()
-temp = {}
 
 """
 select_day - Select day you want to practice
@@ -39,13 +38,17 @@ help - Help/Info
 
 class UserState(StatesGroup):
     shuffle = State()
+    show = State()
+    test = State()
 
 
-async def play(chat_id, user_name, args):
-    global temp
-    
-    words = temp[chat_id]['day']
+async def play(chat_id, user_name, state):
+    data = await state.get_data()
+    data = data['test']
 
+    words = data['day']
+    args = data['args']
+   
     if words:
         answers = []
         word = words.pop()
@@ -71,7 +74,7 @@ async def play(chat_id, user_name, args):
 
         if 'w' not in args:
             for answer in answers:
-                btn_data = answer[mod], 'True' if answer[mod]==word[mod] else 'False'
+                btn_data = answer[mod].capitalize(), 'True' if answer[mod]==word[mod] else 'False'
                 for_kb.append(btn_data)
 
             ibtn1 = InlineKeyboardButton(text=f"{for_kb[0][0]}",callback_data=f"{for_kb[0][1]}")
@@ -81,23 +84,24 @@ async def play(chat_id, user_name, args):
             ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn3,ibtn4]])
 
             if 's' in args:
-                text = word[3].replace(word[1], '****')
+                text = word[3].replace(word[1], '****').capitalize()
                 test_msg = await bot.send_message(chat_id, text, parse_mode="HTML", reply_markup=ikb)
             else:
-                test_msg = await bot.send_message(chat_id, word[2 if mod == 1 else 1], parse_mode="HTML", reply_markup=ikb)
+                test_msg = await bot.send_message(chat_id, f'{word[2 if mod == 1 else 1].capitalize()}:', parse_mode="HTML", reply_markup=ikb)
         else:
             ...  # TODO Write mode.
 
-        if temp[chat_id].get('test_msg'):
-            await asyncio.sleep(2)
-            await bot.delete_message(chat_id=chat_id, message_id=temp[chat_id]['test_msg'])
+        if data.get('test_msg'):
+            await bot.delete_message(chat_id=chat_id, message_id=data['test_msg'])
 
-        temp[chat_id]['test_msg'] = test_msg.message_id
+        data.update({'test_msg': test_msg.message_id})
 
     else:
-        amount = temp[chat_id]['day_size']
-        right_answer = temp[chat_id]['day_answers']
+        amount = data['day_size']
+        right_answer = data['day_answers']
 
+        await state.clear()
+        await bot.delete_message(chat_id=chat_id, message_id=data['test_msg'])
         await bot.send_message(chat_id, text=f"Test is over!\nNice job!\n{right_answer}/{amount}")
 
 
@@ -146,15 +150,36 @@ async def start_commmand(msg: types.Message):
 
 
 @dp.message(Command("show"))
-async def show_commmand(msg: types.Message, command=None, sort="Time"):
-    list_of_chunks = []
-    chunk_msg = ""
+async def show_commmand(msg: types.Message, state:FSMContext, command, sort="Time"):
+    await state.set_state(UserState.show)
 
-    connection = sqlite3.connect(f"{script_dir}/{db_functions.DB_NAME}")
-    cursor = connection.cursor()
-    cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
-    curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
-    connection.close()
+    list_of_chunks = []
+    msg_chunk = ""
+    data = {}
+
+    if isinstance(command, int):
+        if command != 0:
+            curent_dict = await db_functions.get_day(script_dir, msg.chat.first_name, command-1)
+            args = command
+        else:
+            connection = sqlite3.connect(f"{script_dir}/{db_functions.DB_NAME}")
+            cursor = connection.cursor()
+            cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
+            curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
+            connection.close()
+            args = 0
+    
+    else:
+        if command.args:
+            args = int(command.args.strip())
+            curent_dict = await db_functions.get_day(script_dir, msg.from_user.first_name, args-1)
+        else:
+            connection = sqlite3.connect(f"{script_dir}/{db_functions.DB_NAME}")
+            cursor = connection.cursor()
+            cursor.execute(f'SELECT * FROM {msg.chat.first_name}')
+            curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
+            connection.close()
+            args = 0
     
     longest_word = max(curent_dict, 
                        key=lambda x: len(x[1])
@@ -165,25 +190,25 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
         curent_dict.sort(key=lambda x: x[1])
 
         for row in curent_dict:
-            if len(chunk_msg) < 2500:
-                chunk_msg += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
+            if len(msg_chunk) < 2500:
+                msg_chunk += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
             else:
-                list_of_chunks.append(chunk_msg)
-                chunk_msg = ""
-                chunk_msg += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
+                list_of_chunks.append(msg_chunk)
+                msg_chunk = ""
+                msg_chunk += f"<code>{row[1].capitalize()}</code>: <pre>{' '*len_of_longest_word + row[2]}</pre>\n"
 
-        list_of_chunks.append(chunk_msg)
+        list_of_chunks.append(msg_chunk)
 
     elif sort == "Examples":
         for i in curent_dict:
-            if len(chunk_msg) < 2500:
-                chunk_msg += f"<code>{i[1].capitalize()}</code>: {i[2]} <pre>{i[3]}</pre>\n"
+            if len(msg_chunk) < 2500:
+                msg_chunk += f"<code>{i[1].capitalize()}</code>: {i[2]} <pre>{i[3].capitalize()}</pre>\n"
             else:
-                list_of_chunks.append(chunk_msg)
-                chunk_msg = ""
-                chunk_msg += f"<code>{i[1].capitalize()}</code>: {i[2]} <pre>{i[3]}</pre>\n"
+                list_of_chunks.append(msg_chunk)
+                msg_chunk = ""
+                msg_chunk += f"<code>{i[1].capitalize()}</code>: {i[2]} <pre>{i[3].capitalize()}</pre>\n"
 
-        list_of_chunks.append(chunk_msg)
+        list_of_chunks.append(msg_chunk)
 
     else:
         temp_date = ""
@@ -191,37 +216,56 @@ async def show_commmand(msg: types.Message, command=None, sort="Time"):
 
         for i in curent_dict:
             if i[4] != temp_date:
-                chunk_msg += ". "*10 + i[4] + f" ({day_count})" + "\n"
+                msg_chunk += ". "*10 + i[4] + f" ({day_count})" + "\n"
                 temp_date = i[4]
                 day_count += 1
-            if len(chunk_msg) < 2500:
-                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
+            if len(msg_chunk) < 2500:
+                msg_chunk += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
             else:
-                list_of_chunks.append(chunk_msg)
-                chunk_msg = ""
-                chunk_msg += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
+                list_of_chunks.append(msg_chunk)
+                msg_chunk = ""
+                msg_chunk += f"{i[0]}. <code>{i[1].capitalize()}</code>:  {'  '*(len_of_longest_word-len(i[1]))}{i[2]}\n"
 
-        list_of_chunks.append(chunk_msg)
+        list_of_chunks.append(msg_chunk)
 
-    ibtn1 = InlineKeyboardButton(text="Alphabet",callback_data=f"Alphabet")
-    ibtn2 = InlineKeyboardButton(text="Time", callback_data=f"Time")
-    ibtn3 = InlineKeyboardButton(text="Close", callback_data=f"Close")
-    ibtn4 = InlineKeyboardButton(text="Examples", callback_data=f"Examples")
-    ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn4],[ibtn3]])
+    ibtn1 = InlineKeyboardButton(text="Alphabet",callback_data="Alphabet")
+    ibtn2 = InlineKeyboardButton(text="Time", callback_data="Time")
+    ibtn4 = InlineKeyboardButton(text="Examples", callback_data="Examples")
     
-    for chunk in list_of_chunks:
+    temp = {}
+    for i in range(len(list_of_chunks)):
+        ibtn3 = InlineKeyboardButton(text="Close", callback_data=f"Close{i}")
+        ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn4],[ibtn3]])
+
         show_msg = await bot.send_message(msg.chat.id, 
-                                        chunk, 
+                                        list_of_chunks[i], 
                                         parse_mode="HTML", 
                                         reply_markup=ikb)
+        
+        temp[f'Close{i}'] = show_msg.message_id 
     
-    # BUG  Deleate only last msg
-    if msg.chat.id in temp:
-        temp[msg.chat.id].update({'show':{'to_close': show_msg.message_id}})
-    else:
-        temp[msg.chat.id] = {'show':{'to_close': show_msg.message_id}}
+    data['to_deleate'] = temp
+    data['day'] = args
+    
+    await state.update_data(show=data)
 
     await msg.delete()
+
+
+@dp.callback_query(UserState.show)
+async def callback_show(callback: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    data = data['show']
+
+    if callback.data in data['to_deleate']:
+        await bot.delete_message(chat_id=callback.message.chat.id, message_id=data['to_deleate'][callback.data])
+
+    elif callback.data == "Alphabet":
+        await show_commmand(callback.message, state, data['day'], sort="Alphabet")
+    elif callback.data == "Examples":
+        await show_commmand(callback.message, state, data['day'], sort="Examples")
+    elif callback.data == "Time":
+        await show_commmand(callback.message, state, data['day'])
 
 
 @dp.message(Command("add"))
@@ -263,19 +307,16 @@ To deleate whole day type 'd' before command, like:\n/del d 3")
 
 
 @dp.message(Command("select_day"))
-async def select_day(msg: types.Message, command):
-    global temp
-    
-    if command.args and command.args.isdigit():
-        day = await db_functions.get_day(script_dir, msg.from_user.first_name,  int(command.args.strip())-1)
+async def select_day(msg: types.Message, command, state: FSMContext):
+    await state.set_state(UserState.test)
+
+    if command.args and command.args.strip().isdigit():
+        day = await db_functions.get_day(script_dir, msg.from_user.first_name,  int(command.args)-1)
        
         if day:
             tmp = {'day': day, 'day_size': len(day), 'day_answers': 0}
 
-            if msg.chat.id in temp:
-                temp[msg.chat.id].update(tmp)
-            else:
-                temp[msg.chat.id] = tmp
+            await state.update_data(test=tmp)
         else:
            await bot.send_message(msg.chat.id, 
                                   "Wrong day numder!")
@@ -290,8 +331,32 @@ You can finde day number using <code>/show</code> command.",
 
 
 @dp.message(Command("test"))
-async def test(msg: types.Message, command):
-    global temp 
+async def test(msg: types.Message, command, state:FSMContext):
+    current_state = await state.get_state()
+    user_name = msg.from_user.first_name
+
+    if command.args and command.args.strip() in ('e', 'w', 'e w', 'w e', 's'):
+        args = command.args.strip().split()
+    else:
+        args = ()
+
+    if current_state is None:
+        await bot.send_message(msg.chat.id, 'Pls select day.')
+    elif current_state == UserState.test:
+        data = await state.get_data()
+        data = data['test']
+        data.update({'args': args})
+        
+        await state.update_data(test=data)
+        await play(msg.chat.id, user_name, state)
+
+    await state.set_state(UserState.test)
+    await msg.delete()
+
+
+@dp.message(Command("test10"))
+async def test10(msg: types.Message, command, state:FSMContext):
+    await state.set_state(UserState.test)
 
     if command.args and command.args.strip() in ('e', 'w', 'e w', 'w e', 's'):
         args = command.args.strip().split()
@@ -299,12 +364,11 @@ async def test(msg: types.Message, command):
         args = ()
 
     user_name = msg.from_user.first_name
+    day = await db_functions.get_word(script_dir, user_name, 10)
+    tmp = {'day': day, 'day_size': 10, 'day_answers': 0, 'args': args}
 
-    if msg.chat.id in temp and temp[msg.chat.id].get('day'):
-        temp[msg.chat.id]['test_mod'] = args
-        await play(msg.chat.id, user_name, args)
-    else:
-        await bot.send_message(msg.chat.id, 'Pls select day.')
+    await state.update_data(test=tmp)
+    await play(msg.chat.id, user_name, state)
 
     await msg.delete()
 
@@ -406,48 +470,39 @@ async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
             await state.update_data(shuffle=data)
 
 
-@dp.callback_query()
-async def choice_callback(callback: types.CallbackQuery):
-    global temp
+@dp.callback_query(UserState.test)
+async def choice_callback(callback: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    data = data['test']
     user_id = callback.from_user.id
     
-    # Play 
     if callback.data == "True":
-        temp[user_id]['day_answers'] += 1
+        data['day_answers'] += 1
 
-        amount = temp[user_id]['day_size']
-        right_answer = temp[user_id]['day_answers']
+        amount = data['day_size']
+        right_answer = data['day_answers']
 
-        if temp[user_id].get('x'):
-            await temp[user_id]['x'].delete()
-        x = await callback.message.answer(text=f"✅ {right_answer}/{amount}", show_alert=True)
-        temp[user_id]['x'] = x
-        await play(user_id, callback.from_user.first_name, temp[user_id]['test_mod'])
+        if data.get('score'):
+            await bot.delete_message(callback.message.chat.id, message_id=data['score'])
+
+        msg = await callback.message.answer(text=f"✅ {right_answer}/{amount}")
+        data['score'] = msg.message_id
+        await state.update_data(test=data)
+
+        await play(user_id, callback.from_user.first_name, state)
 
     elif callback.data == "False":
-        #await callback.reply(text="❌", show_alert=True)
-        amount = temp[user_id]['day_size']
-        right_answer = temp[user_id]['day_answers']
+        amount = data['day_size']
+        right_answer = data['day_answers']
         
-        if temp[user_id].get('x'):
-            await temp[user_id]['x'].delete()
-        x = await callback.message.answer(text=f"❌ {right_answer}/{amount}")
-        temp[user_id]['x'] = x
-        await play(user_id, callback.from_user.first_name, temp[user_id]['test_mod'])
+        if data.get('score'):
+            await bot.delete_message(callback.message.chat.id, message_id=data['score'])
 
-    # Show
-    if callback.data == "Close":
-        if user_id in temp:
-            show_msg_id = temp[user_id]['show']['to_close']
-            await bot.delete_message(chat_id=callback.message.chat.id, message_id=show_msg_id)
-            del temp[user_id]['show']['to_close']
+        msg = await callback.message.answer(text=f"❌ {right_answer}/{amount}")
+        data['score'] = msg.message_id
+        await state.update_data(test=data)
 
-    elif callback.data == "Alphabet":
-        await show_commmand(callback.message, sort="Alphabet")
-    elif callback.data == "Examples":
-        await show_commmand(callback.message, sort="Examples")
-    elif callback.data == "Time":
-        await show_commmand(callback.message)
+        await play(user_id, callback.from_user.first_name, state)
 
 
 async def main():

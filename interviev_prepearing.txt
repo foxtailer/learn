@@ -695,8 +695,8 @@
  when you need to iterate over a data stream or container. Iterators power and control
  the iteration process, while iterables typically hold data that you want to iterate over one
  value at a time.
-  An iterator is an object that contains a countable number of values.
- An iterator is an object that can be iterated upon, meaning that you can traverse
+
+  An iterator is an object that can be iterated upon, meaning that you can traverse
  through all the values. Technically, in Python, an iterator is an object which implements
  the iterator protocol, which consist of the methods __iter__() and __next__().
 
@@ -762,7 +762,26 @@
 
   A collision can be handled using various techniques:
   Separate Chaining Technique
+
+    Steps of Separate Chaining:
+      Insert:
+        Compute the index using the hash function.
+        If the bucket at that index is empty, insert the element.
+        If the bucket already contains elements, append the new element to the linked list.
+      Search:
+        Compute the index using the hash function.
+        Search the linked list at the computed index for the desired key.
+      Delete:
+        Compute the index using the hash function.
+        Search for the element in the linked list at that index, then remove it if found.
+
   Open Addressing technique
+    Hash Function: The hash function calculates the initial index for inserting a key.
+    Collision Handling: If the calculated index is already occupied (collision), open 
+      addressing looks for the next available empty slot based on a probing technique.
+    Probing: Probing is the process of finding the next open slot in the hash table by 
+      following a specific sequence. There are different types of probing techniques, such as 
+      linear probing, quadratic probing, and double hashing.
 
 
 -- FUNCTIONS
@@ -785,7 +804,7 @@
   Function side effect
 
   Function is said to have a side effect if it changes anything outside of its function definition like
- changing arguments passed to the function or changing a global variable. For example:
+  changing arguments passed to the function or changing a global variable. For example:
 
     def fn_side_effects(fruits):
         print(f"Fruits before change - {fruits} id - {id(fruits)}")
@@ -1451,6 +1470,8 @@
 -- PIP/PYPI
 -- ENVIROMENT
 -- MAKING OWN MODULE
+
+
 -- VIRTUAL ENVIRONMENT
 
   A virtual environment is (amongst other things):
@@ -1465,8 +1486,13 @@
     in the environment.
     - Not considered as movable or copyable – you just recreate the same environment in the target location.
 
+    pip freeze > requirements.txt
+
     python -m venv /path/to/new/virtual/environment
     python3 -m venv myenv --python=/usr/bin/python3.8
+    source vnv/bin/activate
+    pip install -r requirements.txt
+
 
 ******ADVENCED*******
 
@@ -2477,6 +2503,8 @@ This allows the object to be reconstructed and used in the application as if it 
 -- LINUX
 
 command --help
+uname -a
+mount
 
 ls -l -a
 
@@ -2489,18 +2517,18 @@ mv file1 file-n destination
 rm [name -r *.txt]  
 cp file destination
 
-find path -name file.exmpl
-find . -name file.exmpl
+find path/to/search/from -name file.exmpl
+find . -name file.exmpl  (. mean current direcrory)
 find . -name "*.exmpl" 
--iname for ignore case in name
 find . -type d -name dir-name  (Look for directories)
+-iname (for ignore case in name)
 
 adduser name
 deluser name
 passwd name  (Change password of user)
 cat /etc/passwd  (File contein info about all user in sistem)
 
-Groups eatch uses has 1 primary group (Same as the name of user) and up to 15 secondary groups
+Groups eatch user has 1 primary group (Same as the name of user) and up to 15 secondary groups
 each file own by user primary group.
 addgroup group-name
 delgroup group-name
@@ -2633,6 +2661,14 @@ $	          End of string or end of line depending on            .*?the end$	   
  manager
  logging
  microservises
+
+ python manage.py createsuperuser
+ makemigrations
+ migrate
+ python manage.py runserver 0.0.0.0:8080
+ python manage.py loaddata data.json
+ python manage.py dumpdata app_name.ModelName --output=data.json
+
 
 -- FLASK
 

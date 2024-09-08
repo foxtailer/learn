@@ -26,10 +26,10 @@
               </div>
               <div class="col p-0"><strong>100.00 $</strong></div>
               <div class="col p-0">
-                  <a href="{% url "carts:cart_remove" %}" class="remove-from-cart" data-cart-id="">
+                  {% comment %} <a href="{% url "carts:cart_remove" %}" class="remove-from-cart" data-cart-id="">
                       <img class="mx-1" src="{% static "icons/trash3-fill.svg" %}"
                           alt="Catalog Icon" width="16" height="16">
-                  </a>
+                  </a> {% endcomment %}
               </div>
           </div>
       </li>

@@ -95,6 +95,7 @@
                     </button>
                     <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
                         {% tag_categories as categories %}
+                        <script>console.log(categories)</script>
                         {% for category in categories %}
                         <li><a class="dropdown-item text-white" href="{% url "goods:index" category.slug %}">{{category.name}}</a></li>
                         {% endfor %}
