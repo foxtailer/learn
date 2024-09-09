@@ -4,6 +4,10 @@
 
 {% block footer-css %}<link rel="stylesheet" href="{% static "css/my_footer_css.css" %}">{% endblock  %}
 
+{% block modal_cart %}
+{% include "includes/cart_btn.html" %}
+{% endblock  %}
+
 {% block content %}
 <div class="row">
     <!-- Форма фильтров -->
@@ -91,7 +95,7 @@
                             {% else %}
                             <p><strong>{{product.price}} $</strong></p>
                         {% endif %}
-                        <a href="#" class="btn add-to-cart">
+                        <a href="{% url "carts:cart-add" product.slug%}" class="btn add-to-cart">
                             <img class="mx-1" src="{% static "icons/cart-plus.svg" %}" alt="Catalog Icon"
                                 width="32" height="32">
                         </a>

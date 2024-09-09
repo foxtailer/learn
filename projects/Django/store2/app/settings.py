@@ -42,7 +42,6 @@ INSTALLED_APPS = [
 
     'main',
     'goods',
-    'dbtest',
     'users',
     'carts',
 ]

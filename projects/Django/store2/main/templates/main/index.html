@@ -3,6 +3,10 @@
 
 {% block footer-css %}<link rel="stylesheet" href="{% static "css/my_footer_css.css" %}">{% endblock  %}
 
+{% block modal_cart %}
+{% include "includes/cart_btn.html" %}
+{% endblock  %}
+
 {% block content %}
 <h1 class="mt-5 pt-5"><strong>Магазин мебели HOME</strong></h1>
 {% endblock  %}
