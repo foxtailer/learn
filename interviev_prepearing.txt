@@ -2502,154 +2502,197 @@ This allows the object to be reconstructed and used in the application as if it 
  
 -- LINUX
 
-command --help
-uname -a
-mount
+  uptime
+  man command (manual of command)
+  command --help
+  tree (ls -R im more visual format)
+  echo 'something' > file.txt
+  touch, mkdir, rm, cp
+  head | tail file.log -n 5
+  uname -a
+  mount
 
-ls -l -a
+  ls -l -a
 
-cat file-name.txt  (Show file content)
-cat >> file-name.txt  (Start input text to append it to the end of file Ctrl + d to finish)
-cat file1 >> file2  (Concatenate files)
+  cat file-name.txt  (Show file content)
+  cat >> file-name.txt  (Start input text to append it to the end of file Ctrl + d to finish)
+  cat file1 >> file2  (Concatenate files)
 
-mv file1 file-n destination
+  mv file1 file-n destination
 
-rm [name -r *.txt]  
-cp file destination
+  rm [name -r *.txt]  
+  cp file destination
 
-find path/to/search/from -name file.exmpl
-find . -name file.exmpl  (. mean current direcrory)
-find . -name "*.exmpl" 
-find . -type d -name dir-name  (Look for directories)
--iname (for ignore case in name)
+  find path/to/search/from -name file.exmpl
+  find . -name file.exmpl  (. mean current direcrory)
+  find . -name "*.exmpl" 
+  find . -type d -name dir-name  (Look for directories)
+  -iname (for ignore case in name)
+  find / -perm x
 
-adduser name
-deluser name
-passwd name  (Change password of user)
-cat /etc/passwd  (File contein info about all user in sistem)
+  cat file.txt | grep 0.0.0.0 -n  (Search for line in file.txt where 0.0.0.0 are)
 
-Groups eatch user has 1 primary group (Same as the name of user) and up to 15 secondary groups
-each file own by user primary group.
-addgroup group-name
-delgroup group-name
-usermod -a -G group-name user-name
-  -a (Append)
-  -G (Group)
-groups user-name  (Show to whot groups user belong)
-gpasswd -d user-name group-name  (Remove user from group)
-visudo  (Modify file where permissions of group writen)
-/usr/bin/top  (Path to top command)
-/etc/group  
-su  (Switch user)
+  locate something
 
-Esc :wq  (Mast known command in Linux)
+  adduser name
+  deluser name
+  passwd name  (Change password of user)
+  cat /etc/passwd  (File contein info about all user in sistem)
 
-which command  (Show where command is)
+  Groups eatch user has 1 primary group (Same as the name of user) and up to 15 secondary groups
+  each file own by user primary group.
+  addgroup group-name
+  delgroup group-name  (After deleate user group is empty and should be deleated)
+  usermod -a -G group-name user-name
+    -a (Append)
+    -G (Group)
+  groups user-name  (Show to whot groups user belong)
+  gpasswd -d user-name group-name  (Remove user from group)
+  visudo  (Modify file where permissions of group writen)
+  /usr/bin/top  (Path to top command)
+  /etc/group     (List of all groups)
+  su  (Switch user)
+  
+  getent group Marketing
+  chown :group something
 
-cmod [who] [+,-,=] [permission(s)] filename
-cmod a+w file
-cmod a+w file
-cmod -R a+w directory  (Add write permission foa all users to all files in directori recursivly)
-d--- --- ---   permissions for user | permissions for group | permissions for all user in sistem
-d directory
-l link
-- file
+  Esc :wq  (Mast known command in Linux)
 
-u - User
-g - Group
-o - Other
-a - All
+  which command  (Show where command is)
 
-chmod g+w, o-rw, a+x file
-chmod -x file  (Remove execute permission from all groups)
+  cmod [who] [+,-,=] [permission(s)] filename
+  cmod a+w file
+  cmod -R a+w directory  (Add write permission foa all users to all files in directori recursivly)
+  d--- --- ---   permissions for user | permissions for group | permissions for all user in sistem
+  d directory
+  l link
+  - file
 
-top
-htop
-ps  (root user proceses by default ps a to show all)
-ps aux
-You can kill process by id(PID) or name(COMMAND). Send signal to the process
-killall name
-kill id
-apt install something
+  u - User
+  g - Group
+  o - Other
+  a - All
 
-ifconfig  (Show info about network devises)
-ip -4 addr
-netstat
-curl adress  (Send request to adress)
-curl -X POST --data "some=data&some2=data2" adress
-ping adress
+  chmod g+w, o-rw, a+x file
+  chmod -x file  (Remove execute permission from all groups)
 
-le ~/.ssh/id_rsa*  (Look for RSA keys)
-ssh-keygen -b 4096  (Generate RSA keys)
-ssh-copy-id root@000.000.000.000
+  top
+  htop
+  ps  (root user proceses by default ps a to show all)
+  ps aux
+  You can kill process by id(PID) or name(COMMAND). Send signal to the process
+  killall name
+  kill id
+  apt install something
 
-sudo lsof -i :<port_number>
+  ifconfig  (Show info about network devises)
+  ip -4 addr
+  netstat
+  curl adress  (Send request to adress)
+  curl -X POST --data "some=data&some2=data2" adress
+  ping adress
+
+  le ~/.ssh/id_rsa*  (Look for RSA keys)
+  ssh-keygen -b 4096  (Generate RSA keys)
+  ssh-copy-id root@000.000.000.000
+
+  sudo lsof -i :<port_number>
+
+  Run your Python script in that session:
+    screen
+    python your_script.py
+    Detach the screen session by pressing Ctrl + A, then D.
+    You can later reattach to the screen session with:
+
+    screen -ls
+    screen -r <id>
+
+  - Reset forgotten root password Debian
+    Reboot your Debian 10 system. You should be presented with a GRUB menu . On the first option, proceed and press the ‘e’ key 
+  on the keyboard before the system starts booting.
+    Scroll down and locate the line that begins with ‘linux’. Move the cursor to the end of this line, just after ‘ro quiet’ and 
+  append the parameter init=/bin/bash. 
+  Next hit ctrl + x
+    mount -n -o remount,rw /
+    passwd
+    Finally press Ctrl + Alt + Del to exit and reboot.
+
+  - ssh
+    ssh -V
+    ssh -p 2220  bandit0@bandit.labs.overthewire.org
+    reset
+    find . -type f -exec file {} + | grep 'text'
+    find . -type f -size 1033c ! -perm /111 -exec file {} + | grep 'text'
+    find / -type f -user bandit7 -group bandit6 -size 33c ! -perm /111 -exec file {} + 2>/dev/null | grep 'text'
+    8 dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+
 
 
 -- REGULAR EXPRESSION
 
-Character	  Legend	                                             Example	                Sample Match
-\d	        Most engines: one digit from 0 to 9	                 file_\d\d	              file_25
+  Character	  Legend	                                             Example	                Sample Match
+  \d	        Most engines: one digit from 0 to 9	                 file_\d\d	              file_25
 
-\w	        Most engines: "word character": ASCII                \w-\w\w\w	              A-b_1
-              letter, digit or underscore	
+  \w	        Most engines: "word character": ASCII                \w-\w\w\w	              A-b_1
+                letter, digit or underscore	
 
-\s	        Most engines: "whitespace character":                a\sb\sc	                a b
-            space, tab, newline, carriage return,                                         c
-            vertical tab	
+  \s	        Most engines: "whitespace character":                a\sb\sc	                a b
+              space, tab, newline, carriage return,                                         c
+              vertical tab	
 
-\D	        One character that is not a digit as                 \D\D\D	                  ABC
-              defined by your engine's \d	
+  \D	        One character that is not a digit as                 \D\D\D	                  ABC
+                defined by your engine's \d	
 
-\W	        One character that is not a word character           \W\W\W\W\W	              *-+=)
-              as defined by your engine's \w
+  \W	        One character that is not a word character           \W\W\W\W\W	              *-+=)
+                as defined by your engine's \w
 
-\S	        One character that is not a whitespace               \S\S\S\S	                Yoyo
-              character as defined by your engine's \s	
+  \S	        One character that is not a whitespace               \S\S\S\S	                Yoyo
+                character as defined by your engine's \s	
 
-+	          One or more	                                         Version\w-\w+	          Version A-b1_1
-{3}	        Exactly three times	                                 \D{3}	                  ABC
-{2,4}	      Two to four times	                                   \d{2,4}	                156
-{3,}	      Three or more times	                                 \w{3,}	                  regex_tutorial
-*	          Zero or more times	                                 A*B*C*	                  AAACC
-?	          Once or none	                                       plurals?	                plural
+  +	          One or more	                                         Version\w-\w+	          Version A-b1_1
+  {3}	        Exactly three times	                                 \D{3}	                  ABC
+  {2,4}	      Two to four times	                                   \d{2,4}	                156
+  {3,}	      Three or more times	                                 \w{3,}	                  regex_tutorial
+  *	          Zero or more times	                                 A*B*C*	                  AAACC
+  ?	          Once or none	                                       plurals?	                plural
 
-.	          Any character except line break	                     a.c	                    abc
-\	          Escapes a special character	\.\*\+\?                 \$\^\/\\	.*+?            $^/\
+  .	          Any character except line break	                     a.c	                    abc
+  \	          Escapes a special character	\.\*\+\?                 \$\^\/\\	.*+?            $^/\
 
-|	          Alternation / OR operand	                           22|33	                  33
-( … )	      Capturing group	                                     A(nt|pple)	              Apple 
-                                                                                          (captures "pple")
-\1	        Contents of Group 1	                                 r(\w)g\1x	              regex
-\2	        Contents of Group 2	                                 (\d\d)\+(\d\d)=\2\+\1	  12+65=65+12
-(?: … )	    Non-capturing group	                                 A(?:nt|pple)	            Apple
+  |	          Alternation / OR operand	                           22|33	                  33
+  ( … )	      Capturing group	                                     A(nt|pple)	              Apple 
+                                                                                            (captures "pple")
+  \1	        Contents of Group 1	                                 r(\w)g\1x	              regex
+  \2	        Contents of Group 2	                                 (\d\d)\+(\d\d)=\2\+\1	  12+65=65+12
+  (?: … )	    Non-capturing group	                                 A(?:nt|pple)	            Apple
 
-\t	        Tab	                                                 T\t\w{2}	                T     ab
-\r	        Carriage return character	                           see below	
-\n	        Line feed character	                                 see below	
-\r\n	      Line separator on Windows	                           AB\r\nCD	                AB
-                                                                                          CD
+  \t	        Tab	                                                 T\t\w{2}	                T     ab
+  \r	        Carriage return character	                           see below	
+  \n	        Line feed character	                                 see below	
+  \r\n	      Line separator on Windows	                           AB\r\nCD	                AB
+                                                                                            CD
 
-+	          The + (one or more) is "greedy"	                     \d+	                    12345
-?	          Makes quantifiers "lazy"	                           \d+?	                    1 in 12345
-*	          The * (zero or more) is "greedy"	                   A*	                      AAA
-?	          Makes quantifiers "lazy"	                           A*?	                    empty in AAA
-{2,4}	      Two to four times, "greedy"	                         \w{2,4}	                abcd
-?	          Makes quantifiers "lazy"	                           \w{2,4}?	                ab in abcd
+  +	          The + (one or more) is "greedy"	                     \d+	                    12345
+  ?	          Makes quantifiers "lazy"	                           \d+?	                    1 in 12345
+  *	          The * (zero or more) is "greedy"	                   A*	                      AAA
+  ?	          Makes quantifiers "lazy"	                           A*?	                    empty in AAA
+  {2,4}	      Two to four times, "greedy"	                         \w{2,4}	                abcd
+  ?	          Makes quantifiers "lazy"	                           \w{2,4}?	                ab in abcd
 
-[ … ]	      One of the characters in the brackets	               T[ao]p	                  Tap or Top
--	          Range indicator	                                     [a-z]	                  One lowercase letter
-[x-y]	      One of the characters in the range from x to y	     [A-Z]+	                  GREAT
-[^x]	      One character that is not x	                         [^a-z]{3}	              A1!
-[\d\D]	    One character that is a digit or a non-digit	       [\d\D]+	                Any characters, inc-
-                                                                                          luding new lines, which the  
-                                                                                          regular dot doesn't match
+  [ … ]	      One of the characters in the brackets	               T[ao]p	                  Tap or Top
+  -	          Range indicator	                                     [a-z]	                  One lowercase letter
+  [x-y]	      One of the characters in the range from x to y	     [A-Z]+	                  GREAT
+  [^x]	      One character that is not x	                         [^a-z]{3}	              A1!
+  [\d\D]	    One character that is a digit or a non-digit	       [\d\D]+	                Any characters, inc-
+                                                                                            luding new lines, which the  
+                                                                                            regular dot doesn't match
 
-^	          Start of string or start of line depending           ^abc.*	                  abc (line start)
-            on multiline mode. (But when [^inside brackets], 
-            it means "not")	
-$	          End of string or end of line depending on            .*?the end$	            this is the end
-            multiline mode. Many engine-dependent subtleties.
+  ^	          Start of string or start of line depending           ^abc.*	                  abc (line start)
+              on multiline mode. (But when [^inside brackets], 
+              it means "not")	
+  $	          End of string or end of line depending on            .*?the end$	            this is the end
+              multiline mode. Many engine-dependent subtleties.
+
 
 -- MATH
 -- STATISTIC
