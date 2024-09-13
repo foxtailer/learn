@@ -1,4 +1,5 @@
-projects/telegram/eng_asistenf/bot_db.db
+*.db
+*.sqlite3
+__pycache__/
+migrations/
 projects/telegram/eng_asistenf/Mari.csv
-projects/Django/wise/db.sqlite3
-Django-4-by-example-main/Chapter01/mysite/db.sqlite3

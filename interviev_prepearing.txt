@@ -2560,6 +2560,7 @@ This allows the object to be reconstructed and used in the application as if it 
 
   which command  (Show where command is)
 
+  cmod 400 ssnkey.private
   cmod [who] [+,-,=] [permission(s)] filename
   cmod a+w file
   cmod -R a+w directory  (Add write permission foa all users to all files in directori recursivly)
@@ -2636,13 +2637,17 @@ This allows the object to be reconstructed and used in the application as if it 
     gunzip -c file.bin > file2.gz
     tar -xvzf backup.tar.gz
     tar -xvf file3  (for file3: POSIX tar archive (GNU))
-    ssh -i ~/sshkey.private -p 2220 bandit14@bandit.labs.overthewire.org
+    ssh -i ~/sshkey.private -p 2220 bandit14@bandit.labs.overthewire.org   [command]
     echo "MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS" | nc localhost 30000
     openssl s_client -connect localhost:30001
+    openssl s_client -connect localhost:30001 -ign_eof
     nmap -p 31000-32000 localhost
-    
+    nmap -p 13,14,15 -A localhost
+    diff passwords.old passwords.new
+    awk 'NR==FNR { lines[$0]; next } !($0 in lines)' passwords.old passwords.new
+
     cat /etc/bandit_pass/bandit15
-    16 kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+    20 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
 
 
 -- REGULAR EXPRESSION
