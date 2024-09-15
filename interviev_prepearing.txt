@@ -2589,6 +2589,9 @@ This allows the object to be reconstructed and used in the application as if it 
   ifconfig  (Show info about network devises)
   ip -4 addr
   netstat
+  curl ifconfig.me
+  curl icanhazip.com
+  wget -qO- ifconfig.me
   curl adress  (Send request to adress)
   curl -X POST --data "some=data&some2=data2" adress
   ping adress
@@ -2645,9 +2648,28 @@ This allows the object to be reconstructed and used in the application as if it 
     nmap -p 13,14,15 -A localhost
     diff passwords.old passwords.new
     awk 'NR==FNR { lines[$0]; next } !($0 in lines)' passwords.old passwords.new
+    netstat -tuln
+    nc -lvp 9999
 
     cat /etc/bandit_pass/bandit15
     20 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+    21 EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+
+-- CC
+
+  Common Ports and Protocols
+
+  TCP                       UDP
+    FTP(21)                   DNS(53)
+    SSH(22)                   DHCP(67,68)          
+    Telnet(23)                TFTP(69)
+    SMTP(25)                  SNMP(161)
+    HTTP(80)/HTTPS(443)
+    POP3(110)
+    SMB(139+445)
+    IMAP(143)
+    DNS(53)
 
 
 -- REGULAR EXPRESSION
