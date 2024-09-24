@@ -2503,6 +2503,7 @@ This allows the object to be reconstructed and used in the application as if it 
 -- LINUX
 
   uptime
+  cat /etc/os-release
   man command (manual of command)
   command --help
   tree (ls -R im more visual format)
@@ -2513,6 +2514,13 @@ This allows the object to be reconstructed and used in the application as if it 
   mount
 
   ls -l -a
+  ls -ld .
+
+  sudo dpkg -i DEB_PACKAGE
+
+  history
+  !22
+  !22:p
 
   cat file-name.txt  (Show file content)
   cat >> file-name.txt  (Start input text to append it to the end of file Ctrl + d to finish)
@@ -2621,6 +2629,10 @@ This allows the object to be reconstructed and used in the application as if it 
     passwd
     Finally press Ctrl + Alt + Del to exit and reboot.
 
+    which python #linux
+    python -c "import os, sys; print(os.path.dirname(sys.executable))"
+    where python
+
   - ssh
     ssh -V
     ssh -p 2220  bandit0@bandit.labs.overthewire.org
@@ -2650,10 +2662,23 @@ This allows the object to be reconstructed and used in the application as if it 
     awk 'NR==FNR { lines[$0]; next } !($0 in lines)' passwords.old passwords.new
     netstat -tuln
     nc -lvp 9999
+    echo "Hello, this is a test message!" | nc localhost 12345
+    echo I am user $myname | md5sum | cut -d ' ' -f 1
+    stat --format "%U" file
+    for i in $(seq -w 0000 9999);  = for i in {0..9}{0..9}{0..9}{0..9};
 
     cat /etc/bandit_pass/bandit15
     20 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
     21 EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+    22 tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+    23 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+    24 gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+    25 iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+    26 s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+    27 upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+    28 Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+    29 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+    
 
 
 -- CC

@@ -83,8 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'blog',
-        'USER': 'blog',
-        'PASSWORD': 'xxxxxx',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -132,7 +134,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email server configuration
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'your_account@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'yaroslavdd1992@gmail.com'
+EMAIL_HOST_PASSWORD = 'ekli wzsx hslc vnas'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+#EMAIL_USE_SSL: Whether to use an implicit TLS secure connection
