@@ -2632,6 +2632,8 @@ This allows the object to be reconstructed and used in the application as if it 
     which python #linux
     python -c "import os, sys; print(os.path.dirname(sys.executable))"
     where python
+    watch -n 1 pgrep -a python
+    python -i file.py
 
   - ssh
     ssh -V

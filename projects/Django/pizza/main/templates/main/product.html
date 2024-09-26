@@ -1,6 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
 
+{% block product-style %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock  %}
+
+{% block content %}
 <div class="card-wrapper">
-    <div class="card">
+    {% for product in products %}
+      <div class="card">
         <img class="card-image" src="{{ MEDIA_URL }}images/goods/pizza3.jpg" alt="">
 
         <div class="content">
@@ -16,7 +24,7 @@
                 <h5>$ 123</h5>
             </div>
 
-            <h4 class="name"> Product name</h4>
+            <h4 class="name">{{product.name}}</h4>
             <div class="description">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Dignissimos tenetur ipsam odit alias. Asperiores, molestias velit. Asperiores, a? Libero debitis nostrum aliquam. Exercitationem tenetur dicta accusamus ipsam modi non facere.</p>
@@ -49,79 +57,11 @@
                 <button class="card-button">Add to cart
 
                 </button>
-            </div>
-        </div>
-    </div>
+              </div>
+          </div>
+      </div>
+    {% endfor %}
 </div>
 
-<style>
-.card-wrapper {
-    display: grid;
-    place-content: center;
-    height: 100vh;
-    margin: 1em;
-}
-
-.card-image {
-    width: 100%;
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-}
-
-.card {
-    width: 100%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 1.2em;
-    background-color: #fff;
-}
-
-.content {
-    background-color: #fff;
-    margin: 1em;
-}
-
-.review-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: .6em;
-}
-
-.stars i {
-    color: rgb(255, 238, 0);
-    font-size: .8em;
-}
-
-.stars span,
-.description p {
-    font-size: .85em;
-    color: #000;
-}
-
-.name,
-.price {
-   font-size: 1.3em;
-   color: black;  
-}
-
-.description {
-    margin: .6em 0;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.quantity-input {
-    width: 30px;
-}
-
-@media screen and (min-width: 500px) {
-    .card {
-        width: 350px;
-        margin: 0 auto;
-    }
-}
-
-</style>
+{% include "pagination.html" with page=products %}
+{% endblock  %}

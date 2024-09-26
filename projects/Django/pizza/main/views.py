@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from .models import Product
 
 def main(request):
-    context = {'goods': True}
-    return render(request, 'base.html', context=context)
+    products = Product.objects.all()
+
+    paginator = Paginator(products, 6)
+    page_number = request.GET.get('page', 1)
+    products = paginator.page(page_number)
+
+    return render(request, 'main/product.html', {'products': products})
 
 
 def news(request):

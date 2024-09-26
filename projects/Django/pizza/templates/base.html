@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
   {% block about-style %}{% endblock %}
   {% block contacts-style %}{% endblock %}
+  {% block product-style %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/normolize.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>Gaeta Pizza</title>
@@ -140,10 +141,6 @@
       <div class="container">
         <div class="main-inner">
           {% block content %}{% endblock %}
-
-          {% if goods %}
-            {% include "main/product.html" %}
-          {% endif %}
         </div>
       </div>
     </main>
