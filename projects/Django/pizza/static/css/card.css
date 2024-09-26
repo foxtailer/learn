@@ -1,0 +1,52 @@
+.card-wrapper {
+    display: grid;
+    place-content: center;
+    height: 100vh;
+    margin: 1em;
+}
+
+.card {
+    width: 100%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 1.2em;
+}
+
+.content {
+    background: #fff;
+    margin: 1em;
+}
+
+.review-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .6em;
+}
+
+.stars i {
+    color: rgb(255, 238, 0);
+    font-size: .8em;
+}
+
+.stars span,
+.description p {
+    font-size: .85em;
+    color: rgb(36, 36, 36);
+}
+
+.name,
+.price {
+   font-size: 1.3em;
+   color: black;  
+}
+
+.description {
+    margin: .6em 0;
+}
+
+@media screen and (min-width: 500px) {
+    .card {
+        width: 350px;
+        margin: 0 auto;
+    }
+}

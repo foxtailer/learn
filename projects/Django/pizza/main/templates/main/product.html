@@ -1,0 +1,127 @@
+
+<div class="card-wrapper">
+    <div class="card">
+        <img class="card-image" src="{{ MEDIA_URL }}images/goods/pizza3.jpg" alt="">
+
+        <div class="content">
+            <div class="review-container">
+                <div class="stars">
+                    <span>Reviews</span>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half"></i>
+                </div>
+
+                <h5>$ 123</h5>
+            </div>
+
+            <h4 class="name"> Product name</h4>
+            <div class="description">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dignissimos tenetur ipsam odit alias. Asperiores, molestias velit. Asperiores, a? Libero debitis nostrum aliquam. Exercitationem tenetur dicta accusamus ipsam modi non facere.</p>
+            </div>
+
+            <div class="button-container">
+                <div class="quantity-control">
+                    <button class="decrement" type="button">
+                      <svg class="fill-current text-gray-600 w-4" viewBox="0 0 448 512">
+                        <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                      </svg>
+                    </button>
+
+                    <input
+                      class="quantity-input"
+                      type="number"
+                      value="1"
+                      name="quantity"
+                      min="1"
+                      oninput="validity.valid||(value='1');"
+                      required/>
+
+                    <button class="increment" type="button">
+                      <svg class="fill-current text-gray-600 w-4" viewBox="0 0 448 512">
+                        <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                      </svg>
+                    </button>
+                </div>
+
+                <button class="card-button">Add to cart
+
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card-wrapper {
+    display: grid;
+    place-content: center;
+    height: 100vh;
+    margin: 1em;
+}
+
+.card-image {
+    width: 100%;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.card {
+    width: 100%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 1.2em;
+    background-color: #fff;
+}
+
+.content {
+    background-color: #fff;
+    margin: 1em;
+}
+
+.review-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .6em;
+}
+
+.stars i {
+    color: rgb(255, 238, 0);
+    font-size: .8em;
+}
+
+.stars span,
+.description p {
+    font-size: .85em;
+    color: #000;
+}
+
+.name,
+.price {
+   font-size: 1.3em;
+   color: black;  
+}
+
+.description {
+    margin: .6em 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.quantity-input {
+    width: 30px;
+}
+
+@media screen and (min-width: 500px) {
+    .card {
+        width: 350px;
+        margin: 0 auto;
+    }
+}
+
+</style>

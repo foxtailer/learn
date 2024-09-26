@@ -11,7 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap" rel="stylesheet">
 
-  {% comment %} <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png"> {% endcomment %}
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  {% block about-style %}{% endblock %}
+  {% block contacts-style %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/normolize.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>Gaeta Pizza</title>
@@ -46,8 +48,8 @@
                     <button class="drop-btn" id="lang-btn" onclick="langDropdown()">eng</button>
                   </label>
                   <div class="dropdown-content" id="lang-dropdown">
-                    <a href="#">eng</a>
-                    <a href="#">rus</a>
+                    <a href="#" onclick="changeLanguage('eng')">eng</a>
+                    <a href="#" onclick="changeLanguage('rus')">rus</a>
                   </div>
                 </div>
               </li>
@@ -55,16 +57,16 @@
               <li class="user-nav__item">
                 <div class="dropdown">
                   <label class="area" for="location-btn">
-                    <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff"
-                      class="bi bi-geo-alt-fill">
+                    <svg width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#fff" class="bi bi-geo-alt-fill">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                     </svg>
                     <button class="drop-btn" id="location-btn" onclick="locationDropdown()">Osaka</button>
                   </label>
+
                   <div class="dropdown-content" id="location-dropdown">
-                    <a href="#">Osaka</a>
-                    <a href="#">Kioto</a>
-                    <a href="#">Tokio</a>
+                    <button class="location-dropdown__btn" id="location1" onclick="changeLocation('Osaka')" >Osaka</button>
+                    <button class="location-dropdown__btn" id="location2" onclick="changeLocation('Kioto')" >Kioto</button>
+                    <button class="location-dropdown__btn" id="location3" onclick="changeLocation('Tokyo')" >Tokio</button>
                   </div>
                 </div>
               </li>
@@ -88,23 +90,23 @@
       <div class="container">
         <div class="header__inner">
           <a class="logo" href="#">
-            <img class="logo-img" src="img/logo-01.svg" alt="">
+            <img class="logo-img" src="{% static 'img/logo-01.svg' %}" alt="">
           </a>
   
           <div class="navigation">
             <nav class="main-nav">
               <ul class="main-nav__list">
                 <li class="main-nav__item">
-                  <a class="main-nav__link" href="">menu</a>
+                  <a class="main-nav__link" href="{% url "main:main" %}">menu</a>
                 </li>
                 <li class="main-nav__item">
-                  <a class="main-nav__link" href="">news</a>
+                  <a class="main-nav__link" href="{% url "main:news" %}">news</a>
                 </li>
                 <li class="main-nav__item">
-                  <a class="main-nav__link" href="">about</a>
+                  <a class="main-nav__link" href="{% url "main:about" %}">about</a>
                 </li>
                 <li class="main-nav__item">
-                  <a class="main-nav__link" href="">contacts</a>
+                  <a class="main-nav__link" href="{% url "main:contacts" %}">contacts</a>
                 </li>
               </ul>
   
@@ -137,7 +139,11 @@
     <main class="main">
       <div class="container">
         <div class="main-inner">
-          
+          {% block content %}{% endblock %}
+
+          {% if goods %}
+            {% include "main/product.html" %}
+          {% endif %}
         </div>
       </div>
     </main>
@@ -149,7 +155,7 @@
         <div class="social">
           <ul class="social-list">
             <li class="social-item">
-              <a class="social-link" href="#">
+              <a class="social-link" href="{% url "main:social_plug" %}">
                 <span class="visually-hidden">VK</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="15" viewBox="0 0 26.14 14.91">
                   <path
@@ -159,7 +165,7 @@
               </a>
             </li>
             <li class="social-item">
-              <a class="social-link" href="#">
+              <a class="social-link" href="{% url "main:social_plug" %}">
                 <span class="visually-hidden">Fasebook</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 10.15 21.74">
                   <path
@@ -169,7 +175,7 @@
               </a>
             </li>
             <li class="social-item">
-              <a class="social-link" href="#">
+              <a class="social-link" href="{% url "main:social_plug" %}">
                 <span class="visually-hidden">Instagram</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                   <path
@@ -183,7 +189,7 @@
       </div>
     </footer>
   </div>                 
-  <script src="js/main.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>

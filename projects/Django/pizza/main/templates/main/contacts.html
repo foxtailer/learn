@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block contacts-style %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}">
+{% endblock  %}
+
+
+{% block content %}
+<div class="contacts-top">
+  <h1 class="contacts__title">Контакты</h1>
+
+  <div class="select-box">
+    <div class="select-option">
+      <input type="text" placeholder="Osaka" id="soValue" readonly>
+    </div>
+    <div class="content">
+      <div class="search">
+        <input type="text" id="optionSearch" placeholder="City">
+      </div>
+      <ul class="options">
+        <li>Osaka</li>
+        <li>Kioto</li>
+        <li>Tokio</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="contacts-inner">
+  <div class="contacts-top">
+    <div class="contacts__img-box">
+      <img class="contacts__previev" src="{{ MEDIA_URL }}images/contacts-page/contacts-1.jpg" alt="">
+    </div>
+
+    <ul class="contacts__list">
+      <li class="contacts__item">
+        <p class="contacts__item-title">Адрес:</p>
+        <p class="contacts__item-text">Украина, Одесса,<br>
+          ул. Транспортная, 10 <br>
+          65039</p>
+      </li>
+
+      <li class="contacts__item">
+        <p class="contacts__item-title">Телефоны:</p>
+        <p class="contacts__item-text">
+          <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+          <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+          <a class="contacts__phone" href="tel:+380986467960">+38 (098) 777 79 60</a>
+        </p>
+      </li>
+
+      <li class="contacts__item">
+        <p class="contacts__item-title">Почта:</p>
+        <a class="contacts__item-text" href="mailto:info@odessa.kinolog.com.ua">info@odessa.kinolog.com.ua</a>
+      </li>
+
+      <li class="contacts__item">
+        <p class="contacts__item-title">время работы:</p>
+        <p class="contacts__item-text">Понедельник — Воскресенье <br> 10:00 — 18:00</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="contacts__map">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d29918.541860035915!2d30.928671992511596!3d48.48625323089458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sua!4v1713792203341!5m2!1sen!2sua"
+      style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <img src="{{ MEDIA_URL }}images/contacts-page/map.jpg" alt="">
+  </div>
+</div>
+
+<div class="subscribe">
+  <div class="subscribe__img-box">
+    <img src="{{ MEDIA_URL }}images/contacts-page/cont-form.jpg" alt="">
+  </div>
+  <div class="subscribe__contact-form">
+      <h3>Hello!</h3>
+      <p class="subscribe__imfo">Subscribe for news and be the first who take a <strong>limited access</strong>.
+        and get a surprise for <strong>your burthday</strong>!</p>
+      <form action="" method="post" class="">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="tel" name="phone" placeholder="Phone">
+        <label>Birthday:
+          <input type="date" name="birthday">
+        </label>
+
+        <button type="submit" data-action="submit">Invia</button>
+      </form>
+  </div>
+</div>
+{% endblock  %}
