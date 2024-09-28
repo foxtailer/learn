@@ -2497,7 +2497,10 @@ This allows the object to be reconstructed and used in the application as if it 
   git reflog  # Показать историю
   git reflog <branch> # Показать историю по конкретной ветке
 
- git flow
+  git flow
+  git log --graph --all --oneline
+  git checkout [hash]
+  git reset --hard [hash]
 
  
 -- LINUX
