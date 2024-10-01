@@ -522,7 +522,7 @@
 
   Characteristics:
     Fixed iterations: The loop runs a set number of times.
-    Example: for loops in many programming languages where the range is specified.
+      Example: for loops in many programming languages where the range is specified.
 
   Indefinite Loop
   An indefinite loop, on the other hand, runs an unknown number of times. The number of iterations is 
@@ -531,7 +531,7 @@
 
   Characteristics:
     Condition-based: The loop runs based on a condition that is evaluated during each iteration.
-    Example: while loops in many programming languages where the loop continues until the condition is false.
+      Example: while loops in many programming languages where the loop continues until the condition is false.
 
   for loop: A for loop is used to iterate over a sequence that is either a list, tuple,
  dictionary, or a set. We can execute a set of statements once for each item in a list,
@@ -2497,12 +2497,34 @@ This allows the object to be reconstructed and used in the application as if it 
   git reflog  # Показать историю
   git reflog <branch> # Показать историю по конкретной ветке
 
+  git init
+  git push -u origin master
   git flow
+  git reflog
   git log --graph --all --oneline
   git checkout [hash]
   git reset --hard [hash]
+  
+  git restore .
+  git checkout master
+  git commit -m "title" -m "description"
 
- 
+  git remote -v
+  git remote add origin <link>
+
+  git stash
+  git stash pop
+
+  git branch
+  git checkout -b branch-name
+  git diff branch-name
+  git merge bname
+  git branch -d bname
+
+  git reset
+  git reset HEAD~1
+
+
 -- LINUX
 
   uptime
@@ -2609,7 +2631,9 @@ This allows the object to be reconstructed and used in the application as if it 
 
   le ~/.ssh/id_rsa*  (Look for RSA keys)
   ssh-keygen -b 4096  (Generate RSA keys)
+  ssh-keygen -t rsa -b 4096 -C "email@test.test"
   ssh-copy-id root@000.000.000.000
+  pbcopy < ~/testkey.pub
 
   sudo lsof -i :<port_number>
 
@@ -2868,7 +2892,184 @@ This allows the object to be reconstructed and used in the application as if it 
   subsequent system failures. The transaction’s changes are saved to the database permanently, and even if the system crashes, 
   the changes remain intact and can be recovered.
 
-  
+
+-- SQL
+  1. Data Query Keywords
+    SELECT: Retrieves data from one or more tables.
+      Example: SELECT * FROM table_name;
+    FROM: Specifies the table(s) from which to retrieve or manipulate data.
+      Example: SELECT column_name FROM table_name;
+    WHERE: Filters the rows returned by SELECT, DELETE, or UPDATE.
+      Example: SELECT * FROM table WHERE condition;
+    GROUP BY: Groups rows that have the same values into summary rows.
+      Example: SELECT column, COUNT(*) FROM table GROUP BY column;
+    HAVING: Filters groups after GROUP BY is applied.
+      Example: SELECT column, COUNT(*) FROM table GROUP BY column HAVING COUNT(*) > 1;
+    ORDER BY: Specifies the sort order of the result set.
+      Example: SELECT * FROM table ORDER BY column ASC;
+
+  2. Data Manipulation Keywords (DML)
+    INSERT INTO: Adds new rows of data to a table.
+      Example: INSERT INTO table_name (column1, column2) VALUES (value1, value2);
+    UPDATE: Modifies existing data in a table.
+      Example: UPDATE table_name SET column1 = value1 WHERE condition;
+    DELETE: Removes rows from a table.
+      Example: DELETE FROM table_name WHERE condition;
+    VALUES: Provides data for an INSERT statement.
+      Example: INSERT INTO table_name (column1) VALUES ('value1');
+
+  3. Data Definition Keywords (DDL)
+    CREATE: Defines a new database object (table, view, index, etc.).
+      Example: CREATE TABLE table_name (column1 datatype, column2 datatype);
+    DROP: Deletes an existing database object.
+      Example: DROP TABLE table_name;
+    ALTER: Modifies the structure of an existing object.
+      Example: ALTER TABLE table_name ADD column_name datatype;
+    TRUNCATE: Deletes all rows from a table, but keeps its structure.
+      Example: TRUNCATE TABLE table_name;
+
+  4. Transaction Control Keywords (TCL)
+    COMMIT: Finalizes a transaction, making all changes permanent.
+      Example: COMMIT;
+    ROLLBACK: Undoes changes in a transaction before they are committed.
+      Example: ROLLBACK;
+    SAVEPOINT: Sets a point within a transaction to which you can roll back later.
+      Example: SAVEPOINT savepoint_name;
+    SET TRANSACTION: Sets the properties for the current transaction.
+      Example: SET TRANSACTION READ ONLY;
+
+  5. Data Control Keywords (DCL)
+    GRANT: Gives specific privileges to users or roles.
+      Example: GRANT SELECT ON table_name TO user_name;
+    REVOKE: Removes specific privileges from users or roles.
+      Example: REVOKE SELECT ON table_name FROM user_name;
+
+  6. Join Keywords
+    JOIN: Combines rows from two or more tables based on a related column.
+      Example: SELECT * FROM table1 JOIN table2 ON table1.column = table2.column;
+    INNER JOIN: Returns rows when there is at least one match between the tables.
+    LEFT JOIN: Returns all rows from the left table, and matched rows from the right table. Returns NULL for non-matching rows.
+    RIGHT JOIN: Returns all rows from the right table, and matched rows from the left table.
+    FULL OUTER JOIN: Returns all rows when there is a match in either left or right table.
+      Example: SELECT * FROM table1 FULL OUTER JOIN table2 ON table1.column = table2.column;
+
+  7. Conditional Keywords
+    CASE: Performs conditional logic in queries, like an if-else statement.
+      Example: SELECT CASE WHEN condition THEN result1 ELSE result2 END FROM table_name;
+    IFNULL / COALESCE: Returns the first non-NULL value.
+      Example: SELECT IFNULL(column1, 'default') FROM table_name;
+
+  8. Subquery and Common Table Expressions (CTE) Keywords
+    WITH: Defines a temporary result set (common table expression) for use within a query.
+      Example: WITH cte AS (SELECT * FROM table_name) SELECT * FROM cte;
+    EXISTS: Tests for the existence of rows returned by a subquery.
+      Example: SELECT * FROM table WHERE EXISTS (subquery);
+
+  9. Schema Manipulation Keywords
+    USE: Selects a specific database to work with.
+      Example: USE database_name;
+    SHOW: Displays database objects or system information.
+      Example: SHOW TABLES;
+    DESCRIBE: Provides information about the columns in a table.
+      Example: DESCRIBE table_name;
+
+  10. Miscellaneous Keywords
+    DISTINCT: Removes duplicate rows from a result set.
+      Example: SELECT DISTINCT column_name FROM table_name;
+    LIMIT / FETCH FIRST: Limits the number of rows returned by a query.
+      Example: SELECT * FROM table_name LIMIT 10;
+    OFFSET: Skips a specific number of rows in the result set.
+      Example: SELECT * FROM table_name LIMIT 10 OFFSET 20;
+    CAST: Converts one data type to another.
+      Example: SELECT CAST(column_name AS datatype) FROM table_name;
+  ---------------------------------------------------
+  1. String Operators
+    Operators used for handling strings in SQL.
+
+    || – Concatenation operator (combines two strings).
+    LIKE – Pattern matching operator (used to find strings matching a certain pattern).
+      Example: 'abc%' finds any string that starts with "abc".
+    ILIKE (PostgreSQL-specific) – Case-insensitive pattern matching.
+    POSITION – Returns the position of a substring within a string.
+    SUBSTRING – Extracts a part of a string.
+    TRIM – Removes leading and trailing spaces or other characters from a string.
+    LENGTH – Returns the length of a string.
+
+  2. Set Operators
+    Used for combining the results of multiple SELECT queries.
+
+    UNION – Combines results of two SELECT queries and removes duplicates.
+    UNION ALL – Combines results of two SELECT queries without removing duplicates.
+    INTERSECT – Returns rows common to both SELECT queries.
+    EXCEPT (or MINUS in Oracle) – Returns rows from the first SELECT query that are not in the second.
+
+  5. NULL-related Operators
+    Operators dealing with NULL values.
+
+    IS NULL – Checks if a value is NULL.
+    IS NOT NULL – Checks if a value is not NULL.
+    COALESCE – Returns the first non-NULL value in a list of arguments.
+    NULLIF – Returns NULL if two arguments are equal; otherwise, returns the first argument.
+
+  6. Range and Membership Operators
+    Used for testing ranges and lists of values.
+
+    IN – Tests if a value is in a list or subquery.
+      Example: SELECT * FROM table WHERE column IN (1, 2, 3)
+    NOT IN – Tests if a value is not in a list or subquery.
+    BETWEEN – Tests if a value is within a range of values (inclusive).
+      Example: WHERE column BETWEEN 10 AND 20
+    NOT BETWEEN – Tests if a value is not within a range.
+
+  7. JSON Operators (for databases like PostgreSQL)
+    Used for working with JSON data types.
+
+    -> – Extracts a JSON object field by key.
+      Example: json_column->'key'
+    ->> – Extracts a JSON object field as text.
+      Example: json_column->>'key'
+    #> – Extracts a JSON sub-object at the specified path.
+      Example: json_column#>'{path, to, key}'
+    #>> – Extracts a JSON sub-object at the specified path as text.
+      Example: json_column#>>'{path, to, key}'
+
+  8. Array Operators (PostgreSQL-specific)
+    Used for handling arrays.
+
+    @> – Contains (checks if an array contains a specific element or sub-array).
+      Example: '{1,2,3}' @> '{1}' (true)
+    <@ – Contained by (checks if an array is contained within another array).
+      Example: '{1}' <@ '{1,2,3}' (true)
+    || – Concatenates two arrays.
+      Example: '{1,2}' || '{3,4}' (results in '{1,2,3,4}')
+    && – Overlaps (checks if two arrays have elements in common).
+      Example: '{1,2}' && '{2,3}' (true)
+
+  10. Miscellaneous Operators
+    Other useful SQL operators not falling into the above categories.
+
+    DISTINCT – Removes duplicate rows in a result set.
+      Example: SELECT DISTINCT column FROM table
+    EXISTS – Tests for the existence of rows returned by a subquery.
+      Example: WHERE EXISTS (subquery)
+    ANY – Tests if any values in a list or subquery meet the condition.
+      Example: WHERE column = ANY (subquery)
+    ALL – Tests if all values in a list or subquery meet the condition.
+      Example: WHERE column = ALL (subquery)
+    CAST – Converts a value from one data type to another.
+      Example: CAST(column AS INTEGER)
+    CONVERT (MySQL/SQL Server) – Converts a value from one data type to another.
+      Example: CONVERT(column, DATE)
+    COLLATE – Sets a collation for a string comparison.
+      Example: WHERE column COLLATE utf8_bin = 'text'
+
+                  PrimaryKey
+                      |
+    SurogateKey   NaturalKey  CompositeKey
+
+  ForeighKey - PeimaryKey that belong to other table.
+
+
 -- PSQL
   sudo -i -u postgres
   psql

@@ -6,6 +6,7 @@ from aiogram import Bot, types, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
+from aiogram.client.session.aiohttp import AiohttpSession
 
 import db_functions
 from bot_cmds_list import private
@@ -13,11 +14,11 @@ from bot_functions import play
 import variables
 from states import UserState
 
-import sys; sys.path.append('/home/zoy/vscode')
-import deps
+# import sys; sys.path.append('/home/zoy/vscode')
+# import deps
 
-
-bot = Bot(deps.T)
+session = AiohttpSession(proxy='http://proxy.server:3128')
+bot = Bot('1690656566:AAH1aWeuR6AUPs9yjU_UfnstKxr5ALXUcY4', session=session)
 dp = Dispatcher()
 
 script_dir = db_functions.find_path()
@@ -28,19 +29,19 @@ async def help_commmand(msg: types.Message):
     message = variables.HELP_MESSAGE
     await bot.send_message(msg.chat.id, message, parse_mode="HTML")
     await msg.delete()
- 
+
 
 @dp.message(Command("start"))
 async def start_commmand(msg: types.Message):
-    
+
     n = "We hope our bote can help you learn watever you want:)"
     if await db_functions.check_user(msg.from_user.first_name, script_dir):
-        await bot.send_message(msg.chat.id, 
-                               f"Hello {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.", 
+        await bot.send_message(msg.chat.id,
+                               f"Hello {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.",
                                parse_mode="HTML")
     else:
-        await bot.send_message(msg.chat.id, 
-                               f"Welcome {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.", 
+        await bot.send_message(msg.chat.id,
+                               f"Welcome {msg.from_user.first_name}!\n{n}\n<code>/help</code> for more details.",
                                parse_mode="HTML")
     await msg.delete()
 
@@ -64,7 +65,7 @@ async def show_commmand(msg: types.Message, state:FSMContext, command, sort="Tim
             curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
             connection.close()
             args = 0
-    
+
     else:
         if command.args:
             args = int(command.args.strip())
@@ -76,12 +77,12 @@ async def show_commmand(msg: types.Message, state:FSMContext, command, sort="Tim
             curent_dict = cursor.fetchall()  # [(371, ' Stain', ' пятно', ' The red wine left a stain on the carpet.', '2024-08-26', 0),]
             connection.close()
             args = 0
-    
-    longest_word = max(curent_dict, 
+
+    longest_word = max(curent_dict,
                        key=lambda x: len(x[1])
                        )[1]
     len_of_longest_word = len(longest_word)
-    
+
     if sort == "Alphabet":
         curent_dict.sort(key=lambda x: x[1])
 
@@ -127,22 +128,22 @@ async def show_commmand(msg: types.Message, state:FSMContext, command, sort="Tim
     ibtn1 = InlineKeyboardButton(text="Alphabet",callback_data="Alphabet")
     ibtn2 = InlineKeyboardButton(text="Time", callback_data="Time")
     ibtn4 = InlineKeyboardButton(text="Examples", callback_data="Examples")
-    
+
     temp = {}
     for i in range(len(list_of_chunks)):
         ibtn3 = InlineKeyboardButton(text="Close", callback_data=f"Close{i}")
         ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1,ibtn2],[ibtn4],[ibtn3]])
 
-        show_msg = await bot.send_message(msg.chat.id, 
-                                        list_of_chunks[i], 
-                                        parse_mode="HTML", 
+        show_msg = await bot.send_message(msg.chat.id,
+                                        list_of_chunks[i],
+                                        parse_mode="HTML",
                                         reply_markup=ikb)
-        
-        temp[f'Close{i}'] = show_msg.message_id 
-    
+
+        temp[f'Close{i}'] = show_msg.message_id
+
     data['to_deleate'] = temp
     data['day'] = args
-    
+
     await state.update_data(show=data)
 
     await msg.delete()
@@ -168,17 +169,17 @@ async def callback_show(callback: types.CallbackQuery, state: FSMContext):
 async def add_commmand(msg: types.Message, command):
     if command.args:
         if await db_functions.add_to_db(msg.from_user.first_name, command.args.strip(), script_dir):
-            await bot.send_message(msg.chat.id, 
+            await bot.send_message(msg.chat.id,
                                f"Sucsess!",)
         else:
-            await bot.send_message(msg.chat.id, 
+            await bot.send_message(msg.chat.id,
                                f"Wrong sintax!",)
     else:
-        await bot.send_message(msg.chat.id, 
+        await bot.send_message(msg.chat.id,
                                f"Pls tipe words you want to add after <b>/add</b> command.\n\n \
 <code>/add eng,rus,exsample</code>\n\n\
 Example can be empty but ',' stil nesesary. To add multiple sets of words, just conect them by coma.\
-Inside example simbol '<b>,</b>' is forbiden!", 
+Inside example simbol '<b>,</b>' is forbiden!",
                                parse_mode="HTML")
 
 
@@ -187,7 +188,7 @@ async def del_commmand(msg: types.Message, command):
     args = command.args.replace(' ', '').strip()
 
     if args[0] == 'd' and args[1:].replace(',', '').isdigit():
-        args = ('d', args[1:]) 
+        args = ('d', args[1:])
     elif args and args.replace(',', '').isdigit():
         args = ('', args)
     else:
@@ -208,21 +209,21 @@ async def select_day(msg: types.Message, command, state: FSMContext):
 
     if command.args and command.args.strip().isdigit():
         day = await db_functions.get_day(script_dir, msg.from_user.first_name,  int(command.args)-1)
-       
+
         if day:
             tmp = {'day': day, 'day_size': len(day), 'day_answers': 0}
 
             await state.update_data(test=tmp)
         else:
-           await bot.send_message(msg.chat.id, 
+           await bot.send_message(msg.chat.id,
                                   "Wrong day numder!")
     else:
-        await bot.send_message(msg.chat.id, 
+        await bot.send_message(msg.chat.id,
                                f"Pls tipe number of day you want to select after command.\n\n \
 <code>/select_day 3</code>\n\n\
-You can finde day number using <code>/show</code> command.", 
+You can finde day number using <code>/show</code> command.",
                                parse_mode="HTML")
-        
+
     await msg.delete()
 
 
@@ -244,7 +245,7 @@ async def test(msg: types.Message, command, state:FSMContext):
         data = await state.get_data()
         data = data['test']
         data.update({'args': args})
-        
+
         await state.update_data(test=data)
         await play(msg.chat.id, user_name, state, bot=bot)
 
@@ -280,14 +281,14 @@ async def shuffle_play(msg, state:FSMContext):
     shuffled_word = list(word[0][1])
     random.shuffle(shuffled_word)
 
-    data = {'shuffle_clue': 0, 
+    data = {'shuffle_clue': 0,
                 'shuffle_word': word[0][1],
                 'shuffle_rus': word[0][2],
                 'shuffle_ex': word[0][3],
                 'shuffled_word':shuffled_word}
-    
+
     text = '_'.join(shuffled_word)
-    
+
     ibtn1 = InlineKeyboardButton(text="Help", callback_data="shuffle_help")
     ikb = InlineKeyboardMarkup(inline_keyboard=[[ibtn1]])
 
@@ -314,7 +315,7 @@ async def listener(msg: types.Message, state: FSMContext):
         await msg.answer(text=f"✅\n{data['shuffle_word'].capitalize()}: {data['shuffle_rus']}\n\
 {data['shuffle_ex'].capitalize()}",
 reply_markup=rkb)
-        
+
         await bot.delete_message(chat_id=msg.chat.id, message_id=data['shuffle_msg'])
         await state.clear()
     else:
@@ -326,7 +327,7 @@ async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
     if callback.data == "shuffle_help":
         data = await state.get_data()
         data = data['shuffle']
-    
+
         data['shuffle_clue'] += 1
         clue = data['shuffle_clue']
         word = list(data['shuffle_word'])
@@ -334,7 +335,7 @@ async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
 
         if clue < len(word):
             clue_letters = word[0:clue]
-            
+
             for letter in clue_letters:
                 shuffled_word.remove(letter)
 
@@ -348,7 +349,7 @@ async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
                         message_id=data['shuffle_msg'],
                         text=text,
                         reply_markup=ikb)
-            
+
             await state.update_data(shuffle=data)
 
         elif clue == len(word):
@@ -363,7 +364,7 @@ async def callback_shuffle(callback: types.CallbackQuery, state: FSMContext):
                         chat_id=callback.message.chat.id,
                         message_id=data['shuffle_msg'],
                         text=text)
-            
+
             await state.update_data(shuffle=data)
 
 
@@ -387,8 +388,8 @@ async def write(msg: types.Message, state: FSMContext):
         await play(msg.from_user.id, msg.from_user.first_name, state, bot=bot)
     else:
         if data['flag']:
-            score = await bot.send_message(msg.chat.id, 
-                                            f"❌ {data['day_answers']}/{data['day_size']}", 
+            score = await bot.send_message(msg.chat.id,
+                                            f"❌ {data['day_answers']}/{data['day_size']}",
                                             parse_mode="HTML")
             data['score'] = score.message_id
             data['flag'] = False
@@ -403,7 +404,7 @@ async def choice_callback(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     amount = data['day_size']
     right_answer = data['day_answers']
-    
+
     if callback.data == "True":
         data['day_answers'] += 1
 
@@ -416,7 +417,7 @@ async def choice_callback(callback: types.CallbackQuery, state: FSMContext):
 
         await play(user_id, callback.from_user.first_name, state, bot=bot)
 
-    elif callback.data == "False": 
+    elif callback.data == "False":
 
         if data.get('score'):
             await bot.delete_message(callback.message.chat.id, message_id=data['score'])
@@ -431,7 +432,7 @@ async def choice_callback(callback: types.CallbackQuery, state: FSMContext):
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
-    await dp.start_polling(bot, 
+    await dp.start_polling(bot,
                            allowed_updates=["message", "edited_message", "callback_query", "inline_query"],
                            polling_timeout=20)
 
