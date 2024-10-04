@@ -386,6 +386,7 @@ async def write(msg: types.Message, state: FSMContext):
         await state.update_data(data)
         await play(msg.from_user.id, msg.from_user.first_name, state, bot=bot)
     else:
+        await msg.deleate()
         if data['flag']:
             score = await bot.send_message(msg.chat.id, 
                                             f"❌ {data['day_answers']}/{data['day_size']}", 

@@ -1,6 +1,6 @@
 from django.db import models
 from main.models import User
-from taggit.managers import TaggableManager
+#from taggit.managers import TaggableManager
 import random
 import string
 
@@ -25,7 +25,7 @@ class Wisdom(models.Model):
     reported_by = models.ManyToManyField(User, related_name='reported_wisdoms', blank=True)
     accepted = models.ManyToManyField(User, related_name='accepted', blank=True)
     reply = models.BooleanField(default=True)
-    tags = TaggableManager(blank=True)
+    #tags = TaggableManager(blank=True)
 
     @classmethod
     def wisdome_choice(cls):
