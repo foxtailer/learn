@@ -1,20 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from explore.models import Wisdom
-from django.http import JsonResponse, HttpResponse
+from django.template.loader import render_to_string
+from django.http import JsonResponse, HttpResponseNotFound
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 
 @require_GET
 def get_random_wisdom(request):
-    random_wisdome = Wisdom.wisdome_choice()  # Assuming get_random is a class method
-    #tags = [tag.name for tag in random_wisdome.tags.all()]
-    return JsonResponse({'wisdom': random_wisdome.text, 
-                        'wisdom_id': random_wisdome.pk, 
-                        'wisdom_author': random_wisdome.author.id,
-                        #'tag': tags,
-                        'reply': random_wisdome.reply,})
+    random_wisdome = Wisdom.wisdome_choice()
+
+    if random_wisdome:
+        return JsonResponse({'wisdom': random_wisdome.text, 
+                            'wisdom_id': random_wisdome.pk, 
+                            'wisdom_author': random_wisdome.author.id,
+                            'reply': random_wisdome.reply,})
+    else:
+        template = render_to_string('404.html')
+        return HttpResponseNotFound(template)
 
 
 @require_POST
