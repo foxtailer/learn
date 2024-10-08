@@ -1,0 +1,4 @@
+.bottom-menu__btn--report:hover svg {
+    border-radius: 50px;
+    background-color: rgb(122, 5, 5);
+}

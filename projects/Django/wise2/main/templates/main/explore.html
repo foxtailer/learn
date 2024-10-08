@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content_style %}
+<link rel="stylesheet" href="{% static 'css/explore.css' %}">
+{% endblock %}
+
+{% block load_jq %}<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>{% endblock %}
+{% block load_js %}<script src="{% static 'js/explore.js' %}"></script>{% endblock %}
+
+
+{% block top-menu__items %}
+  <li class="top-menu__item">
+    {% include "include/write.html" %}
+  </li>
+
+  <li>
+    {% include "include/my.html" with user=user %}
+  </li>
+
+  <li>
+    <button class="top-menu__btn" id="like_btn" data-wisdom-id="">
+      <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <use href="{% static 'img/icon/icons.svg' %}#icon-bookmark"></use>
+      </svg>
+    </button>
+  </li>
+{% endblock %}
+
+
+{% block content %}
+<div class="wisdom_inner">
+  <p class="wisdom" id="wisdom">{{post.text}}</p>
+
+  <div class="control">
+    <button class="control__btn" id="next_btn" data-wisdom-id="{{ post.id }}">
+      <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <use href="{% static 'img/icon/icons.svg' %}#icon-arrow-right"></use>
+      </svg>
+    </button>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block bottom-menu__items %}
+<li class="bottom-menu__item">
+  <button class="bottom-menu__btn bottom-menu__btn--report" id="report_btn" data-wisdom-id="">
+    <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+      <use href="{% static 'img/icon/icons.svg' %}#icon-exclamation-mark"></use>
+    </svg>
+  </button>
+</li>
+
+<li class="bottom-menu__item">
+  <button class="bottom-menu__btn" id="mail_btn" data-wisdom-id="">
+    <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+      <use fill: red; href="{% static 'img/icon/icons.svg' %}#icon-envelope"></use>
+    </svg>
+  </button>
+</li>
+{% endblock %}

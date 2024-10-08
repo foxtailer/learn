@@ -15,6 +15,14 @@ body {
   height: 100%;
 }
 
+svg {
+  transition: transform 0.3s ease;
+}
+
+svg:hover {
+  transform: scale(1.2);
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f7f7f7;
@@ -50,6 +58,15 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -76,16 +93,6 @@ a {
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.top-menu__btn,
-.bottom-menu__btn {
-  background-color: transparent;
-  border: none;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  margin: 0 auto;
 }
 
 .top-menu__link,
@@ -117,13 +124,6 @@ main {
   flex-direction: column;
 }
 
-.wisdom__next,
-.wisdom__prev {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 .my-wisdom__controls {
   display: flex;
   gap: 50px;
@@ -148,12 +148,6 @@ main {
   justify-content: space-around;
 }
 
-.show-tags_btn {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
 .search {
   border: none;
   background-color: transparent;
@@ -170,23 +164,4 @@ main {
   display: flex;
   gap: 20px;
   align-items: baseline;
-}
-
-.user-menu {
-  display: flex;
-  gap: 5px;
-  position: relative;
-}
-
-.user-menu__dropdown {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  position: absolute;
-  left: 0;
-  bottom: -21px;
-}
-
-.user-menu__dropdown.hide {
-  display: none;
 }
