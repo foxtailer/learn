@@ -9,7 +9,7 @@
 <div class="card-wrapper">
     {% for product in products %}
       <div class="card">
-        <img class="card-image" src="{{product.image.url}}" alt="{{product.name}}">
+        <img class="card-image" src="{{ product.image.url }}" alt="{{ product.name }}">
 
         <div class="content">
             <div class="review-container">
@@ -21,12 +21,12 @@
                     <i class="fa fa-star-half"></i>
                 </div>
 
-                <h5 class="price">$ {{product.price}}</h5>
+                <h5 class="price">$ {{ product.price }}</h5>
             </div>
 
-            <h4 class="name">{{product.name}}</h4>
+            <a href="{{ product.get_absolute_url }}"><h4 class="name">{{ product.name }}</h4></a>
             <div class="description">
-                <p>{{product.description}}</p>
+                <p>{{ product.description }}</p>
             </div>
 
             <div class="button-container">

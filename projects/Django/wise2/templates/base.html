@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/normolize.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block content_style %}{% endblock %}
-
-    {% block load_jq %}{% endblock %}
-    {% block load_js %}{% endblock %}
     
     <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/favicon/feather-16x16.png" %}">
 
@@ -43,5 +40,8 @@
         </div>
       </footer>
     </div>
+
+    {% block load_jq %}{% endblock %}
+    {% block load_js %}{% endblock %}
   </body>
 </html>

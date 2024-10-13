@@ -9,7 +9,6 @@ from .models import Post
 
 
 def home(request):
-    
     context = {
         'page_title': 'Wise',
     }
@@ -21,10 +20,20 @@ def home(request):
 
 def write(request):
     return HttpResponse('wtite')
-    #return render()
 
 
 def explore(request):
+    if request.method == "POST":
+        except_id = request.POST.get('except_id')
+        post = Post.random_wisdome(except_id)
+
+        response_data = {
+            'wisdom': post.text,
+            'wisdom_id': post.id,
+        }
+
+        return JsonResponse(response_data)
+
     try:
         post = Post.random_wisdome()
     except Post.DoesNotExist:
@@ -34,7 +43,7 @@ def explore(request):
         'page_title': 'Explore',
         'post': post,
     }
-    
+
     return render(request, 
                   'main/explore.html',
                   context=context)
@@ -42,7 +51,6 @@ def explore(request):
 
 def my(request):
     return HttpResponse('my')
-    #return render()
 
 
 @require_POST

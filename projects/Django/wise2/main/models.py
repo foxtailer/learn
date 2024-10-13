@@ -41,9 +41,9 @@ class Post(models.Model):
     published = PublishedManager()
 
     @classmethod
-    def random_wisdome(cls):
-        count = cls.published.count()
+    def random_wisdome(cls, except_id=None):
+        count = cls.published.exclude(id=except_id).count()
         if count == 0:
             return None
         random_index = random.randint(0, count - 1)
-        return cls.published.all()[random_index]
+        return cls.published.all().exclude(id=except_id)[random_index]

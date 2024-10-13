@@ -108,6 +108,13 @@
     >>> [1, 3, 4, 7]
     >>> [-1, 3, 4, 7]
 
+    (slicing a mutable object (like a list) creates a shallow copy of the selected portion, not a deep copy.
+    Same as:
+      shallow_copy = list(original_list)
+      shallow_copy = original_list.copy()
+      shallow_copy = [*original_list]
+      shallow_copy = [i for i in original_list])
+
   However, shallow copies won’t do the trick when you have a compound object with nested mutable types — for instance a list
  of lists. In the example below, we can see that if we take a shallow copy of a list of lists, a change of the original list
  a or the original compound object c , the result will have effect on the copied list d:
@@ -647,6 +654,35 @@
   “Under the hood”, an iterable is any Python object with an __iter__() method or with
  a __getitem__() method that implements Sequence semantics.
 
+  # sequence protocal
+  class CustomSequence:  #  Sequence/Iterable
+    def __init__(self, data):
+        self.data = data
+
+    def __getitem__(self, index):
+        if index < len(self.data):
+            return self.data[index]
+        else:
+            raise IndexError("Index out of range")
+
+
+  # iter protocol
+  class CustomIterable:
+    def __init__(self, data):
+        self.data = data
+
+    def __iter__(self):
+        self.index = 0
+        return self
+
+    def __next__(self):
+        if self.index < len(self.data):
+            item = self.data[self.index]
+            self.index += 1
+            return item
+        else:
+            raise StopIteration
+
  Here are some useful built-in functions that accept iterables as arguments:
 
     list, tuple, dict, set: construct a list, tuple, dictionary, or set, respectively, from the contents of an iterable
@@ -688,8 +724,10 @@
 
     # `none_indices` now stores: [1, 3]
 
+  (range return iterable)
 
---ITERATOR
+
+-- ITERATOR
 
   Python’s iterators and iterables are two different but related tools that come in handy
  when you need to iterate over a data stream or container. Iterators power and control
@@ -699,6 +737,9 @@
   An iterator is an object that can be iterated upon, meaning that you can traverse
  through all the values. Technically, in Python, an iterator is an object which implements
  the iterator protocol, which consist of the methods __iter__() and __next__().
+  
+  next with second argument return it when no more items in sequence:
+    next(iterator, '@')
 
   Lists, tuples, dictionaries, and sets are all iterable objects. They are iterable
  containers which you can get an iterator from. All these objects have a iter() method
@@ -718,6 +759,83 @@
  The for loop actually creates an iterator object and executes the next() method for each loop.
 
  Note: Every iterator is also an iterable, but not every iterable is an iterator in Python.
+
+
+-- GENERATORS
+
+ A generator function in Python is defined like a normal function, but whenever it needs to generate a 
+ value, it does so with the yield keyword rather than return.
+ Python Generator functions return a generator object that is iterable, i.e., can be used as an Iterator. 
+ Generator objects are used either by calling the next method of the generator object or using the generator 
+ object in a “for in” loop.
+
+    def fibonacci_gen():
+      yield 0
+      yield 1
+      prev_prev, prev = 0, 1
+
+      while True:
+        result = prev + prev_prev
+        prev_prev, prev = prev, result
+        yield result
+
+    g = fibonacci_gen() #  Return generator
+    for i in g:
+      print(i)
+
+  Generetor enter in function run throw lines until meet yield. When yield occured
+ function return some value and remember line of execution. After next next() call 
+ generator returns to that line it remember.
+
+    def interleave_gen(a,b):
+      a = iter(a)
+      b = iter(b)
+      while True:
+        yield next(a)
+        yield next(b)
+
+  Embaded generator:
+    def join_Generator(a, b):
+      yield from a  # Enter to 'a' and next generator call(next(g)) retern values from 'a' until 'a' exhausted.
+      yield from b
+
+    j = join_Generator(range(2), range(3))  # 0, 1, 0, 1, 2, StopIteration
+  
+  #############
+    def flipper_Generator(a, b):
+      while True:
+        yield a
+        yield b
+
+    def counter_Generator():
+      n = 0
+      while True:
+        yield n
+        n += 1
+
+    def cycler_Generator(maximum):
+      n = 0
+      while True:
+        yield n
+        n = n + 1
+        if n >= maximum:
+          n = 0
+
+    (itertools contain a lot of iterators and generators)
+    
+ Python Generator Expression
+  In Python, generator expression is another way of writing the generator function. It uses the Python list 
+  comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
+
+  Generator Expression Syntax
+  The generator expression in Python has the following Syntax:
+
+    (expression for item in iterable)
+
+    squares = (x * x for x in range(3))
+    print(next(squares))  # Output: 0
+    print(next(squares))  # Output: 1
+    print(next(squares))  # Output: 4
 
 
 -- BUILD IN DATA STRUCTURES
@@ -1749,49 +1867,6 @@
     400
     200
 
--- GENERATORS
-
- A generator function in Python is defined like a normal function, but whenever it needs to generate a 
- value, it does so with the yield keyword rather than return.
- Python Generator functions return a generator object that is iterable, i.e., can be used as an Iterator. 
- Generator objects are used either by calling the next method of the generator object or using the generator 
- object in a “for in” loop.
-
-    def fibonacci_gen():
-    yield 0
-    yield 1
-    prev_prev, prev = 0, 1
-
-    while True:
-      result = prev + prev_prev
-      prev_prev, prev = prev, result
-      yield result
-
-    g = fibonacci_gen() #  Return generator
-    for i in g:
-      print(i)
-
- Generetor enter in function run throw lines until meet yield. When yield occured
- function return some value and remember line of execution. After next next() call 
- renerator returns to that line it remember.
-
-    def interleave_gen(a,b):
-      a = iter(a)
-      b = iter(b)
-      while True:
-        yield next(a)
-        yield next(b)
-
-
- Python Generator Expression
-  In Python, generator expression is another way of writing the generator function. It uses the Python list 
-  comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
-
-  Generator Expression Syntax
-  The generator expression in Python has the following Syntax:
-
-    (expression for item in iterable)
-
 
 -- CONTEXT MENEGER(WITH)
 -- METACLASSES
@@ -1927,7 +2002,9 @@
         p.join()
 
 
--- CONCURENCY
+--- CONCURENCY
+
+  Python with GIL limits amount of concurrency on a single thread on a single CPU.
 
   - Asyncio
 
@@ -2074,6 +2151,17 @@
   Multiprocessing: One common workaround is to use the multiprocessing module instead of threading. The multiprocessing
   module creates separate processes, each with its own Python interpreter and memory space, bypassing the GIL 
   and allowing true parallelism.
+
+   1. GIL Blocks True Parallelism with Threads: The Global Interpreter Lock (GIL) prevents true parallel execution 
+  of threads because it only allows one thread to execute Python bytecode at a time, even if there are multiple CPU 
+  cores available. So, multiple threads in Python cannot run in true parallel.
+   2. Threads Still Achieve Concurrency: Even with the GIL, Python threads can achieve concurrency by rapidly switching 
+  between tasks, giving the illusion that multiple tasks are happening simultaneously. This is especially effective 
+  for I/O-bound tasks (like waiting for network responses, file reads/writes) where the GIL is released while waiting, 
+  allowing another thread to run in the meantime.
+   3. Concurrency Without Parallelism: This means that threads in Python can still make progress on multiple tasks 
+  concurrently, but they’re not truly executing at the same time on different CPU cores (i.e., not in parallel). 
+  They appear to run “at the same time” through task switching, but only one thread executes Python code at any given moment.
 
 
 -- RAISE CONDITION

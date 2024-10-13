@@ -1,29 +1,19 @@
-class Student:
-    students = []
-    
-    def __init__(self, name, age):
-        self.name = name 
-        self.age = age
-        Student.students.append(self)
-
-    def get_info(self):
-        return f'{self.name.capitalize()} {self.age}'
-    
-    @classmethod
-    def _clear(cls):
-        # for i in cls.students:   # Deleate i variable thar refer to students[i]
-        #     del i
-
-        Student.students.clear()
+import types
 
 
-student1 = Student('name', 20)
-student2 = Student('name', 20)
+def fibonacci_gen():
+    yield 0
+    yield 1
+    prev_prev, prev = 0, 1
 
-print(student1.get_info())
-print(student1 is Student.students[0])
+    while True:
+        result = prev + prev_prev
+        prev_prev, prev = prev, result
+        yield result
 
-Student._clear()
-print(student1.get_info())
-print(Student.students[0])
-print(Student.students[0].get_info())
+x = (i*i for i in range(10))
+g = fibonacci_gen() #  Return generator
+print(type(g))
+print(type(x))
+print(isinstance(g, types.GeneratorType))
+print(isinstance(x, types.GeneratorType))

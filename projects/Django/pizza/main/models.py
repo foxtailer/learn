@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
     
 class Categories(models.Model):
@@ -58,4 +59,8 @@ class Product(models.Model):
     ingredients = models.ManyToManyField(Ingredient,
                                          related_name='products',
                                          blank=True)
+    
+    def get_absolute_url(self):
+        return reverse('main:product',
+                       args=[self.id])
     
