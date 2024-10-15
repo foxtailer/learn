@@ -1,6 +1,7 @@
 {% load static %}
 
-<a class="main-index__link main-index__link--my" href="{% url "main:my" %}">
+<a class="control-element {% if user.id %} active {% else %} off {% endif %}" 
+   href="{% if user.id %} {% url "main:my" %} {% endif %}">
     <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <use href="{% static 'img/icon/icons.svg' %}#icon-book"></use>
     </svg>

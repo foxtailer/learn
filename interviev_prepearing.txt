@@ -904,7 +904,7 @@
 
 -- FUNCTIONS
 
-   A function is a block of code which only runs when it is called.
+   A function is a block(callable object) of code which only runs when it is called.
    You can pass data, known as parameters, into a function.
    A function can return data as a result.
 
@@ -919,9 +919,15 @@
   Python uses the mechanism pass arguments by sharing object reference during function calls.
   Name of variable reserve in local scope and refer to some object
 
-  Function side effect
+  Function life cicle
+  fu()
+  1. Matches Parameters
+  2. Create new namespace(lacal scope)
+  3. Execute function body until return statement or runs out of code.
+  4. return result or None
 
-  Function is said to have a side effect if it changes anything outside of its function definition like
+  Function side effect
+   Function is said to have a side effect if it changes anything outside of its function definition like
   changing arguments passed to the function or changing a global variable. For example:
 
     def fn_side_effects(fruits):
@@ -1035,6 +1041,7 @@
 
 
 -- NAMESPACE 
+
  Namespace in python use LEGB(local, enclosing, global, built-in) rule
 
   str = 'global'
@@ -1051,7 +1058,6 @@
 
         # nested function  
         def inner():
-
             # declare nonlocal variable
             nonlocal message
 
@@ -1062,6 +1068,18 @@
         print("outer:", message)
 
     outer()
+
+   Scopes aren’t stored in a single physical location but exist in Python’s symbol 
+  tables, which map variable names to their values.
+   The local symbol table is created each time a function is called, mapping local 
+  variables within that function.
+   The global symbol table maps global variables in the module, while built-ins are 
+  kept in the built-in namespace (usually loaded when Python starts).
+
+  You can view the names available in the current scope in Python using the built-in functions locals() and globals().
+  The built-in scope can be accessed through the __builtins__ module.
+  You can list all built-in names by looking at dir(__builtins__).
+
 
 -- *ARGS **KWARGS
 
@@ -1750,49 +1768,53 @@
 
 -- DECORATORS
 
-  Decorators are a very powerful and useful tool in Python since it allows programmers to modify the behaviour 
- of a function or class. Decorators allow us to wrap another function in order to extend the behaviour of the 
- wrapped function, without permanently modifying it. In Python, functions are first class objects which means 
- that functions in Python can be used or passed as arguments. 
-  In Decorators, functions are taken as the argument into another function and then called inside the wrapper function.
+  A Python decorator is a function or a class that modifies the behavior of another function or method. Decorators are a 
+  way to "wrap" a function or a method in additional functionality without changing its actual code. They use the @decorator_name 
+  syntax just before a function definition, allowing you to add reusable features or behaviors to existing code in a clean, 
+  readable way. In Python, functions are first class objects which means that functions in Python can be used or passed as arguments.
 
+  In Decorators, functions are taken as the argument into another function and then called inside the wrapper function.
+  Decorator enclosing (or wrapping) a function with additional code. When a decorated function is called, the decorator's 
+  logic is executed before (and sometimes after) the actual function’s logic.
+
+  Enclosing Concept
+  The enclosing concept comes from the way decorators create a closure: a nested function that has access to variables 
+  in the outer function’s scope, even after the outer function has finished executing
 
     @gfg_decorator
     def hello_decorator():
         print("Gfg")
 
     '''Above code is equivalent to -
-      def hello_decorator():
+      def hello():
           print("Gfg")
           
-      hello_decorator = gfg_decorator(hello_decorator)
+      hello_decorator = gfg_decorator(hello)
     '''
 
+  Using @my_decorator above say_hello replaces say_hello with my_decorator(say_hello), wrapping it in additional behavior.
 
+  #####################################
     # defining a decorator
     def hello_decorator(func):
-        # inner1 is a Wrapper function in 
-        # which the argument is called
-        
-        # inner function can access the outer local
-        # functions like in this case "func"
-        def inner1():
-            print("Hello, this is before function execution")
+      # inner1 is a Wrapper function in  which the argument is called
+      # inner function can access the outer local functions like in this case "func"
 
-            # calling the actual function now
-            # inside the wrapper function.
-            func()
+      def inner1():
+        print("Hello, this is before function execution")
 
-            print("This is after function execution")
-            
-        return inner1
+        # calling the actual function now inside the wrapper function.
+        func()
+
+        print("This is after function execution")
+          
+      return inner1
 
     # defining a function, to be called inside wrapper
     def function_to_be_used():
         print("This is inside the function !!")
 
-    # passing 'function_to_be_used' inside the
-    # decorator to control its behaviour
+    # passing 'function_to_be_used' inside the decorator to control its behaviour.
     function_to_be_used = hello_decorator(function_to_be_used)
 
     # calling the function
@@ -1803,20 +1825,20 @@
     This is inside the function !!
     This is after function execution
 
-
+  ################################
     def hello_decorator(func):
-    def inner1(*args, **kwargs):
-        
-        print("before Execution")
-        
-        # getting the returned value
-        returned_value = func(*args, **kwargs)
-        print("after Execution")
-        
-        # returning the value to the original frame
-        return returned_value
-        
-    return inner1
+      def inner1(*args, **kwargs):
+          
+          print("before Execution")
+          
+          # getting the returned value
+          returned_value = func(*args, **kwargs)
+          print("after Execution")
+          
+          # returning the value to the original frame
+          return returned_value
+          
+      return inner1
 
 
     # adding decorator to the function
@@ -1829,14 +1851,14 @@
 
     # getting the value through return of the function
     print("Sum =", sum_two_numbers(a, b))
-    Output: 
 
+    Output: 
     before Execution
     Inside the function
     after Execution
     Sum = 3
 
-
+  ###########################
     # code for testing decorator chaining 
     def decor1(func): 
         def inner(): 
@@ -1867,6 +1889,30 @@
     400
     200
 
+  ####################
+  def green(fu):
+    fu.green = True
+    return fu
+
+  @green
+  def add(a, b): return a+b;
+
+  add.green >> True
+
+  ##############
+  def to_float(fu):
+    def wrapper(a,b):
+      a = float(a)
+      b = float(b)
+      return fu(a,b)
+    
+    return wrapper
+
+  @to_float
+  def add(a, b): return a+b;
+
+  add(1, 2) >> 3.0
+
 
 -- CONTEXT MENEGER(WITH)
 -- METACLASSES
@@ -1874,7 +1920,7 @@
 
 -- THREAD
 
-  The threads may be running on different processors, but they will only be running one at a time.
+  The threads may be running on different processors, but with GIL they will only be running one at a time.
   Tasks that spend much of their time waiting for external events are generally good candidates
   for threading. Problems that require heavy CPU computation and spend little time waiting for external
   events might not run faster at all.
@@ -1943,11 +1989,10 @@
   concurrency and threading simulate parallelism through the following mechanisms:
 
   Context Switching:
-
   The CPU switches between different tasks or threads very quickly, saving and restoring their states. This switching 
   happens so rapidly that it appears as if tasks are running in parallel.
-  Non-blocking I/O:
 
+  Non-blocking I/O:
   For I/O-bound tasks, using asynchronous programming or non-blocking I/O operations allows the CPU to switch to 
   another task while waiting for I/O operations to complete. This efficient use of CPU time improves overall performance 
   and responsiveness.
@@ -2004,7 +2049,7 @@
 
 --- CONCURENCY
 
-  Python with GIL limits amount of concurrency on a single thread on a single CPU.
+  Python with GIL limits amount of concurrency on a single thread on a single process.
 
   - Asyncio
 
@@ -2095,7 +2140,6 @@
   Imagine you’re writing a web scraper that needs to fetch data from multiple websites. Using asyncio, you can 
   request data from all websites concurrently, instead of waiting for one request to finish before starting the next.
 
-
     import asyncio
     import aiohttp
 
@@ -2117,12 +2161,21 @@
   you can run multiple fetch operations concurrently, significantly speeding up the overall process.
 
   Summary:
-  Use async def to define an async function.
-  Use await to pause execution within an async function until the awaited task is complete.
-  Use asyncio.run() to run your async function.
-  Create tasks with asyncio.create_task() to run multiple coroutines concurrently.
-  Use asyncio.gather() to wait for multiple tasks to complete and collect their results.
-  This basic understanding of asyncio should help you start writing concurrent code in Python.
+    Use async def to define an async function.
+    Use await to pause execution within an async function until the awaited task is complete.
+    Use asyncio.run() to run your async function.
+    Create tasks with asyncio.create_task() to run multiple coroutines concurrently.
+    Use asyncio.gather() to wait for multiple tasks to complete and collect their results.
+    This basic understanding of asyncio should help you start writing concurrent code in Python.
+
+   In Python, asynchronous programming (using asyncio and coroutines) can indeed be a more efficient way to achieve 
+  concurrency than threading, especially when dealing with I/O-bound tasks.
+   The key reason is that context switching between coroutines is typically lighter than switching between threads. 
+  Coroutine switching occurs within the same thread and is managed by the Python runtime, so it doesn’t require the 
+  operating system to get involved. Thread switching, on the other hand, involves OS-level threads, which come with 
+  additional overhead for context switching.
+   This makes asynchronous programming with coroutines particularly suited for tasks like network calls, file I/O, or 
+  other non-CPU-intensive tasks, where you can avoid the GIL limitations and achieve highly efficient concurrency.
 
 
 -- PARALELISM
@@ -2174,12 +2227,17 @@
 -- TESTING
   pytest
   unittest
+
+
 -- BUILD AND MANIPULATE PAKEGES
 -- CYTHON
+
 
 ***** ADDITIONAL ******
 
 -- ALGORITMS
+
+
 -- DS
 
   -queue
@@ -2320,6 +2378,7 @@
   modules and also having __init__.py file by which the interpreter interprets it as a Package. 
   The package is simply a namespace. The package also contains sub-packages inside it. 
 
+
 -- BEST PRACTICES
 
   - DRY
@@ -2431,6 +2490,7 @@
      Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, 
     but allows subclasses to alter the type of objects that will be created.
 
+
 -- OSI
 
   - Application Layer: Applications create the data.
@@ -2446,23 +2506,25 @@
 -- TCP/UDP
 
 
-Serialization
-Serialization is the process of converting an object into a format that can be easily stored or transmitted. This format is typically 
-a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
+-- SERALIZATION
 
-Common Serialization Formats:
-JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
-and generate for machines.
-XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
- human-readable and machine-readable.
-YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
-languages and is often used for configuration files.
-Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
-compared to text-based formats.
+  Serialization is the process of converting an object into a format that can be easily stored or transmitted. This format is typically 
+  a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
 
-Deserialization
-Deserialization is the reverse process of serialization. It converts the byte stream or string back into a copy of the original object. 
-This allows the object to be reconstructed and used in the application as if it were the original.
+  Common Serialization Formats:
+  JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
+  and generate for machines.
+  XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
+  human-readable and machine-readable.
+  YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
+  languages and is often used for configuration files.
+  Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
+  compared to text-based formats.
+
+  Deserialization
+  Deserialization is the reverse process of serialization. It converts the byte stream or string back into a copy of the original object. 
+  This allows the object to be reconstructed and used in the application as if it were the original.
+
 
 -- GIT
  help
@@ -2894,6 +2956,7 @@ This allows the object to be reconstructed and used in the application as if it 
 
 
 -- DJANGO
+
  app lifecicle
  model inheritance
  manager
@@ -2904,8 +2967,9 @@ This allows the object to be reconstructed and used in the application as if it 
  makemigrations
  migrate
  python manage.py runserver 0.0.0.0:8080
- python manage.py loaddata data.json
+ 
  python manage.py dumpdata app_name.ModelName --output=data.json
+ python manage.py loaddata data.json
 
 
 -- FLASK
@@ -2991,6 +3055,7 @@ This allows the object to be reconstructed and used in the application as if it 
 
 
 -- SQL
+
   1. Data Query Keywords
     SELECT: Retrieves data from one or more tables.
       Example: SELECT * FROM table_name;
@@ -3168,6 +3233,7 @@ This allows the object to be reconstructed and used in the application as if it 
 
 
 -- PSQL
+
   sudo -i -u postgres
   sudo -u postgres psql
   psql

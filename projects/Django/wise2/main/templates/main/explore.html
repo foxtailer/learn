@@ -8,9 +8,10 @@
 {% block load_jq %}<script src="{% static 'js/jquery/jquery-3.7.0.min.js' %}"></script>{% endblock %}
 {% block load_js %}<script src="{% static '/js/jq-ajax-explore.js' %}"></script>{% endblock %}
 
+{% block token %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock  %}
 
 {% block top-menu__items %}
-  <li class="top-menu__item">
+  <li>
     {% include "include/write.html" %}
   </li>
 
@@ -19,7 +20,8 @@
   </li>
 
   <li>
-    <button class="top-menu__btn" id="like_btn">
+    <button class="control-element {% if user.id %} active {% else %} off {% endif %}" 
+            id="like_btn">
       <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
         <use href="{% static 'img/icon/icons.svg' %}#icon-bookmark"></use>
       </svg>
@@ -30,14 +32,13 @@
 
 {% block content %}
 <div class="wisdom_inner">
-  <p class="wisdom" id="wisdom" >{{post.text}}</p>
+  <p class="wisdom" id="wisdom" data-wisdom-id="{{ post.id }}">{{post.text}}</p>
 
   <div class="control">
-    <button class="control__btn" id="next_btn" data-wisdom-id="{{ post.id }}">
+    <button class="control-element active" id="next_btn">
       <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
         <use href="{% static 'img/icon/icons.svg' %}#icon-arrow-right"></use>
       </svg>
-      {% csrf_token %}
     </button>
   </div>
 </div>
@@ -46,7 +47,8 @@
 
 {% block bottom-menu__items %}
 <li class="bottom-menu__item">
-  <button class="bottom-menu__btn bottom-menu__btn--report" id="report_btn">
+  <button class="control-element {% if user.id %} active {% else %} off {% endif %} report" 
+          id="report_btn">
     <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <use href="{% static 'img/icon/icons.svg' %}#icon-exclamation-mark"></use>
     </svg>
@@ -54,10 +56,11 @@
 </li>
 
 <li class="bottom-menu__item">
-  <button class="bottom-menu__btn" id="mail_btn">
+  <a class="control-element {% if post.reply %} active {% else %} off {% endif %}" id="mail_btn"
+     href="{% if post.reply %} mailto:{{ post.author.email }} {% endif %}">
     <svg width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
       <use fill: red; href="{% static 'img/icon/icons.svg' %}#icon-envelope"></use>
     </svg>
-  </button>
+  </a>
 </li>
 {% endblock %}

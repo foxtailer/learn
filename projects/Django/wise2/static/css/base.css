@@ -15,14 +15,6 @@ body {
   height: 100%;
 }
 
-svg {
-  transition: transform 0.3s ease;
-}
-
-svg:hover {
-  transform: scale(1.2);
-}
-
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f7f7f7;
@@ -61,10 +53,7 @@ a {
 button {
   background-color: transparent;
   border: none;
-  width: 50px;
-  height: 50px;
   cursor: pointer;
-  margin: 0 auto;
 }
 
 .visually-hidden {
@@ -93,15 +82,9 @@ button {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 10px;
 }
 
-.top-menu__link,
-.bottom-menu__link {
-  display: grid;
-  place-content: center center;
-  width: 50px;
-  height: 50px;
-}
 
 /* Main */
 
@@ -110,19 +93,44 @@ main {
   place-content: center center;
 }
 
-.write-form__user-input {
-  padding: 10px;
-  width: clamp(250px, 85vw, 1200px);
-  height: 80vh;
+.control {
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
 }
 
-.wisdom_inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-direction: column;
+.control-element {
+  display: grid;
+  place-content: center center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 auto;
 }
+
+.active {
+  transition: transform 0.3s ease;
+}
+
+.active:hover {
+  transform: scale(1.2);
+}
+
+.off {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.off:hover {
+  transform: initial;
+}
+
+
+
+/* ----- */
 
 .my-wisdom__controls {
   display: flex;
@@ -141,27 +149,4 @@ main {
 .my-wisdom__page:focus {
   outline: none;
   border-bottom: 2px solid #000000;
-}
-
-.add-btn__wrapper {
-  display: flex;
-  justify-content: space-around;
-}
-
-.search {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.tags {
-  display: none;
-  background-color: rgb(209, 208, 208);
-  border-radius: 10%;
-}
-
-.control {
-  display: flex;
-  gap: 20px;
-  align-items: baseline;
 }

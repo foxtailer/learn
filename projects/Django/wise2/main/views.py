@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, Http404
 from django.urls import reverse
@@ -5,7 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 
-from .models import Post
+from .models import Post, WiseUser
 
 
 def home(request):
@@ -19,23 +21,40 @@ def home(request):
 
 
 def write(request):
-    return HttpResponse('wtite')
+    return render(request,
+                  'main/write.html')
 
 
 def explore(request):
+    user = request.user.id
+
     if request.method == "POST":
-        except_id = request.POST.get('except_id')
-        post = Post.random_wisdome(except_id)
+        except_id = request.POST.get('wisdom_id')
+        post = Post.random_wisdome(except_id, user)
 
         response_data = {
             'wisdom': post.text,
             'wisdom_id': post.id,
+            'reply': post.reply,
+            'email': post.author.email,
         }
 
         return JsonResponse(response_data)
 
+    elif request.method == "PATCH":
+        data = json.loads(request.body)
+
+        post = Post.published.get(id=data.get('post_id'))
+        user = WiseUser.objects.get(id=data.get('user_id'))
+
+        post.accepted.add(user)
+        post.save()
+
+        response_data = {'status': '200'}
+        return JsonResponse(response_data)
+    
     try:
-        post = Post.random_wisdome()
+        post = Post.random_wisdome(user=user)
     except Post.DoesNotExist:
         raise Http404("No Post found.")
     
@@ -50,7 +69,8 @@ def explore(request):
 
 
 def my(request):
-    return HttpResponse('my')
+    return render(request,
+                  'main/my.html')
 
 
 @require_POST

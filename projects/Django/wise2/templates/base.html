@@ -12,6 +12,12 @@
     
     <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/favicon/feather-16x16.png" %}">
 
+    <script>
+      var userId = "{{ user.id }}";
+    </script>
+
+    {% block token %}{% endblock  %}
+
     <title>{{ page_title }}</title>
 </head>
   <body>
