@@ -34,6 +34,15 @@ $(document).ready(function () {
                     document.getElementById("mail_btn").setAttribute("class", "control-element " + "off");
                     document.getElementById("mail_btn").setAttribute("href", "");
                 }
+   
+                document.getElementById("like_btn").setAttribute("data-like", data.is_accepted);
+                if (data.is_accepted) {
+                    document.getElementById("like_btn").setAttribute("class", "control-element " + "active " + "used");
+                } else {
+                    document.getElementById("like_btn").setAttribute("class", "control-element " + "active ");
+                }
+
+                document.getElementById("report_btn").setAttribute("class", "control-element " + "active ");
             },
 
             error: function (data) {
@@ -47,7 +56,11 @@ $(document).ready(function () {
         e.preventDefault();
 
         var wisdom_id = $("#wisdom").data("wisdom-id");
+        var button = $(this);
+        var is_accepted = button.data("like"); 
 
+        $(this).toggleClass("used"); 
+        console.log(is_accepted)
         $.ajax({
             type: "PATCH",
             url: "",
@@ -55,10 +68,13 @@ $(document).ready(function () {
             data: JSON.stringify({
                 user_id: userId,
                 post_id: wisdom_id,
+                is_accepted: is_accepted,
             }),
         
             success: function (data) {
-                console.log('+')
+                console.log(data.is_accepted)
+                button.removeData("like"); 
+                button.attr("data-like", data.is_accepted);
             },
 
             error: function (data) {
@@ -74,7 +90,7 @@ $(document).ready(function () {
         var wisdom_id = $("#wisdom").data("wisdom-id");
 
         $.ajax({
-            type: "PATCH",
+            type: "PUT",
             url: "",
             contentType: 'application/json',
             data: JSON.stringify({
@@ -83,7 +99,7 @@ $(document).ready(function () {
             }),
         
             success: function (data) {
-                console.log('+')
+                document.getElementById("report_btn").setAttribute("class", "control-element " + "off " + "used");
             },
 
             error: function (data) {

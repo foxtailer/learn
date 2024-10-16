@@ -1,0 +1,14 @@
+.my_wisdom {
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+}
+
+.my_wisdom:hover {
+    background-color: #323232;
+    color: #eaeaea;
+}
+
+.my_wisdom + .my_wisdom {
+    margin-top: 3px;
+}

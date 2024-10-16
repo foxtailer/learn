@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block content_style %}
+<link rel="stylesheet" href="{% static 'css/my.css' %}">
+{% endblock %}
+
 
 {% block top-menu__items %}
 <li>
@@ -12,13 +16,15 @@
   </li>
 {% endblock %}
 
+
 {% block content %}
 <div class="wisdom_inner">
-  
-  <p class="wisdom" id="wisdom">text</p> 
-
+  {% for post in posts %}
+    <p class="my_wisdom" id="">{{ post.text }}</p> 
+  {% endfor %}
 </div>
 {% endblock %}
+
 
 {% block bottom-menu__items %}
 <li class="bottom-menu__item">

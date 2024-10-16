@@ -3038,6 +3038,11 @@
   and these are the four basic operations that we perform on persistence storage.) Http methods POST, GET, PUT/PATCH, DELETE
 
 
+-- AJAX
+
+  The HTTP method (GET, POST, PUT, PATCH, DELETE).
+
+
 -- ACID 
 
   -Atomicity: Atomicity ensures that a transaction is treated as a single, indivisible unit of work. Either all 
