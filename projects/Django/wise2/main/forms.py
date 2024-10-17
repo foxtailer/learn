@@ -19,11 +19,13 @@ class UserRegistrationForm(UserCreationForm):
       "username",
       "password1",
       "password2",
+      "email",
     )
   
   username = forms.CharField()
   password1 = forms.CharField()
   password2 = forms.CharField()
+  email = forms.EmailField()
 
 
 class EmailPostForm(forms.Form):

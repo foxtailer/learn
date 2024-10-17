@@ -62,6 +62,16 @@
  Collector to determine whether it is fine to reclaim the memory of unused objects. And since Python objects are capable of
  knowing their own type, variables don’t have to remember this piece of information.
 
+  Reference Count: Every object has a reference count, which tracks how many variables or objects are pointing to it.
+  Tracking Reference Count: The sys module provides the getrefcount() function, which can check the reference 
+  count of an object:
+    import sys
+    a = []
+    print(sys.getrefcount(a))  # Output might be 2, as `a` and the argument in getrefcount both reference it
+
+  While the reference count is a key part of Python's memory management, Python also has a cyclic garbage collector to handle 
+  cases where objects reference each other in a cycle, which reference counting alone cannot handle.
+
   In Python, it is possible for multiple variables to reference the same object. This behaviour is called a "shared reference".
  For example, consider the code below
 
@@ -335,6 +345,32 @@
     ^=	x ^= 3	  x = x ^ 3
     >>=	x >>= 3	  x = x >> 3
     <<=	x <<= 3	  x = x << 3
+
+    := symbol is the walrus operator in Python, introduced in Python 3.8. It allows you to assign a value to a variable 
+    as part of an expression, meaning you can both assign and evaluate in a single line.
+
+      # Without :=
+      line = input("Enter text: ")
+      while line != "quit":
+          print(line)
+          line = input("Enter text: ")
+
+      # With :=
+      while (line := input("Enter text: ")) != "quit":
+          print(line)
+
+      ####################
+      nums = [1, 3, 4, 5]
+      squares_over_10 = [square for num in nums if (square := num ** 2) > 10]
+      print(squares_over_10)  # Output: [16, 25]
+
+      ###################
+      import re
+
+      text = "Email: example@example.com"
+      if (match := re.search(r'\S+@\S+', text)):
+      print("Found email:", match.group())
+
 
  Comparison
 
@@ -1080,6 +1116,9 @@
   The built-in scope can be accessed through the __builtins__ module.
   You can list all built-in names by looking at dir(__builtins__).
 
+  dir() function in Python is used to get a list of the names of attributes and methods associated with an object.
+  Without arguments, dir() returns the list of names in the current local scope.
+
 
 -- *ARGS **KWARGS
 
@@ -1138,6 +1177,8 @@
 
 
 -- COMMON METHODS
+
+
 
 *****INTERMEDIATE******
 
@@ -3424,3 +3465,5 @@ Click Ok on all open windows and restart your system restart the command prompt.
     "when": "debuggersAvailable && debugState != 'initializing'" 
   },
 ]
+
+* constant 0-254 in python alredy in cache.

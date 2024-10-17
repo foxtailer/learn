@@ -12,3 +12,13 @@
 .my_wisdom + .my_wisdom {
     margin-top: 3px;
 }
+
+.write-form__user-input {
+    padding: 10px;
+    width: 100%;
+    height: 80vh;
+}
+
+.write-form__settings {
+    display: block;
+}

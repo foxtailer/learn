@@ -1,6 +1,6 @@
-a = 2
-def x():
-    b = a*2
-    return b
+import re
 
-print(x())
+text = "Email: example@example.com"
+
+if re.search(r'\S+@\S+', text):
+    print("Found email:")

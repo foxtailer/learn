@@ -42,7 +42,7 @@ $(document).ready(function () {
                     document.getElementById("like_btn").setAttribute("class", "control-element " + "active ");
                 }
 
-                document.getElementById("report_btn").setAttribute("class", "control-element " + "active ");
+                document.getElementById("report_btn").setAttribute("class", "control-element " + "active " + "report");
             },
 
             error: function (data) {
