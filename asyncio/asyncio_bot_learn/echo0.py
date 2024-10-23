@@ -3,9 +3,10 @@ import asyncio
 from aiogram.filters.command import Command
 import string
 
+import sys; sys.path.append('/home/zoy/vscode')
+import deps
 
-
-TOKEN = ""
+TOKEN = deps.T
 
 bot = Bot(TOKEN)
 dp = Dispatcher()

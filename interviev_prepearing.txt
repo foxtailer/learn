@@ -22,6 +22,10 @@
     would hold the numbers 1,2 and 3
  While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
 
+ Object's Internal Structure: Each Python object has a structure that includes metadata, such as its type 
+ and reference count. In CPython (the standard Python interpreter), this structure is represented by PyObject. 
+ The PyObject structure contains a field called ob_refcnt, which is the reference count for that object.
+
  (name = variable) --(referense) ----> (id)-( object)
 
  To sum up, every time we assign variables Python undertakes the three following steps:
@@ -265,6 +269,9 @@
     Greater than: a > b
     Greater than or equal to: a >= b
 
+  Python compare lists by elements a[0] compare b[0], a[1] compare b[1]...
+  [2] > [1, 1] >>> True becouse 2>1
+  
  These conditions can be used in several ways, most commonly in "if statements" and loops.
 
  Chained conditionals are simply a "chain" or a combination or multiple conditions.
@@ -796,6 +803,11 @@
 
  Note: Every iterator is also an iterable, but not every iterable is an iterator in Python.
 
+    import random
+    d = iter(lambda: random.tandrange(10), 7)
+    list(d)
+
+
 
 -- GENERATORS
 
@@ -858,20 +870,35 @@
           n = 0
 
     (itertools contain a lot of iterators and generators)
-    
- Python Generator Expression
-  In Python, generator expression is another way of writing the generator function. It uses the Python list 
-  comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
 
-  Generator Expression Syntax
-  The generator expression in Python has the following Syntax:
+    #############
+    def bgfun():
+      res = 'Start'
+      while res:
+        res = yield f'/{res}/'
+      yield 'Finish'
 
-    (expression for item in iterable)
+    ite = bgfun()
+    next(ite) >>> '/Start/'
+    ite.send(123) >>> '/123/'
+    ite.send('qqq') >>> '/qqq/'
+    ite.send(0) >>> 'Finish'
 
-    squares = (x * x for x in range(3))
-    print(next(squares))  # Output: 0
-    print(next(squares))  # Output: 1
-    print(next(squares))  # Output: 4
+  Python Generator Expression
+    In Python, generator expression is another way of writing the generator function. It uses the Python list 
+    comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
+
+    Generator Expression Syntax
+    The generator expression in Python has the following Syntax:
+
+      (expression for item in iterable)
+
+      squares = (x * x for x in range(3))
+      print(next(squares))  # Output: 0
+      print(next(squares))  # Output: 1
+      print(next(squares))  # Output: 4
+
+  * g.next() <=> g.send(None)
 
 
 -- BUILD IN DATA STRUCTURES
@@ -936,6 +963,8 @@
     Probing: Probing is the process of finding the next open slot in the hash table by 
       following a specific sequence. There are different types of probing techniques, such as 
       linear probing, quadratic probing, and double hashing.
+  
+  Funtion hash(value) return hash of value.
 
 
 -- FUNCTIONS
@@ -1118,6 +1147,10 @@
 
   dir() function in Python is used to get a list of the names of attributes and methods associated with an object.
   Without arguments, dir() returns the list of names in the current local scope.
+
+  __dict__ is a dictionary or mapping object that stores an object's (or class's) writable attributes. It essentially 
+  contains all the instance variables (attributes) of an object in the form of key-value pairs, where the key is the 
+  attribute's name (as a string), and the value is the corresponding data. (Contains only the object's instance attributes.)
 
 
 -- *ARGS **KWARGS
@@ -1369,8 +1402,7 @@
  print(object1.c)
  print(object1.__d)
 
-  - Polymorphism simply means having many forms. For example, we need to determine if the given species of birds
- fly or not, using polymorphism we can do this using a single function.
+  - Polymorphism simply means having many forms. Oportunity to apply one common function to object with different types.
  In Python, polymorphism allows objects of different classes to be treated as objects of a common super class. 
  It is the ability to present the same interface for differing underlying forms (data types).
 
@@ -1425,10 +1457,13 @@
             There are many types of birds.
             Ostriches cannot fly.
 
- - Encapsulation is one of the fundamental concepts in object-oriented programming (OOP). It describes the idea
- of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables
- and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
- variable can only be changed by an object’s method. Those types of variables are known as private variables.
+ - Encapsulation is one of the fundamental concepts in object-oriented programming (OOP).
+  - Minimization of nesessary information space.
+  - Wrapping one name space by enother(create ierarhy obj1.param.name.set())
+  - It describes the idea
+  of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables
+  and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
+  variable can only be changed by an object’s method. Those types of variables are known as private variables.
 
              # Python program to
             # demonstrate private members
@@ -1573,6 +1608,7 @@
 
 
 -- MIXIN 
+
   A mixin is a class that provides method implementations for reuse by multiple related child classes. However, 
   the inheritance is not implying an is-a relationship.
   A mixin doesn’t define a new type. Therefore, it is not intended for direction instantiation.
@@ -1591,6 +1627,35 @@
 
 
 -- MRO (diamond  problem)
+
+  1. The class of the object itself.
+  2. The first parent class (from left to right in the inheritance declaration).
+  3. If the attribute is not found, Python checks the next parent class in the MRO.
+  4. If still not found, it continues up through the ancestors (i.e., parents of parents) in the MRO.
+
+  class A:
+    def method(self):
+        print("Method from A")
+
+  class B(A):  # B inherits from A
+      pass
+
+  class C(A):
+      def method(self):
+          print("Method from C")
+
+  class D(B, C):  # D inherits from both B and C
+      pass
+
+  d = D()
+  d.method() 
+
+  print(D.mro())   >> [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+
+  List of object fields/memvers populated from:
+    1. Object fields.
+    2. Class fields.
+    3. Parent class fields.(recursivly)
 
 
 -- COMPREHENTIONS
@@ -1645,7 +1710,6 @@
 -- ADVENSED CLASS
 -- DANDER METHOD
 -- PIP/PYPI
--- ENVIROMENT
 -- MAKING OWN MODULE
 
 
@@ -1733,6 +1797,10 @@
   In Python, a closure is a function that retains access to its lexical scope, even after the scope has finished 
   executing. In simpler terms, a closure "remembers" the variables that were in its surrounding scope when it was 
   created, even if that scope no longer exists.
+
+  When python analize inner function code and 'see' variable that reffer to parent function scope(nonlocal/enclosing)
+  it save value of this variable in __closure__ of child function.
+      reterned_inner_fu.__closure__[0].cell_contents
 
   How Closures Work
   Closures are created when a nested function captures variables from its enclosing scope. Here's an example:
@@ -2991,6 +3059,8 @@
   $	          End of string or end of line depending on            .*?the end$	            this is the end
               multiline mode. Many engine-dependent subtleties.
 
+  re.findall(r'\b\w+\b', line) -> list of words without punctuations simbols from line of text.
+
 
 -- MATH
 -- STATISTIC
@@ -3377,6 +3447,59 @@
   sudo -u postgres psql -c "SHOW config_file;"
 
 
+-- MONOLITH MICROSERVISES DECOMPOSED MONOLITH
+
+  Comparative table for Monolith, Decomposed Monolith, and Microservices:
+
+  Aspect	        Monolith	                              Decomposed Monolith	                                          Microservices
+  -
+  Deployment	    Single deployable unit	                Single deployable unit (modularized)	                        Independent services, separate deployment
+  -
+  Independence	  Tightly coupled components	            Loosely decoupled components, but still deployed together	    Fully decoupled, independent services
+  -
+  Communication	  In-memory function calls	              In-memory function calls or internal APIs	                    Network-based (HTTP, messaging, gRPC, etc.)
+  -
+  Database	      Shared monolithic database	            Shared database, possibly modularized	                        Separate databases per service
+  -
+  Scaling	        Scale entire system together	          Scale entire system together, but may optimize modules	      Scale individual services independently
+  -
+  Failure 	      Failures can affect the whole system	  Failures can still propagate, but isolation is improving	    Failures are isolated to individual services
+  Isolation
+  -
+  Team 	          Requires tight coordination	            Some independence in modules, but deployment is shared	      Independent teams for each service
+  Autonomy
+  -
+  Operational 	  Lower operational complexity	          Moderate complexity (managing modules)	                      High complexity (managing multiple services)
+  Complexity
+  -
+  Technology 	    Single technology stack	                Usually single stack, but components are more modular	        Different stacks per service if needed
+  Choices
+  -
+  Development 	  Faster to develop initially, 	          Improved modularity speeds up certain areas, 	                Faster iteration and delivery for independent services
+  Speed           but slower as the system grows          but deployment coupling remains
+  -
+  Scaling 	      Whole application must scale	          Slightly improved scaling within components	                  Fine-grained scaling of individual services
+  Flexibility
+  -
+  Codebase 	      Single, large codebase	                Still a single codebase, but modular	                        Multiple smaller codebases, per service
+  Management
+  -
+  Testing 	      Simpler to test as a single unit	      Requires modular testing and integration testing	            Each service tested individually, with more integration tests needed
+  Complexity
+  -
+  Fault 	        Low, since the whole system can fail	  Improved but still risks system-wide failure	                 High, since each service is isolated
+  Tolerance
+  -
+  Upgrading	      Requires updating the entire system	    Update all components together	                               Can upgrade individual services independently
+
+  Summary of Key Differences:
+  Monolith: All components are tightly coupled and deployed together, with simple operations and communication but hard to scale and maintain 
+    as the system grows.
+  Decomposed Monolith: An intermediate state where the monolithic application is refactored into modular components, improving flexibility and 
+    scalability but still deployed as one unit.
+  Microservices: Fully decoupled architecture where each service is independent, deployed separately, and can be scaled, updated, and managed 
+    individually, but at the cost of higher operational complexity.
+
 
 -- PANDAS
 -- Matplotlib
@@ -3467,3 +3590,5 @@ Click Ok on all open windows and restart your system restart the command prompt.
 ]
 
 * constant 0-254 in python alredy in cache.
+* type(obj) ->  constructor of object 
+  obj2 = type(obj)() -> same object

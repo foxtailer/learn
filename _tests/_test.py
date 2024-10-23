@@ -1,6 +1,17 @@
-import re
+class A:
+    def fun(self):
+        print('A')
 
-text = "Email: example@example.com"
+class B(A):
+    pass
 
-if re.search(r'\S+@\S+', text):
-    print("Found email:")
+class C(A):
+    def fun(self):
+        print('C')
+
+class D(B, C):
+    pass
+
+d = D()
+
+d.fun()
