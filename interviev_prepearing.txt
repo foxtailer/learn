@@ -1216,6 +1216,7 @@
 *****INTERMEDIATE******
 
 
+
 -- OOP
 
   Object-oriented programming (OOP) is a method of structuring a program by bundling related
@@ -1258,8 +1259,7 @@
  Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from a parent class.
  Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base class.
 
-        # Python code to demonstrate how parent constructors
-        # are called.
+        # Python code to demonstrate how parent constructors are called.
 
         # parent class
         class Person(object):
@@ -1284,7 +1284,7 @@
                 self.post = post
 
                 # invoking the __init__ of the parent class
-                Person.__init__(self, name, idnumber)
+                Person.__init__(self, name, idnumber)  # super().__init__(name, idnumber)
 
             def details(self):
                 print("My name is {}".format(self.name))
@@ -1314,61 +1314,58 @@
 
  Python program to demonstrate error if we forget to invoke __init__() of the parent
 
- class Person(object):
-    # Constructor
-    def __ini8t__(self, name):
+  class Person(object):
+      # Constructor
+      def __init__(self, name):
+          self.name = name
+      # To get name
+      def getName(self):
+          return self.name
+      # To check if this person is an employee
+      def isEmployee(self):
+          return False
 
-        self.name = name
-    # To get name
-    def getName(self):
-        return self.name
-    # To check if this person is an employee
-    def isEmployee(self):
-        return False
+  # Inherited or Subclass (Note Person in bracket)
+  class Employee(Person):
+      # Here we return true
+      def isEmployee(self):
+          return True
 
- # Inherited or Subclass (Note Person in bracket)
- class Employee(Person):
-     # Here we return true
-     def isEmployee(self):
-        return True
-
- # Driver code
-
- emp = Person("Geek1")  # An Object of Person
- print(emp.getName(), emp.isEmployee())
- emp = Employee("Geek2")  # An Object of Employee
- print(emp.getName(), emp.isEmployee)
+  # Driver code
+  emp = Person("Geek1")  # An Object of Person
+  print(emp.getName(), emp.isEmployee())
+  emp = Employee("Geek2")  # An Object of Employee
+  print(emp.getName(), emp.isEmployee)
 
   The super() function is a built-in function that
  returns the objects that represent the parent class. It allows
  to access the parent class’s methods and attributes in the child class.
 
- # parent class
- class Person():
+  # parent class
+  class Person():
 
-   def __init__(self, name, age):
-     self.name = name
-     self.age = age
+    def __init__(self, name, age):
+      self.name = name
+      self.age = age
 
-   def display(self):
-     print(self.name, self.age)
+    def display(self):
+      print(self.name, self.age)
 
- # child class
+  # child class
+  class Student(Person):
+    def __init__(self, name, age, dob):
+      self.sName = name
+      self.sAge = age
+      self.dob = dob
+      # inheriting the properties of parent class
+      super().__init__("Rahul", age)
 
- class Student(Person):
-   def __init__(self, name, age, dob):
-     self.sName = name
-     self.sAge = age
-     self.dob = dob
-     # inheriting the properties of parent class
-     super().__init__("Rahul", age)
+    def displayInfo(self):
+      print(self.sName, self.sAge, self.dob)
 
-   def displayInfo(self):
-     print(self.sName, self.sAge, self.dob)
-
- obj = Student("Mayank", 23, "16-03-2000")
- obj.display()
- obj.displayInfo()
+  obj = Student("Mayank", 23, "16-03-2000")
+  obj.display()
+  obj.displayInfo()
 
  There are 5 different types of inheritance in Python.
  They are as follows:
@@ -1386,21 +1383,21 @@
  the child class i.e. we can make some of the instance variables of the parent class
  private, which won’t be available to the child class.
 
- class C(object):
-    def __init__(self):
-        self.c = 21
-        # d is private instance variable
-        self.__d = 42
+  class C(object):
+      def __init__(self):
+          self.c = 21
+          # d is private instance variable
+          self.__d = 42
 
- class D(C):
-    def __init__(self):
-        self.e = 84
-        C.__init__(self)
+  class D(C):
+      def __init__(self):
+          self.e = 84
+          C.__init__(self)
 
- object1 = D()
- # produces an error as d is private instance variable
- print(object1.c)
- print(object1.__d)
+  object1 = D()
+  # produces an error as d is private instance variable
+  print(object1.c)
+  print(object1.__d)
 
   - Polymorphism simply means having many forms. Oportunity to apply one common function to object with different types.
  In Python, polymorphism allows objects of different classes to be treated as objects of a common super class. 
