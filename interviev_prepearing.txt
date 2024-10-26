@@ -1603,6 +1603,14 @@
   Validation: You can add validation logic in the setter method to ensure that the data is in the expected format.
   Read-only Attributes: By only defining a getter method, you can make an attribute read-only.
 
+  - slots
+    class A:
+      __slots__ = ['a', 'b', 'c']
+      a = 1  # read only atribute
+    
+    a = A()
+    a.b = 2
+
 
 -- MIXIN 
 
@@ -1704,6 +1712,7 @@
   zip run throw collections at the same time until some of them dont have eny items
   end create tuple on each iteration.
 
+
 -- ADVENSED CLASS
 -- DANDER METHOD
 -- PIP/PYPI
@@ -1732,7 +1741,10 @@
     pip install -r requirements.txt
 
 
+
 ******ADVENCED*******
+
+
 
 -- POETRY
 
@@ -1798,6 +1810,9 @@
   When python analize inner function code and 'see' variable that reffer to parent function scope(nonlocal/enclosing)
   it save value of this variable in __closure__ of child function.
       reterned_inner_fu.__closure__[0].cell_contents
+
+      import inspect
+      inspect.getqlosurevars(fu)
 
   How Closures Work
   Closures are created when a nested function captures variables from its enclosing scope. Here's an example:
@@ -2018,6 +2033,36 @@
   def add(a, b): return a+b;
 
   add(1, 2) >> 3.0
+
+  ###########
+  from functools import wraps
+
+  def repeater(n):
+    def dec(fu):
+      @wraps(fun)
+      def wrapper(*args):
+        return [fun(*args) for i in range(n)]
+      return wrapper
+    return dec
+
+  @repeater(4)
+  def multi(a, b):
+    return a * B
+
+  multi(2, 4)  # [8, 8, 8, 8]
+
+  ################
+  class repeater4:
+    def __init__(self, fu):
+      self.fu = fu
+    def __call__(self, *args):
+      return [self.fun(*args) for i in range(4)]
+  
+  @repeater4
+  def multi(a, b):
+    return a * B
+
+  multi(2, 4)  # [8, 8, 8, 8]
 
 
 -- CONTEXT MENEGER(WITH)
@@ -2336,10 +2381,32 @@
 
 
 -- BUILD AND MANIPULATE PAKEGES
--- CYTHON
+
+
+-- CPYTHON
+
+  When Python code is executed, it goes through a multi-step process:
+
+   Syntax Analysis (Parsing):
+  Python first parses the code, checking its syntax for correctness. This step involves generating an Abstract Syntax Tree (AST) 
+  from the source code, ensuring that the code conforms to Python’s grammar.
+  If there are syntax errors, Python raises a SyntaxError and stops execution.
+
+   Bytecode Compilation:
+  After syntax analysis, the code is compiled into bytecode, an intermediate, platform-independent representation of the code.
+  Bytecode is a lower-level, optimized version of the original code, which allows Python to run more efficiently.
+  Python stores the compiled bytecode in .pyc files (in the __pycache__ directory), so it doesn't need to recompile unchanged code 
+  in future executions.
+  
+   Interpretation (Execution):
+  Finally, the Python interpreter executes the bytecode line by line. This is done by the Python Virtual Machine (PVM), which 
+  interprets and runs the bytecode.
+
 
 
 ***** ADDITIONAL ******
+
+
 
 -- ALGORITMS
 
@@ -2432,6 +2499,7 @@
 
 
 -- MODULES AND PACKEGES
+
   The module is a simple Python file that contains collections of functions and global variables and with having a .py 
   extension file. It is an executable file and to organize all the modules we have the concept called Package in Python. 
   There are actually three different ways to define a module in Python:
@@ -2633,6 +2701,7 @@
 
 
 -- GIT
+
  help
   git <command> --help  # Откроет информацию по запрашиваемой команде
   git commit --help  # Пример
@@ -3589,3 +3658,5 @@ Click Ok on all open windows and restart your system restart the command prompt.
 * constant 0-254 in python alredy in cache.
 * type(obj) ->  constructor of object 
   obj2 = type(obj)() -> same object
+* from inspect import signature
+  signature(fu)
