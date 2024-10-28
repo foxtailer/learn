@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from .models import Categories, Ingredient, Product
 
 # Register the Categories model
@@ -26,8 +27,6 @@ class ProductAdmin(admin.ModelAdmin):
 
     def image_preview(self, obj):
         if obj.image:
-            return f'<img src="{obj.image.url}" width="50" height="50" />'
+            return mark_safe(f'<img src="{obj.image.url}" width="50" height="50" />')
         return ''
-    image_preview.allow_tags = True
     image_preview.short_description = 'Image Preview'
-

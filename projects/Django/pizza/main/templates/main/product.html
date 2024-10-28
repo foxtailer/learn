@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
 {% endblock  %}
 
+{% block options %}
+{% include "include/filter.html" with form=form %}
+{% endblock  %}
+
 {% block content %}
 <div class="card-wrapper">
     {% for product in products %}

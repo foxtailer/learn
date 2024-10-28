@@ -3,15 +3,29 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
 from .models import Product
+from .forms import CategoryFilterForm
 
 def main(request):
+    form = CategoryFilterForm(request.GET or None)
     products = Product.objects.all()
+
+    selected_categories = [1,2,3]
+    if request.method == 'GET' and form.is_valid():
+        selected_categories.clear()
+        for key, value in form.cleaned_data.items():
+            if value:  # Checkbox is checked
+                category_id = key.split('_')[1]  # Extract category ID from the key
+                selected_categories.append(int(category_id))
+        if selected_categories:
+            products = products.filter(category__in=selected_categories)
 
     paginator = Paginator(products, 6)
     page_number = request.GET.get('page', 1)
     products = paginator.page(page_number)
+    form = CategoryFilterForm(selected_categories=selected_categories)
 
-    context = {'products': products,}
+    context = {'products': products,
+               'form': form,}
 
     return render(request, 'main/product.html', context)
 
