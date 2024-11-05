@@ -9,10 +9,13 @@ from django.views.decorators.http import require_POST
 
 
 def post_list(request):
+    print(request)
     post_list = Post.published.all()
     # Pagination with 3 posts per page
     paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page', 1)
+    x = request.GET.get('x', 8)
+    
     try:
         posts = paginator.page(page_number)
     except PageNotAnInteger:
@@ -23,7 +26,7 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)
     return render(request,
                  'blog/post/list.html',
-                 {'posts': posts})
+                 {'posts': posts, 'x':x, 'y': 1})
 
 
 def post_detail(request, year, month, day, post):
