@@ -54,3 +54,85 @@ window.onscroll = () => {
     line.classList.remove("no-animation");
   });
 }
+
+
+// Get all elements with class 'card-image'
+const boxes = document.querySelectorAll('.card-image');
+
+// Loop through each 'card-image' element
+boxes.forEach(box => {
+  // Find the parent card element (the card that contains both the image and the ingredients control)
+  const card = box.closest('.card');
+  
+  // Try to find the associated ingredients control within the card
+  const hiddenContent = card.querySelector('.ingredients-control');
+  
+  // If the ingredients control exists, add the event listeners
+  if (hiddenContent) {
+    // Add event listener for mouse enter (hover) to show the ingredients control
+    box.addEventListener('mouseenter', function() {
+      hiddenContent.classList.remove('hidden');  // Show the ingredients control
+    });
+
+    // Add event listener for mouse leave on the image
+    box.addEventListener('mouseleave', function() {
+      // Only hide ingredients if the mouse is not over the ingredients control
+      if (!hiddenContent.matches(':hover')) {
+        hiddenContent.classList.add('hidden');  // Hide the ingredients control
+      }
+    });
+
+    // Add event listener for mouse enter on the ingredients control (to keep it visible)
+    hiddenContent.addEventListener('mouseenter', function() {
+      hiddenContent.classList.remove('hidden');  // Keep the ingredients control visible
+    });
+
+    // Add event listener for mouse leave on the ingredients control (to hide it again)
+    hiddenContent.addEventListener('mouseleave', function() {
+      hiddenContent.classList.add('hidden');  // Hide the ingredients control when mouse leaves
+    });
+  }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Get all elements with class 'quantity-control'
+  const quantityControls = document.querySelectorAll('.quantity-control');
+
+  // Set initial values
+  const minValue = 1;  // Minimum allowed value for the input
+  const maxValue = 100; // Maximum allowed value for the input (optional, can be adjusted)
+
+  // Function to update the input value for each quantity control
+  function updateValue(inputField, newValue) {
+    // Ensure the value is within bounds (minValue and maxValue)
+    if (newValue >= minValue && newValue <= maxValue) {
+      inputField.value = newValue;
+    }
+  }
+
+  // Loop through each quantity control and add event listeners to its buttons
+  quantityControls.forEach(function (control) {
+    const inputField = control.querySelector('.quantity-control__input');
+    const decrementButton = control.querySelector('.decrement');
+    const incrementButton = control.querySelector('.increment');
+
+    // Event listener for the decrement button
+    decrementButton.addEventListener('click', function() {
+      let currentValue = parseInt(inputField.value, 10);
+      if (currentValue > minValue) {
+        currentValue--;
+        updateValue(inputField, currentValue);
+      }
+    });
+
+    // Event listener for the increment button
+    incrementButton.addEventListener('click', function() {
+      let currentValue = parseInt(inputField.value, 10);
+      if (currentValue < maxValue) {
+        currentValue++;
+        updateValue(inputField, currentValue);
+      }
+    });
+  });
+});

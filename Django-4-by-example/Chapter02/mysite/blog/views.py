@@ -9,7 +9,6 @@ from django.views.decorators.http import require_POST
 
 
 def post_list(request):
-    print(request)
     post_list = Post.published.all()
     # Pagination with 3 posts per page
     paginator = Paginator(post_list, 3)
@@ -26,7 +25,9 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)
     return render(request,
                  'blog/post/list.html',
-                 {'posts': posts, 'x':x, 'y': 1})
+                 {'posts': posts, 
+                  'x': x, 
+                  'y': "z"})
 
 
 def post_detail(request, year, month, day, post):
@@ -48,14 +49,14 @@ def post_detail(request, year, month, day, post):
                    'form': form})
 
 
-class PostListView(ListView):
-    """
-    Alternative post list view
-    """
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+# class PostListView(ListView):
+#     """
+#     Alternative post list view
+#     """
+#     queryset = Post.published.all()
+#     context_object_name = 'posts'
+#     paginate_by = 3
+#     template_name = 'blog/post/list.html'
 
 
 def post_share(request, post_id):

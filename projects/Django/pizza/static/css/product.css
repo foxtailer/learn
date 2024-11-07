@@ -13,17 +13,26 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.card__image-wrapper {
+    height: 55%;
+    border-radius: 1.2em;
 }
 
 .card-image {
     width: 100%;
-    height: 70%;
+    height: 100%;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     object-fit: cover;
     vertical-align: top;
 }
 
+.hidden {
+    display: none;
+}
 
 .content {
     background-color: #fff;
@@ -65,11 +74,6 @@
     flex-grow: 1;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between;
-}
-
 .decrement,
 .increment {
     background-color: transparent;
@@ -99,15 +103,40 @@
     background-color: #36732e;
 }
 
+.size-control__box {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
 .quantity-control {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
 }
 
-.quantity-input {
+.quantity-control,
+.size-control {
+    padding: 5px;
+}
+
+.quantity-control__input {
     width: 30px;
     height: 24px;
+}
+
+.ingredients-control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.753);
+    height: 55%;
+    width: 100%;
+    border-top-left-radius: 1.2em;
+    border-top-right-radius: 1.2em;
 }
 
 @media (max-width: 860px) {
