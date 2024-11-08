@@ -3,6 +3,7 @@
 
 {% block product-style %}
 <link rel="stylesheet" href="{% static 'css/product.css' %}">
+<link rel="stylesheet" href="{% static 'css/rating.css' %}">
 {% endblock  %}
 
 {% block options %}
@@ -19,15 +20,26 @@
 
         <div class="content">
           <div class="review-container">
-              <div class="stars">
-                  <span>Reviews</span>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star-half"></i>
-              </div>
+            <div class="">
+              <span>Reviews</span>
+              <div class="rating rating_set" data-ajax="true">
+                <div class="rating__body">
+                  <div class="rating__active"></div>
 
-              <h5 class="price">$ {{ product.price }}</h5>
+                  <div class="rating__items">
+                    <input class="rating__item" type="radio" value="1" name="rating">
+                    <input class="rating__item" type="radio" value="2" name="rating">
+                    <input class="rating__item" type="radio" value="3" name="rating">
+                    <input class="rating__item" type="radio" value="4" name="rating">
+                    <input class="rating__item" type="radio" value="5" name="rating">
+                  </div>
+                </div>
+
+                <div class="rating__value">{{ product.rating }}</div>
+              </div>
+            </div>
+
+            <h5 class="price">$ {{ product.price }}</h5>
           </div>
 
           <a href="{{ product.get_absolute_url }}"><h4 class="name">{{ product.name }}</h4></a>

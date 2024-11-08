@@ -1,9 +1,12 @@
+import json
+
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from .models import Product
 from .forms import CategoryFilterForm
+
 
 def main(request):
     form = CategoryFilterForm(request.GET or None)
@@ -49,3 +52,20 @@ def contacts(request):
 
 def social_plug(request):
     return render(request, 'social_plug.html')
+
+
+def update_rating(request):
+    if request.method == 'GET':
+        try:
+            # Parse the JSON body
+            body = json.loads(request.body)
+            user_rating = body.get('userRating')
+
+            new_rating = user_rating + 1
+
+            # Return the new rating as a JSON response
+            return JsonResponse({'newRating': new_rating}, status=200)
+        except (json.JSONDecodeError, TypeError, ValueError) as e:
+            return JsonResponse({'error': 'Invalid input'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
