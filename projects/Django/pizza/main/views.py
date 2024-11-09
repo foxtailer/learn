@@ -55,13 +55,15 @@ def social_plug(request):
 
 
 def update_rating(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
             # Parse the JSON body
             body = json.loads(request.body)
-            user_rating = body.get('userRating')
-
-            new_rating = user_rating + 1
+            user_rating = int(body.get('userRating'))
+            product_id = int(body.get('productId'))
+            
+            product = Product.objects.get(id=product_id)
+            new_rating = product.update_rating(user_rating)
 
             # Return the new rating as a JSON response
             return JsonResponse({'newRating': new_rating}, status=200)

@@ -1,3 +1,6 @@
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
 // Dropdown language and location buttons
 function langDropdown() {
   document.getElementById("lang-dropdown").classList.toggle("show");
@@ -200,11 +203,14 @@ function initRatings() {
     if (!rating.classList.contains('rating_sending')) {
       rating.classList.add('rating_sending');
 
+      const productId = rating.dataset.productId;
+
       let response = await fetch('/update-rating/', {
         method: 'POST',
 
         body: JSON.stringify({
-          userRating: value
+          userRating: value,
+          productId: productId,
         }),
         
         headers: {

@@ -73,8 +73,9 @@ class Product(models.Model):
             self.rating = new_vote_value
         else:
             # Weighted average formula
-            self.rating = ((self.rating * self.vote) + new_vote_value) / (self.vote + 1)
+            self.rating = round(((self.rating * self.vote) + new_vote_value) / (self.vote + 1), 1)
 
         self.vote += 1
         self.save()
+        return self.rating
     
