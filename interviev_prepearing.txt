@@ -697,6 +697,11 @@
   “Under the hood”, an iterable is any Python object with an __iter__() method or with
  a __getitem__() method that implements Sequence semantics.
 
+ How Traversal with __getitem__ Works:
+ When you traverse a collection using __getitem__, you typically use indexing like obj[i] to access elements.
+ This approach requires that the entire data structure be present in memory and available for random access. 
+ Each call to obj[i] retrieves the element at index i directly from the collection.
+
   # sequence protocal
   class CustomSequence:  #  Sequence/Iterable
     def __init__(self, data):
@@ -807,6 +812,19 @@
     d = iter(lambda: random.tandrange(10), 7)
     list(d)
 
+  Lazy traversing (also known as lazy evaluation or lazy iteration) refers to a technique where elements of a sequence or 
+  collection are generated or accessed only as needed, rather than all at once. This approach is particularly useful when 
+  working with large data sets or potentially infinite sequences, as it avoids loading or processing everything in memory upfront.
+
+  Characteristics of Lazy Traversing:
+   On-Demand Computation: Elements are produced one at a time when requested, instead of generating all elements at once. This 
+  means memory usage is minimized because only the required elements are in memory at any point.
+
+   Efficient Memory Usage: Since data isn't stored all at once, you can work with huge (even infinite) data streams without 
+  running out of memory. For example, iterating over a generator yields one value at a time, without building a list of all elements.
+
+   Useful for Infinite Sequences: Lazy traversing is especially effective for creating infinite sequences, as you only generate 
+  values as needed and can stop at any point, which wouldn't be possible with a fully evaluated sequence.
 
 
 -- GENERATORS
@@ -3183,6 +3201,8 @@
  
  python manage.py dumpdata app_name.ModelName --output=data.json
  python manage.py loaddata data.json
+
+ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 -- FLASK

@@ -18,7 +18,7 @@
   {% block token %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/normolize.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <title>Gaeta Pizza</title>
+  <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -76,12 +76,27 @@
               <li class="user-nav__item">
                 <label class="area" for="">
                   <span class="visually-hidden">user login</span>
-                  <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="6" r="4" fill="#fff" />
-                    <path
-                      d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
-                      fill="#fff" />
-                  </svg>
+
+                  <div class="dropdown-user">
+                    <button class="user-menu-button">
+                      <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="6" r="4" fill="#fff" />
+                        <path
+                          d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
+                          fill="#fff" />
+                      </svg>
+                    </button>
+  
+                    <div class="dropdown-user-content">
+                      {% if user.id %}
+                        <a href="{% url "users:profile" %}">Profile</a>
+                        <a href="{% url "users:logout" %}">Logout</a>
+                      {% else %}
+                        <a href="{% url "users:register" %}">Register</a>
+                        <button class="modal-open">Login</button>
+                      {% endif %}
+                    </div>
+                  </div>
                 </label>
               </li>
             </ul>
@@ -137,6 +152,8 @@
         </div>
       </div>
     </header>
+
+    {% include "users/login.html" %}
   
     <main class="main">
       <div class="container">

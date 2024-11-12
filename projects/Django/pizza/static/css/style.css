@@ -232,6 +232,59 @@ ul {
   display: block;
 }
 
+
+/* User menu button */
+
+.modal-open {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+  width: 100%;
+  text-align: left;
+}
+
+.user-menu-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.dropdown-user {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-user-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  min-width: 160px;
+  border: 1px solid #ccc;
+  z-index: 1;
+  margin-left: -130px;
+}
+
+.dropdown-user-content a {
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-user-content a:hover,
+.dropdown-user-content button:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-user:hover .dropdown-user-content {
+  display: block;
+}
+
+
 /* Hide menu */
 
 .menu-btn {

@@ -28,7 +28,8 @@ def main(request):
     form = CategoryFilterForm(selected_categories=selected_categories)
 
     context = {'products': products,
-               'form': form,}
+               'form': form,
+               'title': 'Gaeta Pizza'}
 
     return render(request, 'main/product.html', context)
 
@@ -39,15 +40,24 @@ def product(request, product_id):
     return HttpResponse(f'{product.name}')
 
 def news(request):
-    return render(request, 'main/news.html')
+    context = {
+        'title': 'News'
+    }
+    return render(request, 'main/news.html', context)
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    context = {
+        'title': 'About'
+    }
+    return render(request, 'main/about.html', context)
 
 
 def contacts(request):
-    return render(request, 'main/contacts.html')
+    context = {
+        'title': 'Contacts'
+    }
+    return render(request, 'main/contacts.html', context)
 
 
 def social_plug(request):
