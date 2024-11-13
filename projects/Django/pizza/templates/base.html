@@ -85,10 +85,12 @@
                           d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
                           fill="#fff" />
                       </svg>
+                      {% if user.id %}🗸{% endif %}
                     </button>
   
                     <div class="dropdown-user-content">
                       {% if user.id %}
+                        <span class="username">{{ user.username }}</span>
                         <a href="{% url "users:profile" %}">Profile</a>
                         <a href="{% url "users:logout" %}">Logout</a>
                       {% else %}
@@ -154,6 +156,13 @@
     </header>
 
     {% include "users/login.html" %}
+    {% if messages %}
+      {% for message in messages %}
+        <script>
+          alert("{{ message }}")
+        </script>
+      {% endfor %}
+    {% endif %}
   
     <main class="main">
       <div class="container">

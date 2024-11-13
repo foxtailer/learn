@@ -284,6 +284,12 @@ ul {
   display: block;
 }
 
+.username {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
 
 /* Hide menu */
 

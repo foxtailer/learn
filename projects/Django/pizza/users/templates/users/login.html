@@ -12,23 +12,15 @@
   
       <div class="login-registration__row">
         <label class="" for="username">Имя пользователя</label>
-        <input class="" type="text" name='username' id="username" placeholder="Name" required>
-        {% comment %} value="{% if form.username.value %}{{form.username.value}}{% endif %}">
-        {% if form.username.errors %}
-          <p class="">{{form.username.errors}}</p>
-        {% endif %} {% endcomment %}
+        <input class="" type="text" name='username' id="username" placeholder="Name" required autofocus>
       </div>
       
       <div class="login-registration__row">
         <label class="" for="password" >Пароль</label>
         <input class="" type="password"  name="password" id="password" placeholder="Password" required>
-        {% comment %} {% if form.password.errors %}
-          <p class="">{{form.password.errors}}</p>
-        {% endif %} {% endcomment %}
       </div>
   
-      <button class="login-registration__btn" type="submit">Enter</button>
-  
+    <button class="login-registration__btn" type="submit">Enter</button>
       <a class="registration-link" href="{% url "users:register" %}">Registration</a>
     </form>
   </div>

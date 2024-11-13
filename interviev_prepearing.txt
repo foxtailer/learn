@@ -3177,6 +3177,26 @@
 
     Model fields are used to specify how data should be stored, validated, and handled by the application.
 
+    - Authentication
+    Definition: Authentication is the process of verifying the identity of a user or system. It confirms who someone is, 
+    usually by checking credentials like a username and password, a fingerprint, or other forms of verification.
+
+    Purpose: To ensure that the user accessing a system is who they claim to be.
+    Example: When you enter a username and password to log in to a website, you are being authenticated. If the credentials are 
+    correct, you are authenticated and granted access.
+
+    - Authorization
+    Definition: Authorization is the process of determining what actions, resources, or services a user or system is permitted to 
+    access after they have been authenticated. It specifies what data and operations the authenticated user has permission to use.
+
+    Purpose: To control access rights and determine what an authenticated user can do or see within a system.
+    Example: After logging into a website (authentication), you might have access to view your profile but may not have permission 
+    (authorization) to edit other users' profiles or access administrative features.
+
+    Summary:
+    Authentication = Confirms who you are.
+    Authorization = Determines what you are allowed to do.
+
   - View
   - Template
   - URLs and Routing
