@@ -234,3 +234,22 @@ function initRatings() {
     }
   }
 }
+
+
+//TODO
+{/* <input type="password" id="password" />
+<button id="togglePassword">Show</button>
+
+<script>
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+
+  togglePassword.addEventListener('click', () => {
+    // Toggle the input type
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+
+    // Optional: change the button text
+    togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
+  });
+</script> */}

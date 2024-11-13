@@ -4,7 +4,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from .forms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 def login(request):
@@ -45,9 +45,21 @@ def register(request):
     return render(request, 'users/register.html', context)
 
 
+@login_required
 def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(data=request.POST,
+                               instance=request.user,
+                               files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+
     context = {
-        'title': 'Profile'
+        'title': 'Profile',
+        'form': form,
     }
 
     return render(request, 'users/profile.html', context)
