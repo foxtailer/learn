@@ -61,6 +61,7 @@ class Product(models.Model):
                                          related_name='products',
                                          blank=True)
     
+    size = models.CharField(max_length=50, null=True, blank=True)
     rating = models.FloatField(default=0, validators=[MaxValueValidator(5.0)])
     vote = models.IntegerField(default=0)
     
@@ -73,7 +74,8 @@ class Product(models.Model):
             self.rating = new_vote_value
         else:
             # Weighted average formula
-            self.rating = round(((self.rating * self.vote) + new_vote_value) / (self.vote + 1), 1)
+            self.rating = round(((self.rating * self.vote) + new_vote_value) \
+                                / (self.vote + 1), 1)
 
         self.vote += 1
         self.save()

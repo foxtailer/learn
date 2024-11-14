@@ -45,18 +45,18 @@
     }
   
     .login-registration {
-        padding: 10px;
-        border: 4px solid #000000;
-        border-radius: 10px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-width: 500px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        background-color: #6d6d6d;
-        display: none;
-        z-index: 1000;
+      padding: 10px;
+      border: 4px solid #000000;
+      border-radius: 10px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 500px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #6d6d6d;
+      display: none;
+      z-index: 1000;
     }
     
     .login-registration.modal-show {
@@ -106,18 +106,18 @@
   </style>
   
   <script>
-    var popup = document.querySelector(".login-registration")
-    var close = document.querySelector(".modal-close")
-    var open = document.querySelector(".modal-open")
+    var popup1 = document.querySelector(".login-registration")
+    var close1 = document.querySelector(".modal-close")
+    var open1 = document.querySelector(".modal-open")
   
-    open.addEventListener("click", function(evt){
-        if (!popup.classList.contains("modal-show")) {
-            popup.classList.add("modal-show");
+    open1.addEventListener("click", function(ev){
+        if (!popup1.classList.contains("modal-show")) {
+            popup1.classList.add("modal-show");
         }
     });
  
     
-    close.addEventListener("click", function(evt){
-      popup.classList.toggle("modal-show");
+    close1.addEventListener("click", function(ev){
+      popup1.classList.toggle("modal-show");
     });
   </script>

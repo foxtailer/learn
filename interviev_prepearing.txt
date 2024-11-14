@@ -1629,6 +1629,8 @@
     a = A()
     a.b = 2
 
+  * Usecase of __new__: Singltone patern when we ned to allow creation only one instanse of object.
+
 
 -- MIXIN 
 
@@ -1696,7 +1698,7 @@
 
 -- LAMBDA MAP/FILTER/ZIP
 
- A lambda function is a small anonymous function.
+ A lambda function is a small anonymous function. Meaning they are not given a specific name unless assigned to a variable.
  A lambda function can take any number of arguments, but can only have one expression.
 
     lambda arguments : expression
@@ -2701,6 +2703,39 @@
 
 
 -- HTTP/HTTPS
+
+  1xx - Informational Responses
+    100 Continue: The server has received the request headers and the client should proceed to send the request body.
+    101 Switching Protocols: The requester has asked the server to switch protocols and the server has agreed to do so.
+    102 Processing: Server has received and is processing the request, but no response is available yet.
+
+  2xx - Successful Responses
+    200 OK: The request was successful, and the server has returned the requested resource.
+    201 Created: The request was successful, and a new resource was created as a result.
+    202 Accepted: The request has been accepted for processing, but the processing has not been completed.
+    204 No Content: The server successfully processed the request, but is not returning any content.
+
+  3xx - Redirection Messages
+    301 Moved Permanently: The resource has been moved to a new URL permanently.
+    302 Found: The resource has been temporarily moved to a different URL.
+    304 Not Modified: The resource has not been modified since the last request; the client can use the cached version.
+
+  4xx - Client Error Responses
+    400 Bad Request: The server could not understand the request due to invalid syntax.
+    401 Unauthorized: The client must authenticate itself to get the requested response.
+    403 Forbidden: The client does not have access rights to the content.
+    404 Not Found: The server can not find the requested resource.
+    405 Method Not Allowed: The request method is known by the server but is not supported by the target resource.
+    408 Request Timeout: The server timed out waiting for the request.
+
+  5xx - Server Error Responses
+    500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.
+    501 Not Implemented: The server does not support the functionality required to fulfill the request.
+    502 Bad Gateway: The server, while acting as a gateway or proxy, received an invalid response from the upstream server.
+    503 Service Unavailable: The server is not ready to handle the request, often due to being overloaded or down for maintenance.
+    504 Gateway Timeout: The server, acting as a gateway or proxy, did not receive a timely response from the upstream server.
+
+
 -- TCP/UDP
 
 
@@ -3749,7 +3784,7 @@ Click Ok on all open windows and restart your system restart the command prompt.
   },
 ]
 
-* constant 0-254 in python alredy in cache.
+* constant integers between -5 and 256 in python alredy in cache.
 * type(obj) ->  constructor of object 
   obj2 = type(obj)() -> same object
 * from inspect import signature

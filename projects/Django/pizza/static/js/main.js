@@ -236,6 +236,23 @@ function initRatings() {
 }
 
 
+// Cart show
+var popup = document.querySelector(".global-cart")
+var close = document.querySelector(".cart-close")
+var open = document.querySelector(".order-btn")
+
+open.addEventListener("click", function(evt){
+    if (!popup.classList.contains("modal-show")) {
+        popup.classList.add("modal-show");
+    }
+});
+
+
+close.addEventListener("click", function(evt){
+  popup.classList.toggle("modal-show");
+});
+
+
 //TODO
 {/* <input type="password" id="password" />
 <button id="togglePassword">Show</button>

@@ -51,7 +51,8 @@
             <p>{{ product.description }}</p>
           </div>
 
-          <form class="button-container">
+          <form class="button-container" action="{% url "carts:cart_add" product.slug %}" method="post">
+            {% csrf_token %}
             {% if product.ingredients.all|length > 1 %}
               <div class="ingredients-control hidden">
                 <span>Ingredients:</span>
@@ -59,7 +60,7 @@
                 <div class="ingredients-control__box">
                   {% for ingredient in product.ingredients.all %}
                     <div class="ingredient-checkbox">
-                      <input type="checkbox" name="ingredients" value="{{ ingredient.name }}" checked>
+                      <input type="checkbox" name="ingredient_{{forloop.counter0}}" value="{{ ingredient.name }}" checked>
                       {{ ingredient.name }}
                     </div>
                   {% endfor %}
@@ -109,7 +110,7 @@
                   </svg>
                 </button>
   
-                <input class="quantity-control__input" type="text" value="1" readonly/>
+                <input class="quantity-control__input" type="text" name="quantity" value="1" readonly/>
   
                 <button class="increment" type="button">
                   <svg class="" width="20px" height="20px" viewBox="0 0 448 512">

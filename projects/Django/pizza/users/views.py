@@ -23,6 +23,7 @@ def login(request):
         messages.error(request, "Please correct the errors below.")
 
     next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or "/"
+    # return redirect(request.META['HTTP_REFERER'])
     return HttpResponseRedirect(next_url)
 
 
