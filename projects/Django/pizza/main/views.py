@@ -1,9 +1,12 @@
+import json
+
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from .models import Product
 from .forms import CategoryFilterForm
+
 
 def main(request):
     form = CategoryFilterForm(request.GET or None)
@@ -25,7 +28,8 @@ def main(request):
     form = CategoryFilterForm(selected_categories=selected_categories)
 
     context = {'products': products,
-               'form': form,}
+               'form': form,
+               'title': 'Gaeta Pizza'}
 
     return render(request, 'main/product.html', context)
 
@@ -36,16 +40,44 @@ def product(request, product_id):
     return HttpResponse(f'{product.name}')
 
 def news(request):
-    return render(request, 'main/news.html')
+    context = {
+        'title': 'News'
+    }
+    return render(request, 'main/news.html', context)
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    context = {
+        'title': 'About'
+    }
+    return render(request, 'main/about.html', context)
 
 
 def contacts(request):
-    return render(request, 'main/contacts.html')
+    context = {
+        'title': 'Contacts'
+    }
+    return render(request, 'main/contacts.html', context)
 
 
 def social_plug(request):
     return render(request, 'social_plug.html')
+
+
+def update_rating(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON body
+            body = json.loads(request.body)
+            user_rating = int(body.get('userRating'))
+            product_id = int(body.get('productId'))
+            
+            product = Product.objects.get(id=product_id)
+            new_rating = product.update_rating(user_rating)
+
+            # Return the new rating as a JSON response
+            return JsonResponse({'newRating': new_rating}, status=200)
+        except (json.JSONDecodeError, TypeError, ValueError) as e:
+            return JsonResponse({'error': 'Invalid input'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)

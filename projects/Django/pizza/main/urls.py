@@ -10,4 +10,5 @@ urlpatterns = [
     path('news/', views.news, name='news'),
     path('about/', views.about, name='about'),
     path('contacts/', views.contacts, name='contacts'),
+    path('update-rating/', views.update_rating, name='update_rating'),
 ]

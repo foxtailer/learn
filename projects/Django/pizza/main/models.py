@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MaxValueValidator
 
     
 class Categories(models.Model):
@@ -60,7 +61,23 @@ class Product(models.Model):
                                          related_name='products',
                                          blank=True)
     
+    size = models.CharField(max_length=50, null=True, blank=True)
+    rating = models.FloatField(default=0, validators=[MaxValueValidator(5.0)])
+    vote = models.IntegerField(default=0)
+    
     def get_absolute_url(self):
         return reverse('main:product',
                        args=[self.id])
+    
+    def update_rating(self, new_vote_value):
+        if self.vote == 0:
+            self.rating = new_vote_value
+        else:
+            # Weighted average formula
+            self.rating = round(((self.rating * self.vote) + new_vote_value) \
+                                / (self.vote + 1), 1)
+
+        self.vote += 1
+        self.save()
+        return self.rating
     

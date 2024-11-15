@@ -13,6 +13,8 @@ def post_list(request):
     # Pagination with 3 posts per page
     paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page', 1)
+    x = request.GET.get('x', 8)
+    
     try:
         posts = paginator.page(page_number)
     except PageNotAnInteger:
@@ -23,7 +25,9 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)
     return render(request,
                  'blog/post/list.html',
-                 {'posts': posts})
+                 {'posts': posts, 
+                  'x': x, 
+                  'y': "z"})
 
 
 def post_detail(request, year, month, day, post):
@@ -45,14 +49,14 @@ def post_detail(request, year, month, day, post):
                    'form': form})
 
 
-class PostListView(ListView):
-    """
-    Alternative post list view
-    """
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+# class PostListView(ListView):
+#     """
+#     Alternative post list view
+#     """
+#     queryset = Post.published.all()
+#     context_object_name = 'posts'
+#     paginate_by = 3
+#     template_name = 'blog/post/list.html'
 
 
 def post_share(request, post_id):
