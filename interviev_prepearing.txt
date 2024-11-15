@@ -2996,6 +2996,10 @@
     watch -n 1 pgrep -a python
     python -i file.py
 
+    zip -r -P your_password archive.zip .
+    tar -czf - your-folder | gpg -c -o archive.tar.gz.gpg
+    gpg -d archive.tar.gz.gpg | tar -xz
+
   - ssh
     ssh -V
     ssh -p 2220  bandit0@bandit.labs.overthewire.org
@@ -3042,7 +3046,6 @@
     28 Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
     29 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
     
-
 
 -- CC
 
@@ -3420,6 +3423,8 @@
   sudo -u postgres psql
   psql
 
+  SET ROLE username;
+
   psql -U username -d mydatabase -W
   \l  (list daatabases)
   \du  (list users)
@@ -3594,11 +3599,11 @@ Ctrl alt arrow up/down - add cursor
 Ctrl U - undo cursor insert
 alt arrow - mowe curent line
 Shift alt arrow - copy line/block
+https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf
 
 Windows
 W+d - dosctop
 W+t - tascbar
-
 
 Open start menu, (add program to PATH)
 
@@ -3611,49 +3616,6 @@ a window pops up, click New
 Type the Directory path of your .exe or batch file ( Directory means exclude the file name from path)
 Click Ok on all open windows and restart your system restart the command prompt.
 
-[
-  {
-    "key": "ctrl+alt+l",
-    "command": "editor.action.transformToLowercase"
-  },
-  {
-    "key": "ctrl+shift+d",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+right",
-    "command": "-editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+shift+d",
-    "command": "-workbench.view.debug",
-    "when": "viewContainer.workbench.view.debug.enabled"
-  },
-  {
-    "key": "shift+alt+right",
-    "command": "editor.action.smartSelect.grow"
-  },
-  {
-    "key": "shift+alt+down",
-    "command": "editor.action.copyLinesDownAction",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+up",
-    "command": "editor.action.copyLinesUpAction",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl",
-    "command": "workbench.action.toggleMultiCursorModifier"
-  },
-  { "key": "shift+f5",
-    "command": "workbench.action.debug.run",
-    "when": "debuggersAvailable && debugState != 'initializing'" 
-  },
-]
 
 * constant 0-254 in python alredy in cache.
 * type(obj) ->  constructor of object 
