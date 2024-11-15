@@ -2701,8 +2701,64 @@
   - Data Link Layer: Packets are framed and sent to the next device.
   - Physical Layer: Frames are converted into bits and transmitted physically.
 
+  Top 3 layers(7,6,5) produce PDU (Protocol Data Unit) for transport layer.
+    At Layer 4 (Transport layer), the PDU is called a Segment (in the case of TCP or UDP).
+    At Layer 3 (Network layer), the PDU is called a Packet.
+    At Layer 2 (Data Link layer), the PDU is called a Frame.
+    At Layer 1 (Physical layer), the PDU is called a Bit.
+
+  4 Application makes request, service recive them. Source and destination on this layer are
+  aplications and we identify them by ports.
+
+  3 We talk about sender and resiver that are computers in network and we identify tem by ip 
+  adreses.
+
+  2 we convert data to phycical representation and source and destination here is mac adreses of 
+  devices.
+
+  1 carry signal.
+
+
+-- TCP/IP
+
+  - Aplication (7,6,5 in OSI)
+  - Transport
+  - Internetwork
+  - Network Access / Link Layer (1,2 in OSI)
 
 -- HTTP/HTTPS
+
+  The HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It is a 
+  protocol used for transferring data between a client (usually a web browser) and a server (hosting a website). 
+  Here are some key points about HTTP:
+
+  1. Stateless Protocol:
+    HTTP is stateless, meaning each request made by a client to the server is independent of any previous request. 
+    The server doesn't retain any knowledge of past requests. Once the response is sent, the connection is closed, 
+    and no information about that transaction is kept.
+  2. Request-Response Model:
+    HTTP follows a request-response model. A client sends an HTTP request (e.g., to load a webpage), and the server 
+    processes the request and sends an HTTP response (e.g., HTML content, images, or data).
+
+  HTTP Methods:
+  HTTP defines several methods that specify what action the client wants the server to perform on the resource. 
+  The most common HTTP methods are:
+
+  GET: Retrieves data from the server (e.g., a webpage, image, etc.).
+  POST: Sends data to the server, often used for submitting form data.
+  PUT: Updates data on the server.
+  DELETE: Deletes data from the server.
+  HEAD: Retrieves headers (but not the body of the response).
+  OPTIONS: Describes the communication options for the target resource.
+  PATCH: Applies partial modifications to a resource.
+
+  HTTP (Hypertext Transfer Protocol): It is not encrypted, meaning that the data transmitted between the client 
+  and server is sent in plain text. This makes it vulnerable to eavesdropping, interception, and modification by 
+  attackers.
+
+  HTTPS (Hypertext Transfer Protocol Secure): HTTPS adds a layer of security by using SSL/TLS (Secure Sockets 
+  Layer / Transport Layer Security) encryption. This ensures that the data transferred between the client and 
+  server is encrypted and secure, protecting it from being intercepted by third parties.
 
   1xx - Informational Responses
     100 Continue: The server has received the request headers and the client should proceed to send the request body.
