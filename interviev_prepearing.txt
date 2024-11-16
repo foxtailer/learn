@@ -2726,8 +2726,64 @@
       Examples: Ethernet (physical aspects), USB, Bluetooth, DSL, IEEE 802.11 (Wi-Fi)
       Purpose: This layer handles the transmission of raw binary data over a physical medium (cables, wireless).
 
+  Top 3 layers(7,6,5) produce PDU (Protocol Data Unit) for transport layer.
+    At Layer 4 (Transport layer), the PDU is called a Segment (in the case of TCP or UDP).
+    At Layer 3 (Network layer), the PDU is called a Packet.
+    At Layer 2 (Data Link layer), the PDU is called a Frame.
+    At Layer 1 (Physical layer), the PDU is called a Bit.
+
+  4 Application makes request, service recive them. Source and destination on this layer are
+  aplications and we identify them by ports.
+
+  3 We talk about sender and resiver that are computers in network and we identify tem by ip 
+  adreses.
+
+  2 we convert data to phycical representation and source and destination here is mac adreses of 
+  devices.
+
+  1 carry signal.
+
+
+-- TCP/IP
+
+  - Aplication (7,6,5 in OSI)
+  - Transport
+  - Internetwork
+  - Network Access / Link Layer (1,2 in OSI)
 
 -- HTTP/HTTPS
+
+  The HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It is a 
+  protocol used for transferring data between a client (usually a web browser) and a server (hosting a website). 
+  Here are some key points about HTTP:
+
+  1. Stateless Protocol:
+    HTTP is stateless, meaning each request made by a client to the server is independent of any previous request. 
+    The server doesn't retain any knowledge of past requests. Once the response is sent, the connection is closed, 
+    and no information about that transaction is kept.
+  2. Request-Response Model:
+    HTTP follows a request-response model. A client sends an HTTP request (e.g., to load a webpage), and the server 
+    processes the request and sends an HTTP response (e.g., HTML content, images, or data).
+
+  HTTP Methods:
+  HTTP defines several methods that specify what action the client wants the server to perform on the resource. 
+  The most common HTTP methods are:
+
+  GET: Retrieves data from the server (e.g., a webpage, image, etc.).
+  POST: Sends data to the server, often used for submitting form data.
+  PUT: Updates data on the server.
+  DELETE: Deletes data from the server.
+  HEAD: Retrieves headers (but not the body of the response).
+  OPTIONS: Describes the communication options for the target resource.
+  PATCH: Applies partial modifications to a resource.
+
+  HTTP (Hypertext Transfer Protocol): It is not encrypted, meaning that the data transmitted between the client 
+  and server is sent in plain text. This makes it vulnerable to eavesdropping, interception, and modification by 
+  attackers.
+
+  HTTPS (Hypertext Transfer Protocol Secure): HTTPS adds a layer of security by using SSL/TLS (Secure Sockets 
+  Layer / Transport Layer Security) encryption. This ensures that the data transferred between the client and 
+  server is encrypted and secure, protecting it from being intercepted by third parties.
 
   1xx - Informational Responses
     100 Continue: The server has received the request headers and the client should proceed to send the request body.
@@ -3080,6 +3136,10 @@
     watch -n 1 pgrep -a python
     python -i file.py
 
+    zip -r -P your_password archive.zip .
+    tar -czf - your-folder | gpg -c -o archive.tar.gz.gpg
+    gpg -d archive.tar.gz.gpg | tar -xz
+
   - ssh
     ssh -V
     ssh -p 2220  bandit0@bandit.labs.overthewire.org
@@ -3126,7 +3186,6 @@
     28 Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
     29 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
     
-
 
 -- CC
 
@@ -3574,6 +3633,8 @@
   sudo -u postgres psql
   psql
 
+  SET ROLE username;
+
   psql -U username -d mydatabase -W
   \l  (list daatabases)
   \du  (list users)
@@ -3748,11 +3809,11 @@ Ctrl alt arrow up/down - add cursor
 Ctrl U - undo cursor insert
 alt arrow - mowe curent line
 Shift alt arrow - copy line/block
+https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf
 
 Windows
 W+d - dosctop
 W+t - tascbar
-
 
 Open start menu, (add program to PATH)
 
@@ -3765,49 +3826,6 @@ a window pops up, click New
 Type the Directory path of your .exe or batch file ( Directory means exclude the file name from path)
 Click Ok on all open windows and restart your system restart the command prompt.
 
-[
-  {
-    "key": "ctrl+alt+l",
-    "command": "editor.action.transformToLowercase"
-  },
-  {
-    "key": "ctrl+shift+d",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+right",
-    "command": "-editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+shift+d",
-    "command": "-workbench.view.debug",
-    "when": "viewContainer.workbench.view.debug.enabled"
-  },
-  {
-    "key": "shift+alt+right",
-    "command": "editor.action.smartSelect.grow"
-  },
-  {
-    "key": "shift+alt+down",
-    "command": "editor.action.copyLinesDownAction",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+up",
-    "command": "editor.action.copyLinesUpAction",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl",
-    "command": "workbench.action.toggleMultiCursorModifier"
-  },
-  { "key": "shift+f5",
-    "command": "workbench.action.debug.run",
-    "when": "debuggersAvailable && debugState != 'initializing'" 
-  },
-]
 
 * constant integers between -5 and 256 in python alredy in cache.
 * type(obj) ->  constructor of object 
