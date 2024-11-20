@@ -13,12 +13,14 @@ class CartQueryset(models.QuerySet):
         if self:
             return sum(cart.quantity for cart in self)
 
+
 class Cart(models.Model):
 
     user = models.ForeignKey(to=GaetaUser, on_delete=models.CASCADE, verbose_name='User', blank=True, null=True)
     session_key = models.CharField(max_length=32, null=True, blank=True)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='Product')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Quantity')
+    data = models.JSONField()
     created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Adding date')
 
     class Meta:

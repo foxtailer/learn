@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -11,26 +13,24 @@ def user_cart(request):
 
 
 def cart_add(request, product_slug):
-    try:
-        print(request.POST['size'])
-        print(request.POST['ingredient_0'])
-        print(request.POST['quantity'])
-    except:
-        print("***")
-
     product = Product.objects.get(slug=product_slug)
+    data = {'ingredient': request.POST.get('ingredient_0', None)}
+    json_data = json.dumps(data)
 
     if request.user.is_authenticated:
-        #carts = Cart.objects.filter(user=request.user, product=product)
+        carts = Cart.objects.filter(user=request.user, product=product)
 
-        # if carts.exists():
-        #     cart = carts.first()
-        #     if cart:
-        #         cart.quantity += 1
-        #         cart.save()
-        #     else:
-        #Cart.objects.create(user=request.user, pro)
-        ...
+        if carts.exists():
+            cart = carts.first()
+            if cart:
+                cart.quantity += 1
+                cart.save()
+        else:
+            Cart.objects.create(user=request.user,
+                                product=product,
+                                quantity=request.POST['quantity'],
+                                data=json_data)
+        
     return HttpResponseRedirect(reverse('main:main'))
 
 
