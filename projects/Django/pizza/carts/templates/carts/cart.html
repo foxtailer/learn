@@ -31,7 +31,7 @@
                     </div>
                     <div class="col p-0"><strong> {{ cart.product_price }} $</strong></div>
                     <div class="col p-0">
-                        <a href="{% url "carts:cart_remove" 1 %}" class="remove-from-cart" data-cart-id="">
+                        <a href="{% url "carts:cart_remove" cart.product.slug cart.size %}" class="remove-from-cart" data-cart-id="">
                             <img class="mx-1" src="{% static 'img/delete.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>

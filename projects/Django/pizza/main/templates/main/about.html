@@ -7,6 +7,17 @@
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
 {% endblock  %}
 
+{% block cart %}
+<div class="global-cart">
+  <button class="cart-close" type="button">
+    <span class="visually-hidden">Закрыть</span>
+  </button>
+
+  {% include "carts/cart.html" %}
+
+  <button class="" type="button">Order</button>
+</div>
+{% endblock  %}
 
 {% block content %}
 <div class="about__inner">

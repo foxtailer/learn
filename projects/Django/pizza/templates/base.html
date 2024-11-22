@@ -160,12 +160,7 @@
 
     {% include "users/login.html" %}
 
-    <div class="global-cart">
-      <button class="cart-close" type="button">
-        <span class="visually-hidden">Закрыть</span>
-      </button>
-      {% include "carts/cart.html" %}
-    </div>
+    {% block cart %}{% endblock  %}
 
     {% if messages %}
       {% for message in messages %}

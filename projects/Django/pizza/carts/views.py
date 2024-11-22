@@ -19,7 +19,8 @@ def cart_add(request, product_slug):
     size = request.POST['size']
 
     if request.user.is_authenticated:
-        carts = Cart.objects.filter(user=request.user, product=product)
+        carts = Cart.objects.filter(user=request.user, product=product,
+                                    size=size)
 
         if carts.exists():
             cart = carts.first()
@@ -36,9 +37,18 @@ def cart_add(request, product_slug):
     return HttpResponseRedirect(reverse('main:main'))
 
 
-def cart_remove(request, product_slug):
-    ...
+def cart_remove(request, product_slug, size):
+    product = Product.objects.get(slug=product_slug)
+    carts = Cart.objects.filter(user=request.user,
+                               product=product,
+                               size=size)
+    
+    if carts.exists():
+        cart = carts.first()
+        if cart:
+            cart.delete()
 
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def cart_change(request, product_slug):
     ...

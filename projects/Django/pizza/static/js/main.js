@@ -276,19 +276,36 @@ function initRatings() {
 
 
 // Cart show
-var popup = document.querySelector(".global-cart")
-var close = document.querySelector(".cart-close")
-var open = document.querySelector(".order-btn")
+document.addEventListener("DOMContentLoaded", function() {
+  var popup = document.querySelector(".global-cart");
+  var close = document.querySelector(".cart-close");
+  var open = document.querySelector(".order-btn");
 
-open.addEventListener("click", function(evt){
-    if (!popup.classList.contains("modal-show")) {
-        popup.classList.add("modal-show");
-    }
+  open.addEventListener("click", function(evt) {
+      if (!popup.classList.contains("modal-show")) {
+          popup.classList.add("modal-show");
+      }
+  });
+
+  close.addEventListener("click", function(evt) {
+      popup.classList.toggle("modal-show");
+  });
 });
 
 
-close.addEventListener("click", function(evt){
-  popup.classList.toggle("modal-show");
+// Login modal
+var popup1 = document.querySelector(".login-registration")
+var close1 = document.querySelector(".modal-close")
+var open1 = document.querySelector(".modal-open")
+
+open1.addEventListener("click", function(ev){
+    if (!popup1.classList.contains("modal-show")) {
+        popup1.classList.add("modal-show");
+    }
+});
+
+close1.addEventListener("click", function(ev){
+  popup1.classList.toggle("modal-show");
 });
 
 
