@@ -11,6 +11,23 @@ class PublishedManager(models.Manager):
 
 class Post(models.Model):
 
+    class PizaSize(models.TextChoices):
+        SMALL = '20SM', 'Small'
+        MEDIUM = '30SM', 'Medium'
+        LARGE = '40SM', 'Large'
+
+    class DeinksSize(models.TextChoices):
+        SMALL = '0.5L', 'Small'
+        MEDIUM = '1L', 'Medium'
+        LARGE = '2L', 'Large'
+
+    size = models.CharField(max_length=4,
+                              choices=....choices,
+                              default=....DRAFT)
+    
+
+class Post(models.Model):
+
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
