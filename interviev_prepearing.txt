@@ -2845,10 +2845,11 @@
  help
   git <command> --help  # Откроет информацию по запрашиваемой команде
   git commit --help  # Пример
+  git --help --all  # All commands
 
  init
-  git init  # Создать репозиторий. (Сделать текущую директорию новым репозиторием)
-  git init <name>  # Создать репозиторий в текущей директории с именем <name>
+  git init  # Создать репозиторий. In current folder.
+  git init <name>  # Создать репозиторий в директории с именем <name> or create it if not exist.
   git init basic-git  # Пример
 
  clone
@@ -2874,11 +2875,19 @@
 
  status
   git status
-  git status -s  # Статус в короткой форме
+  git status -s | git status --short # Статус в короткой форме
+
+      M index.html
+      Note: Short status flags are:
+
+      ?? - Untracked files
+      A - Files added to stage
+      M - Modified files
+      D - Deleted files
 
  add | restore | rm
   git add <path>  # Добавить в индекс всю директорию или файл по указанному пути
-  git add .  # Добавить всё в текущей директории
+  git add . | add --all | add -A  # Добавить всё в текущей директории
   git restore --staged <path>  # Исключает из индекса добавленную директорию или файл по указанному пути
   git restore <path>  # Отменить изменения в указанном месте 
   git rm  # Фактически то же самое, что и удаление файла/директории
@@ -2899,6 +2908,8 @@
 
   git commit --amend [-m] # Закоммитить изменения в предыдущий коммит
   git commit --amend  --no-edit # Закоммитить изменения в предыдущий коммит без редактирования заголовка и описания
+
+  git commit -a -m  # Add without previous adding files to stage.
 
  log
   git log  # Посмотреть логи по порядку
@@ -3831,6 +3842,10 @@ Click Edit
 a window pops up, click New
 Type the Directory path of your .exe or batch file ( Directory means exclude the file name from path)
 Click Ok on all open windows and restart your system restart the command prompt.
+
+Debian
+sudo systemctl start bluetooth
+sudo systemctl enable bluetooth
 
 
 * constant integers between -5 and 256 in python alredy in cache.

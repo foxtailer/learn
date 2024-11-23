@@ -30,6 +30,7 @@ class Ingredient(models.Model):
     
 
 class Product(models.Model):
+
     name = models.CharField(max_length=150,
                             unique=True,
                             verbose_name='Name')
@@ -61,7 +62,6 @@ class Product(models.Model):
                                          related_name='products',
                                          blank=True)
     
-    size = models.CharField(max_length=50, null=True, blank=True)
     rating = models.FloatField(default=0, validators=[MaxValueValidator(5.0)])
     vote = models.IntegerField(default=0)
     
@@ -79,5 +79,5 @@ class Product(models.Model):
 
         self.vote += 1
         self.save()
-        return self.rating
+        return self.rating        
     

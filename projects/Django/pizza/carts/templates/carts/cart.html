@@ -6,43 +6,45 @@
         <h5 class="card-title">Товар</h5>
     </div>
     <ul class="list-group">
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col p-0">
-                    <div class="input-group">
-                        <button class="decrement" type="button">
-                            <svg class="" width="20px" height="20px" viewBox="0 0 448 512">
-                            <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-                            </svg>
-                        </button>
-            
-                        <input class="quantity-control__input" type="text" value="1" readonly/>
-            
-                        <button class="increment" type="button">
-                            <svg class="" width="20px" height="20px" viewBox="0 0 448 512">
-                            <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-                            </svg>
-                        </button>
+        {% for cart in carts %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col p-0">
+                        <div class="input-group">
+                            <button class="decrement" type="button">
+                                <svg class="" width="20px" height="20px" viewBox="0 0 448 512">
+                                <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                                </svg>
+                            </button>
+                
+                            <input class="quantity-control__input" type="text" value="{{ cart.quantity }}" readonly/>
+                
+                            <button class="increment" type="button">
+                                <svg class="" width="20px" height="20px" viewBox="0 0 448 512">
+                                <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <p>x {{ cart.product.price }} = </p>
+                    </div>
+                    <div class="col p-0"><strong> {{ cart.product_price }} $</strong></div>
+                    <div class="col p-0">
+                        <a href="{% url "carts:cart_remove" cart.product.slug cart.size %}" class="remove-from-cart" data-cart-id="">
+                            <img class="mx-1" src="{% static 'img/delete.svg' %}"
+                                alt="Catalog Icon" width="16" height="16">
+                        </a>
                     </div>
                 </div>
-                <div class="col p-0">
-                    <p>x 100.00 = </p>
-                </div>
-                <div class="col p-0"><strong>100.00 $</strong></div>
-                <div class="col p-0">
-                    <a href="{% url "carts:cart_remove" 1 %}" class="remove-from-cart" data-cart-id="">
-                        <img class="mx-1" src="{% static 'img/delete.svg' %}"
-                            alt="Catalog Icon" width="16" height="16">
-                    </a>
-                </div>
-            </div>
-        </li>
+            </li>
+        {% endfor %}
     </ul>
 </div>
 <div class="">
     <div class="card-footer">
-        <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
-        <h4 class="float-left"><strong>100.00 $</strong></h4>
+        <p class="float-left">Итого <strong>{{ carts.total_quantity }}</strong> товар(а) на сумму</p>
+        <h4 class="float-left"><strong>{{ carts.total_price }} $</strong></h4>
     </div>
 </div>
 

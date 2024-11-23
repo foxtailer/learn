@@ -1,5 +1,4 @@
 *.db
 *.sqlite3
 __pycache__/
-/migrations
 projects/telegram/eng_asistenf/Mari.csv

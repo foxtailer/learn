@@ -1,4 +1,7 @@
 {% load static %}
+{% load cart_tags %}
+
+{% user_carts request as carts %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -138,7 +141,7 @@
                   </svg>
   
                   <span class="amount">
-                    350 <span class="corrency">грн</span>
+                    {{ carts.total_price }} <span class="corrency">$</span>
                   </span>
                 </p>
                 <button class="order-btn">Order</button>
@@ -157,12 +160,7 @@
 
     {% include "users/login.html" %}
 
-    <div class="global-cart">
-      <button class="cart-close" type="button">
-        <span class="visually-hidden">Закрыть</span>
-      </button>
-      {% include "carts/cart.html" %}
-    </div>
+    {% block cart %}{% endblock  %}
 
     {% if messages %}
       {% for message in messages %}

@@ -14,6 +14,18 @@
 {% include "include/filter.html" with form=form %}
 {% endblock  %}
 
+{% block cart %}
+<div class="global-cart">
+  <button class="cart-close" type="button">
+    <span class="visually-hidden">Закрыть</span>
+  </button>
+
+  {% include "carts/cart.html" %}
+
+  <button class="" type="button">Order</button>
+</div>
+{% endblock  %}
+
 {% block content %}
 <div class="card-wrapper">
     {% for product in products %}
@@ -43,7 +55,7 @@
               </div>
             </div>
 
-            <h5 class="price">$ {{ product.price }}</h5>
+            <h5 class="price" data-unit-price="{{ product.price }}">$ {{ product.price }}</h5>
           </div>
 
           <a href="{{ product.get_absolute_url }}"><h4 class="name">{{ product.name }}</h4></a>
@@ -73,11 +85,11 @@
                 <span>Size:</span>
 
                 <ul class="size-control__box">
-                    <li><input type="radio" name="size" value="small" /> Small (20cm)</li>
+                    <li><input type="radio" name="size" value="S" /> Small (20cm)</li>
     
-                    <li><input type="radio" name="size" value="medium" checked/> Medium (30cm)</li>
+                    <li><input type="radio" name="size" value="M" checked/> Medium (30cm)</li>
     
-                    <li><input type="radio" name="size" value="large" /> Large (40cm)</li>
+                    <li><input type="radio" name="size" value="L" /> Large (40cm)</li>
                 </ul>
               </div>
             {% elif product.category.slug == 'side-dishes' %}
@@ -85,9 +97,9 @@
                 <span>Size:</span>
 
                 <ul class="size-control__box">
-                    <li><input type="radio" name="size" value="medium" checked/> Medium (200g)</li>
+                    <li><input type="radio" name="size" value="M" checked/> Medium (200g)</li>
     
-                    <li><input type="radio" name="size" value="large" /> Large (400gcm)</li>
+                    <li><input type="radio" name="size" value="L" /> Large (400g)</li>
                 </ul>
               </div>
             {% elif product.category.slug == 'drinks' %}
@@ -95,9 +107,9 @@
                 <span>Size:</span>
 
                 <ul class="size-control__box">
-                    <li><input type="radio" name="size" value="small" /> Small (0.5l)</li>
+                    <li><input type="radio" name="size" value="S" /> Small (0.5l)</li>
     
-                    <li><input type="radio" name="size" value="medium" checked/> Medium (1l)</li>
+                    <li><input type="radio" name="size" value="M" checked/> Medium (1l)</li>
                 </ul>
               </div>
             {% endif %}
