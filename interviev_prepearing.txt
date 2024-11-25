@@ -1417,6 +1417,13 @@
   print(object1.c)
   print(object1.__d)
 
+  -Composition is often used to model "has-a" relationships between objects, as opposed to inheritance, 
+    which models "is-a" relationships.
+  
+  Composition allows an object to delegate responsibilities to other objects rather than inheriting them. 
+  This provides more flexibility than inheritance, as objects can be composed in various ways without having 
+  a rigid class hierarchy.
+
   - Polymorphism simply means having many forms. Oportunity to apply one common function to object with different types.
  In Python, polymorphism allows objects of different classes to be treated as objects of a common super class. 
  It is the ability to present the same interface for differing underlying forms (data types).
@@ -2644,6 +2651,9 @@
       square having four equal sides but a derived class does not affect the behavior of the parent class so if you will do 
       that it will violate the Liskov Substitution Principle.
 
+      Child instead of a parent changes nothing.
+      Children's behavior is the same as parent's behavior.
+
     4. Interface Segregation Principle
       This principle is the first principle that applies to Interfaces instead of classes in SOLID and it is similar to the 
       single responsibility principle. It states that “do not force any client to implement an interface which is irrelevant 
@@ -2676,6 +2686,11 @@
       to the codebase. They don’t depend on specific details of how Git works internally.
 
       This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
+  
+  - Identify aspects of the application that can change and separate/encapsulate them from those that always remain constant.
+  - Program at the interface level, not at the implementation level.
+  - Favor composition over inheritance.
+  - Strive for loose coupling of interacting objects.
 
 
 -- PROBLEM SOLVING
@@ -2689,6 +2704,18 @@
     Factory Method (Virtual Constructor)
      Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, 
     but allows subclasses to alter the type of objects that will be created.
+
+  Strategy Pattern 
+    is a behavioral design pattern that defines a family of algorithms, encapsulates each one in a separate class, and 
+    makes them interchangeable at runtime. This allows a client (such as an object) to select a specific algorithm dynamically 
+    without altering its own code.
+
+  Observer pattern 
+    is a behavioral design pattern that establishes a one-to-many dependency between objects, ensuring that 
+    when one object (the subject) changes its state, all its dependent objects (the observers) are notified and updated automatically.
+    Subject: The object being observed. It maintains a list of its observers and provides methods to add, remove, or notify them.
+    Observer: The object that wants to be notified of changes in the subject. It defines an interface for updating in response to changes.
+      Can subscribe or umsubscribe to subject.
 
 
 -- OSI
