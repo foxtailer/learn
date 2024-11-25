@@ -34,10 +34,11 @@ def main(request):
     return render(request, 'main/product.html', context)
 
 
-def product(request, product_id):
-    product = Product.objects.get(id=product_id)
+def product(request, product_slug):
+    product = Product.objects.get(slug=product_slug)
 
     return HttpResponse(f'{product.name}')
+
 
 def news(request):
     context = {

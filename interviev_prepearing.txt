@@ -2694,30 +2694,55 @@
 -- OSI
 
   - Application Layer: Applications create the data.
+      Examples: HTTP (Hypertext Transfer Protocol), FTP (File Transfer Protocol), SMTP (Simple Mail Transfer Protocol),
+      DNS (Domain Name System), POP3 (Post Office Protocol 3)
+      Purpose: Provides network services directly to end-user applications, such as web browsing, file transfer, and email.
+
   - Presentation Layer: Data is formatted and encrypted.
+      Examples: SSL/TLS (Secure Sockets Layer / Transport Layer Security), ASCII, JPEG, MPEG, GIF
+      Purpose: Ensures that data is in a readable format for the application layer, handling data encryption/decryption, 
+      compression, and translation.
+
   - Session Layer: Connections are established and managed.
+      Examples: NetBIOS, RPC (Remote Procedure Call), PPTP (Point-to-Point Tunneling Protocol)
+      Purpose: Manages and controls the connections (sessions) between applications, including opening, closing, and 
+        managing communication sessions.
+
   - Transport Layer: Data is broken into segments for reliable delivery.
+      Examples: TCP (Transmission Control Protocol), UDP (User Datagram Protocol), SCTP (Stream Control Transmission Protocol)
+      Purpose: Ensures data is delivered error-free, in sequence, and with no losses or duplications. Offers flow and congestion control.
+   
+      4 Application makes request, service recive them. Source and destination on this layer are
+      aplications and we identify them by ports.
+
   - Network Layer: Segments are packaged into packets and routed.
+      Examples: IP (Internet Protocol), ICMP (Internet Control Message Protocol), ARP (Address Resolution Protocol), 
+      RIP (Routing Information Protocol), OSPF (Open Shortest Path First)
+      Purpose: Manages logical addressing, routing, and forwarding of packets across different networks.
+      
+      3 We talk about sender and resiver that are computers in network and we identify tem by ip 
+      adreses.
+
   - Data Link Layer: Packets are framed and sent to the next device.
+      Examples: Ethernet (framing and media access), PPP (Point-to-Point Protocol), HDLC (High-Level Data Link Control),
+      MAC (Media Access Control)
+      Purpose: Responsible for node-to-node data transfer, error detection, and handling in the data frames.
+      
+      2 we convert data to phycical representation and source and destination here is mac adreses of 
+      devices.
+
   - Physical Layer: Frames are converted into bits and transmitted physically.
+      Examples: Ethernet (physical aspects), USB, Bluetooth, DSL, IEEE 802.11 (Wi-Fi)
+      Purpose: This layer handles the transmission of raw binary data over a physical medium (cables, wireless).
+      
+      1 carry signal.
 
   Top 3 layers(7,6,5) produce PDU (Protocol Data Unit) for transport layer.
     At Layer 4 (Transport layer), the PDU is called a Segment (in the case of TCP or UDP).
     At Layer 3 (Network layer), the PDU is called a Packet.
     At Layer 2 (Data Link layer), the PDU is called a Frame.
     At Layer 1 (Physical layer), the PDU is called a Bit.
-
-  4 Application makes request, service recive them. Source and destination on this layer are
-  aplications and we identify them by ports.
-
-  3 We talk about sender and resiver that are computers in network and we identify tem by ip 
-  adreses.
-
-  2 we convert data to phycical representation and source and destination here is mac adreses of 
-  devices.
-
-  1 carry signal.
-
+    
 
 -- TCP/IP
 
@@ -2801,14 +2826,14 @@
   a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
 
   Common Serialization Formats:
-  JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
-  and generate for machines.
-  XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
-  human-readable and machine-readable.
-  YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
-  languages and is often used for configuration files.
-  Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
-  compared to text-based formats.
+    JSON (JavaScript Object Notation): A lightweight data interchange format that is easy to read and write for humans and easy to parse 
+    and generate for machines.
+    XML (eXtensible Markup Language): A markup language that defines a set of rules for encoding documents in a format that is both
+    human-readable and machine-readable.
+    YAML (YAML Ain't Markup Language): A human-readable data serialization standard that can be used in conjunction with all programming 
+    languages and is often used for configuration files.
+    Binary Formats: Such as Protocol Buffers (Protobuf), Apache Avro, and MessagePack, which are more efficient for both size and speed 
+    compared to text-based formats.
 
   Deserialization
   Deserialization is the reverse process of serialization. It converts the byte stream or string back into a copy of the original object. 
@@ -2978,13 +3003,19 @@
   git diff branch-name
   git diff commit1 commit2
   git merge bname
-  git branch -d bname
+  git branch -d bnames
 
   git reset
   git reset HEAD~1
 
 
 -- LINUX
+
+  shutdown now
+  poweroff
+  halt
+  init 0
+  systemctl poweroff -i
 
   uptime
   cat /etc/os-release

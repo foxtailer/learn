@@ -67,7 +67,7 @@ class Product(models.Model):
     
     def get_absolute_url(self):
         return reverse('main:product',
-                       args=[self.id])
+                       args=[self.slug])
     
     def update_rating(self, new_vote_value):
         if self.vote == 0:
