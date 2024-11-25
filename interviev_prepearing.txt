@@ -3477,132 +3477,325 @@
 
 -- SQL
 
-  1. Data Query Keywords
-    SELECT: Retrieves data from one or more tables.
-      Example: SELECT * FROM table_name;
-    FROM: Specifies the table(s) from which to retrieve or manipulate data.
-      Example: SELECT column_name FROM table_name;
-    WHERE: Filters the rows returned by SELECT, DELETE, or UPDATE.
-      Example: SELECT * FROM table WHERE condition;
-    GROUP BY: Groups rows that have the same values into summary rows.
-      Example: SELECT column, COUNT(*) FROM table GROUP BY column;
-    HAVING: Filters groups after GROUP BY is applied.
-      Example: SELECT column, COUNT(*) FROM table GROUP BY column HAVING COUNT(*) > 1;
-    ORDER BY: Specifies the sort order of the result set.
-      Example: SELECT * FROM table ORDER BY column ASC;
+  SQL Data Querying Keywords
 
-  2. Data Manipulation Keywords (DML)
-    INSERT INTO: Adds new rows of data to a table.
-      Example: INSERT INTO table_name (column1, column2) VALUES (value1, value2);
-    UPDATE: Modifies existing data in a table.
-      Example: UPDATE table_name SET column1 = value1 WHERE condition;
-    DELETE: Removes rows from a table.
-      Example: DELETE FROM table_name WHERE condition;
-    VALUES: Provides data for an INSERT statement.
-      Example: INSERT INTO table_name (column1) VALUES ('value1');
+  SELECT – Retrieves data from a database.
+    SELECT * FROM employees;
 
-  3. Data Definition Keywords (DDL)
-    CREATE: Defines a new database object (table, view, index, etc.).
-      Example: CREATE TABLE table_name (column1 datatype, column2 datatype);
-    DROP: Deletes an existing database object.
-      Example: DROP TABLE table_name;
-    ALTER: Modifies the structure of an existing object.
-      Example: ALTER TABLE table_name ADD column_name datatype;
-    TRUNCATE: Deletes all rows from a table, but keeps its structure.
-      Example: TRUNCATE TABLE table_name;
+  FROM – Specifies the table from which to retrieve data.
+    SELECT name FROM employees;
 
-  4. Transaction Control Keywords (TCL)
-    COMMIT: Finalizes a transaction, making all changes permanent.
-      Example: COMMIT;
-    ROLLBACK: Undoes changes in a transaction before they are committed.
-      Example: ROLLBACK;
-    SAVEPOINT: Sets a point within a transaction to which you can roll back later.
-      Example: SAVEPOINT savepoint_name;
-    SET TRANSACTION: Sets the properties for the current transaction.
-      Example: SET TRANSACTION READ ONLY;
+  WHERE – Specifies conditions for the query.
+    SELECT * FROM employees WHERE department = 'Sales';
 
-  5. Data Control Keywords (DCL)
-    GRANT: Gives specific privileges to users or roles.
-      Example: GRANT SELECT ON table_name TO user_name;
-    REVOKE: Removes specific privileges from users or roles.
-      Example: REVOKE SELECT ON table_name FROM user_name;
+  ORDER BY – Sorts the result set.
+    SELECT * FROM employees ORDER BY salary DESC/ASC;
 
-  6. Join Keywords
-    JOIN: Combines rows from two or more tables based on a related column.
-      Example: SELECT * FROM table1 JOIN table2 ON table1.column = table2.column;
-    INNER JOIN: Returns rows when there is at least one match between the tables.
-    LEFT JOIN: Returns all rows from the left table, and matched rows from the right table. Returns NULL for non-matching rows.
-    RIGHT JOIN: Returns all rows from the right table, and matched rows from the left table.
-    FULL OUTER JOIN: Returns all rows when there is a match in either left or right table.
-      Example: SELECT * FROM table1 FULL OUTER JOIN table2 ON table1.column = table2.column;
+  GROUP BY – Groups rows sharing a property.
+    SELECT department, COUNT(*) FROM employees GROUP BY department;
+    +----+---------+------------+--------+    +------------+----------+
+    | id | name    | department | salary |    | department | COUNT(*) |
+    +----+---------+------------+--------+    +------------+----------+
+    |  1 | Alice   | HR         | 60000  |    | HR         | 4        |
+    |  2 | Bob     | IT         | 75000  |    | IT         | 3        |
+    |  3 | Charlie | HR         | 65000  |    | Sales      | 2        |
+    |  4 | Dave    | IT         | 70000  |    +------------+----------+
+    |  5 | Eve     | IT         | 80000  |    
+    |  6 | Frank   | Sales      | 45000  |    
+    |  7 | Grace   | HR         | 70000  |    
+    |  8 | Henry   | Sales      | 40000  |    
+    +----+---------+------------+--------+    
 
-  7. Conditional Keywords
-    CASE: Performs conditional logic in queries, like an if-else statement.
-      Example: SELECT CASE WHEN condition THEN result1 ELSE result2 END FROM table_name;
-    IFNULL / COALESCE: Returns the first non-NULL value.
-      Example: SELECT IFNULL(column1, 'default') FROM table_name;
+  HAVING – Sets a condition for groups in a GROUP BY query.
+    SELECT department, AVG(salary) FROM employees GROUP BY department HAVING AVG(salary) > 50000;
+    +----+---------+------------+--------+    +------------+------------+
+    | id | name    | department | salary |    | department | AVG(salary) |
+    +----+---------+------------+--------+    +------------+------------+
+    |  1 | Alice   | HR         | 60000  |    | IT         | 75000.00    |
+    |  2 | Bob     | IT         | 75000  |    | HR         | 65000.00    |
+    |  3 | Charlie | HR         | 65000  |    |            |             |
+    |  4 | Dave    | IT         | 70000  |    +------------+------------+
+    |  5 | Eve     | IT         | 80000  |    
+    |  6 | Frank   | Sales      | 45000  |    
+    |  7 | Grace   | HR         | 70000  |    
+    |  8 | Henry   | Sales      | 40000  |    
+    +----+---------+------------+--------+    
 
-  8. Subquery and Common Table Expressions (CTE) Keywords
-    WITH: Defines a temporary result set (common table expression) for use within a query.
-      Example: WITH cte AS (SELECT * FROM table_name) SELECT * FROM cte;
-    EXISTS: Tests for the existence of rows returned by a subquery.
-      Example: SELECT * FROM table WHERE EXISTS (subquery);
+  JOIN – Combines rows from two or more tables based on a related column.
+    +----+---------+--------------+-------------+    +----+------------------+
+    | id | name    | department_id | salary     |    | id | department_name  |
+    +----+---------+--------------+-------------+    +----+------------------+
+    |  1 | Alice   | 1            | 60000       |    |  1 | HR               |
+    |  2 | Bob     | 2            | 75000       |    |  2 | IT               |
+    |  3 | Charlie | 1            | 65000       |    |  3 | Sales            |
+    |  4 | Dave    | 3            | 70000       |    |  4 | Marketing        |
+    |  5 | Eve     | 2            | 80000       |    +----+------------------+
+    |  6 | Frank   | 4            | 45000       |
+    |  7 | Grace   | 1            | 70000       |
+    |  8 | Henry   | 3            | 40000       |
+    +----+---------+----------------------------+
+    INNER JOIN: Returns rows with matching values in both tables.
+      SELECT employees.name, departments.department_name 
+      FROM employees 
+      INNER JOIN departments ON employees.department_id = departments.id;
+      +---------+------------------+
+      | name    | department_name  |
+      +---------+------------------+
+      | Alice   | HR               |
+      | Charlie | HR               |
+      | Grace   | HR               |
+      | Bob     | IT               |
+      | Eve     | IT               |
+      | Dave    | Sales            |
+      | Henry   | Sales            |
+      | Frank   | Marketing        |
+      +---------+------------------+
 
-  9. Schema Manipulation Keywords
-    USE: Selects a specific database to work with.
-      Example: USE database_name;
-    SHOW: Displays database objects or system information.
-      Example: SHOW TABLES;
-    DESCRIBE: Provides information about the columns in a table.
-      Example: DESCRIBE table_name;
+    LEFT JOIN: Returns all rows from the left table and matching rows from the right table.
+      SELECT employees.name, departments.department_name
+      FROM employees
+      LEFT JOIN departments ON employees.department_id = departments.id;
+      +---------+------------------+
+      | name    | department_name  |
+      +---------+------------------+
+      | Alice   | HR               |
+      | Bob     | IT               |
+      | Charlie | HR               |
+      | Dave    | Sales            |
+      | Eve     | IT               |
+      | Frank   | Marketing        |
+      | Grace   | HR               |
+      | Henry   | Sales            |
+      +---------+------------------+
 
-  10. Miscellaneous Keywords
-    DISTINCT: Removes duplicate rows from a result set.
-      Example: SELECT DISTINCT column_name FROM table_name;
-    LIMIT / FETCH FIRST: Limits the number of rows returned by a query.
-      Example: SELECT * FROM table_name LIMIT 10;
-    OFFSET: Skips a specific number of rows in the result set.
-      Example: SELECT * FROM table_name LIMIT 10 OFFSET 20;
-    CAST: Converts one data type to another.
-      Example: SELECT CAST(column_name AS datatype) FROM table_name;
-  ---------------------------------------------------
-  1. String Operators
-    Operators used for handling strings in SQL.
+    RIGHT JOIN: Returns all rows from the right table and matching rows from the left table.
+    FULL JOIN: Returns rows when there is a match in one of the tables.
+    CROSS JOIN: Returns the Cartesian product of two tables.
 
-    || – Concatenation operator (combines two strings).
-    LIKE – Pattern matching operator (used to find strings matching a certain pattern).
-      Example: 'abc%' finds any string that starts with "abc".
-    ILIKE (PostgreSQL-specific) – Case-insensitive pattern matching.
-    POSITION – Returns the position of a substring within a string.
-    SUBSTRING – Extracts a part of a string.
-    TRIM – Removes leading and trailing spaces or other characters from a string.
-    LENGTH – Returns the length of a string.
+  DISTINCT – Removes duplicate rows from the result.
+    SELECT DISTINCT department FROM employees;
 
-  2. Set Operators
-    Used for combining the results of multiple SELECT queries.
+  LIMIT / OFFSET – Limits the number of rows returned (with LIMIT) and skips a specified number of rows (with OFFSET).
+    SELECT * FROM employees LIMIT 5 OFFSET 10;
 
-    UNION – Combines results of two SELECT queries and removes duplicates.
-    UNION ALL – Combines results of two SELECT queries without removing duplicates.
-    INTERSECT – Returns rows common to both SELECT queries.
-    EXCEPT (or MINUS in Oracle) – Returns rows from the first SELECT query that are not in the second.
+  AS – Renames a column or table (aliasing).
+    SELECT name AS employee_name FROM employees;
 
-  5. NULL-related Operators
-    Operators dealing with NULL values.
+  IN – Specifies multiple values in a WHERE clause.
+    SELECT * FROM employees WHERE department IN ('Sales', 'Marketing');
 
-    IS NULL – Checks if a value is NULL.
-    IS NOT NULL – Checks if a value is not NULL.
-    COALESCE – Returns the first non-NULL value in a list of arguments.
-    NULLIF – Returns NULL if two arguments are equal; otherwise, returns the first argument.
+  BETWEEN – Selects values within a range.
+    SELECT * FROM employees WHERE salary BETWEEN 50000 AND 100000;
 
-  6. Range and Membership Operators
-    Used for testing ranges and lists of values.
+  LIKE – Searches for a specified pattern in a column.
+    SELECT * FROM employees WHERE name LIKE 'J%';
 
-    IN – Tests if a value is in a list or subquery.
-      Example: SELECT * FROM table WHERE column IN (1, 2, 3)
-    NOT IN – Tests if a value is not in a list or subquery.
-    BETWEEN – Tests if a value is within a range of values (inclusive).
-      Example: WHERE column BETWEEN 10 AND 20
-    NOT BETWEEN – Tests if a value is not within a range.
+  IS NULL – Checks for NULL values.
+    SELECT * FROM employees WHERE commission IS NULL;
+
+  EXISTS – Checks if a subquery returns any result.
+    SELECT * FROM employees WHERE EXISTS (SELECT * FROM sales WHERE sales.employee_id = employees.id);
+
+  SQL Data Manipulation Keywords
+
+  INSERT INTO – Adds new records to a table.
+    INSERT INTO employees (name, department, salary) VALUES ('John Doe', 'HR', 60000);
+
+  VALUES – Specifies the values to insert into a table.
+    INSERT INTO employees VALUES (1, 'John Doe', 'HR', 60000);
+
+  UPDATE – Modifies existing records in a table.
+    UPDATE employees SET salary = 70000 WHERE name = 'John Doe';
+
+  SET – Specifies the column values to update.
+    UPDATE employees SET department = 'IT' WHERE name = 'John Doe';
+
+  DELETE – Deletes records from a table.
+    DELETE FROM employees WHERE name = 'John Doe';
+
+  TRUNCATE – Removes all rows from a table (faster than DELETE).
+    TRUNCATE TABLE employees;
+
+  REPLACE – Inserts new rows or updates existing rows if they match a specified condition.
+    REPLACE INTO employees (id, name, department) VALUES (1, 'John Doe', 'Sales');
+
+  SQL Data Definition Keywords
+
+  CREATE TABLE – Defines a new table in the database.
+    CREATE TABLE employees (id INT PRIMARY KEY, name VARCHAR(50), department VARCHAR(50), salary DECIMAL(10, 2));
+
+  ALTER TABLE – Modifies an existing table (e.g., adding/removing columns).
+    ALTER TABLE employees ADD email VARCHAR(100);
+
+  DROP TABLE – Deletes a table from the database.
+    DROP TABLE employees;
+
+  CREATE DATABASE – Creates a new database.
+    CREATE DATABASE company;
+
+  USE – Specifies the database to work with.
+    USE company;
+
+  DROP DATABASE – Deletes a database.
+    DROP DATABASE company;
+
+  CREATE INDEX – Creates an index on a table to improve query performance.
+    CREATE INDEX idx_department ON employees (department);
+
+  DROP INDEX – Deletes an index.
+    DROP INDEX idx_department;
+
+  ADD COLUMN – Adds a new column to an existing table.
+    ALTER TABLE employees ADD phone VARCHAR(15);
+
+  DROP COLUMN – Removes a column from an existing table.
+    ALTER TABLE employees DROP COLUMN phone;
+
+  SQL Constraints and Keys
+
+  PRIMARY KEY – Uniquely identifies each record in a table.
+    CREATE TABLE employees (id INT PRIMARY KEY, name VARCHAR(50));
+
+  FOREIGN KEY – Ensures referential integrity by linking two tables.
+    CREATE TABLE orders (id INT PRIMARY KEY, employee_id INT, FOREIGN KEY (employee_id) REFERENCES employees(id));
+
+  UNIQUE – Ensures all values in a column are distinct.
+    CREATE TABLE employees (email VARCHAR(100) UNIQUE);
+
+  NOT NULL – Ensures that a column cannot contain NULL values.
+    CREATE TABLE employees (name VARCHAR(50) NOT NULL);
+
+  CHECK – Ensures that all values in a column satisfy a specific condition.
+    CREATE TABLE employees (salary DECIMAL(10, 2) CHECK (salary > 0));
+
+  DEFAULT – Sets a default value for a column when no value is specified.
+    CREATE TABLE employees (status VARCHAR(10) DEFAULT 'active');
+
+  SQL Transaction Commands
+
+  BEGIN TRANSACTION – Begins a transaction.
+    BEGIN TRANSACTION;
+
+  COMMIT – Saves the changes made in the current transaction.
+    COMMIT;
+
+  ROLLBACK – Undoes changes made in the current transaction.
+    ROLLBACK;
+
+  SAVEPOINT – Sets a savepoint within a transaction.
+    SAVEPOINT my_savepoint;
+
+  RELEASE SAVEPOINT – Releases a savepoint.
+    RELEASE SAVEPOINT my_savepoint;
+
+  SET TRANSACTION – Configures a transaction's isolation level.
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+  SQL User and Permissions
+
+  GRANT – Assigns permissions to users.
+    GRANT SELECT, INSERT ON employees TO user1;
+
+  REVOKE – Removes permissions from users.
+    REVOKE SELECT, INSERT ON employees FROM user1;
+
+  CREATE USER – Creates a new user.
+    CREATE USER 'user1' IDENTIFIED BY 'password';
+
+  DROP USER – Deletes a user.
+    DROP USER 'user1';
+
+  SQL Functions and Operators
+
+  COUNT() – Returns the number of rows.
+    SELECT COUNT(*) FROM employees;
+
+  SUM() – Returns the sum of a column.
+    SELECT SUM(salary) FROM employees;
+
+  AVG() – Returns the average value of a column.
+    SELECT AVG(salary) FROM employees;
+
+  MIN() – Returns the minimum value in a column.
+    SELECT MIN(salary) FROM employees;
+
+  MAX() – Returns the maximum value in a column.
+    SELECT MAX(salary) FROM employees;
+
+  CONCAT() – Concatenates two or more strings.
+    SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM employees;
+
+  SUBSTRING() – Extracts a substring from a string.
+    SELECT SUBSTRING(name, 1, 3) FROM employees;
+
+  ROUND() – Rounds a numeric value to a specified number of decimal places.
+    SELECT ROUND(salary, 2) FROM employees;
+
+  NOW() – Returns the current date and time.
+    SELECT NOW();
+
+  COALESCE() – Returns the first non-NULL value in a list of arguments.
+    SELECT COALESCE(phone, 'Not Provided') FROM employees;
+
+  CASE – A conditional expression used in SELECT, UPDATE, INSERT, or DELETE.
+  Example:
+  sql
+  Copy code
+  SELECT name,
+        CASE 
+            WHEN salary > 50000 THEN 'High'
+            ELSE 'Low'
+        END AS salary_range
+  FROM employees;
+
+  SQL Set Operations
+
+  UNION – Combines the result sets of two or more SELECT statements (removes duplicates).
+    SELECT name FROM employees WHERE department = 'Sales' UNION SELECT name FROM employees WHERE department = 'HR';
+
+  UNION ALL – Combines the result sets of two or more SELECT statements (includes duplicates).
+    SELECT name FROM employees WHERE department = 'Sales' UNION ALL SELECT name FROM employees WHERE department = 'HR';
+
+  INTERSECT – Returns the common records from two SELECT statements.
+    SELECT name FROM employees WHERE department = 'Sales' INTERSECT SELECT name FROM employees WHERE salary > 50000;
+
+  EXCEPT (or MINUS) – Returns the rows from the first SELECT statement that are not in the second SELECT statement.
+    SELECT name FROM employees WHERE department = 'Sales' EXCEPT SELECT name FROM employees WHERE salary < 50000;
+
+  SQL Indexes and Views
+
+  CREATE VIEW – Creates a virtual table based on the result of a query.
+    CREATE VIEW employee_view AS SELECT name, department FROM employees WHERE salary > 50000;
+
+  DROP VIEW – Deletes a view.
+    DROP VIEW employee_view;
+
+  CREATE INDEX – Creates an index on a table for faster querying.
+    CREATE INDEX idx_salary ON employees (salary);
+
+  DROP INDEX – Deletes an index.
+    DROP INDEX idx_salary;
+
+  SHOW INDEX – Displays the indexes on a table.
+    SHOW INDEX FROM employees;
+
+  SQL Other Useful Commands
+
+  DESCRIBE (or EXPLAIN) – Provides metadata about the table (structure/columns).
+    DESCRIBE employees;
+
+  SHOW TABLES – Lists all the tables in the current database.
+    SHOW TABLES;
+
+  SHOW COLUMNS – Lists the columns of a table.
+    SHOW COLUMNS FROM employees;
+
+  SHOW DATABASES – Lists all databases in the SQL server.
+    SHOW DATABASES;
+
+  FLUSH – Refreshes database objects, buffers, or caches.
+    FLUSH PRIVILEGES;
+
 
   7. JSON Operators (for databases like PostgreSQL)
     Used for working with JSON data types.
@@ -3670,6 +3863,7 @@
   Unique key: also enforces uniqueness on the column, but it can be null.
   The main difference between unique and primary is the primary key identifies each record in the table, 
   and the unique key prevents duplicate entries in a column.
+
 
 -- PSQL
 
