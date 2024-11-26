@@ -1,11 +1,11 @@
 max_subsum = float('-inf')
 current_sum = 0
 
-# 1
-# while n := int(input(': ')):
+1
+while n := int(input(': ')):
 
-#     current_sum = max(n, current_sum + n)
-#     max_subsum = max(max_subsum, current_sum)
+    current_sum = max(n, current_sum + n)
+    max_subsum = max(max_subsum, current_sum)
 
 
 # 2

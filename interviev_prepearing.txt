@@ -2717,6 +2717,14 @@
     Observer: The object that wants to be notified of changes in the subject. It defines an interface for updating in response to changes.
       Can subscribe or umsubscribe to subject.
 
+  Decorator Pattern 
+    is a structural design pattern that allows you to dynamically add or modify behavior to an object without changing its structure 
+    or modifying its code. It involves wrapping an object with another object (called a decorator) that provides the additional behavior.
+    Component: The original object interface or abstract class.
+    ConcreteComponent: The core object whose behavior you want to extend.
+    Decorator: An abstract wrapper that follows the same interface as the component.
+    ConcreteDecorator: The specific wrapper that adds or modifies behavior.
+
 
 -- OSI
 
