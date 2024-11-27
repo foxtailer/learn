@@ -1761,6 +1761,7 @@
     - Not considered as movable or copyable – you just recreate the same environment in the target location.
 
     pip freeze > requirements.txt
+    pip freeze | xargs pip uninstall -y
 
     python -m venv /path/to/new/virtual/environment
     python3 -m venv myenv --python=/usr/bin/python3.8
@@ -3174,10 +3175,10 @@
 
   - Reset forgotten root password Debian
     Reboot your Debian 10 system. You should be presented with a GRUB menu . On the first option, proceed and press the ‘e’ key 
-  on the keyboard before the system starts booting.
+    on the keyboard before the system starts booting.
     Scroll down and locate the line that begins with ‘linux’. Move the cursor to the end of this line, just after ‘ro quiet’ and 
-  append the parameter init=/bin/bash. 
-  Next hit ctrl + x
+    append the parameter init=/bin/bash. 
+    Next hit ctrl + x
     mount -n -o remount,rw /
     passwd
     Finally press Ctrl + Alt + Del to exit and reboot.
@@ -3378,22 +3379,22 @@
   - Signals
   - Testing
 
- app lifecicle
- model inheritance
- manager
- logging
- microservises
+  app lifecicle
+  model inheritance
+  manager
+  logging
+  microservises
 
- python manage.py createsuperuser
- makemigrations
- migrate
- python manage.py runserver 0.0.0.0:8080
- python manage.py runserver 8001
- 
- python manage.py dumpdata app_name.ModelName --output=data.json
- python manage.py loaddata data.json
+  python manage.py createsuperuser
+  makemigrations
+  migrate
+  python manage.py runserver 0.0.0.0:8080
+  python manage.py runserver 8001
+  
+  python manage.py dumpdata app_name.ModelName --output=data.json
+  python manage.py loaddata data.json
 
- AUTH_USER_MODEL = 'users.CustomUser'
+  AUTH_USER_MODEL = 'users.CustomUser'
 
 
 -- FLASK
@@ -3439,7 +3440,7 @@
 
 -- REST API
 
-  R epresentational S tate T ransfer (REST) is an architectural style that defines a set of constraints 
+  Representational State Transfer (REST) is an architectural style that defines a set of constraints 
   to be used for creating web services. REST API is a way of accessing web services in a simple and flexible 
   way without having any processing.
 
@@ -3463,8 +3464,6 @@
 
 
 -- AJAX
-
-  The HTTP method (GET, POST, PUT, PATCH, DELETE).
 
 
 -- ACID 

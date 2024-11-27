@@ -1,4 +1,4 @@
-from abstract import Beverage, CondimentDecorator
+from abstract import Beverage, CondimentDecorator, Size
 
 
 class Espresso(Beverage):
@@ -19,6 +19,7 @@ class HouseBlend(Beverage):
         return 0.89
 
 
+
 class Mocha(CondimentDecorator):
     def __init__(self, beverage):
         super().__init__(beverage)
@@ -27,7 +28,15 @@ class Mocha(CondimentDecorator):
         return self.beverage.get_description() + ", Mocha"
 
     def cost(self):
-        return self.beverage.cost() + 0.20
+        size = self.get_size()
+        if size == Size.SMALL:
+            return self.beverage.cost() + 0.10
+        elif size == Size.MEDIUM:
+            return self.beverage.cost() + 0.15
+        elif size == Size.LARGE:
+            return self.beverage.cost() + 0.20
+        else:
+            return self.beverage.cost()
 
 
 class Chocolate(CondimentDecorator):
@@ -38,4 +47,12 @@ class Chocolate(CondimentDecorator):
         return self.beverage.get_description() + ", Chocolate"
 
     def cost(self):
-        return self.beverage.cost() + 0.1
+        size = self.get_size()
+        if size == Size.SMALL:
+            return self.beverage.cost() + 0.10
+        elif size == Size.MEDIUM:
+            return self.beverage.cost() + 0.15
+        elif size == Size.LARGE:
+            return self.beverage.cost() + 0.20
+        else:
+            return self.beverage.cost()
