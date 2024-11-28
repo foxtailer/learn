@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTextEdit, QVBoxLayout, QFileDialog
-from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QTextEdit, QVBoxLayout
+from PyQt5.QtCore import Qt, pyqtSignal
 import sys
-import os
+#import os
 import pyautogui
+import pytesseract
 from PIL import Image
 
 
@@ -66,12 +67,18 @@ class TransparentWindow(QWidget):
             self.take_screenshot()
 
     def open_text_window(self):
-        """Open or create the secondary text window."""
+        """Open or create the secondary text window and set its text."""
         if self.text_window is None:  # Create the text window only if it doesn't exist
             self.text_window = TextWindow()  # Create the text window
+            self.text_window.closed.connect(self.on_text_window_closed)  # Connect to the closed signal
+
         self.text_window.setGeometry(self.geometry())  # Set the second window's size to match the main window
         self.text_window.show()
         self.update_text_window_position()
+
+    def on_text_window_closed(self):
+        """Reset the text window reference when it is closed."""
+        self.text_window = None
 
     def update_text_window_position(self):
         """Align the secondary window to the right of the main window or left if close to screen edge."""
@@ -116,32 +123,46 @@ class TransparentWindow(QWidget):
         # Capture the area inside the main window but exclude the bottom part where the button is located
         screenshot = pyautogui.screenshot(region=(main_geometry.x(), main_geometry.y(), main_geometry.width(), main_geometry.height() - button_height))
 
-        # Get the current script's directory
-        script_directory = os.path.dirname(os.path.abspath(__file__))
+        image = Image.frombytes("RGB", screenshot.size, screenshot.tobytes())
 
-        # Define the file path for the screenshot
-        file_name = os.path.join(script_directory, "screenshot.png")
+        # Use Tesseract OCR to extract text from the image
+        extracted_text = pytesseract.image_to_string(image, lang='eng+rus')
 
-        # Save the screenshot in the same directory as the script
-        screenshot.save(file_name)
-        print(f"Screenshot saved as {file_name}")
+        self.text_window.set_text(extracted_text)
+
+        # # Get the current script's directory
+        # script_directory = os.path.dirname(os.path.abspath(__file__))
+
+        # # Define the file path for the screenshot
+        # file_name = os.path.join(script_directory, "screenshot.png")
+
+        # # Save the screenshot in the same directory as the script
+        # screenshot.save(file_name)
+        # print(f"Screenshot saved as {file_name}")
 
 
 class TextWindow(QWidget):
+    closed = pyqtSignal()  # Signal to notify when the window is closed
+
     def __init__(self):
         super().__init__()
         self.init_ui()
 
     def init_ui(self):
         self.setWindowTitle("Text Window")
-        
-        # Set a layout to allow resizing of the text field
-        layout = QVBoxLayout(self)  # Create a vertical layout
+        layout = QVBoxLayout(self)
         self.text_edit = QTextEdit(self)
-        layout.addWidget(self.text_edit)  # Add the text field to the layout
-
-        # Set the layout to the widget, so the text field resizes with the window
+        layout.addWidget(self.text_edit)
         self.setLayout(layout)
+
+    def set_text(self, text):
+        """Set the given text into the text edit field."""
+        self.text_edit.setText(text)
+
+    def closeEvent(self, event):
+        """Emit the closed signal when the window is closed."""
+        self.closed.emit()  # Emit the closed signal
+        super().closeEvent(event)
 
 
 if __name__ == "__main__":
