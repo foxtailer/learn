@@ -3871,6 +3871,12 @@
   The main difference between unique and primary is the primary key identifies each record in the table, 
   and the unique key prevents duplicate entries in a column.
 
+-- SQLITE
+
+  sqlite3 <path to db>
+  ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
+  UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
+
 
 -- PSQL
 
