@@ -13,3 +13,6 @@ PyScreeze==1.0.1
 pytesseract==0.3.13
 python3-xlib==0.15
 pytweening==1.2.0
+# sudo apt install gnome-screenshot
+# sudo apt-get install python3-tk python3-dev
+# sudo apt install tesseract-ocr
