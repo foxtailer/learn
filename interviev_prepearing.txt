@@ -2288,6 +2288,7 @@
 
   Coroutines:
 
+  Coroutines are result of call on asyncronous function.
   A coroutine is a function that can pause and resume execution, usually using await.
   When you use async def, you’re defining a coroutine.
 

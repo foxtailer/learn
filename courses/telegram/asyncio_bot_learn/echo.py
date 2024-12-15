@@ -3,8 +3,8 @@ import asyncio
 from aiogram.filters.command import Command
 import string
 
-TOKEN = ""
 
+TOKEN = ""
 
 bot = Bot(TOKEN)
 dp = Dispatcher()
@@ -13,6 +13,7 @@ dp = Dispatcher()
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     await message.answer("Hello!")
+
 
 @dp.message()
 async def echo_message(msg: types.Message):
@@ -26,6 +27,7 @@ async def echo_message(msg: types.Message):
 async def cmd_test2(message: types.Message):
     await message.reply("Test 2")
 dp.message.register(cmd_test2, Command("test2"))
+
 
 async def main():
     await dp.start_polling(bot, on_startup=cmd_start)
