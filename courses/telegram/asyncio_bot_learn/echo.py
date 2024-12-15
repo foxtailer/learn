@@ -16,6 +16,8 @@ async def cmd_start(message: types.Message):
 
 @dp.message()
 async def echo_message(msg: types.Message):
+    # msg.text - text without formating
+    # message.html_text / message.md_text can be used
     await bot.send_message(msg.from_user.id, msg.text)
     await msg.reply(string.ascii_letters)
     await msg.delete()

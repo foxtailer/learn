@@ -13,6 +13,7 @@ dp = Dispatcher()
 dp["started_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
 mylist = [2,4,5]
 
+
 @dp.message(Command("add_to_list"))
 async def cmd_add_to_list(message: types.Message, mylist: list): 
     mylist.append(7)
@@ -23,10 +24,12 @@ async def cmd_add_to_list(message: types.Message, mylist: list):
 async def cmd_show_list(message: types.Message, mylist: list):
     await message.answer(f"Ваш список: {mylist}")
 
+
 @dp.message(Command("info"))
 async def cmd_info(message: types.Message, started_at: str):
     await message.answer(f"Бот запущен {started_at}")
     
+
 async def main():
     await dp.start_polling(bot, mylist=mylist)
 

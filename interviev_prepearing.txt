@@ -3873,9 +3873,12 @@
 
 -- SQLITE
 
+  .tables
+  .schema table_name
   sqlite3 <path to db>
   ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
   UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
+  ALTER TABLE users RENAME TO customers;
 
 
 -- PSQL
