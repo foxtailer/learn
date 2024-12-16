@@ -1,8 +1,13 @@
-from aiogram import Bot, types, Dispatcher
 import asyncio
+
+from aiogram import Bot, types, Dispatcher
 from aiogram.filters.command import Command
 from aiogram import html
 from aiogram.types import FSInputFile, URLInputFile, BufferedInputFile
+
+import os
+script_directory = os.path.dirname(os.path.abspath(__file__))
+
 
 TOKEN = ""
 
@@ -19,7 +24,7 @@ async def upload_photo(message: types.Message):
     # открытием файла через `open()`. Но, вообще говоря, этот способ
     # лучше всего подходит для отправки байтов из оперативной памяти
     # после проведения каких-либо манипуляций, например, редактированием через Pillow
-    with open("01.jpg", "rb") as image_from_buffer:
+    with open(f"{script_directory}/01.jpg", "rb") as image_from_buffer:
         result = await message.answer_photo(
             BufferedInputFile(
                 image_from_buffer.read(),
@@ -30,7 +35,7 @@ async def upload_photo(message: types.Message):
         file_ids.append(result.photo[-1].file_id)
 
     # Отправка файла из файловой системы
-    image_from_pc = FSInputFile("02.jpg")
+    image_from_pc = FSInputFile(f"{script_directory}/02.jpg")
     result = await message.answer_photo(
         image_from_pc,
         caption="Изображение из файла на компьютере"
@@ -41,9 +46,11 @@ async def upload_photo(message: types.Message):
     image_from_url = URLInputFile("https://picsum.photos/seed/groosha/400/300")
     result = await message.answer_photo(
         image_from_url,
-        caption="Изображение по ссылке"
+        caption="Изображение по ссылке",
+        show_caption_above_media=True
     )
     file_ids.append(result.photo[-1].file_id)
+
     await message.answer("Отправленные файлы:\n"+"\n".join(file_ids))
 
 
