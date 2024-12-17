@@ -5,6 +5,8 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
+
 
 TOKEN = ""
 
@@ -13,9 +15,6 @@ bot = Bot(TOKEN,
               parse_mode=ParseMode.HTML)
 )
 dp = Dispatcher()
-
-
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 
 @dp.message(Command("reply_builder"))

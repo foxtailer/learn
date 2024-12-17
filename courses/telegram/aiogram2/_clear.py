@@ -15,6 +15,7 @@ dp = Dispatcher()
 
 
 async def main():
+    await bot.delete_webhook(drop_pending_updates=True)  # Skip colected updates
     await dp.start_polling(bot)
 
 

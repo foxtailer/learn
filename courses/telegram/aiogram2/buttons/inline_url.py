@@ -5,6 +5,8 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
 
 TOKEN = ""
 
@@ -14,8 +16,6 @@ bot = Bot(TOKEN,
 )
 dp = Dispatcher()
 
-
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 @dp.message(Command("inline_url"))
 async def cmd_inline_url(message: types.Message, bot: Bot):

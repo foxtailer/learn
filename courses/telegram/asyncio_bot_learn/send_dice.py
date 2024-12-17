@@ -12,6 +12,7 @@ dp = Dispatcher()
 @dp.message(Command("dice"))
 async def cmd_dice(message: types.Message, bot: Bot):
     await bot.send_dice(message.from_user.id, emoji=DiceEmoji.DICE)
+    await message.answer_dice(emoji=DiceEmoji.BASKETBALL)
 
 async def main():
     await dp.start_polling(bot)
