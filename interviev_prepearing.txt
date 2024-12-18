@@ -2232,6 +2232,7 @@
 
   - Asyncio
 
+  Asynchronous execution - paralel execution of diferent code blocks.
   Asynchronous functions are defined using the async def syntax.
   Instead of blocking the execution (like a normal function), an async function allows other tasks to 
   run while it waits for an operation to complete.
