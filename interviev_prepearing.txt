@@ -4084,7 +4084,8 @@ Click Ok on all open windows and restart your system restart the command prompt.
 
 Debian
 sudo systemctl start bluetooth
-sudo systemctl enable bluetooth
+sudo systemctl enable Bluetooth
+ibus-setup　
 
 
 * constant integers between -5 and 256 in python alredy in cache.
