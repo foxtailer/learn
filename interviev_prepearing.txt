@@ -4042,6 +4042,12 @@
 -- Matplotlib
 
 
+-- ngrok
+
+  ngrok config add-authtoken YOUR_AUTH_TOKEN
+  ngrok http 8001
+
+
 *hardcode - to put information into a software program so that it cannot be easily changed by a user.
 Write value just in code instead of using variable.
 
