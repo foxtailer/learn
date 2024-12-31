@@ -73,7 +73,7 @@
     a = []
     print(sys.getrefcount(a))  # Output might be 2, as `a` and the argument in getrefcount both reference it
 
-  While the reference count is a key part of Python's memory management, Python also has a cyclic garbage collector to handle 
+  While the reference count is d key part of Python's memory management, Python also has a cyclic garbage collector to handle 
   cases where objects reference each other in a cycle, which reference counting alone cannot handle.
 
   In Python, it is possible for multiple variables to reference the same object. This behaviour is called a "shared reference".
@@ -3431,13 +3431,49 @@
   Hub to find official images for various applications and operating systems.
 
   Basic Docker Commands
+    docker version
+
+    docker run hello-world  Run container from image
+      To generate this message, Docker took the following steps:
+      1. The Docker client contacted the Docker daemon.
+      2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+          (amd64)
+      3. The Docker daemon created a new container from that image which runs the
+          executable that produces the output you are currently reading.
+      4. The Docker daemon streamed that output to the Docker client, which sent it
+          to your terminal.
+      --rm For delete container after stop.
+      --name name To set name of container
+      -it ubuntu  Run interactive terminal
+    docker run -d -p 127.0.0.1:8000:80 --name server nginx
+
+    docker start Rectart container
+    -i attach output to terminal
+
+    docker container prune  Remove all stoped containers.
+      -ls -a
+    docker rm $(docker ps -aq)
+
+    docker system prune  Remove all.
+      -a
+    docker builder purne -a
+
+    docker logs container_name
     docker build: Builds an image from a Dockerfile.
+      . -t image_name:tag
+
     docker pull: Downloads an image from a registry (like Docker Hub).
     docker run: Runs a container from an image.
-    docker ps: Lists running containers.
+    docker ps: Lists running containers. -a for all.
     docker stop: Stops a running container.
     docker rm: Removes a container.
     docker rmi: Removes an image.
+    docker commit 
+
+    docker logs container_name
+    docker inspect container server
+
+    docker exec -it server sh  Start container with termanal
 
 
 -- REST API
