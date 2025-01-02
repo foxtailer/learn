@@ -3049,6 +3049,100 @@
 
 -- LINUX
 
+  /bin (Binaries)
+    Contains essential binary executables (programs) needed for the system to operate, even in single-user mode.
+    Examples: ls, cp, mv, bash.
+
+  2. /boot
+    Holds files needed for the system boot process.
+    Includes the Linux kernel, bootloader (e.g., GRUB) configurations, and initial RAM disk image (initrd).
+    Example: /boot/vmlinuz (kernel image).
+
+  3. /dev (Devices)
+    Contains device files representing hardware devices and system resources.
+    Examples:
+    /dev/sda: First hard drive.
+    /dev/null: Discard output (black hole).
+
+  4. /docker-entrypoint.d & /docker-entrypoint.sh
+    Specific to Docker containers:
+    /docker-entrypoint.d: A directory for scripts or files to be executed as part of a container's startup process.
+    /docker-entrypoint.sh: A script used to set up the environment or start services inside a Docker container.
+
+  5. /etc (Configuration)
+    Contains system-wide configuration files and scripts.
+    Examples:
+    /etc/passwd: User account information.
+    /etc/hostname: System's hostname.
+
+  6. /home
+    Default location for users' personal directories.
+    Example: /home/username contains the files and settings for username.
+
+  7. /lib (Libraries)
+    Contains shared libraries and kernel modules essential for system boot and basic operation.
+    Examples: /lib/libc.so.6.
+
+  8. /lib64
+    Similar to /lib, but specifically for 64-bit shared libraries on 64-bit systems.
+
+  9. /media
+    Temporary mount point for removable media like USB drives, CDs, or DVDs.
+    Example: /media/username/usbdrive.
+
+  10. /mnt
+    Temporary mount point for file systems, often used for manual mounting by the administrator.
+    Example: mount /dev/sdb1 /mnt.
+
+  11. /opt (Optional)
+    Used for optional software packages that are not part of the default system installation.
+    Example: /opt/myapp.
+
+  12. /proc (Process Information)
+    Virtual file system providing information about system processes and kernel.
+    Examples:
+    /proc/cpuinfo: CPU details.
+    /proc/uptime: System uptime.
+
+  13. /root
+    Home directory for the root user (administrator).
+    Example: Contains root’s personal files and settings.
+
+  14. /run
+    Stores runtime information for processes and services after boot.
+    Examples:
+    /run/lock: Lock files.
+    /run/systemd: Systemd runtime data.
+
+  15. /sbin (System Binaries)
+    Contains essential binaries for system administration, often requiring root privileges.
+    Examples: reboot, fdisk, iptables.
+
+  16. /srv (Service Data)
+    Stores data for system services like web servers or FTP servers.
+    Example: /srv/www for a web server's files.
+
+  17. /sys (System Information)
+    Virtual file system for accessing hardware and kernel information.
+    Example: /sys/class/net (network interfaces).
+
+  18. /tmp (Temporary)
+    Temporary storage for files. Files in this directory are usually deleted on system reboot.
+    Example: Temporary download or process files.
+
+  19. /usr (User Programs)
+    Contains user-installed applications and libraries.
+    Subdirectories:
+    /usr/bin: Non-essential user binaries.
+    /usr/lib: Shared libraries for user applications.
+    /usr/local: Locally installed software.
+
+  20. /var (Variable Data)
+    Holds files that change frequently during system operation.
+    Examples:
+    /var/log: System logs.
+    /var/spool: Print or mail queues.
+
   shutdown now
   poweroff
   halt
@@ -3065,6 +3159,8 @@
   head | tail file.log -n 5
   uname -a
   mount
+
+  sudo lsof -i :80 
 
   ls -l -a
   ls -ld .
@@ -3442,10 +3538,10 @@
           executable that produces the output you are currently reading.
       4. The Docker daemon streamed that output to the Docker client, which sent it
           to your terminal.
+    docker run -d -p 127.0.0.1:8000:80 --name server nginx  Link host port to container port
       --rm For delete container after stop.
       --name name To set name of container
       -it ubuntu  Run interactive terminal
-    docker run -d -p 127.0.0.1:8000:80 --name server nginx
 
     docker start Rectart container
     -i attach output to terminal
@@ -3466,6 +3562,7 @@
     docker run: Runs a container from an image.
     docker ps: Lists running containers. -a for all.
     docker stop: Stops a running container.
+      $(docker ps -q)  All
     docker rm: Removes a container.
     docker rmi: Removes an image.
     docker commit 
@@ -3473,7 +3570,99 @@
     docker logs container_name
     docker inspect container server
 
+    docker network ls
+    docker network create network_name
+
     docker exec -it server sh  Start container with termanal
+
+    - Mount host directory to container directory
+
+    Docker containers run in an isolated environment, but you can share folders (known as volumes 
+    or bind mounts) between your host machine and a container. This allows the container to read and/or 
+    write to a specific directory on your host.
+
+    docker run -d \
+    -p 8000:80 \
+    -v ${PWD}/site:/usr/share/nginx/html \
+    --name server \
+    nginx
+
+    docker stats
+
+    docker compose up -d
+      -f pash_to_file.yml
+
+    Запуск контейнеров
+  docker inspect                    запускает все сервисы и контейнеры на основе вашего docker-compose.yml файла
+  docker compose up -d              запускает все контейнеры в фоновом режиме (не блокирует консоль)
+  docker compose up postgres>       запускает определенный сервис (вместо postgres подставьте нужный)
+  docker compose --profile dev up   запускает только те контейнеры, которые относятся к профилю dev
+  docker compose start              запускает остановленные контейнеры
+  docker compose build              собирает образы
+  docker compose up --build         запускает и одновременно пересобирает образы, если они были изменены с момента 
+    последнего запуска или если они еще не были созданы
+  docker compose restart            перезапустить контейнеры
+
+  Остановка контейнеров
+  docker compose down - останавливает и удаляет все контейнеры и сети, созданные с помощью docker-compose up
+  docker compose down --remove-orphans - если какие-либо контейнеры остаются после остановки всех сервисов, которые изначально их создали, то эти оставшиеся контейнеры также будут удалены
+  docker compose down --volumes - останавливает контейнеры и удаляет связанные с ними volumes
+  docker compose stop - останавливает контейнеры, созданные с помощью docker-compose up, без их удаления
+
+  Состояние контейнеров
+  docker compose logs - просмотреть логи
+  docker logs <container_name> - посмотреть логи конкретного контейнера
+  docker compose ps - просмотреть статус запущенных контейнеров
+  docker compose top - отображает информцию о процессах внутри контейнеров
+  docker inspect <container_id> - показывает json с настройками контейнера и его состоянием
+
+  Масштабирование
+  docker-compose up -d --scale <service_name>=<num_instances> - масштабирует количество запущенных контейнеров для указанного сервиса
+
+  Выполнение команд внутри контейнера
+  docker compose exec <container_id> <command> - позволяет выполнять команды внутри контейнера, например docker exec 7cbde5a06bbb pytest api/tests.py
+  docker exec -it <container_id> /bin/sh - открыть консоль контейнера
+
+
+-- nginx
+
+  Is a high-performance web server and reverse proxy server. It's widely used for various purposes in 
+  modern web applications due to its efficiency, scalability, and versatility.
+
+    1. Web Server
+    2. Reverse Proxy
+    3. Load Balancer
+    4. HTTPS Termination
+    5. Caching
+    6. WebSocket Proxying
+    7. Content Compression
+    8. Security Features
+    9. Serving as a Gateway for Microservices
+
+    Hide backend server details from clients.
+    Provide a single entry point for requests.
+    Enable features like HTTPS termination, caching, and compression.
+    Handle high traffic efficiently.
+    Improve fault tolerance by distributing load.
+    Increase application scalability and reliability.
+
+
+-- Gunicorn 
+
+  Is a Python WSGI (Web Server Gateway Interface) server that runs Python web applications, such as Django 
+  or Flask. It acts as a bridge between your Python application and a web server like Nginx or Apache, 
+  handling incoming requests and sending responses back to the client.
+
+  - Key Features
+
+    WSGI Compatibility: Gunicorn is compatible with any Python web framework that follows the WSGI standard, 
+    such as Django, Flask, or FastAPI (with ASGI-to-WSGI adapters).
+
+    Concurrency: It uses a pre-fork worker model to handle multiple requests simultaneously, improving 
+    performance for web applications.
+
+    Flexibility: Supports various worker types (sync, async, and others) to suit different workloads.
+    Ease of Deployment: Lightweight and easy to integrate into existing projects.
 
 
 -- REST API

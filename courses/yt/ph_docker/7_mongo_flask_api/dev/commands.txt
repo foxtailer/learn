@@ -5,7 +5,7 @@ docker network create mynetwork
 docker run --name mymongo --network mynetwork -d mongo
 
 Запускаем контейнер с mongo-express
-docker run --name dbbrowser --network mynetwork -e ME_CONFIG_MONGODB_SERVER=mymongo -p 8081:8081 -d mongo-express
+docker run --name dbbrowser --network mynetwork -e ME_CONFIG_MONGODB_SERVER=mymongo -p 8082:8082 -d mongo-express
 
 Запускаем контейнер checker
 docker build -t app ./checker
