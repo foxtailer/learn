@@ -43,7 +43,7 @@ services:
       start_period: 10s
 
   postgres-db:
-    image: postgres:latest
+    image: postgres:17.2-alpine3.20
     container_name: postgres
     environment:
       POSTGRES_DB: prediction

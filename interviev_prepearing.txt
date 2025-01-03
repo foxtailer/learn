@@ -3149,6 +3149,11 @@
   init 0
   systemctl poweroff -i
 
+  env
+  printenv
+  export MY_VAR="my_value"  Temporary
+  ~/.bashrc or /etc/environment
+
   uptime
   cat /etc/os-release
   man command (manual of command)
@@ -3528,6 +3533,10 @@
 
   Basic Docker Commands
     docker version
+      --version
+    systemctl status docker
+
+    docker images
 
     docker run hello-world  Run container from image
       To generate this message, Docker took the following steps:
@@ -3538,42 +3547,49 @@
           executable that produces the output you are currently reading.
       4. The Docker daemon streamed that output to the Docker client, which sent it
           to your terminal.
-    docker run -d -p 127.0.0.1:8000:80 --name server nginx  Link host port to container port
-      --rm For delete container after stop.
-      --name name To set name of container
-      -it ubuntu  Run interactive terminal
 
-    docker start Rectart container
-    -i attach output to terminal
+    docker run -d -p 127.0.0.1:8000:80 --name server nginx  ~ Link host port to container port
+      --rm  ~ For delete container after stop.
+      --name name  ~ To set name of container
+      -it ubuntu  ~ Run interactive terminal
 
-    docker container prune  Remove all stoped containers.
+    docker start  ~ Rectart container
+      -i  ~ attach output to terminal
+  
+  -clear
+    docker rm e6 a2 b8      ~ Remove 3 containers
+    docker container prune  ~ Remove all stoped containers.
       -ls -a
     docker rm $(docker ps -aq)
-
-    docker system prune  Remove all.
-      -a
+    docker system prune  ~ Remove all.
+      -a --volumes
     docker builder purne -a
 
-    docker logs container_name
     docker build: Builds an image from a Dockerfile.
-      . -t image_name:tag
+      -t image_name:tag
 
     docker pull: Downloads an image from a registry (like Docker Hub).
     docker run: Runs a container from an image.
     docker ps: Lists running containers. -a for all.
     docker stop: Stops a running container.
       $(docker ps -q)  All
+    docker kill  ~ Faster than stop
+    docker pause container
+    docker unpause container
     docker rm: Removes a container.
     docker rmi: Removes an image.
     docker commit 
 
     docker logs container_name
+      -f  ~ Logs in real time
     docker inspect container server
+    docker stats
 
     docker network ls
     docker network create network_name
 
-    docker exec -it server sh  Start container with termanal
+    docker exec -it server sh  ~ Start container with termanal
+                           /bin/bash
 
     - Mount host directory to container directory
 
@@ -3587,41 +3603,39 @@
     --name server \
     nginx
 
-    docker stats
-
     docker compose up -d
       -f pash_to_file.yml
 
-    Запуск контейнеров
-  docker inspect                    запускает все сервисы и контейнеры на основе вашего docker-compose.yml файла
-  docker compose up -d              запускает все контейнеры в фоновом режиме (не блокирует консоль)
-  docker compose up postgres>       запускает определенный сервис (вместо postgres подставьте нужный)
-  docker compose --profile dev up   запускает только те контейнеры, которые относятся к профилю dev
-  docker compose start              запускает остановленные контейнеры
-  docker compose build              собирает образы
-  docker compose up --build         запускает и одновременно пересобирает образы, если они были изменены с момента 
-    последнего запуска или если они еще не были созданы
-  docker compose restart            перезапустить контейнеры
+  Запуск контейнеров
+    docker inspect                    запускает все сервисы и контейнеры на основе вашего docker-compose.yml файла
+    docker compose up -d              запускает все контейнеры в фоновом режиме (не блокирует консоль)
+    docker compose up postgres>       запускает определенный сервис (вместо postgres подставьте нужный)
+    docker compose --profile dev up   запускает только те контейнеры, которые относятся к профилю dev
+    docker compose start              запускает остановленные контейнеры
+    docker compose build              собирает образы
+    docker compose up --build         запускает и одновременно пересобирает образы, если они были изменены с момента 
+      последнего запуска или если они еще не были созданы
+    docker compose restart            перезапустить контейнеры
 
-  Остановка контейнеров
-  docker compose down - останавливает и удаляет все контейнеры и сети, созданные с помощью docker-compose up
-  docker compose down --remove-orphans - если какие-либо контейнеры остаются после остановки всех сервисов, которые изначально их создали, то эти оставшиеся контейнеры также будут удалены
-  docker compose down --volumes - останавливает контейнеры и удаляет связанные с ними volumes
-  docker compose stop - останавливает контейнеры, созданные с помощью docker-compose up, без их удаления
+    Остановка контейнеров
+    docker compose down - останавливает и удаляет все контейнеры и сети, созданные с помощью docker-compose up
+    docker compose down --remove-orphans - если какие-либо контейнеры остаются после остановки всех сервисов, которые изначально их создали, то эти оставшиеся контейнеры также будут удалены
+    docker compose down --volumes - останавливает контейнеры и удаляет связанные с ними volumes
+    docker compose stop - останавливает контейнеры, созданные с помощью docker-compose up, без их удаления
 
-  Состояние контейнеров
-  docker compose logs - просмотреть логи
-  docker logs <container_name> - посмотреть логи конкретного контейнера
-  docker compose ps - просмотреть статус запущенных контейнеров
-  docker compose top - отображает информцию о процессах внутри контейнеров
-  docker inspect <container_id> - показывает json с настройками контейнера и его состоянием
+    Состояние контейнеров
+    docker compose logs - просмотреть логи
+    docker logs <container_name> - посмотреть логи конкретного контейнера
+    docker compose ps - просмотреть статус запущенных контейнеров
+    docker compose top - отображает информцию о процессах внутри контейнеров
+    docker inspect <container_id> - показывает json с настройками контейнера и его состоянием
 
-  Масштабирование
-  docker-compose up -d --scale <service_name>=<num_instances> - масштабирует количество запущенных контейнеров для указанного сервиса
+    Масштабирование
+    docker-compose up -d --scale <service_name>=<num_instances> - масштабирует количество запущенных контейнеров для указанного сервиса
 
-  Выполнение команд внутри контейнера
-  docker compose exec <container_id> <command> - позволяет выполнять команды внутри контейнера, например docker exec 7cbde5a06bbb pytest api/tests.py
-  docker exec -it <container_id> /bin/sh - открыть консоль контейнера
+    Выполнение команд внутри контейнера
+    docker compose exec <container_id> <command> - позволяет выполнять команды внутри контейнера, например docker exec 7cbde5a06bbb pytest api/tests.py
+    docker exec -it <container_id> /bin/sh - открыть консоль контейнера
 
 
 -- nginx
