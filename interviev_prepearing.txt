@@ -14,12 +14,19 @@
     Identity(ID) – This refers to the address that the object refers to in the 
     computer’s memory.
       Unique and constant for the object during its lifetime. You can obtain 
-      using the id() function.
+      using the id() function. The ID typically represents the memory address of the 
+      object in CPython , but this is not guaranteed in all Python implementations.
+
     Type(class) – This refers to the kind of object that is created. For example 
     - integer, list, string etc.
       You can get the type of an object using the type() function.
+      type(x) == x.__class__  # True
+
     Value – This refers to the value stored by the object. For example – List=[1,2,3] 
     would hold the numbers 1,2 and 3
+
+    Reference counter
+
  While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
 
  Object's Internal Structure: Each Python object has a structure that includes metadata, such as its type 
@@ -35,8 +42,8 @@
     3 Assign the reference to the object (in memory) to the variable
 
   A variable, is a symbolic name in a system table that holds links (i.e. references) to objects. In other words,
- references are pointers from variables to objects(hold the location of objects). In Python though, variables do not have a type. Therefore,
- it is possible to assign objects of different type to the same variable name, as shown below.
+ references are pointers from variables to objects(hold the location of objects). In Python though, variables do not 
+ have a type. Therefore,it is possible to assign objects of different type to the same variable name, as shown below.
 
  Behaves as a value that is contains
 
@@ -57,8 +64,8 @@
  If you want to specify the data type of a variable, this can be done with casting.
 
 	x = str(3)    # x will be '3'
-    y = int(3)    # y will be 3
-    z = float(3)  # z will be 3.0
+  y = int(3)    # y will be 3
+  z = float(3)  # z will be 3.0
 
   When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish.
  This value can be an integer, a string or of any other type. Apart from the value, objects also come with a couple of
@@ -73,8 +80,49 @@
     a = []
     print(sys.getrefcount(a))  # Output might be 2, as `a` and the argument in getrefcount both reference it
 
-  While the reference count is d key part of Python's memory management, Python also has a cyclic garbage collector to handle 
+  While the reference count is key part of Python's memory management, Python also has a cyclic garbage collector to handle 
   cases where objects reference each other in a cycle, which reference counting alone cannot handle.
+
+    lass Node:
+      def __init__(self, name):
+          self.name = name
+          self.next = None
+
+    # Create two objects referencing each other
+    a = Node("A")
+    b = Node("B")
+    a.next = b
+    b.next = a
+  
+  The GC identifies these cycles and can clean them up, provided the objects are not reachable from the rest of the program.
+
+  The Python garbage collector (GC), which is part of the gc module, identifies circular references using a process called 
+  tracing. Here's how it works:
+
+  1. Understanding Object Reachability
+  The garbage collector differentiates between objects that are reachable and those that are unreachable.
+    Reachable objects: Can be accessed from active references in the program (e.g., global variables, local variables, or 
+    objects in use).
+    Unreachable objects: Are not directly or indirectly accessible from active references.
+  2. Tracking Objects
+    Python keeps track of all allocated objects in a structure called the object graph.
+    The GC maintains a list of all container objects (e.g., lists, dictionaries, and custom objects) that can potentially hold 
+    references to other objects.
+
+  Weak References:
+  Use weak references (weakref module) to break circular dependencies. Weak references do not increase the reference count.
+
+    import weakref
+
+    class Node:
+        def __init__(self, name):
+            self.name = name
+            self.next = None
+
+    a = Node("A")
+    b = Node("B")
+    a.next = weakref.ref(b)  # Weak reference prevents circular reference
+    b.next = weakref.ref(a)
 
   In Python, it is possible for multiple variables to reference the same object. This behaviour is called a "shared reference".
  For example, consider the code below
@@ -140,8 +188,7 @@
     d = copy.copy(c)
     a[0] = -1
     c[0][1] = -3
-    print(d)
-    >>> [[-1, -3, 5, 7], [2, 4, 6, 8]]
+    print(d)  >>> [[-1, -3, 5, 7], [2, 4, 6, 8]]
 
   This is because a shallow copy does not create a new object for the nested instances but instead, it copies their reference
  to the original object. In most of the cases we typically need to create a new object even for nested instances so that the
@@ -304,7 +351,20 @@
     not True        # This gives False
     not False       # This gives True
 
- We can also combine the use of these keywords to create longer conditions:
+  Both the and and or operators in Python are lazy (short-circuiting). This means they evaluate 
+  expressions only as far as needed to determine the result, potentially skipping the evaluation 
+  of subsequent expressions.
+
+  and evaluates its left operand first:
+    If the left operand is falsy (e.g., False, 0, None, ''), it immediately returns the left 
+    operand without evaluating the right operand.
+    If the left operand is truthy, it proceeds to evaluate the right operand and returns its result.
+
+  or evaluates its left operand first:
+    If the left operand is truthy, it immediately returns the left operand without evaluating the right operand.
+    If the left operand is falsy, it proceeds to evaluate the right operand and returns its result.
+
+  We can also combine the use of these keywords to create longer conditions:
 
     (True or False) and False  # This is False
     False and True and True    # This is False
@@ -377,7 +437,6 @@
       text = "Email: example@example.com"
       if (match := re.search(r'\S+@\S+', text)):
       print("Found email:", match.group())
-
 
  Comparison
 
@@ -593,6 +652,8 @@
 
     for j in range(0,10):
         print(j, end = " ")
+    else:
+      # Else block runs if the loop completes without encountering a `break`.
 
   while loop: In Python, while loops are used to execute a block of statements repeatedly
  until a given condition is satisfied. Then, the expression is checked again and,
@@ -631,8 +692,8 @@
         print(x)
     except NameError:
         print("Variable x is not defined")
-    except:
-        print("Something else went wrong")
+    except Exeption as e:
+        print(f"Something else went wrong {e}")
 
  The raise keyword is used to raise an exception.
  You can define what kind of error to raise, and the text to print to the user.
@@ -712,7 +773,6 @@
             return self.data[index]
         else:
             raise IndexError("Index out of range")
-
 
   # iter protocol
   class CustomIterable:
@@ -809,8 +869,16 @@
  Note: Every iterator is also an iterable, but not every iterable is an iterator in Python.
 
     import random
-    d = iter(lambda: random.tandrange(10), 7)
-    list(d)
+    d = iter(lambda: random.randrange(10), 7)
+    list(d) >>> [3, 4, 6, 0, 9, 4, 8, 9, 8, 5, 8, 1, 1, 5, 1, 4, 4, 0, 3, 5, 6] or [8, 2, 6, 0, 4, 1, 9] or ...
+
+  lambda: random.randrange(10):
+    This lambda function generates a random integer between 0 (inclusive) and 10 (exclusive) each time it is called.
+  iter(callable, sentinel):
+    The iter function creates an iterator that repeatedly calls the provided callable (in this case, the lambda function).
+    The iteration stops when the callable returns the sentinel value (7 in this case).
+  list(d):
+    This converts the iterator d into a list by consuming all its values.
 
   Lazy traversing (also known as lazy evaluation or lazy iteration) refers to a technique where elements of a sequence or 
   collection are generated or accessed only as needed, rather than all at once. This approach is particularly useful when 
@@ -1002,6 +1070,9 @@
   Python uses the mechanism pass arguments by sharing object reference during function calls.
   Name of variable reserve in local scope and refer to some object
 
+  "scope" generally refers to: 
+    The set of variables, functions, and objects accessible at a given point in a program.
+
   Function life cicle
   fu()
   1. Matches Parameters
@@ -1180,7 +1251,7 @@
         print(args)
 
     friends("Sachin", "Rishu", "Yashwant", "Abhishek")
-    >>>('Sachin', 'Rishu', 'Yashwant', 'Abhishek')
+    >>> ('Sachin', 'Rishu', 'Yashwant', 'Abhishek')
 
  We got Tuple because when we use *args the function will get the arguments as tuple.
  There is one exception: when passing regular arguments and *args as parameters to a function, never pass *args before regular arguments.
@@ -1234,7 +1305,6 @@
 *****INTERMEDIATE******
 
 
-
 -- OOP
 
   Object-oriented programming (OOP) is a method of structuring a program by bundling related
@@ -1281,7 +1351,6 @@
 
         # parent class
         class Person(object):
-
             # __init__ is known as the constructor
             def __init__(self, name, idnumber):
                 self.name = name
@@ -1419,10 +1488,57 @@
 
   -Composition is often used to model "has-a" relationships between objects, as opposed to inheritance, 
     which models "is-a" relationships.
-  
-  Composition allows an object to delegate responsibilities to other objects rather than inheriting them. 
-  This provides more flexibility than inheritance, as objects can be composed in various ways without having 
-  a rigid class hierarchy.
+  Composition is a design principle where a class contains instances of other classes to reuse their functionality, 
+  rather than inheriting from them. It is an alternative to inheritance and is often preferred because it promotes 
+  flexibility, modularity, and maintainability.
+
+    class Engine:
+      def start(self):
+          print("Engine starts")
+
+    class Car:
+      def __init__(self):
+          self.engine = Engine()  # Composition: Car has an Engine
+
+      def drive(self):
+          self.engine.start()
+          print("Car is driving")
+
+    # Using composition
+    my_car = Car()
+    my_car.drive()
+
+  You can pass different objects dynamically to customize behavior:
+
+      class PetrolEngine:
+        def start(self):
+            print("Petrol engine starts")
+
+      class ElectricEngine:
+          def start(self):
+              print("Electric engine starts")
+
+      class Car:
+          def __init__(self, engine):
+              self.engine = engine  # Inject the engine dynamically
+
+          def drive(self):
+              self.engine.start()
+              print("Car is driving")
+
+      # Using composition with different engines
+      petrol_car = Car(PetrolEngine())
+      electric_car = Car(ElectricEngine())
+
+      petrol_car.drive()
+      # Output:
+      # Petrol engine starts
+      # Car is driving
+
+      electric_car.drive()
+      # Output:
+      # Electric engine starts
+      # Car is driving`
 
   - Polymorphism simply means having many forms. Oportunity to apply one common function to object with different types.
  In Python, polymorphism allows objects of different classes to be treated as objects of a common super class. 
@@ -1525,6 +1641,51 @@
   It hides unnecessary code details from the user. Also,  when we do not want to give out sensitive parts of our
  code implementation and this is where data abstraction came.
  Data Abstraction in Python can be achieved by creating abstract classes.
+
+  - abstract classes provide a way to define common interfaces for a group of related classes. They serve as 
+  blueprints for other classes and enforce the implementation of certain methods in derived classes.
+    - Abstract classes cannot be instantiated directly. They are designed to be subclassed.
+    - Enforce a contract for subclass implementation, ensuring consistency across all derived classes.
+    - Python provides the abc (Abstract Base Classes) module to define abstract classes.
+
+        from abc import ABC, abstractmethod
+
+        class Animal(ABC):  # Abstract base class
+            @abstractmethod
+            def speak(self):
+                """This method must be implemented by subclasses."""
+                pass
+
+        class Dog(Animal):  # Subclass of Animal
+            def speak(self):
+                return "Woof!"
+
+        class Cat(Animal):  # Subclass of Animal
+            def speak(self):
+                return "Meow!"
+
+        # dog = Animal()  # This will raise an error: Can't instantiate abstract class
+
+        dog = Dog()
+        print(dog.speak())  # Output: Woof!
+        cat = Cat()
+        print(cat.speak())  # Output: Meow!
+
+    Example of an Error
+
+    from abc import ABC, abstractmethod
+
+    class Animal(ABC):
+        @abstractmethod
+        def speak(self):
+            pass
+
+    # Incorrect subclass: does not implement the abstract method `speak`
+    class Dog(Animal):
+        pass
+
+    # Attempting to instantiate `Dog` will raise an error
+    dog = Dog()  # TypeError: Can't instantiate abstract class Dog with abstract method speak
 
  - Descriptors
  In Python, a descriptor is an object attribute with "binding behavior," meaning it can control 
@@ -1629,12 +1790,72 @@
   Read-only Attributes: By only defining a getter method, you can make an attribute read-only.
 
   - slots
+   __slots__ mechanism is used to restrict the attributes that an object can have, allowing for more 
+  memory-efficient objects. By default, Python objects use a dictionary to store instance attributes, 
+  which can take up a lot of memory, especially if many instances are created. When __slots__ is 
+  defined in a class, Python doesn't create the usual dictionary for storing instance attributes, 
+  but instead, it creates a more memory-efficient internal structure.
+   You can define a set of attributes that instances of the class are allowed to have. Any attempt to 
+  assign an attribute not listed in __slots__ will result in an AttributeError.
+
     class A:
       __slots__ = ['a', 'b', 'c']
       a = 1  # read only atribute
     
     a = A()
     a.b = 2
+
+  - classmethod 
+   in Python is a method that is bound to the class, rather than an instance of the class. This means 
+   it receives the class itself as its first argument, rather than an instance of the class. It is 
+   defined using the @classmethod decorator and the first parameter is typically named cls (for class), 
+   rather than self (which is used for instance methods).
+
+      class Dog:
+        species = "Canis familiaris"  # Class-level attribute
+
+        def __init__(self, name):
+            self.name = name
+
+        @classmethod
+        def get_species(cls):
+            return cls.species
+
+        # Calling class method on the class
+        print(Dog.get_species())  # Output: Canis familiaris
+
+        # Calling class method on an instance (not recommended)
+        dog = Dog("Buddy")
+        print(dog.get_species())  # Output: Canis familiaris
+
+  Class methods are often used to create alternative constructors for a class.
+
+      class Car:
+          def __init__(self, brand, model):
+              self.brand = brand
+              self.model = model
+
+          @classmethod
+          def from_string(cls, car_string):
+              brand, model = car_string.split('-')
+              return cls(brand, model)
+
+      # Using the class method as an alternative constructor
+      car = Car.from_string("Toyota-Camry")
+      print(car.brand)  # Output: Toyota
+      print(car.model)  # Output: Camry
+
+  - staticmethod 
+   in Python is a method that is bound to a class rather than an instance of the class, but unlike 
+  a classmethod, it does not take the class (cls) or instance (self) as its first argument. It 
+  behaves just like a regular function, but it belongs to the class’s namespace and can be called 
+  on the class itself or on an instance.
+
+    class MyClass:
+    @staticmethod
+    def my_static_method(arg1, arg2):
+        # Function logic
+        print(f"Static method called with {arg1} and {arg2}")
 
   * Usecase of __new__: Singltone patern when we ned to allow creation only one instanse of object.
 
@@ -1644,9 +1865,11 @@
   A mixin is a class that provides method implementations for reuse by multiple related child classes. However, 
   the inheritance is not implying an is-a relationship.
   A mixin doesn’t define a new type. Therefore, it is not intended for direction instantiation.
-  A mixin bundles a set of methods for reuse. Each mixin should have a single specific behavior, implementing closely related methods.
+  A mixin bundles a set of methods for reuse. Each mixin should have a single specific behavior, implementing 
+  closely related methods.
   Typically, a child class uses multiple inheritance to combine the mixin classes with a parent class.
-  Since Python doesn’t define a formal way to define mixin classes, it’s a good practice to name mixin classes with the suffix Mixin.
+  Since Python doesn’t define a formal way to define mixin classes, it’s a good practice to name mixin classes 
+  with the suffix Mixin.
 
   class Person():
     pass
@@ -1682,7 +1905,8 @@
   d = D()
   d.method() 
 
-  print(D.mro())   >> [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+  print(D.mro())   >> [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, 
+  <class '__main__.A'>, <class 'object'>]
 
   List of object fields/memvers populated from:
     1. Object fields.
@@ -1692,7 +1916,9 @@
 
 -- COMPREHENTIONS
 
- Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the following 4 types of comprehension:
+ Comprehensions in Python provide us with a short and concise way to construct new sequences 
+ (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the 
+ following 4 types of comprehension:
 
     List Comprehensions
     Dictionary Comprehensions
@@ -1701,6 +1927,26 @@
 
     output_list = [output_exp for var in input_list if (var satisfies this condition)]
     dict_using_comp = {key:value for (key, value) in zip(state, capital)}
+  
+ Nested List Comprehension
+  Example: Flattening a List of Lists
+  Given a list of lists, create a flat list of all elements.
+
+  nested_list = [[1, 2], [3, 4], [5, 6]]
+  flattened = [item for sublist in nested_list for item in sublist]
+  print(flattened)  # [1, 2, 3, 4, 5, 6]
+
+  Creating a Multiplication Table
+  Generate a 2D array (list of lists) for a multiplication table.
+
+  multiplication_table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
+  print(multiplication_table)
+    # Output:
+        [[1, 2, 3, 4, 5], 
+        [2, 4, 6, 8, 10], 
+        [3, 6, 9, 12, 15], 
+        [4, 8, 12, 16, 20], 
+        [5, 10, 15, 20, 25]]
 
 
 -- LAMBDA MAP/FILTER/ZIP
@@ -1840,7 +2086,7 @@
       reterned_inner_fu.__closure__[0].cell_contents
 
       import inspect
-      inspect.getqlosurevars(fu)
+      inspect.getclosurevars(fu)
 
   How Closures Work
   Closures are created when a nested function captures variables from its enclosing scope. Here's an example:
@@ -2594,6 +2840,8 @@
   - YAGNI
     You Ain't Gonna Need It
 
+  - Change is inevitable in software.
+
   - SOLID
     Single Responsibility Principle (SRP)
     Open/Closed Principle
@@ -2609,6 +2857,7 @@
             One component - one task.
             One compovent - one responsibility.
             One component - one usage scenario.
+            Dont create god object.
 
       Let’s understand Single Responsibility Principle using an example:
 
@@ -2626,6 +2875,9 @@
     2. Open/Closed Principle
       This principle states that “Software entities (classes, modules, functions, etc.) should be open for extension, but 
       closed for modification” which means you should be able to extend a class behavior, without modifying it.
+
+      Separate parts of program that are change from that those stay the same. Program on interfases. Interfase stay
+      the same implementation are changes.
 
           Behavior is controlled by an interface.
 
@@ -2679,6 +2931,8 @@
       should not depend on low-level modules. Both should depend on abstractions“. Additionally, abstractions should not depend 
       on details. Details should depend on abstractions.
 
+        Favor composition over inheritance
+
       In simpler terms, the DIP suggests that classes should rely on abstractions (e.g., interfaces or abstract classes) rather 
       than concrete implementations.
       This allows for more flexible and decoupled code, making it easier to change implementations without affecting other 
@@ -2692,7 +2946,6 @@
   
   - Identify aspects of the application that can change and separate/encapsulate them from those that always remain constant.
   - Program at the interface level, not at the implementation level.
-  - Favor composition over inheritance.
   - Strive for loose coupling of interacting objects.
 
 

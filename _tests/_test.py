@@ -1,34 +1,22 @@
-from enum import Flag
-from datetime import date
+class Reverse():
+    def __init__(self, data):
+        self.data = data
+        self.index = len(data)
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.index == 0:
+            raise StopIteration
+        self.index -= 1
+        return self.data[self.index]
+    
+rev = Reverse("spam")
+print(type(iter(rev)))
+print()
 
- 
-class Weekday(Flag):
-    MONDAY = 1
-    TUESDAY = 2
-    WEDNESDAY = 4
-    THURSDAY = 8
-    FRIDAY = 16
-    SATURDAY = 32
-    SUNDAY = 64
+for char in rev:
+    print(char)
 
-    @classmethod
-    def from_date(cls, date):
-        return cls(date.isoweekday())
-
-
-def show_chores(chores, day):
-    day = Weekday.from_date(day)
-
-    for chore, days in chores.items():
-        if day in days:
-            print(chore)
-
-
-chores_for_ethan = {
-'feed the cat': Weekday.MONDAY | Weekday.WEDNESDAY | Weekday.FRIDAY,
-'do the dishes': Weekday.TUESDAY | Weekday.THURSDAY,
-'answer SO questions': Weekday.SATURDAY,
-}
-
-
-show_chores(chores_for_ethan, date.today())
+print("__next__" in dir(iter([1,2])))
