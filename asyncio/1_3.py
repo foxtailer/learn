@@ -1,5 +1,6 @@
 import asyncio
 
+
 async def counter_1():
     n = 0
     while True:

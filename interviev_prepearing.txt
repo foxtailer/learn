@@ -3818,8 +3818,10 @@
       -a --volumes
     docker builder purne -a
 
+    docker rmi: Removes an image.
+
     docker build: Builds an image from a Dockerfile.
-      -t image_name:tag
+      -t image_name:tag .
 
     docker pull: Downloads an image from a registry (like Docker Hub).
     docker run: Runs a container from an image.
@@ -3829,8 +3831,6 @@
     docker kill  ~ Faster than stop
     docker pause container
     docker unpause container
-    docker rm: Removes a container.
-    docker rmi: Removes an image.
     docker commit 
 
     docker logs container_name
@@ -3850,11 +3850,17 @@
     or bind mounts) between your host machine and a container. This allows the container to read and/or 
     write to a specific directory on your host.
 
+    docker run --rm -v /host/folder:/app counter:01
+
     docker run -d \
     -p 8000:80 \
     -v ${PWD}/site:/usr/share/nginx/html \
     --name server \
     nginx
+
+    docker run -v folder_name*:/app/in_container/folder/name image
+      > (on host) /var/lib/docker/volumes/folder_name*/_data
+      /host/folder:/container/folder:ro  Read only permissions for container
 
     docker compose up -d
       -f pash_to_file.yml

@@ -1,7 +1,7 @@
 last_fn = None
 
 
-def log(fn):
+def log_dec(fn):
     def wrapper(a,b):
         print(a)
         print(b)
@@ -12,9 +12,8 @@ def log(fn):
     return wrapper
 
 
-def round_result(places):
+def round_result_dec(places:int):
     def decorator(fn):
-
         def wrapper(a,b):
             return round(fn(a,b), places)
         
@@ -22,24 +21,25 @@ def round_result(places):
     return decorator
 
 
-def remember(fn):
+def remember_dec(fn):
     global last_fn
     last_fn = fn
     return last_fn
 
-def green(fn):
+
+def green_dec(fn):
     fn.green = True
     return fn
 
-@ green
-@ remember
-@ log
-@ round_result(2)
-
-
-def add(a,b): return a + b;
+@ green_dec
+@ remember_dec
+@ log_dec
+@ round_result_dec(2)
+def add(a,b): 
+    return a + b
 
 
 last_fn(3.14159, 2.71707)
 add(1.222222,2.222222)
 print(add.green)
+print(add.__name__)
