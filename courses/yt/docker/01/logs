@@ -1,0 +1,3 @@
+#  in order to get log file on in some host folder:
+# docker run --rm -v /host/folder:/app image_name:tag
+-------- 10 sec pass.

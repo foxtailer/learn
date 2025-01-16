@@ -19,4 +19,4 @@ def generate_permutations(N, M=-1, prefix=None):
         generate_permutations(N, M-1, prefix)
         prefix.pop()
 
-generate_permutations(5, 5)
+generate_permutations(5, 3)

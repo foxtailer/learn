@@ -1,0 +1,19 @@
+docker run --name web01 \
+--rm \
+-p 81:80 \
+-v /home/zoy/vscode/learn/courses/yt/docker/02_nginx_volume/nginx:/usr/share/nginx/html:ro -d nginx
+
+-v web_data:/usr/share/nginx/html:ro
+  create volume at /var/lib/docker/volumes/web_data/_data
+
+http://0.0.0.0:81/ > page from host/nginx folder
+
+###
+
+docker run -d \
+-v nextcloud:/var/www/html \
+-v apps:/var/www/html/custom_apps \
+-v config:/var/www/html/config \
+-v data:/var/www/html/data \
+-v theme:/var/www/html/themes/<YOUR_CUSTOM_THEME> \
+nextcloud

@@ -1,3 +1,74 @@
+The Python Virtual Machine (PVM) is the component of the Python interpreter that executes the 
+compiled bytecode. When you write Python code, the process typically follows these steps:
+
+Source Code to Bytecode: Your .py file is translated into bytecode, which is a low-level, 
+  platform-independent representation of your code.
+Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machine. The PVM 
+  interprets and executes these instructions, handling all operations like variable assignments, 
+  function calls, and loops.
+
+1. Parser
+  Role: Converts your source code into an abstract syntax tree (AST).
+  How It Works:
+  Reads and tokenizes the code (lexical analysis).
+  Checks for syntax errors.
+  Creates a tree structure representing the code's logic.
+  Example:
+  python
+  Copy code
+  x = 5 + 3
+  The parser creates a tree with nodes for = (assignment), x (variable), + (addition), 5, and 3.
+
+2. Abstract Syntax Tree (AST)
+  Role: A tree representation of the source code structure.
+  Purpose: Serves as an intermediate form for further processing.
+  Usage: Python provides a module (ast) to inspect and modify the AST.
+
+3. Compiler
+  Role: Converts the AST into bytecode.
+  Bytecode: A lower-level, platform-independent representation of the code.
+  Bytecode is stored in .pyc files in the __pycache__ directory for reuse.
+  Example Bytecode Instruction:
+  Copy code
+  LOAD_CONST 5
+  LOAD_CONST 3
+  BINARY_ADD
+  STORE_NAME x
+
+4. Python Virtual Machine (PVM)
+  Role: Executes the bytecode.
+  How It Works:
+  Reads one bytecode instruction at a time.
+  Executes it using C-level functions.
+  Manages Python’s runtime features like memory allocation, function calls, and object operations.
+
+5. Garbage Collector
+  Role: Automatically manages memory by removing unused objects.
+  Key Features:
+  Uses reference counting as the primary mechanism.
+  Handles cyclic references with a separate garbage collection process.
+  Controlled via the gc module.
+
+6. Global Interpreter Lock (GIL)
+  Role: Ensures only one thread executes Python bytecode at a time.
+  Purpose: Simplifies memory management for CPython.
+  Implication: Limits true parallelism in multi-threaded Python programs.
+
+7. Standard Library
+  Role: Provides a rich set of built-in modules and tools (e.g., os, sys, math).
+  How It Fits: These modules are dynamically loaded as needed during execution.
+
+8. Built-in Functions and Objects
+  Role: Provide essential functionality (e.g., len, print, int).
+  Example:
+  Calling len() is directly handled by the interpreter as a special operation.
+  
+9. C API
+  Role: Allows the Python interpreter to interface with C extensions.
+  Purpose: Enables performance-critical tasks and native integrations.
+
+
+
 *******BEGINER********
 
 -- VARIABLES
@@ -3153,6 +3224,11 @@
   git remote add test https://github.com/LpilinAlexandr/basic-git123.git  # Установить новый remote адрес
   git remote -v  # Посмотреть список всех remote адресов
 
+  git rm -r --cached *.sqlite3
+  git rm -r --cached **/__pycache__/
+
+  git status --ignored
+
  config
   git config -l # Список текущих настроек
   git config --global -l  # Список глобальных настроек
@@ -3302,6 +3378,7 @@
 
 -- LINUX
 
+  man hier
   /bin (Binaries)
     Contains essential binary executables (programs) needed for the system to operate, even in single-user mode.
     Examples: ls, cp, mv, bash.
@@ -3402,6 +3479,8 @@
   init 0
   systemctl poweroff -i
 
+  stty -a
+  
   env
   printenv
   export MY_VAR="my_value"  Temporary
@@ -3410,6 +3489,8 @@
   uptime
   cat /etc/os-release
   man command (manual of command)
+  whatis
+  apropos
   command --help
   tree (ls -R im more visual format)
   echo 'something' > file.txt
@@ -3422,6 +3503,7 @@
 
   ls -l -a
   ls -ld .
+  ls /bin | wc
 
   sudo dpkg -i DEB_PACKAGE
 
@@ -3850,6 +3932,8 @@
     or bind mounts) between your host machine and a container. This allows the container to read and/or 
     write to a specific directory on your host.
 
+    docker volume ls
+
     docker run --rm -v /host/folder:/app counter:01
 
     docker run -d \
@@ -3860,8 +3944,16 @@
 
     docker run -v folder_name*:/app/in_container/folder/name image
       > (on host) /var/lib/docker/volumes/folder_name*/_data
-      /host/folder:/container/folder:ro  Read only permissions for container
+      /host/folder:/container/folder:ro  Read only permissions for container it
+        can't change files in host folder. 
 
+    docker run -v /app/in_container/folder/name image
+      on host > /var/lib/docker/volumes/HASH/_data (del when contailer stop)
+      in container > /app/in_container/folder/name
+
+    docker volume create v_name
+
+    docker compose build
     docker compose up -d
       -f pash_to_file.yml
 
@@ -3895,6 +3987,12 @@
     Выполнение команд внутри контейнера
     docker compose exec <container_id> <command> - позволяет выполнять команды внутри контейнера, например docker exec 7cbde5a06bbb pytest api/tests.py
     docker exec -it <container_id> /bin/sh - открыть консоль контейнера
+
+    - nets
+     bridge
+      docker0: 172.17.0.0/16
+     host
+     none
 
 
 -- nginx
@@ -4385,17 +4483,19 @@
 
   sudo -i -u postgres
   sudo -u postgres psql
+  psql -U username -d mydatabase -W
   psql
 
   SET ROLE username;
 
-  psql -U username -d mydatabase -W
   \l  (list daatabases)
   \du  (list users)
   \dt  (db tables)
   \d table_name
   \c (conection details)
   \c dbname (to swap on other db)
+
+  SELECT current_user;
 
   CREATE DATABASE new_database_name;
   CREATE USER new_username WITH PASSWORD 'password';
@@ -4413,6 +4513,7 @@
   GRANT ALL PRIVILEGES ON DATABASE database_name TO new_username;
   ALTER USER new_username WITH SUPERUSER;
   ALTER USER new_username WITH CREATEDB;
+  ALTER USER django_user PASSWORD 'django_pass';
 
   psql -h remote_server_address -U your_username -d your_database
 
@@ -4424,7 +4525,6 @@
 
   SELECT field, field FROM table ORDER BY field DESC/ASC LIMIT n;
   SELECT major FROM student WHERE name IN ('dog', 'Lusy');
-  SELECT current_user;
   SELECT DISTINCT column_name FROM table_name;
   functions
   SELECT COUNT(column_name) FROM table_name;
@@ -4479,7 +4579,24 @@
   sudo systemctl restart postgresql
   sudo systemctl start postgresql
   sudo systemctl stop postgresql
+  - To change peep authentication when psql user mast be sistem user
   sudo -u postgres psql -c "SHOW config_file;"
+    Before:
+    local   all   django_user   peer
+    After:
+    local   all   django_user   md5
+
+  -reinstall
+  sudo systemctl stop postgresql
+  sudo apt remove --purge postgresql postgresql-* -y
+  sudo rm -rf /etc/postgresql /var/lib/postgresql /var/log/postgresql
+  sudo apt autoremove -y
+  sudo apt autoclean
+
+  sudo apt install postgresql -y
+  sudo systemctl start postgresql
+  sudo systemctl enable postgresql
+  sudo systemctl enable postgresql
 
 
 -- MONOLITH MICROSERVISES DECOMPOSED MONOLITH
