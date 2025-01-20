@@ -3933,6 +3933,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     write to a specific directory on your host.
 
     docker volume ls
+    docker volume prune
+    docker volume rm
 
     docker run --rm -v /host/folder:/app counter:01
 
