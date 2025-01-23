@@ -2409,6 +2409,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
   multi(2, 4)  # [8, 8, 8, 8]
 
+  - decorator with parameters
+  is not a decorator itself it is decorator factory that return a decorator
+  regular decorator looks this way  fu = decorator(fu)
+  decorator with parametrs looks like this fu = dec_factory(param)(fu)
+
 
 -- CONTEXT MENEGER(WITH)
 -- METACLASSES
@@ -2914,6 +2919,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   - Change is inevitable in software.
 
   - SOLID
+
     Single Responsibility Principle (SRP)
     Open/Closed Principle
     Liskov’s Substitution Principle (LSP)
@@ -3018,6 +3024,12 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   - Identify aspects of the application that can change and separate/encapsulate them from those that always remain constant.
   - Program at the interface level, not at the implementation level.
   - Strive for loose coupling of interacting objects.
+
+
+-- ANTIPATTERN
+
+  - ITM
+    Initiate then modify
 
 
 -- PROBLEM SOLVING
