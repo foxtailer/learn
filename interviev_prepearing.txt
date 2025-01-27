@@ -3836,7 +3836,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   microservises
 
   python manage.py createsuperuser
-  makemigrations
+  makemigrations   (try: python manage.py makemigrations --empty blog. If django dont want create migrations)
   migrate
   python manage.py runserver 0.0.0.0:8080
   python manage.py runserver 8001
@@ -4511,7 +4511,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
   SELECT current_user;
 
-  CREATE DATABASE new_database_name;
+  CREATE DATABASE db_name;
+
   CREATE USER new_username WITH PASSWORD 'password';
 
   CREATE TABLE student(
