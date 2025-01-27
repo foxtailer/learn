@@ -12,7 +12,13 @@ class PublishedManager(models.Manager):
 
 
 class Post(models.Model):
-
+    # Все типы полей находятся на странице
+    # https://docs.djangoproject.com/en/4.2/ref/models/fields/
+    
+    # перечисляемый класс Status путем подклассирования
+    # класса models.TextChoices. Доступными вариантами статуса поста являются
+    # DRAFT и PUBLISHED. Их соответствующими значениями выступают DF и PB, а их
+    # метками или читаемыми именами являются Draft и Published.
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
@@ -24,7 +30,7 @@ class Post(models.Model):
                                on_delete=models.CASCADE,
                                related_name='blog_posts')
     body = models.TextField()
-    publish = models.DateTimeField(default=timezone.now)
+    publish = models.DateTimeField(default=timezone.now)  # транслируется в столбец DATE­TIME в базе данных SQL
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2,
@@ -36,7 +42,15 @@ class Post(models.Model):
     tags = TaggableManager()
 
     class Meta:
+        # определим
+        # заранее заданный порядок. Он будет применяться при извлечении объектов
+        # из базы данных, в случае если в запросе порядок не будет указан.
         ordering = ['-publish']
+        # Индекс повысит
+        # производительность запросов, фильтрующих или упорядочивающих резуль-
+        # таты по указанному полю. Мы ожидаем, что многие запросы извлекут пре-
+        # имущества из этого индекса, поскольку для упорядочивания результатов мы
+        # по умолчанию используем поле publish.
         indexes = [
             models.Index(fields=['-publish']),
         ]

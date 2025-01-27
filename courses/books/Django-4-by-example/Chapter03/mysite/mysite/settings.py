@@ -129,6 +129,14 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+# При создании приложения командой startapp значение
+# параметра DEFAULT_AUTO_FIELD по умолчанию имеет тип BigAutoField. Это
+# 64-битное целое число, которое увеличивается автоматически в соответ-
+# ствии с доступными идентификаторами. Если не указывать первичный ключ
+# своей модели, то Django будет добавлять это поле автоматически. В качестве
+# первичного ключа можно также определить одно из полей модели, установив
+# для него параметр primary_key=True.
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email server configuration

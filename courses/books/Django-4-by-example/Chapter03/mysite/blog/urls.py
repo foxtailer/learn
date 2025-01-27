@@ -1,3 +1,10 @@
+"""
+Место, где располагаются ваши шаблоны URL-адресов . Каж-
+дый URL-адрес, который определен здесь, соотносится с представ-
+лением
+"""
+
+
 from django.urls import path
 from . import views
 from .feeds import LatestPostsFeed

@@ -1,3 +1,5 @@
+# добавим модели блога на сайт администрирования.
+
 from django.contrib import admin
 from .models import Post, Comment
 
