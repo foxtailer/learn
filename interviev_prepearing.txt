@@ -3676,18 +3676,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     echo I am user $myname | md5sum | cut -d ' ' -f 1
     stat --format "%U" file
     for i in $(seq -w 0000 9999);  = for i in {0..9}{0..9}{0..9}{0..9};
-
-    cat /etc/bandit_pass/bandit15
-    20 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
-    21 EeoULMCra2q0dSkYj561DX7s1CpBuOBt
-    22 tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
-    23 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
-    24 gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
-    25 iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
-    26 s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
-    27 upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
-    28 Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
-    29 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
     
 
 -- CC
