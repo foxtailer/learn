@@ -1,6 +1,7 @@
 .*
 *.db
 *.sqlite3
+__pycache__
 **/__pycache__/
-.env
-projects/telegram/eng_asistenf/Mari.csv
+github_settings.py
+*.pyc
