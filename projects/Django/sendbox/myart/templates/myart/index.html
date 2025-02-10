@@ -1,0 +1,13 @@
+{% extends "myart/base.html" %}
+{% load static %}
+
+{% block title %} Index {% endblock title %}
+
+{% block menu %}
+{% include "myart/includes/rubrics_menu.html" with current_rubric=None %}
+{% endblock menu %}
+
+{% block content %}
+<h1 style='background: url("{% static "myart/bg.jpeg" %}") left / auto 100% no-repeat;'>Index</h1>
+{% include "myart/includes/list.html" %}
+{% endblock content %}

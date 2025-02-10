@@ -1,0 +1,12 @@
+{% extends "myart/base.html" %}
+
+{% block title %}{{ current_rubric.name }}{% endblock %}
+
+{% block menu %}
+{% include "myart/includes/rubrics_menu.html" with current_rubric=None %}
+{% endblock menu %}
+
+{% block content %}
+<h1>Rubric</h1>
+{% include "myart/includes/list.html" %}
+{% endblock %}

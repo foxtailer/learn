@@ -1,0 +1,10 @@
+<div>
+    <a href="{% url "my_list" %}">All</a>
+    {% for rubric in rubrics %}
+        <a href="{% if rubric.pk == current_rubric.pk %}#{% else %}
+                 {% url "my_rubric" rubric.pk %}{% endif %}"
+        {% if rubric.pk == current_rubric.pk %}style='color:red;'{% endif %}>
+        {{ rubric.name }}</a>
+    {% endfor %}
+    <a href="{% url "add" %}">+</a>
+</div>
