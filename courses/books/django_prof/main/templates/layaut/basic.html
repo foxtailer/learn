@@ -37,25 +37,25 @@
                                data-bs-toggle="dropdown" href="#">Профиль</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{% url 'main:profile' %}">Мои
-                                   объявления</a>
+                                   объявления</a> 
                                 <a class="dropdown-item" href="{% url 'main:profile_edit' %}">
                                    Изменить личные данные</a>
                                 <a class="dropdown-item" href="{% url 'main:password_edit' %}">
-                                   Изменить пароль</a>
+                                   Изменить пароль</a>{% comment %}
                                 <hr class="dropdown-divider">
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" href="{% url 'main:profile_delete' %}">
+                                    Удалить</a>{% endcomment %}
                                 <form class="px-3" method="post"
-                                      action="{% url 'main:logout' %}">
+                                        action="{% url 'main:logout' %}">
                                     {% csrf_token %}
                                     {% bootstrap_button 'Выйти' button_class='btn-danger' %}
                                 </form>
-                                <hr class="dropdown-divider">
-                                <a class="dropdown-item" href="{% url 'main:profile_delete' %}">
-                                   Удалить</a>
-                            </div>
+                            </div> 
                         </div>
                         {% else %}
-                        {% comment %} <a class="nav-link" href="{% url 'main:register' %}">Регистрация</a>
-                        <a class="nav-link" href="{% url 'main:login' %}">Вход</a> {% endcomment %}
+                        <a class="nav-link" href="{% url 'main:register' %}">Регистрация</a>
+                        <a class="nav-link" href="{% url 'main:login' %}">Вход</a> 
                         {% endif %}
                     </div>
                 </div>
