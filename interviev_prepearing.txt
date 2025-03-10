@@ -300,6 +300,36 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Dictionaries
     User-Defined Classes (It purely depends upon the user to define the characteristics)
 
+    * We can use in dict. In order to not get KeyError while acces to key:
+
+      numberOfPets.setdefault('cats', 0) # Does nothing if 'cats' exists.
+
+    You can use the collections.defaultdict class to eliminate KeyError errors
+    entirely.
+
+      import collections
+      scores = collections.defaultdict(int)
+      scores
+      defaultdict(<class 'int'>, {})
+      scores['Al'] += 1 # No need to set a value for the 'Al' key first.
+      scores
+      defaultdict(<class 'int'>, {'Al': 1})
+      scores['Zophie'] # No need to set a value for the 'Zophie' key first.
+      scores['Zophie'] += 40
+      scores
+      defaultdict(<class 'int'>, {'Al': 1, 'Zophie': 40})
+
+      ######
+
+      import collections
+      booksReadBy = collections.defaultdict(list)
+      booksReadBy['Al'].append('Oryx and Crake')
+      booksReadBy['Al'].append('American Gods')
+      len(booksReadBy['Al'])
+      2
+      len(booksReadBy['Zophie']) # The default value is an empty list.
+      0
+
   Objects of built-in type that are immutable are:
     Numbers (Integer, Rational, Float, Decimal, Complex & Booleans)
     Strings
@@ -517,6 +547,24 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     <	Less than	x < y
     >=	Greater than or equal to	x >= y
     <=	Less than or equal to	x <= y
+
+  - Chain comparison
+
+    # Unpythonic Example
+    if 42 < spam and spam < 99:
+
+    # Same as
+
+    # Pythonic Example
+    if 42 < spam < 99
+
+    spam = eggs = bacon = 'string'
+    spam == eggs == bacon == 'string'
+    True
+
+  * whenever you compare a value to None, you should almost always use the is operator rather
+  than the == operator. == can be overloaded.
+  There is only one None object in any Python program. 
 
  Logical
 
