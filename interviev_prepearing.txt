@@ -1116,6 +1116,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Boolean type: bool
     Set data types: set, frozenset
 
+  * bool data type is a subclass of the int data type.
+  
   -List is an ordered sequence of some data written using square brackets([]) and commas(,).
   -Tuple is another data type which is a sequence of data similar to a list. But it is immutable.
  That means data in a tuple is write-protected. Data in a tuple is written using parenthesis and commas.
