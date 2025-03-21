@@ -141,35 +141,35 @@ while True:
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
 
-        if isWinner(theBoard, playerLetter):
-            drawBoard(theBoard)
-            print('Hooray! You have won the game!')
-            gameIsPlaying = False
-        else:
-            if isBoardFull(theBoard):
+            if isWinner(theBoard, playerLetter):
                 drawBoard(theBoard)
-                print('The game is a tie!')
-                break
+                print('Hooray! You have won the game!')
+                gameIsPlaying = False
             else:
-                turn = 'computer'
+                if isBoardFull(theBoard):
+                    drawBoard(theBoard)
+                    print('The game is a tie!')
+                    break
+                else:
+                    turn = 'computer'
 
         else:
             # Computer's turn
             move = getComputerMove(theBoard, computerLetter)
             makeMove(theBoard, computerLetter, move)
 
-        if isWinner(theBoard, computerLetter):
-            drawBoard(theBoard)
-            print('The computer has beaten you! You lose.')
-            gameIsPlaying = False
-        else:
-            if isBoardFull(theBoard):
+            if isWinner(theBoard, computerLetter):
                 drawBoard(theBoard)
-                print('The game is a tie!')
-                break
+                print('The computer has beaten you! You lose.')
+                gameIsPlaying = False
             else:
-                turn = 'player'
+                if isBoardFull(theBoard):
+                    drawBoard(theBoard)
+                    print('The game is a tie!')
+                    break
+                else:
+                    turn = 'player'
 
-        print('Do you want to play again? (yes or no)')
-        if not input().lower().startswith('y'):
-            break
+    print('Do you want to play again? (yes or no)')
+    if not input().lower().startswith('y'):
+        break
