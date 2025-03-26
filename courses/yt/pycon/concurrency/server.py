@@ -2,8 +2,12 @@
 
 from socket import *
 from threading import Thread
+from concurrent.futures import ProcessPoolExecutor as Pool
 
 from fib import fib
+
+
+pool = Pool(4)
 
 
 def fib_server(address: tuple[str, int]):  # address: ('1.1.1.1', 8000)
@@ -31,7 +35,8 @@ def fib_handler(client):
             break
 
         n = int(req)
-        result = fib(n)
+        future = pool.submit(fib, n)
+        result = future.result()
         resp = str(result).encode('ascii') + b'\n'
         client.send(resp)  # Sends the computed Fibonacci number back to the client.
     print('Closed', client.getpeername())
