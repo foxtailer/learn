@@ -1,3 +1,6 @@
+# Find closest value to given integer, in bst.
+
+
 class Node:
    def __init__(self, data):
       self.left = None
@@ -47,7 +50,7 @@ class Node:
 
 
 # LOOP
-def findClosestValueInBst(tree, target):
+def find_closest_value_in_bst(tree, target):
     return fcvib_helper(tree, target, float("inf"))
 
 def fcvib_helper(tree, target, closest):
@@ -74,4 +77,4 @@ root.insert(22)
 root.insert(1)
 root.insert(14)
 
-print(findClosestValueInBst(root, 12))
+print(find_closest_value_in_bst(root, 12))

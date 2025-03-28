@@ -2815,6 +2815,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
 -- DS
 
+  "ds is a collection of data values the relations among them and functions that can be applied to them."
+
   -queue
 
   Operations associated with queue are: 

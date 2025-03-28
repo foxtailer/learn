@@ -1,3 +1,8 @@
+# Find if second array can be created from first one by deleating some items,
+# without changing the order of items in first array.
+
+
+# O(n) time | O(1) space
 def subsequence(parent_arr, child_arr):
     """
     >>> subsequence([1,4,5,2,7,8,3,1,12], [4,7,1])
@@ -17,6 +22,7 @@ def subsequence(parent_arr, child_arr):
     return child_pointer == len(child_arr)
 
 
+# O(n) time | O(1) space
 def subsequence2(parent_arr, child_arr):
     """
     >>> subsequence([1,4,5,2,7,8,3,1,12], [4,7,1])
