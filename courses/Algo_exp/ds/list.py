@@ -28,3 +28,7 @@ lst[1:2]  # O(k) (where k = b - a)
 lst.count(1)  # return 1. O(n)
 lst.index(1)  # return 0. O(n)
 lst.clear()	  # lst -> []. O(n)
+
+"""
+* list can work like stack (LIFO - Last In, First Out) using append and pop
+"""
