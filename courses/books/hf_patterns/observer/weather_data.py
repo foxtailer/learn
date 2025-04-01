@@ -1,3 +1,5 @@
+# - Strive for loose coupling of interacting objects.
+
 from interfaces import Subject
 
 

@@ -1,56 +1,62 @@
 # Find closest value to given integer, in bst.
 
+from treelib import Tree
 
-class Node:
-   def __init__(self, data):
-      self.left = None
-      self.right = None
-      self.data = data
-      self.deep = 0
+class BinarySearchTree:
+    def __init__(self):
+        self.tree = Tree()
+        self.root = None
 
-   def insert(self, data):
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                    self.left.deep = self.deep+1
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                    self.right.deep = self.deep+1
-                else:
-                    self.right.insert(data)
+    def insert(self, data):
+        if self.root is None:
+            # Creating the root node
+            self.root = self.tree.create_node(data, data, data=data)
+            self.root.left = None
+            self.root.right = None
         else:
-            self.data = data
+            self._insert(self.root, data)
 
-   def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print(f"{self.data}({self.deep})", end=','),
-        if self.right:
-            self.right.PrintTree()
+    def _insert(self, current_node, data):
+        # Insert data to the left
+        if data < current_node.data:
+            if current_node.left is None:
+                current_node.left = self.tree.create_node(data, data, data=data, parent=current_node)
+                current_node.left.left = None
+                current_node.left.right = None
+            else:
+                self._insert(current_node.left, data)
+        # Insert data to the right
+        elif data > current_node.data:
+            if current_node.right is None:
+                current_node.right = self.tree.create_node(data, data, data=data, parent=current_node)
+                current_node.right.left = None
+                current_node.right.right = None
+            else:
+                self._insert(current_node.right, data)
 
-# RECURSION
-# def findClosestValueInBst(tree, target):
-#     return fcvib_helper(tree, target, float("inf"))
-
-# def fcvib_helper(tree, target, closest):
-#     if tree is None:
-#         return closest
-#     if abs(target - closest) > abs(target - tree.data):
-#         closest = tree.data
-#     if target < tree.data:
-#         return fcvib_helper(tree.left, target, closest)
-#     elif target > tree.data:
-#         return fcvib_helper(tree.right, target, closest)
-#     else:
-#         return closest
+    def display(self):
+        self.tree.show()
 
 
-# LOOP
 def find_closest_value_in_bst(tree, target):
+    return fcvib_helper(tree, target, float("inf"))
+
+def fcvib_helper(tree, target, closest):
+    if tree is None:
+        return closest
+    
+    if abs(target - closest) > abs(target - tree.data):
+        closest = tree.data
+
+    if target < tree.data:
+        return fcvib_helper(tree.left, target, closest)
+    elif target > tree.data:
+        return fcvib_helper(tree.right, target, closest)
+    else:
+        return closest
+
+
+def find_closest_value_in_bst2(tree, target):
     return fcvib_helper(tree, target, float("inf"))
 
 def fcvib_helper(tree, target, closest):
@@ -65,16 +71,21 @@ def fcvib_helper(tree, target, closest):
         else:
             break
     return closest
-    
 
-root = Node(10)
-root.insert(5)
-root.insert(15)
-root.insert(2)
-root.insert(5)
-root.insert(13)
-root.insert(22)
-root.insert(1)
-root.insert(14)
 
-print(find_closest_value_in_bst(root, 12))
+tree = BinarySearchTree()
+tree.insert(10)
+tree.insert(5)
+tree.insert(15)
+tree.insert(2)
+tree.insert(6)
+tree.insert(1)
+tree.insert(13)
+tree.insert(11)
+tree.insert(22)
+tree.insert(14)
+
+tree.display()
+
+print(find_closest_value_in_bst(tree.root, 12))
+print(find_closest_value_in_bst2(tree.root, 12))

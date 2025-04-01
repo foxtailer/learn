@@ -1,3 +1,5 @@
+# separate behavior interfases for ducks
+
 from abc import ABC, abstractmethod
 
 

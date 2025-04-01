@@ -1,3 +1,5 @@
+# classes should be open te extention and close to changes 
+
 from abstract import Beverage, CondimentDecorator, Size
 
 

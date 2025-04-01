@@ -1,3 +1,9 @@
+# Separate all that can changes(behavior, fiatures) from duck
+# and create interfase to update what stay saim
+# - Incapsulate changes
+# - composition better then ierarhy
+# - program on interfase not on realization
+
 from behavior import *
 
 
