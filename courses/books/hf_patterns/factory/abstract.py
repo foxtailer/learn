@@ -14,13 +14,18 @@ class Pizza(ABC):
         self.sauce = ""
         self.toppings = []
 
+    @abstractmethod
     def prepare(self):
-        print(f"Preparing {self.name}")
-        print("Tossing dough...")
-        print("Adding sauce...")
-        print("Adding toppings:")
-        for topping in self.toppings:
-            print(f"  {topping}")
+        pass
+    
+    # Change to abstract when adding ingredients factory
+    # def prepare(self):
+    #     print(f"Preparing {self.name}")
+    #     print("Tossing dough...")
+    #     print("Adding sauce...")
+    #     print("Adding toppings:")
+    #     for topping in self.toppings:
+    #         print(f"  {topping}")
 
     def bake(self):
         print("Bake for 25 minutes at 350°F")
@@ -53,3 +58,28 @@ class PizzaStore(ABC):
         pass  # This will be implemented by subclasses
 
 
+class PizzaIngredientFactory(ABC):
+
+    @abstractmethod
+    def create_dough(self):
+        pass
+
+    @abstractmethod
+    def create_sauce(self):
+        pass
+
+    @abstractmethod
+    def create_cheese(self):
+        pass
+
+    @abstractmethod
+    def create_veggies(self):
+        pass
+
+    @abstractmethod
+    def create_pepperoni(self):
+        pass
+
+    @abstractmethod
+    def create_clam(self):
+        pass
