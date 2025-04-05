@@ -1,34 +1,9 @@
-class Node:
-   def __init__(self, data):
-      self.left = None
-      self.right = None
-      self.data = data
-      self.deep = 0
+# find sum of depth of each node in tree
 
-   def insert(self, data):
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                    self.left.deep = self.deep+1
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                    self.right.deep = self.deep+1
-                else:
-                    self.right.insert(data)
-        else:
-            self.data = data
+from helpers import BinaryTree
 
-   def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print(f"{self.data}({self.deep})", end=','),
-        if self.right:
-            self.right.PrintTree()
 
+# O(n) time | O(h) space h - height of tree
 def node_depth(root):
     result = 0
     stack = [{"node": root, "depth": 0}]
@@ -45,14 +20,26 @@ def node_depth(root):
         stack.append({"node": node.right, "depth": depth+1})
     return result
 
-root = Node(10)
-root.insert(5)
-root.insert(15)
-root.insert(2)
-root.insert(5)
-root.insert(13)
-root.insert(22)
-root.insert(1)
-root.insert(14)
 
-print(node_depth(root))
+# O(n) time | O(h) space h - height of tree
+def node_depth2(root, depth=0):
+    if root is None:
+        return 0
+    
+    return depth + node_depth2(root.left, depth + 1) + node_depth2(root.right, depth + 1)
+
+
+tree = BinaryTree()
+tree.insert(5)
+tree.insert(15)
+tree.insert(2)
+tree.insert(5)
+tree.insert(13)
+tree.insert(22)
+tree.insert(1)
+tree.insert(14)
+tree.insert(3)
+tree.display()
+
+print(node_depth(tree.root))
+print(node_depth2(tree.root))
