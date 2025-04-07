@@ -61,7 +61,7 @@ header, footer {
 
 /* About us */
 .my_about {
-    background-color: var(--bs-white);
+    background-color: #eeeeee;
 }
 
 .my_about i {
@@ -85,6 +85,11 @@ header, footer {
     height: 3px;
     background-color: var(--color1);
     margin: 15px auto 30px;
+}
+
+/* For whom */
+.my_for-whom h5 {
+    border: 3px solid var(--color1);
 }
 
 /* Colors */
