@@ -29,3 +29,7 @@ tree.show()
 
 tree.all_nodes()
 tree.children('15')  # [Node(tag=13, identifier=13, data=None), Node(tag=22, identifier=22, data=None)]
+tree.root  # '10'
+tree.children(tree.root)[0].identifier  # '5'
+tree.ancestor('5')  # '10'
+tree.get_node('5')  # Node(tag=5, identifier=5, data=None)
