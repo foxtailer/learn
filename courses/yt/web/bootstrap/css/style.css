@@ -57,3 +57,46 @@ header, footer {
     color: var(--bs-white);
     background-color: var(--color1);
 }
+
+
+/* About us */
+.my_about {
+    background-color: var(--bs-white);
+}
+
+.my_about i {
+    font-size: 25px;
+    color: var(--color2);
+}
+
+.my_circle {
+    margin: 0 auto 15px;
+    width: 70px;
+    height: 70px;
+    border: 3px solid var(--color2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my_line {
+    width: 100px;
+    height: 3px;
+    background-color: var(--color1);
+    margin: 15px auto 30px;
+}
+
+/* Colors */
+.my_color1 {
+    color: var(--color1);
+}
+.my_color2 {
+    color: var(--color2);
+}
+.my_bg1 {
+    background-color: var(--color1);
+}
+.my_bg2 {
+    background-color: var(--color2);
+}
