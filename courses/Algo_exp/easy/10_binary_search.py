@@ -1,6 +1,7 @@
+# Return index of item in sorted list
+
 # Time O(log(n))
 # Space O(1) | O(log(n))-for recursion
-
 def binary_search(array, target):
     return bs_helper(array, target, 0, len(array)-1)
 
@@ -19,6 +20,7 @@ def bs_helper(array, target, left, right):
         return bs_helper(array, target, middle+1, right)
 
 
+# O(log(n)) time | O(1) space
 def binary_search2(array, target):
     left = 0
     right = len(array)-1

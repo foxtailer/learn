@@ -22,4 +22,4 @@ def strict_subsequence(parent_arr, child_arr):
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod(verbose=True)
+    doctest.testmod()

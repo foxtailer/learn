@@ -1,4 +1,6 @@
+# O(n) time | O(d) space; d - max depth of array. product_sum call d times
 def product_sum(array, multiplier=1):
+    # multiplier - depth or array, each nested array has depth +1
     sum = 0
     for element in array:
         if type(element) is list:
@@ -9,4 +11,5 @@ def product_sum(array, multiplier=1):
 
 
 array = [5,2,[7,-1],3,[6,[-13,8],4]]
-print(product_sum(array))
+              #d1   d2       d2  d3 
+print(product_sum(array))  # 12

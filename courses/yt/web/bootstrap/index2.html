@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/fav-rocket-16.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/fontello.css">
+
+    <title>Asistent</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="d-flex align-items-center gap-3 flex-wrap mt-3" style="position: sticky; top: 0;">
+                <a class="text-decoration-none" href=""><i class="icon-paper-plane"></i></a>
+                <a class="text-decoration-none text-uppercase" href="">Play</a>
+            </div>
+            <hr>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <div class="container">
+        <div class="row">
+            <!-- Search -->
+             <!-- style="position: fixed; top: 0; right: 0; height: 100vh; overflow-y: auto;" -->
+              <!-- style="max-height: 500px; overflow-y: auto;" -->
+             <!-- style="position: sticky; top: 0;" -->
+            <div class="col-md-3 border rounded"  style="overflow-y: auto;">
+                <!-- Sort options -->
+                <div class="bg-light" style="position: sticky; top: 0; z-index: 5;">
+                  <!-- Sorting type -->
+                  <div class="d-flex align-items-center justify-content-around">
+                    <button class="my-1 text-decoration-none text-dark border-0 bg-transparent"><i
+                            class="icon-paper-plane"></i></button>
+                    <span class="vr"></span>
+                    <button class="my-1 text-decoration-none text-dark border-0 bg-transparent"><i
+                            class="icon-paper-plane"></i></button>
+                    <span class="vr"></span>
+                    <button class="my-1 text-decoration-none text-dark border-0 bg-transparent"><i
+                            class="icon-paper-plane"></i></button>
+                  </div>
+                  <!-- Select language -->
+                  <div class="d-flex align-items-center flex-wrap">
+                      <button
+                          class="m-1 text-decoration-none text-dark border-0 bg-transparent text-uppercase text-decoration-underline">Eng</button>
+                      <button
+                          class="m-1 text-decoration-none text-dark border-0 bg-transparent text-uppercase text-decoration-underline">Jp</button>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Search...">
+                </div>
+                
+                <!-- Search result -->
+                <div class="p-1 bg-light">
+                  <!-- Group -->
+                  <div class="accordion accordion-flush" id="groupSearchAccordion">
+                      <div class="accordion-item">
+                          <h2 class="accordion-header" id="group1Header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#group1Collapse" aria-expanded="false" aria-controls="group1Collapse">
+                                  Animals
+                              </button>
+                          </h2>
+                          <div id="group1Collapse" class="accordion-collapse collapse" aria-labelledby="group1Header"
+                              data-bs-parent="#groupSearchAccordion">
+                              <div class="accordion-body">
+                                  <!-- Word list inside group -->
+                                  <div class="d-flex flex-column">
+                                      <button class="text-start text-decoration-none text-dark border-0 bg-transparent"
+                                          onclick="loadWord('Cat')">Cat</button>
+                                      <button class="text-start text-decoration-none text-dark border-0 bg-transparent"
+                                          onclick="loadWord('Dog')">Dog</button>
+                                      <button class="text-start text-decoration-none text-dark border-0 bg-transparent"
+                                          onclick="loadWord('Rabbit')">Rabbit</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Alphabet -->
+                  <div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                  <!-- Date -->
+                  <div>
+                      <h5 class="bg-light p-2 text-center">11.10.2001</h5>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Apple')">Apple</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                        <li class="list-group-item border-0 p-0 ps-3">
+                          <button class="text-start text-decoration-none text-dark border-0 bg-transparent p-0" onclick="loadWord('Ant')">Ant</button>
+                        </li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="col-md-9">
+                <div class="p-3 bg-white border rounded">
+                    <h2>Main Content</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, dicta a nemo voluptate cupiditate molestiae debitis sit pariatur, recusandae eligendi vitae exercitationem aliquam porro neque accusantium maiores deleniti commodi nam quo quis quam? Autem cumque assumenda itaque, velit vero eos praesentium incidunt ullam quidem suscipit. Impedit quis laboriosam excepturi cumque aut eaque deleniti accusamus inventore iste? Modi eaque dolorum natus, dolorem totam quia animi provident! Amet laudantium quaerat minima perspiciatis sit repudiandae, ut ipsa excepturi ex officiis rem delectus, ducimus, sunt est modi. Officia sequi voluptates, vitae ipsum magni tempora nobis natus atque? Vel blanditiis assumenda iure! Magnam fuga itaque iusto. Quam dolore voluptatem doloribus harum nemo labore minus itaque inventore molestias saepe illo veritatis iure alias odit, aliquam cumque cum! Voluptatibus iste nobis asperiores. Explicabo ex perferendis libero dolorem nihil, magni adipisci maxime ut! Distinctio, quo? Laboriosam alias officia, consequuntur nihil soluta quisquam iste eaque reprehenderit neque autem velit vel voluptas explicabo sunt dicta ratione dolores recusandae cumque officiis quod beatae, assumenda nemo. Iusto molestiae unde nemo expedita ipsam, doloremque qui. Natus sunt accusantium placeat nobis numquam quidem exercitationem in nisi? Dolor reiciendis vitae debitis dignissimos et officia enim. Excepturi molestias minima incidunt repellat ipsa dolorum pariatur labore in. Cupiditate debitis doloribus facilis suscipit nemo incidunt nihil recusandae culpa illum. Totam sequi voluptatem id blanditiis doloremque mollitia quo perferendis obcaecati error, maiores saepe quos eveniet tenetur voluptates nam praesentium pariatur eum rem minus aliquam dolore doloribus ducimus autem maxime! Fugiat, aut? Perferendis et ullam quibusdam corporis nostrum hic blanditiis odit alias velit? Dolore voluptatum eaque doloremque et magnam, rem numquam ratione excepturi aut corporis eos beatae culpa optio, consequuntur consequatur dolorem expedita minima omnis veritatis libero quidem recusandae eveniet, debitis voluptas? Aperiam earum ipsum perspiciatis accusamus itaque neque ea numquam corporis, nesciunt nam, autem totam. A mollitia quasi aspernatur soluta saepe natus delectus. Fuga quae quia rem consequatur, sint quo hic earum dignissimos, corrupti facilis ducimus iste qui animi deleniti? Dolor voluptates dolores commodi consectetur, explicabo error ex molestiae eveniet laudantium a maiores placeat alias temporibus ullam accusantium ab, est quasi modi dicta eum debitis delectus. Mollitia voluptates rem quos quas cumque necessitatibus eligendi minus debitis numquam quo accusantium, eos ex perferendis aspernatur optio, blanditiis saepe minima illo perspiciatis molestiae consectetur accusamus aliquid suscipit harum. Obcaecati, doloremque voluptatibus eius minus necessitatibus neque sequi non laboriosam ex, pariatur mollitia vel, fuga nihil impedit. Nostrum, quibusdam. Libero culpa nisi reprehenderit ratione expedita tempora. Recusandae qui, libero error nulla tempore beatae sint perspiciatis, porro perferendis expedita deleniti quibusdam distinctio illum tenetur labore ad dolor amet ullam. Alias est veritatis dolorum nostrum asperiores. Perspiciatis beatae sit officiis tempore dolorum maxime et. Quasi assumenda facilis nulla atque vitae necessitatibus sunt quibusdam vel totam! Quo, harum! Incidunt consequatur ratione quam magnam dolore quas aspernatur reiciendis. Iste dolorem labore voluptate ut inventore perferendis minima asperiores illum? Nobis tenetur quae molestiae libero voluptas magni unde sed ab aperiam, veniam facilis maxime animi nisi provident adipisci, repellendus architecto suscipit asperiores? Et ab suscipit quisquam inventore assumenda voluptatem provident dicta, dignissimos modi amet id possimus, ullam eligendi expedita saepe, non ipsa! Minus suscipit quibusdam quam id sit unde dolorem necessitatibus rem officiis ipsa similique ad tenetur esse veritatis accusantium error iste laborum, eaque itaque ducimus tempora! Cupiditate cumque illum impedit tenetur, autem fugiat repellendus porro deleniti modi natus quam qui. Amet labore doloremque quibusdam eum nihil, animi iusto ut hic? Magni quos quae facere sequi beatae neque sunt libero pariatur voluptate maxime qui, reiciendis explicabo iure nam perspiciatis delectus commodi quidem harum iste ea distinctio, necessitatibus voluptatem facilis animi? Corporis dolorum rem dolor consequuntur ab? Quod, eaque nulla quo quibusdam aliquam reiciendis at libero porro sint voluptatum fuga cupiditate dicta mollitia ratione nihil eos! Adipisci, sapiente iusto dolorem iste numquam earum vitae veritatis eum, a reprehenderit nemo quaerat eius. Adipisci magni sit impedit officia ullam exercitationem sunt sed perferendis tempore voluptatibus. Beatae totam libero rem consectetur? Voluptatibus consectetur placeat rerum expedita enim, amet repellat doloremque quasi aut saepe aliquam ex corporis molestias? Odit vitae eaque beatae aliquam doloribus enim cumque deserunt illum voluptates explicabo nam saepe dolores magni exercitationem incidunt repellendus voluptatibus esse, voluptatum quibusdam! Veniam voluptatem libero qui sed necessitatibus id, nulla odit iure consequuntur obcaecati ipsam voluptate vero velit at! Culpa assumenda tenetur tempore suscipit inventore nam aut deserunt repellendus, ut, placeat magnam odio, nesciunt officiis. Reprehenderit dolores modi fugit sint rerum tempora rem incidunt labore doloremque. Suscipit aliquid, odit quos eligendi accusantium eum rem rerum dicta vel illum culpa porro consequatur quas ducimus quam voluptatibus esse perspiciatis nihil facere debitis libero! Quisquam, sapiente accusamus nulla officiis deserunt minus autem explicabo dignissimos voluptatum ipsam aperiam debitis? Nam amet fugit facilis molestias expedita velit ex officiis suscipit, odio doloribus temporibus minus explicabo illum alias nihil incidunt iste repellat itaque laboriosam asperiores laborum! Explicabo ex aliquid sit placeat animi unde, magnam illo nostrum optio iusto nisi eaque reprehenderit saepe non natus mollitia assumenda commodi temporibus in perferendis doloribus sunt eum! Id, minima omnis. Iste, unde ipsum! Impedit asperiores quibusdam totam laborum quisquam tempora minus aliquid tenetur debitis sapiente! Sed nemo, similique voluptatum iure ipsum ex inventore qui ipsa unde reprehenderit voluptate ad debitis sapiente perspiciatis quibusdam laborum vitae iusto neque aliquid quia minus! Quibusdam, quidem. Voluptate maxime quos repellat quae officiis tenetur, praesentium facilis modi voluptatum sit, maiores aut recusandae magni nostrum nihil iste vitae repudiandae quidem inventore ipsa consequuntur numquam consequatur rem! Officia, ipsam quibusdam, iusto fugit ipsum doloremque asperiores perferendis aliquam minima ex soluta. Rem alias perferendis provident totam optio quia suscipit omnis nemo. Id nemo voluptatum quisquam eum beatae maxime deleniti tempore adipisci doloremque impedit ad atque unde sit a, quibusdam cupiditate minus rerum mollitia assumenda officia suscipit voluptate iusto maiores alias. Veniam voluptates quidem, assumenda necessitatibus consequatur aut aliquid deleniti atque sint vitae quae quisquam iusto mollitia rem rerum, reiciendis inventore commodi eius! Praesentium, eum eius assumenda sapiente tenetur rerum quisquam necessitatibus nulla. At officia a eveniet iure perspiciatis aspernatur, rem deserunt vel consequuntur, fuga ad ut deleniti harum temporibus vitae quaerat vero, placeat architecto.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
