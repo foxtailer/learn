@@ -3938,7 +3938,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       4. The Docker daemon streamed that output to the Docker client, which sent it
           to your terminal.
 
-    docker run -d -p 127.0.0.1:8000:80 --name server nginx  ~ Link host port to container port
+    docker run -d -p 127.0.0.1:8000:80 --name server nginx  ~ Run container from image <nginx>
+      -d ~ detached mode (in the background)
+      -p 127.0.0.1:8000:80  ~ Port mapping. Link host port to container port (host:host port:container port)
       --rm  ~ For delete container after stop.
       --name name  ~ To set name of container
       -it ubuntu  ~ Run interactive terminal
@@ -4075,7 +4077,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Increase application scalability and reliability.
 
 
--- Gunicorn 
+-- GUNICORN
 
   Is a Python WSGI (Web Server Gateway Interface) server that runs Python web applications, such as Django 
   or Flask. It acts as a bridge between your Python application and a web server like Nginx or Apache, 
@@ -4528,9 +4530,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
 -- SQLITE
 
+  sqlite3 <path to db>
   .tables
   .schema table_name
-  sqlite3 <path to db>
   ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
   UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
   ALTER TABLE users RENAME TO customers;

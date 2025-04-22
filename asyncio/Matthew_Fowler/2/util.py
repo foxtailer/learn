@@ -2,6 +2,7 @@ import asyncio
 import functools
 import time
 from typing import Callable, Any
+from aiohttp import ClientSession
 
 
 async def delay(delay_second: int) -> int:
@@ -25,3 +26,8 @@ def async_timed():
                 print(f'{func} завершилась за {total:.4f} с')
         return wrapped
     return wrapper
+
+
+async def fetch_status(session: ClientSession, url: str) -> int:
+    async with session.get(url) as result:
+        return result.status
