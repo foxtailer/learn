@@ -3,7 +3,7 @@ import asyncio, signal
 from asyncio import AbstractEventLoop
 from typing import Set
 
-sys.path.append('/home/nami/git/learn/asyncio/Matthew_Fowler/2')
+sys.path.append('/home/zoy/git/learn/asyncio/Matthew_Fowler/2')
 from util import delay
 
 

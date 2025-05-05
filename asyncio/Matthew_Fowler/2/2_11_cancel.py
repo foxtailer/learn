@@ -13,9 +13,10 @@ async def main():
         seconds_elapsed += 1
         if seconds_elapsed == 5:
             long_task.cancel()
+            # raise CancelledError
 
     try:
-        await long_task  # canseled task can not be awaited again?
+        await long_task
     except CancelledError:
         print('Our task was cancelled')
 

@@ -1,4 +1,4 @@
-import asyncio
+import asyncio  # кооперативная многозадачность / однопоточный цикл событий 
 from util import delay
 
 async def add_one(number):
@@ -12,6 +12,6 @@ async def main():
     task1 = asyncio.create_task(hello_world())
     task2 = asyncio.create_task(add_one(1))
 
-    await task1
+    await task1  # In this moment all taskd are started
 
 asyncio.run(main())

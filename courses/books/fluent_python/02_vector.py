@@ -21,7 +21,8 @@ class Vector:
         self.y = y
 
     def __repr__(self):
-        return 'Vector(%r, %r)' % (self.x, self.y)
+        # return 'Vector(%r, %r)' % (self.x, self.y)
+        return f'Vector({self.x!r}, {self.y!r})'
 
     def __abs__(self):
         return hypot(self.x, self.y)

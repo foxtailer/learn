@@ -5,6 +5,13 @@
 ния длительной операции.
 """
 
+'''
+A coroutine is a special function that:
+    Can pause itself (when it is waiting for something slow — like I/O)
+    Can resume later exactly where it left off
+    During the pause, the CPU can do other work (instead of blocking)
+'''
+
 import asyncio
 
 
@@ -17,7 +24,7 @@ async def add_one(num: int)->int:
 async def main():
     step_one = await add_one(1)   # call corutine - pause main
     step_too = await add_one(step_one) # up main - call corutine - pause again
-    # if i/o bount we send it to os until it done
+    # if i/o bound we send it to os until it done
 
     print(step_one)
     print(step_too)
@@ -27,7 +34,7 @@ async def main():
 asyncio.run(main())
 
 """
-asyncio.run – то, что она задумана
+asyncio.run задумана
 как главная точка входа в созданное нами приложение asyncio. Она
 выполняет только одну сопрограмму, и эта сопрограмма должна по-
 заботиться обо всех остальных аспектах приложения. Далее мы будем
