@@ -1,28 +1,19 @@
 import asyncio
 import os
 
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart
-
-# from dotenv import find_dotenv, load_dotenv
-# load_dotenv(find_dotenv())
-
+from dotenv import find_dotenv, load_dotenv
+from aiogram import Bot, Dispatcher
 from handlers.user_private import user_private_router
 
 
 ALLOWED_UPDATES = ['message, edited_message']
 
-# bot = Bot(token=os.getenv('TOKEN'))
+load_dotenv(find_dotenv())
+token = os.getenv('TOKEN')
 
-import sys; sys.path.append('/home/zoy/vscode')
-import deps
-TOKEN = deps.F
-bot = Bot(TOKEN)
-
+bot = Bot(token)
 dp = Dispatcher()
-
 dp.include_router(user_private_router)
-
 
 
 async def main():
