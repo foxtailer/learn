@@ -10,6 +10,7 @@ dp = Dispatcher()
 async def echo_message(msg: types.Message):
     await bot.send_message(msg.from_user.id, f"{msg.from_user.id}: {msg.text}")
 
+# dp.message.register(cmd_test2, Command("test2"))
 
 async def main():
     await dp.start_polling(bot)

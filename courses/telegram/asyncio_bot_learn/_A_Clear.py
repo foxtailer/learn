@@ -1,8 +1,8 @@
-from aiogram import Bot, types, Dispatcher
 import asyncio
+
+from aiogram import Bot, types, Dispatcher
 from aiogram.filters.command import Command
-from aiogram import html
-from aiogram.types import FSInputFile, URLInputFile, BufferedInputFile
+
 
 TOKEN = ""
 
