@@ -1,4 +1,8 @@
 import asyncio
+import threading
+
+from IPython import embed
+
 from aiogram import Bot, types, Dispatcher
 
 
@@ -19,7 +23,13 @@ async def main():
     await dp.start_polling(bot)
 
 
+def start_repl():
+    print("Starting interactive shell...")
+    embed(local=globals())
+
+
 if __name__ == '__main__':
+    threading.Thread(target=start_repl, daemon=True).start()
     asyncio.run(main())
 
 
