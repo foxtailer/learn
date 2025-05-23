@@ -1,8 +1,9 @@
 import base64
 
 
-x = 'HmYkBwozJw4WNyAAFyB1VUcqOE1JZjUIBis7ABdmbU1GIjEJAyIxTRg%3D'  # no
-y = 'secretkey'
+x = '{"showpassword":"yes","bgcolor":"#ffffff"}'  # no
+y = 'DWoe'
+
 
 def xor_encrypt(text, key):
     out_bytes = bytearray()
@@ -16,5 +17,5 @@ def xor_decrypt(text, key):
     return ''.join(chr(b ^ ord(key[i % len(key)])) for i, b in enumerate(encrypted_bytes))
 
 
-print(tmp:= xor_encrypt('noo', y))
+print(tmp:= xor_encrypt(`, y))
 print(xor_decrypt(tmp, y))
