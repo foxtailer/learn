@@ -4547,6 +4547,15 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   sqlite3 <path to db>
   .tables
   .schema table_name
+
+  SELECT name
+    FROM sqlite_master
+    where type = 'table';
+
+  SELECT sql 
+    FROM sqlite_master
+    where name = 'crime_scene_report';
+
   ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
   UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
   ALTER TABLE users RENAME TO customers;
@@ -4582,6 +4591,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   ALTER TABLE student DROP COLUMN gpa;
   INSERT INTO student(student_id, name) VALUES (3, 'Ivan');
 
+    *bigserial for autoincremented id;
     FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL
 
   GRANT ALL PRIVILEGES ON DATABASE database_name TO new_username;
