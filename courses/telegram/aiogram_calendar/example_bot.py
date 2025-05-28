@@ -1,39 +1,38 @@
 import logging
+import asyncio
 
-from aiogram import Bot, Dispatcher
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup
-from aiogram.utils import executor
-#from aiogram.dispatcher.filters import Text
-from aiogram_calendar import simple_cal_callback, SimpleCalendar, dialog_cal_callback, DialogCalendar
+from aiogram import Bot, Dispatcher, F
+from aiogram.filters import Command
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
 
-from my_config import API_TOKEN
+from aiogram_calendar import SCCallback, SimpleCalendar, DCCallback, DialogCalendar
 
-API_TOKEN = ''
 
-# Configure logging
+API_TOKEN = '1690656566:AAH1aWeuR6AUPs9yjU_UfnstKxr5ALXUcY4'
+
 logging.basicConfig(level=logging.INFO)
 
-# Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
 
-start_kb = ReplyKeyboardMarkup(resize_keyboard=True,)
-start_kb.row('Navigation Calendar', 'Dialog Calendar')
+btn1 = KeyboardButton(text='Navigation Calendar')
+btn2 = KeyboardButton(text='Dialog Calendar')
+start_kb = ReplyKeyboardMarkup(resize_keyboard=True,
+                               keyboard=[[btn1], [btn2]])
 
 
 # starting bot when user sends `/start` command, answering with inline calendar
-@dp.message_handler(commands=['start'])
+@dp.message(Command("start"))
 async def cmd_start(message: Message):
     await message.reply('Pick a calendar', reply_markup=start_kb)
 
 
-@dp.message_handler(Text(equals=['Navigation Calendar'], ignore_case=True))
+@dp.message(F.text == 'Navigation Calendar')
 async def nav_cal_handler(message: Message):
     await message.answer("Please select a date: ", reply_markup=await SimpleCalendar().start_calendar())
 
 
-# simple calendar usage
-@dp.callback_query_handler(simple_cal_callback.filter())
+@dp.callback_query(SCCallback.filter())
 async def process_simple_calendar(callback_query: CallbackQuery, callback_data: dict):
     selected, date = await SimpleCalendar().process_selection(callback_query, callback_data)
     if selected:
@@ -43,13 +42,13 @@ async def process_simple_calendar(callback_query: CallbackQuery, callback_data: 
         )
 
 
-@dp.message_handler(Text(equals=['Dialog Calendar'], ignore_case=True))
+@dp.message(F.text == 'Dialog Calendar')
 async def simple_cal_handler(message: Message):
     await message.answer("Please select a date: ", reply_markup=await DialogCalendar().start_calendar())
 
 
 # dialog calendar usage
-@dp.callback_query_handler(dialog_cal_callback.filter())
+@dp.callback_query(DCCallback.filter())
 async def process_dialog_calendar(callback_query: CallbackQuery, callback_data: dict):
     selected, date = await DialogCalendar().process_selection(callback_query, callback_data)
     if selected:
@@ -59,5 +58,12 @@ async def process_dialog_calendar(callback_query: CallbackQuery, callback_data: 
         )
 
 
+async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot, 
+                           allowed_updates=["message", "edited_message", "callback_query", "inline_query"],
+                           polling_timeout=20)
+
+
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    asyncio.run(main())

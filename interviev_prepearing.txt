@@ -2921,18 +2921,17 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   When the interpreter executes the above import module statement, it searches for mod.py in a list of 
   directories assembled from the following sources:
 
-   The directory from which the input script was run or the current directory if the interpreter is being run interactively
-   The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH 
-  is OS-dependent but should mimic the PATH environment variable.)
-   An installation-dependent list of directories configured at the time Python is installed
-  The resulting search path is accessible in the Python variable sys.path, which is obtained from a module named sys:
+    - The directory from which the input script was run or the current directory if the interpreter is being run interactively
+    - The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH 
+    is OS-dependent but should mimic the PATH environment variable.)
+    - An installation-dependent list of directories configured at the time Python is installed
+    The resulting search path is accessible in the Python variable sys.path, which is obtained from a module named sys:
 
   >>> import sys
   >>> sys.path
   ['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
   'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
   'C:\\Python36', 'C:\\Python36\\lib\\site-packages']
-
 
   modify sys.path at run-time so that it contains module directory.
   >>> sys.path.append(r'C:\Users\john')
@@ -2941,7 +2940,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
   'C:\\Python36', 'C:\\Python36\\lib\\site-packages', 'C:\\Users\\john']
   >>> import mod
-
 
   Once a module has been imported, you can determine the location where it was found with the module’s __file__ attribute:
   >>> import mod
@@ -2955,7 +2953,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     The package is a simple directory having collections of modules. This directory contains Python 
   modules and also having __init__.py file by which the interpreter interprets it as a Package. 
   The package is simply a namespace. The package also contains sub-packages inside it. 
+  Packages allow for a hierarchical structuring of the module namespace using dot notation.
 
+  __all__ =[module1, module2] - define list of modules that been imported when: import * from package/module
+  
 
 -- BEST PRACTICES
 
