@@ -8,7 +8,7 @@ from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, KeyboardB
 from aiogram_calendar import SCCallback, SimpleCalendar, DCCallback, DialogCalendar
 
 
-API_TOKEN = '1690656566:AAH1aWeuR6AUPs9yjU_UfnstKxr5ALXUcY4'
+API_TOKEN = ''
 
 logging.basicConfig(level=logging.INFO)
 
