@@ -6,14 +6,19 @@
 
 # from decorators_pycon import CountCalls
 ###################################
+    # outside function 
+def outer():
+    message = 'local'
 
-import inspect
+    # nested function  
+    def inner():
+        # declare nonlocal variable
+        nonlocal message
 
-frame = inspect.currentframe()
-caller_frame = frame.f_back
+        print("inner:", message)
+        message = 'nonlocal'
 
-print("Caller locals:")
-print(caller_frame.f_locals)
+    inner()
+    print("outer:", message)
 
-print("Caller globals:")
-print(caller_frame.f_globals)
+outer()

@@ -52,25 +52,46 @@ class GarageDoor:
     def light_off(self):
         print("Garage light is OFF.")
 
+
 class GarageDoorOpenCommand(Command):
+    @staticmethod
+    def swap():
+            while True:
+                yield 0
+                yield 1
+
     def __init__(self, garage_door):
         self.garage_door = garage_door
+        self._swap = self.swap()
 
     def execute(self):
         self.garage_door.up()
    
     def undo(self):
-        self.garage_door.down()
+        if not next(self._swap):
+            self.garage_door.down()
+        else:
+            self.garage_door.up()
 
 class GarageDoorCloseCommand(Command):
+    @staticmethod
+    def swap():
+            while True:
+                yield 0
+                yield 1
+
     def __init__(self, garage_door):
         self.garage_door = garage_door
+        self._swap = self.swap()
 
     def execute(self):
         self.garage_door.down()
 
     def undo(self):
-        self.garage_door.up()
+        if not next(self._swap):
+            self.garage_door.up()
+        else:
+            self.garage_door.down()
 
 
 class RemoteControl:
@@ -93,10 +114,11 @@ class RemoteControl:
 
     def undo_button_was_pushed(self):
         self.undo_command.undo()
-
+    
+    # For lambda test
     def on_button_was_pushed_2(self, slot):
         self.on_commands[slot]()
-
+    # For lambda test
     def off_button_was_pushed_2(self, slot):
         self.off_commands[slot]()
 

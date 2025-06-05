@@ -135,8 +135,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  If you want to specify the data type of a variable, this can be done with casting.
 
 	x = str(3)    # x will be '3'
-  y = int(3)    # y will be 3
-  z = float(3)  # z will be 3.0
+    y = int(3)    # y will be 3
+    z = float(3)  # z will be 3.0
 
   When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish.
  This value can be an integer, a string or of any other type. Apart from the value, objects also come with a couple of
@@ -154,7 +154,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   While the reference count is key part of Python's memory management, Python also has a cyclic garbage collector to handle 
   cases where objects reference each other in a cycle, which reference counting alone cannot handle.
 
-    lass Node:
+   class Node:
       def __init__(self, name):
           self.name = name
           self.next = None
@@ -301,8 +301,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     User-Defined Classes (It purely depends upon the user to define the characteristics)
 
     * We can use in dict. In order to not get KeyError while acces to key:
-
-      numberOfPets.setdefault('cats', 0) # Does nothing if 'cats' exists.
+        numberOfPets.setdefault('cats', 0) # Does nothing if 'cats' exists.
 
     You can use the collections.defaultdict class to eliminate KeyError errors
     entirely.
@@ -314,7 +313,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       scores['Al'] += 1 # No need to set a value for the 'Al' key first.
       scores
       defaultdict(<class 'int'>, {'Al': 1})
-      scores['Zophie'] # No need to set a value for the 'Zophie' key first.
+      scores['Zophie'] # >> 0 No need to set a value for the 'Zophie' key first.
       scores['Zophie'] += 40
       scores
       defaultdict(<class 'int'>, {'Al': 1, 'Zophie': 40})
@@ -386,7 +385,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  Multiple- target assignment:
 
     x = y = 75
-
     print(x, y) >> 75 75
 
  In this form, Python assigns a reference to the same object (the object which is rightmost) to all
@@ -396,10 +394,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  The augmented assignment is a shorthand assignment that combines an expression and an assignment.
 
     x = 2
-
     # equivalent to: x = x + 1
     x += 1
-
     print(x) >> 3
 
  There are several other augmented assignment forms:
@@ -500,7 +496,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
  Assignment
 
-    =	  x = 5	    x = 5
+    =	x = 5	  x = 5
     +=	x += 3	  x = x + 3
     -=	x -= 3	  x = x - 3
     *=	x *= 3	  x = x * 3
@@ -1103,6 +1099,39 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       print(next(squares))  # Output: 1
       print(next(squares))  # Output: 4
 
+  Generator with send()
+
+    def responder():
+    print("Ready to receive")
+    while True:
+        msg = yield  # waits here until .send(value) is called
+        print("Received:", msg)
+
+    g = responder()
+    next(g)               # Prime the generator — starts and runs until first `yield`
+    g.send("Hello")       # Output: Received: Hello
+    g.send("Another one") # Output: Received: Another one
+
+  You must next() the generator once before the first send() to advance it to the first yield.
+
+  ##################
+    def running_average():
+      total = 0
+      count = 0
+      average = None
+      while True:
+          num = yield average
+          total += num
+          count += 1
+          average = total / count
+
+    avg_gen = running_average()
+    next(avg_gen)  # prime
+
+    print(avg_gen.send(10))  # 10.0
+    print(avg_gen.send(20))  # 15.0
+    print(avg_gen.send(30))  # 20.0
+
   * g.next() <=> g.send(None)
 
 
@@ -1129,6 +1158,12 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  object is used in hashing algorithms, such as those implemented by dictionaries and sets, to quickly 
  compare keys and store/retrieve values.
 
+    class HashList(list):
+      def __hash__(self):
+          return 1
+      def __eq__(self, value):
+          return True
+
   Hashtable
 
    A hash table is a data structure that implements an associative array abstract data type, a structure 
@@ -1147,6 +1182,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   of data is not needed, because the order of data is not retained here.
 
   The hash function can produce an index that has already been used in the table, which is called a collision.
+    
+    index = hash(key) % table_size
 
   A collision can be handled using various techniques:
   Separate Chaining Technique
@@ -1335,12 +1372,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         def inner():
             # declare nonlocal variable
             nonlocal message
-
+            print("inner:", message)  # inner: local
             message = 'nonlocal'
-            print("inner:", message)
 
         inner()
-        print("outer:", message)
+        print("outer:", message)  # outer: nonlocal
 
     outer()
 
@@ -4152,6 +4188,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   -Durability: Durability ensures that once a transaction is committed, its changes are permanent and will survive any 
   subsequent system failures. The transaction’s changes are saved to the database permanently, and even if the system crashes, 
   the changes remain intact and can be recovered.
+
+
+-- BASE
 
 
 -- SQL
