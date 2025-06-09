@@ -3150,6 +3150,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       to the codebase. They don’t depend on specific details of how Git works internally.
 
       This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
+
+      - принцип инверсии зависимостей как способ устранения связанности ключевой логики от инфраструктурных обязанностей.
+      - высоко-уровневые модули (предметная область) не должны зависеть от низко­уровневых (инфраструктура)1.
   
   - Identify aspects of the application that can change and separate/encapsulate them from those that always remain constant.
   - Program at the interface level, not at the implementation level.

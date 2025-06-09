@@ -12,7 +12,7 @@ class OutOfStock(Exception):
     pass
 
 
-@dataclass(frozen=True)
+@dataclass
 class OrderLine:
     orderid: str
     sku: str
