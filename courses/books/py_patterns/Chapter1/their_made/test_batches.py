@@ -1,7 +1,7 @@
 import unittest
 from datetime import date
 
-from learn.courses.books.py_patterns.Chapter1.their_made.model import *
+from model import *
 
 
 class TestBatches(unittest.TestCase):
@@ -44,6 +44,13 @@ class TestBatches(unittest.TestCase):
             self.make_batch_and_line("DECORATIVE-TRINKET", 20, 2)
         batch.deallocate(unallocated_line)
         assert batch.available_quantity == 20
+
+    def test_allocation_is_idempotent(self):
+        batch, line = \
+            self.make_batch_and_line("ANGULAR-DESK", 20, 2)
+        batch.allocate(line)
+        batch.allocate(line)
+        assert batch.available_quantity == 18
 
 
 if __name__ == "__main__":
