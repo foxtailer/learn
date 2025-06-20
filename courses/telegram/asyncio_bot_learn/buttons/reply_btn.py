@@ -21,25 +21,6 @@ async def cmd_start(message: types.Message):
     await message.answer("Как подавать котлеты?", reply_markup=keyboard)
 
 
-@dp.message(Command("start2"))
-async def cmd_start2(message: types.Message):
-    kb = [
-        [
-            types.KeyboardButton(text="С пюрешкой"),
-            types.KeyboardButton(text="Без пюрешки")
-        ],
-        [
-            types.KeyboardButton(text="C макарошками"),
-            types.KeyboardButton(text="С хлебушком")
-        ],
-    ]
-    keyboard = types.ReplyKeyboardMarkup(keyboard=kb,
-                                         resize_keyboard=True,
-                                         input_field_placeholder="Выберите способ подачи")
-    
-    await message.answer("Как подавать котлеты?", reply_markup=keyboard)
-
-
 @dp.message(Command("start3"))
 async def cmd_start3(message: types.Message):
     kb = [
@@ -86,6 +67,7 @@ async def handle_order(message: types.Message):
 
 async def main():
     await dp.start_polling(bot)
+
 
 if __name__ == '__main__':
     asyncio.run(main())

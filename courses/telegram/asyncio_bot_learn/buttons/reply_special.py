@@ -19,6 +19,7 @@ dp = Dispatcher()
 @dp.message(Command("special_buttons"))
 async def cmd_special_buttons(message: types.Message):
     builder = ReplyKeyboardBuilder()
+
     # метод row позволяет явным образом сформировать ряд
     # из одной или нескольких кнопок. Например, первый ряд
     # будет состоять из двух кнопок...
@@ -26,11 +27,13 @@ async def cmd_special_buttons(message: types.Message):
         types.KeyboardButton(text="Запросить геолокацию", request_location=True),
         types.KeyboardButton(text="Запросить контакт", request_contact=True)
     )
+
     # ... второй из одной ...
-    builder.row(types.KeyboardButton(
-        text="Создать викторину",
-        request_poll=types.KeyboardButtonPollType(type="quiz"))
+    builder.row(
+        types.KeyboardButton(text="Создать викторину",
+                             request_poll=types.KeyboardButtonPollType(type="quiz"))
     )
+
     # ... а третий снова из двух
     builder.row(
         types.KeyboardButton(
@@ -56,8 +59,6 @@ async def cmd_special_buttons(message: types.Message):
         reply_markup=builder.as_markup(resize_keyboard=True),
     )
 
-
-from aiogram import F
 
 @dp.message(F.user_shared)
 async def on_user_shared(message: types.Message):
