@@ -4,7 +4,7 @@ from aiogram import Bot, types, Dispatcher
 from aiogram.filters.command import Command
 
 
-bot = Bot(TOKEN)
+bot = Bot('')
 dp = Dispatcher()
 
 

@@ -4035,8 +4035,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
     docker rmi: Removes an image.
 
-    docker build: Builds an image from a Dockerfile.
-      -t image_name:tag .
+    docker build -t your-image-name:tag . ~ Builds an image from a Dockerfile.
 
     docker pull: Downloads an image from a registry (like Docker Hub).
     docker run: Runs a container from an image.
