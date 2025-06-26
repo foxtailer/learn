@@ -1103,7 +1103,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       print(next(squares))  # Output: 1
       print(next(squares))  # Output: 4
 
-  * g.next() <=> g.send(None)
+  * g.send(None) <=> next(g) <=> g.__next__()
 
 
 -- BUILD IN DATA STRUCTURES
@@ -1375,7 +1375,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     >>> ('Sachin', 'Rishu', 'Yashwant', 'Abhishek')
 
  We got Tuple because when we use *args the function will get the arguments as tuple.
- There is one exception: when passing regular arguments and *args as parameters to a function, never pass *args before regular arguments.
+ There is one exception: when passing regular arguments and *args as parameters to a function, never 
+ pass *args before regular arguments.
 
  But unlike *args, **kwargs takes keyword or named arguments.
  The type of **kwargs is Dictionary i.e., the arguments accepted as key-value.
@@ -1461,15 +1462,17 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     It is transitive in nature, which means that if class B inherits from another class A, then all the subclasses of
     B would automatically inherit from class A.
 
-   Types of Inheritance
- Single Inheritance: Single-level inheritance enables a derived class to inherit characteristics from a single-parent class.
- Multilevel Inheritance: Multi-level inheritance enables a derived class to inherit properties from an immediate parent class which
- in turn inherits properties from his parent class.
- Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from a parent class.
- Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base class.
+  Types of Inheritance
+    Single Inheritance: Single-level inheritance enables a derived class to inherit characteristics from a single-parent 
+      class.
+    Multilevel Inheritance: Multi-level inheritance enables a derived class to inherit properties from an immediate parent 
+      class which in turn inherits properties from his parent class.
+    Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from 
+      a parent class.
+    Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base 
+      class.
 
         # Python code to demonstrate how parent constructors are called.
-
         # parent class
         class Person(object):
             # __init__ is known as the constructor
@@ -1678,7 +1681,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Polymorphic Functions: These are functions that can take objects of different types and apply the same operation on them.
 
              class Bird:
-
                 def intro(self):
                     print("There are many types of birds.")
 
@@ -1686,12 +1688,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
                     print("Most of the birds can fly but some cannot.")
 
             class sparrow(Bird):
-
                 def flight(self):
                     print("Sparrows can fly.")
 
             class ostrich(Bird):
-
                 def flight(self):
                     print("Ostriches cannot fly.")
 
@@ -1724,25 +1724,18 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
   variable can only be changed by an object’s method. Those types of variables are known as private variables.
 
-             # Python program to
-            # demonstrate private members
-
-            # Creating a Base class
+            # Python program to demonstrate private members
             class Base:
                 def __init__(self):
                     self.a = "GeeksforGeeks"
                     self.__c = "GeeksforGeeks"
 
-            # Creating a derived class
             class Derived(Base):
                 def __init__(self):
-
-                    # Calling constructor of
-                    # Base class
+                    # Calling constructor of Base class
                     Base.__init__(self)
                     print("Calling private member of base class: ")
                     print(self.__c)
-
 
             # Driver code
             obj1 = Base()
