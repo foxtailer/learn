@@ -1099,6 +1099,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       print(next(squares))  # Output: 1
       print(next(squares))  # Output: 4
 
+<<<<<<< HEAD
+  * g.send(None) <=> next(g) <=> g.__next__()
+=======
   Generator with send()
 
     def responder():
@@ -1133,6 +1136,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     print(avg_gen.send(30))  # 20.0
 
   * g.next() <=> g.send(None)
+>>>>>>> 012da6712c9eb3149a3aba1e496fe9439fa927b4
 
 
 -- BUILD IN DATA STRUCTURES
@@ -1411,7 +1415,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     >>> ('Sachin', 'Rishu', 'Yashwant', 'Abhishek')
 
  We got Tuple because when we use *args the function will get the arguments as tuple.
- There is one exception: when passing regular arguments and *args as parameters to a function, never pass *args before regular arguments.
+ There is one exception: when passing regular arguments and *args as parameters to a function, never 
+ pass *args before regular arguments.
 
  But unlike *args, **kwargs takes keyword or named arguments.
  The type of **kwargs is Dictionary i.e., the arguments accepted as key-value.
@@ -1497,12 +1502,15 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     It is transitive in nature, which means that if class B inherits from another class A, then all the subclasses of
     B would automatically inherit from class A.
 
-   Types of Inheritance
- Single Inheritance: Single-level inheritance enables a derived class to inherit characteristics from a single-parent class.
- Multilevel Inheritance: Multi-level inheritance enables a derived class to inherit properties from an immediate parent class which
- in turn inherits properties from his parent class.
- Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from a parent class.
- Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base class.
+  Types of Inheritance
+    Single Inheritance: Single-level inheritance enables a derived class to inherit characteristics from a single-parent 
+      class.
+    Multilevel Inheritance: Multi-level inheritance enables a derived class to inherit properties from an immediate parent 
+      class which in turn inherits properties from his parent class.
+    Hierarchical Inheritance: Hierarchical-level inheritance enables more than one derived class to inherit properties from 
+      a parent class.
+    Multiple Inheritance: Multiple-level inheritance enables one derived class to inherit properties from more than one base 
+      class.
 
         # Python code to demonstrate how parent constructors are called.
         # parent class
@@ -1756,20 +1764,16 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
   variable can only be changed by an object’s method. Those types of variables are known as private variables.
 
-            # Python program to
-            # demonstrate private members
 
-            # Creating a Base class
+            # Python program to demonstrate private members
             class Base:
                 def __init__(self):
                     self.a = "GeeksforGeeks"
                     self.__c = "GeeksforGeeks"
 
-            # Creating a derived class
             class Derived(Base):
                 def __init__(self):
-                    # Calling constructor of
-                    # Base class
+                    # Calling constructor of Base class
                     Base.__init__(self)
                     print("Calling private member of base class: ")
                     print(self.__c)  # self._Base__c
