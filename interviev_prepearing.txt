@@ -135,8 +135,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  If you want to specify the data type of a variable, this can be done with casting.
 
 	x = str(3)    # x will be '3'
-  y = int(3)    # y will be 3
-  z = float(3)  # z will be 3.0
+    y = int(3)    # y will be 3
+    z = float(3)  # z will be 3.0
 
   When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish.
  This value can be an integer, a string or of any other type. Apart from the value, objects also come with a couple of
@@ -154,7 +154,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   While the reference count is key part of Python's memory management, Python also has a cyclic garbage collector to handle 
   cases where objects reference each other in a cycle, which reference counting alone cannot handle.
 
-    lass Node:
+   class Node:
       def __init__(self, name):
           self.name = name
           self.next = None
@@ -301,8 +301,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     User-Defined Classes (It purely depends upon the user to define the characteristics)
 
     * We can use in dict. In order to not get KeyError while acces to key:
-
-      numberOfPets.setdefault('cats', 0) # Does nothing if 'cats' exists.
+        numberOfPets.setdefault('cats', 0) # Does nothing if 'cats' exists.
 
     You can use the collections.defaultdict class to eliminate KeyError errors
     entirely.
@@ -314,7 +313,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       scores['Al'] += 1 # No need to set a value for the 'Al' key first.
       scores
       defaultdict(<class 'int'>, {'Al': 1})
-      scores['Zophie'] # No need to set a value for the 'Zophie' key first.
+      scores['Zophie'] # >> 0 No need to set a value for the 'Zophie' key first.
       scores['Zophie'] += 40
       scores
       defaultdict(<class 'int'>, {'Al': 1, 'Zophie': 40})
@@ -386,7 +385,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  Multiple- target assignment:
 
     x = y = 75
-
     print(x, y) >> 75 75
 
  In this form, Python assigns a reference to the same object (the object which is rightmost) to all
@@ -396,10 +394,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  The augmented assignment is a shorthand assignment that combines an expression and an assignment.
 
     x = 2
-
     # equivalent to: x = x + 1
     x += 1
-
     print(x) >> 3
 
  There are several other augmented assignment forms:
@@ -500,7 +496,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
  Assignment
 
-    =	  x = 5	    x = 5
+    =	x = 5	  x = 5
     +=	x += 3	  x = x + 3
     -=	x -= 3	  x = x - 3
     *=	x *= 3	  x = x * 3
@@ -1103,7 +1099,44 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       print(next(squares))  # Output: 1
       print(next(squares))  # Output: 4
 
+<<<<<<< HEAD
   * g.send(None) <=> next(g) <=> g.__next__()
+=======
+  Generator with send()
+
+    def responder():
+    print("Ready to receive")
+    while True:
+        msg = yield  # waits here until .send(value) is called
+        print("Received:", msg)
+
+    g = responder()
+    next(g)               # Prime the generator — starts and runs until first `yield`
+    g.send("Hello")       # Output: Received: Hello
+    g.send("Another one") # Output: Received: Another one
+
+  You must next() the generator once before the first send() to advance it to the first yield.
+
+  ##################
+    def running_average():
+      total = 0
+      count = 0
+      average = None
+      while True:
+          num = yield average
+          total += num
+          count += 1
+          average = total / count
+
+    avg_gen = running_average()
+    next(avg_gen)  # prime
+
+    print(avg_gen.send(10))  # 10.0
+    print(avg_gen.send(20))  # 15.0
+    print(avg_gen.send(30))  # 20.0
+
+  * g.next() <=> g.send(None)
+>>>>>>> 012da6712c9eb3149a3aba1e496fe9439fa927b4
 
 
 -- BUILD IN DATA STRUCTURES
@@ -1129,6 +1162,12 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  object is used in hashing algorithms, such as those implemented by dictionaries and sets, to quickly 
  compare keys and store/retrieve values.
 
+    class HashList(list):
+      def __hash__(self):
+          return 1
+      def __eq__(self, value):
+          return True
+
   Hashtable
 
    A hash table is a data structure that implements an associative array abstract data type, a structure 
@@ -1147,6 +1186,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   of data is not needed, because the order of data is not retained here.
 
   The hash function can produce an index that has already been used in the table, which is called a collision.
+    
+    index = hash(key) % table_size
 
   A collision can be handled using various techniques:
   Separate Chaining Technique
@@ -1335,12 +1376,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         def inner():
             # declare nonlocal variable
             nonlocal message
-
+            print("inner:", message)  # inner: local
             message = 'nonlocal'
-            print("inner:", message)
 
         inner()
-        print("outer:", message)
+        print("outer:", message)  # outer: nonlocal
 
     outer()
 
@@ -1724,6 +1764,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object’s
   variable can only be changed by an object’s method. Those types of variables are known as private variables.
 
+
             # Python program to demonstrate private members
             class Base:
                 def __init__(self):
@@ -1735,21 +1776,28 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
                     # Calling constructor of Base class
                     Base.__init__(self)
                     print("Calling private member of base class: ")
-                    print(self.__c)
+                    print(self.__c)  # self._Base__c
+
+                    # or 
+                    # super().__init__()
+                    # private_name = [name for name in dir(self) if name.endswith("__c")][0]
+                    # print(getattr(self, private_name))  # Still prints "GeeksforGeeks"
+
+                    # f"_{self.__class__.__name__}__c"          >> "_Derived__c"
+                    # f'_{type(self).__mro__[1].__name__}__c'
 
             # Driver code
             obj1 = Base()
-            print(obj1.a)
 
-            # Uncommenting print(obj1.c) will
-            # raise an AttributeError
+            print(obj1.a)  # GeeksforGeeks
+            print(self.__c)  # ❌ AttributeError
 
             # Uncommenting obj2 = Derived() will
             # also raise an AtrributeError as
             # private member of base class
             # is called inside derived class
-            Output
-            GeeksforGeeks
+
+    * type(self).__mro__[0] == self.__class__  # is True
 
  - Data Abstraction
   It hides unnecessary code details from the user. Also,  when we do not want to give out sensitive parts of our
@@ -1812,6 +1860,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   __get__(self, instance, owner): This method is called when the attribute is accessed. 
     If the attribute is accessed through an instance, instance is the instance of the class. 
     If the attribute is accessed through the class, instance is None.
+    *instance → the actual object you're accessing the attribute from (obj, p)
+    *owner → the class the descriptor is defined on (MyClass, Person)
 
   __set__(self, instance, value): This method is called when a value is assigned to the attribute.
 
@@ -1835,7 +1885,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
             print(f"Deleting {self.name}")
             del instance.__dict__[self.name]
 
-
     class MyClass:
         attribute = Descriptor('attribute')
 
@@ -1843,6 +1892,26 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     obj.attribute = 10  # Output: Setting attribute to 10
     print(obj.attribute)  # Output: Getting attribute \n 10
     del obj.attribute  # Output: Deleting attribute
+
+    #######################
+
+    class UpperCase:
+      def __get__(self, instance, owner):
+          return instance.__dict__['name'].upper()
+      def __set__(self, instance, value):
+          instance.__dict__['name'] = value
+
+    class Person:
+        name = UpperCase()  # ← descriptor
+        def __init__(self, name):
+            self.name = name
+
+    p = Person("harry")
+    print(p.name)  # HARRY
+
+    self (descriptor) = <__main__.UpperCase object at 0x7f8e59f5cf40>
+    instance (object) = <__main__.Person object at 0x7f8e59f5cfd0>
+    owner (class) = <class '__main__.Person'>
 
   - Property
   In Python, the @property decorator is used to define methods in a class that act like attributes, 
@@ -1972,6 +2041,23 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         print(f"Static method called with {arg1} and {arg2}")
 
   * Usecase of __new__: Singltone patern when we ned to allow creation only one instanse of object.
+        class Singleton:
+            _instance = None  # class-level cache
+
+            def __new__(cls, *args, **kwargs):
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                return cls._instance
+
+            def __init__(self, value):
+                self.value = value
+
+        a = Singleton(10)
+        b = Singleton(20)
+
+        print(a.value)  # 20
+        print(b.value)  # 20
+        print(a is b)   # True — both are the same instance
 
 
 -- MIXIN 
@@ -2914,11 +3000,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   When the interpreter executes the above import module statement, it searches for mod.py in a list of 
   directories assembled from the following sources:
 
-   The directory from which the input script was run or the current directory if the interpreter is being run interactively
-   The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH 
-  is OS-dependent but should mimic the PATH environment variable.)
-   An installation-dependent list of directories configured at the time Python is installed
-  The resulting search path is accessible in the Python variable sys.path, which is obtained from a module named sys:
+    - The directory from which the input script was run or the current directory if the interpreter is being run interactively
+    - The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH 
+    is OS-dependent but should mimic the PATH environment variable.)
+    - An installation-dependent list of directories configured at the time Python is installed
+    The resulting search path is accessible in the Python variable sys.path, which is obtained from a module named sys:
 
   >>> import sys
   >>> sys.path
@@ -2926,29 +3012,27 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
   'C:\\Python36', 'C:\\Python36\\lib\\site-packages']
 
-
   modify sys.path at run-time so that it contains module directory.
   >>> sys.path.append(r'C:\Users\john')
   >>> sys.path
   ['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
   'C:\\Python36\\python36.zip', 'C:\\Python36\\DLLs', 'C:\\Python36\\lib',
   'C:\\Python36', 'C:\\Python36\\lib\\site-packages', 'C:\\Users\\john']
-  >>> import mod
-
 
   Once a module has been imported, you can determine the location where it was found with the module’s __file__ attribute:
   >>> import mod
-  >>> mod.__file__
-  'C:\\Users\\john\\mod.py'
+  >>> mod.__file__  # 'C:\\Users\\john\\mod.py'  python -c 'import aiogram; print(aiogram.__file__)
 
   >>> import mod
-  >>> mod
-  <module 'mod' from 'C:\\Users\\john\\Documents\\Python\\doc\\mod.py'>
+  >>> mod  # <module 'mod' from 'C:\\Users\\john\\Documents\\Python\\doc\\mod.py'>
 
     The package is a simple directory having collections of modules. This directory contains Python 
   modules and also having __init__.py file by which the interpreter interprets it as a Package. 
   The package is simply a namespace. The package also contains sub-packages inside it. 
+  Packages allow for a hierarchical structuring of the module namespace using dot notation.
 
+  __all__ = [module1, module2] - define list of modules that been imported when: import * from package/module
+  
 
 -- BEST PRACTICES
 
@@ -3067,6 +3151,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       to the codebase. They don’t depend on specific details of how Git works internally.
 
       This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
+
+      - принцип инверсии зависимостей как способ устранения связанности ключевой логики от инфраструктурных обязанностей.
+      - высоко-уровневые модули (предметная область) не должны зависеть от низко­уровневых (инфраструктура)1.
   
   - Identify aspects of the application that can change and separate/encapsulate them from those that always remain constant.
   - Program at the interface level, not at the implementation level.
@@ -4144,6 +4231,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   -Durability: Durability ensures that once a transaction is committed, its changes are permanent and will survive any 
   subsequent system failures. The transaction’s changes are saved to the database permanently, and even if the system crashes, 
   the changes remain intact and can be recovered.
+
+
+-- BASE
 
 
 -- SQL

@@ -9,13 +9,7 @@ def home_page(request):
         Item.objects.create(text=request.POST.get('item_text', ''))
         return redirect('/lists/the-only-list-in-the-world/')
     else:
-
-    # context = {
-    #     'new_item_text': new_item_text
-    # }
-    # return HttpResponse(request.POST['item_text'])
-        items = Item.objects.all()
-        return render(request, 'lists/home.html', {'items':items})
+        return render(request, 'lists/home.html')
 
 
 def view_list(request):

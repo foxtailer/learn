@@ -3,7 +3,7 @@
 import asyncio
 import logging
 import sys
-from os import getenv  # Dont cnow for what "getenv" is :)
+from os import getenv
 
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
@@ -35,7 +35,6 @@ async def command_start_handler(message: Message) -> None:
 async def echo_handler(message: types.Message) -> None:
     """
     Handler will forward receive a message back to the sender
-
     By default, message handler will handle all message types (like a text, photo, sticker etc.)
     """
     try:
@@ -56,3 +55,24 @@ async def main() -> None:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(main())
+
+
+"""
+import asyncio
+
+from aiogram import Bot
+
+
+TOKEN = ""
+
+bot = Bot(TOKEN)
+
+
+async def echo():
+    #await bot.send_message(msg.from_user.id, msg.text)
+    await bot.send_message(6338958823, 'ff')
+
+
+if __name__ == '__main__':
+    asyncio.run(echo())
+"""

@@ -1,10 +1,13 @@
-from aiogram import Bot, types, Dispatcher
 import asyncio
-from aiogram.filters.command import Command
-from datetime import datetime
 
 import sys; sys.path.append('/home/zoy/vscode')
 import deps
+
+from aiogram import Bot, types, Dispatcher
+from aiogram.filters.command import Command
+from datetime import datetime
+
+
 TOKEN = deps.F
 
 
@@ -28,6 +31,11 @@ async def cmd_show_list(message: types.Message, mylist: list):
 @dp.message(Command("info"))
 async def cmd_info(message: types.Message, started_at: str):
     await message.answer(f"Бот запущен {started_at}")
+
+
+@dp.message(Command("custom1", prefix="%"))  # comand with custom prefix
+async def cmd_custom1(message):
+    await message.answer("Вижу команду!")
     
 
 async def main():

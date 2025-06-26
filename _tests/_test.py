@@ -6,4 +6,19 @@
 
 # from decorators_pycon import CountCalls
 ###################################
+    # outside function 
+def outer():
+    message = 'local'
 
+    # nested function  
+    def inner():
+        # declare nonlocal variable
+        nonlocal message
+
+        print("inner:", message)
+        message = 'nonlocal'
+
+    inner()
+    print("outer:", message)
+
+outer()
