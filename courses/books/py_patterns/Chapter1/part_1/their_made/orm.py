@@ -1,7 +1,16 @@
+import sys
+from pathlib import Path
+
+# Get the parent directory of the script file
+parent_dir = Path(__file__).resolve().parent
+print(parent_dir)
+# Add it to sys.path
+sys.path.append(str(parent_dir))
+
 from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import mapper, relationship
 
-import model
+import domain.model as model
 
 
 metadata = MetaData()

@@ -1,4 +1,4 @@
-import model, repository
+import domain.model as model, repository
 
 
 def test_repository_can_save_a_batch(session):

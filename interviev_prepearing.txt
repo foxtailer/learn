@@ -4641,6 +4641,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
   UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
   ALTER TABLE users RENAME TO customers;
+  INSERT INTO tasks (user, text, active) VALUES (1, 'user 1 task', TRUE);
 
 
 -- PSQL

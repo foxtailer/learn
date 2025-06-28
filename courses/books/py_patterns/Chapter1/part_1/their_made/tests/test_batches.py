@@ -1,11 +1,19 @@
 from datetime import date
-from model import Batch, OrderLine
+from statistics import quantiles
+from domain.model import Batch, OrderLine
+
+from types.domain import OrderLineSchema, BatchSchema
 
 
 def test_allocating_to_a_batch_reduces_the_available_quantity():
-    batch = Batch("batch-001", "SMALL-TABLE", qty=20, eta=date.today())
-    line = OrderLine("order-ref", "SMALL-TABLE", 2)
+    batch_shema = BatchSchema("batch-001", "SMALL-TABLE", qty=20, eta=date.today())
+    line_shema = OrderLineSchema("order-ref", "SMALL-TABLE", 2)
 
+    batch = Batch(
+        ref=batch_shema.reference,
+        sku=batch_shema.sku,
+        qty=batch_shema.qty,
+    )
     batch.allocate(line)
     breakpoint()
     assert batch.available_quantity == 18

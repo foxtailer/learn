@@ -1,6 +1,3 @@
-from re import U
-from typing import List
-
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select, update, delete, func
 
@@ -41,3 +38,13 @@ async def get_tasks(user_id):
         ]
 
         return serialized_tasks
+
+
+async def get_completed_tasks_count(user_id: int):
+    async with async_session() as session:
+        stmt = select(func.count(Task.id)).where(
+            Task.completed == True,
+            Task.user_id == user_id
+        )
+        return await session.scalar(stmt)
+

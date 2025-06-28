@@ -1,4 +1,3 @@
-from ast import For
 from sqlalchemy import ForeignKey, String, BigInteger
 from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column 
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine 
@@ -16,7 +15,7 @@ class Base(AsyncAttrs, DeclarativeBase):
 class User(Base):
     __tablename__ = 'users'
     id : Mapped[int] = mapped_column(primary_key=True)
-    tg_id = mapped_column(BigInteger)
+    tg_id = mapped_column(BigInteger, unique=True)
 
 
 class Task(Base):

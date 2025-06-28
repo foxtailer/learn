@@ -1,6 +1,5 @@
 from contextlib import asynccontextmanager
 
-from flask import request
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,6 +13,7 @@ async def lifespan(app_: FastAPI):
     await init_db()
     print('Bot is ready')
     yield
+    # 🔴 Code after `yield` (not shown here) would run on shutdown
 
 
 app = FastAPI(title='To Do App', lifespan=lifespan)
@@ -30,4 +30,11 @@ app.add_middleware(
 async def tasks(tg_id: int):
     user = await requests.add_user(tg_id)
     return await requests.get_tasks(user.id)
+
+
+@app.get("/api/main/{tg_id)")
+async def profile(tg_id: int):
+    user = await requests.add_user(tg_id)
+    completed_tasks_count = await requests.get_completed_tasks_count(user.id)
+    return {'completedTasks': completed_tasks_count}
 
