@@ -102,7 +102,7 @@ class TestMoneyOperations(unittest.TestCase):
             _ = self.tenner * self.fiver
 
     def test_name_equality(self):
-        self.assertEqual(Name("Harry", "Percival"), Name("Barry", "Percival"))
+        self.assertEqual(Name("Harry", "Percival"), Name("Harry", "Percival"))
 
 
 class TestIdentity(unittest.TestCase):

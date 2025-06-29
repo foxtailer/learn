@@ -5,13 +5,13 @@ from pydantic import BaseModel, Field
 
 
 class OrderLineSchema(BaseModel):
-    orderid: str
+    orderid: str | None = 'order-001'
     sku: str
-    qty: int = Field(..., gt=0)
+    qty: int = Field(gt=0)
 
 
 class BatchSchema(BaseModel):
-    reference: str
+    reference: str | None = 'batch-001'
     sku: str
     eta: Optional[date]
-    qty: int
+    qty: int = Field(gt=0)

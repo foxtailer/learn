@@ -1,18 +1,8 @@
-import sys
-from pathlib import Path
-
-# Get the parent directory of the script file
-parent_dir = Path(__file__).resolve().parent.parent
-print(parent_dir)
-# Add it to sys.path
-sys.path.append(str(parent_dir))
-
-
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 
-from orm import metadata, start_mappers
+from their_made.infrastructure.orm import metadata, start_mappers
 
 
 @pytest.fixture

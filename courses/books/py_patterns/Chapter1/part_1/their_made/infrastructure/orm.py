@@ -1,16 +1,7 @@
-import sys
-from pathlib import Path
-
-# Get the parent directory of the script file
-parent_dir = Path(__file__).resolve().parent
-print(parent_dir)
-# Add it to sys.path
-sys.path.append(str(parent_dir))
-
 from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.orm import registry, relationship
 
-import domain.model as model
+import their_made.domain.model as model
 
 
 metadata = MetaData()
@@ -43,14 +34,20 @@ allocations = Table(
 )
 
 
+mapper_registry = registry()
+
+
 def start_mappers():
-    lines_mapper = mapper(model.OrderLine, order_lines)
-    mapper(
+    mapper_registry.map_imperatively(model.OrderLine, order_lines)
+    
+    mapper_registry.map_imperatively(
         model.Batch,
         batches,
         properties={
             "_allocations": relationship(
-                lines_mapper, secondary=allocations, collection_class=set,
+                model.OrderLine,
+                secondary=allocations,
+                collection_class=set,
             )
         },
     )

@@ -9,18 +9,6 @@ import typing
 from dataclasses import dataclass
 from datetime import date
 
-import sys
-from pathlib import Path
-
-# Get the parent directory of the script file
-parent_dir = Path(__file__).resolve().parent.parent
-print(parent_dir)
-# Add it to sys.path
-sys.path.append(str(parent_dir))
-
-from types.domain import BatchSchema
-
-
 '''
 Продукт идентифицируется по артикулу, или единице складского учета (stock-
 keeping unit, SKU). Клиенты (customers) делают заказы (orders). Заказ иденти-
@@ -97,15 +85,6 @@ class Batch:
         if other.eta is None:
             return True
         return self.eta > other.eta
-    
-    @classmethod
-    def from_schema(cls, schema: BatchSchema):
-        return cls(
-            ref=schema.reference,
-            sku=schema.sku,
-            qty=schema.qty,
-            eta=schema.eta,
-        )
 
     def allocate(self, line: OrderLine):
         if self.can_allocate(line):

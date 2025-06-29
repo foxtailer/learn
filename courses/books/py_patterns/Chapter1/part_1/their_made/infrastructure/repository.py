@@ -1,8 +1,10 @@
 # Репозиторий дает вам иллюзию коллекции объектов, находящихся в памяти.
 
+# высокоуровневые модули (предметная область) не должны зависеть от низко­уровневых(инфраструктура)
+
 import abc
 
-import domain.model as model
+import their_made.domain.model as model
 
 
 class AbstractRepository(abc.ABC):
