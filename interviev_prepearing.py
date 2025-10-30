@@ -1049,7 +1049,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       yield from b
 
     j = join_Generator(range(2), range(3))  # 0, 1, 0, 1, 2, StopIteration
-  
+    
+    * yield from are like:
+        for item in iterable:
+            yield item
+
   #############
     def flipper_Generator(a, b):
       while True:
@@ -1213,6 +1217,29 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       linear probing, quadratic probing, and double hashing.
   
   Funtion hash(value) return hash of value.
+
+  # SET
+
+    Intersection
+        A = {'a', 'b', 'c'}
+                 {'b', 'c', 'd'} = B
+        B & A =  {'b', 'c'}
+    
+    Union
+            A = {'a', 'b', 'c'}
+                     {'b', 'c', 'd'} = B
+        B | A = {'a', 'b', 'c', 'd'}
+    
+    Difference
+             A = {'a', 'b', 'c'}
+                      {'b', 'c', 'd'} = B
+        A - B = {'a'}
+                        B - A = {'d'}
+    
+    Simmetric differense
+        A = {'a', 'b', 'c'}
+                 {'b', 'c', 'd'} = B
+        A ^ B = {'a', 'd'}
 
 
 -- FUNCTIONS
