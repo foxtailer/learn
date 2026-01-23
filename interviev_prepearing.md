@@ -1,11 +1,7 @@
-The Python Virtual Machine (PVM) is the component of the Python interpreter that executes the 
-compiled bytecode. When you write Python code, the process typically follows these steps:
 
-Source Code to Bytecode: Your .py file is translated into bytecode, which is a low-level, 
-  platform-independent representation of your code.
-Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machine. The PVM 
-  interprets and executes these instructions, handling all operations like variable assignments, 
-  function calls, and loops.
+The *Python Virtual Machine* (PVM) is the component of the Python interpreter that
+ executes the compiled bytecode. When you write Python code, the process typically 
+ follows these steps:
 
 1. Parser
   Role: Converts your source code into an abstract syntax tree (AST).
@@ -14,10 +10,9 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   Checks for syntax errors.
   Creates a tree structure representing the code's logic.
   Example:
-  python
-  Copy code
-  x = 5 + 3
-  The parser creates a tree with nodes for = (assignment), x (variable), + (addition), 5, and 3.
+  `x = 5 + 3`
+  The parser creates a tree with nodes for = (assignment), x (variable), + (addition),
+   5, and 3.
 
 2. Abstract Syntax Tree (AST)
   Role: A tree representation of the source code structure.
@@ -27,7 +22,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 3. Compiler
   Role: Converts the AST into bytecode.
   Bytecode: A lower-level, platform-independent representation of the code.
-  Bytecode is stored in .pyc files in the __pycache__ directory for reuse.
+  Bytecode is stored in `.pyc` files in the __pycache__ directory for reuse.
   Example Bytecode Instruction:
   Copy code
   LOAD_CONST 5
@@ -39,8 +34,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   Role: Executes the bytecode.
   How It Works:
   Reads one bytecode instruction at a time.
-  Executes it using C-level functions.
-  Manages Python’s runtime features like memory allocation, function calls, and object operations.
+  Executes it using C-level functions. Manages Python’s runtime features like memory
+  allocation, function calls, and object operations.
 
 5. Garbage Collector
   Role: Automatically manages memory by removing unused objects.
@@ -61,82 +56,102 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 8. Built-in Functions and Objects
   Role: Provide essential functionality (e.g., len, print, int).
   Example:
-  Calling len() is directly handled by the interpreter as a special operation.
+  Calling `len()` is directly handled by the interpreter as a special operation.
   
 9. C API
   Role: Allows the Python interpreter to interface with C extensions.
   Purpose: Enables performance-critical tasks and native integrations.
 
+  <!--
+    Python source code
+    ↓
+    Bytecode (.pyc)
+    ↓
+    PVM loop (written in C)
+    ↓
+    C functions
+    ↓
+    Machine instructions
+    ↓
+    CPU
+  -->
 
 
-*******BEGINER********
+---
+# **BEGINER**
+---
 
--- VARIABLES
+## -- VARIABLES
 
  Variables are containers for storing data values. A variable is created the 
- moment you first assign a value to it(name).
-  - name refers to or holds a reference to a concrete object. Python
+ moment you first assign a value to it(*name*).
+  <name refers to or holds a reference to a concrete **object**. Python
  objects are concrete pieces of information that live in specific memory 
- positions on computer.
+ positions on computer.>
 
- In Python, everything is treated as an object. Every object has these three 
- attributes:
+ In Python, everything is treated as an object. Every object has these attributes:
 
-    Identity(ID) – This refers to the address that the object refers to in the 
-    computer’s memory.
-      Unique and constant for the object during its lifetime. You can obtain 
-      using the id() function. The ID typically represents the memory address of the 
-      object in CPython , but this is not guaranteed in all Python implementations.
+  **Identity(ID)** – This refers to the address that the object refers to in the 
+  computer’s memory.
+    Unique and constant for the object during its lifetime. You can obtain 
+    using the `id()` function. The ID typically represents the memory address of the 
+    object in CPython , but this is not guaranteed in all Python implementations.
 
-    Type(class) – This refers to the kind of object that is created. For example 
-    - integer, list, string etc.
-      You can get the type of an object using the type() function.
+  **Type(class)** – This refers to the kind of object that is created. For example 
+    integer, list, string etc.
+    You can get the type of an object using the `type()` function.
+    <!--
       type(x) == x.__class__  # True
+    -->
 
-    Value – This refers to the value stored by the object. For example – List=[1,2,3] 
+  **Value** – This refers to the value stored by the object. For example – `List=[1,2,3]` 
     would hold the numbers 1,2 and 3
 
-    Reference counter
+  **Reference counter** - hold number of links that point to object
 
- While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
+ > While ID and Type cannot be changed once it’s created, values can be changed for *Mutable* objects.
 
- Object's Internal Structure: Each Python object has a structure that includes metadata, such as its type 
- and reference count. In CPython (the standard Python interpreter), this structure is represented by PyObject. 
- The PyObject structure contains a field called ob_refcnt, which is the reference count for that object.
-
- (name = variable) --(referense) ----> (id)-( object)
+ > (name)(variable) -> (referense)(id) -> ( object)
 
  To sum up, every time we assign variables Python undertakes the three following steps:
 
-    1 Create an object in memory that holds the value
-    2 If the variable name does not already exist in the namespace, go ahead and create it
-    3 Assign the reference to the object (in memory) to the variable
+  1. Create an object in memory that holds the value
+  2. If the variable name does not already exist in the namespace, go ahead and create it
+  3. Assign the reference to the object to the variable name
 
-  A variable, is a symbolic name in a system table that holds links (i.e. references) to objects. In other words,
- references are pointers from variables to objects(hold the location of objects). In Python though, variables do not 
- have a type. Therefore,it is possible to assign objects of different type to the same variable name, as shown below.
+   <A variable, is a symbolic name in a system table that holds links (i.e. references) to
+  objects. In other words, references are pointers from variables to objects(hold the 
+  location of objects). In Python though, variables do not have a type. Therefore, it is 
+  possible to assign objects of different type to the same variable name, as shown below.
+  Behaves as a value that is contains>
 
- Behaves as a value that is contains
+	<!--
+    x = 5
+    y = "John"
+    print(x)  # 5
+    print(y)  # John
+  -->
 
-	x = 5
-	y = "John"
-	print(x) >>> 5
-	print(y) >>> John
-
- Variables do not need to be declared with any particular type, and can even change type after they have been set.
- Python makes extensive use of a type system known as duck typing. The system is based on objects behaviors and interfaces.
+ Variables do not need to be declared with any particular type, and can even change type
+ after they have been set.
+ Python makes extensive use of a type system known as duck typing. The system is based 
+ on objects behaviors and interfaces.
  "If it walks like a duck and it quacks like a duck, then it must be a duck."
- Duck typing is a type system where an object is considered compatible with a given type if it has all the methods and 
- attributes(API) that the type requires.
+ Duck typing is a type system where an object is considered compatible with a given type if 
+ it has all the methods and attributes(API) that the type requires.
 
-	x = 4       # x is of type int
-	x = "Sally" # x is now of type str
+  <!--
+    x = 4       # x is of type int
+    x = "Sally" # x is now of type str
+  -->
 
- If you want to specify the data type of a variable, this can be done with casting.
+ > If you want to specify the data type of a variable, this can be done with *casting*.
 
-	x = str(3)    # x will be '3'
+	<!--
+    x = str(3)    # x will be '3'
     y = int(3)    # y will be 3
     z = float(3)  # z will be 3.0
+  -->
 
   When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish.
  This value can be an integer, a string or of any other type. Apart from the value, objects also come with a couple of
@@ -286,7 +301,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     print(some_list[1] is copy.copy(some_list)[1]) # True
 
 
--- MUTABLE/IMMUTABLE
+## -- MUTABLE/IMMUTABLE
 
   Mutable objects are those that allow you to change their value or data in place
  without affecting the object’s identity. In contrast, immutable objects don’t allow
@@ -337,7 +352,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     User-Defined Classes (It purely depends upon the user to define the characteristics)
 
 
--- ASSIGNMENT IN PYTHON
+## -- ASSIGNMENT IN PYTHON
 
  Basic form:
  This form is the most common form.
@@ -402,7 +417,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  -=, **=, &=, etc.
 
 
--- CONDITION (BOOL COND. CHAIN COND.)
+## -- CONDITION (BOOL COND. CHAIN COND.)
 
   Python supports the usual logical conditions from mathematics:
 
@@ -471,7 +486,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     not(1 > 2 and 2-7 == -5)   # This is True
 
 
--- OPERATORS
+## -- OPERATORS
 
  Operators are used to perform operations on variables and values.
  Python divides the operators in the following groups:
@@ -663,7 +678,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   anonymous123
 
 
--- CONTROL FLOV
+## -- CONTROL FLOV
 
  A program’s control flow is the order in which the program’s code executes.
  The control flow of a Python program is regulated by conditional statements, loops, and function calls.
@@ -793,7 +808,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         print("In Else Block")
 
 
--- TRY/EXEPT
+## -- TRY/EXEPT
 
     The try block lets you test a block of code for errors.
     The except block lets you handle the error.
@@ -862,7 +877,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   AssertionError: number greater than 0 expected, got: -42
 
 
--- ITERABLES
+## -- ITERABLES
 
   An iterable is an object capable of returning its members one by one. Said in other words,
  an iterable is anything that you can loop over with a for loop in Python.
@@ -950,7 +965,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   (range return iterable)
 
 
--- ITERATOR
+## -- ITERATOR
 
   Python’s iterators and iterables are two different but related tools that come in handy
  when you need to iterate over a data stream or container. Iterators power and control
@@ -1010,7 +1025,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   values as needed and can stop at any point, which wouldn't be possible with a fully evaluated sequence.
 
 
--- GENERATORS
+## -- GENERATORS
 
  A generator function in Python is defined like a normal function, but whenever it needs to generate a 
  value, it does so with the yield keyword rather than return.
@@ -1103,9 +1118,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
       print(next(squares))  # Output: 1
       print(next(squares))  # Output: 4
 
-<<<<<<< HEAD
   * g.send(None) <=> next(g) <=> g.__next__()
-=======
+
   Generator with send()
 
     def responder():
@@ -1140,10 +1154,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     print(avg_gen.send(30))  # 20.0
 
   * g.next() <=> g.send(None)
->>>>>>> 012da6712c9eb3149a3aba1e496fe9439fa927b4
 
-
--- BUILD IN DATA STRUCTURES
+## -- BUILD IN DATA STRUCTURES
 
     Numeric data types: int, float, complex, long(in python 2)
     String data types: str  (string is a sequence of characters)
@@ -1242,7 +1254,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         A ^ B = {'a', 'd'}
 
 
--- FUNCTIONS
+## -- FUNCTIONS
 
    A function is a block(callable object) of code which only runs when it is called.
    You can pass data, known as parameters, into a function.
@@ -1383,7 +1395,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  conventions, its side effects, etc.
 
 
--- NAMESPACE 
+## -- NAMESPACE 
 
  Namespace in python use LEGB(local, enclosing, global, built-in) rule
 
@@ -1430,7 +1442,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   attribute's name (as a string), and the value is the corresponding data. (Contains only the object's instance attributes.)
 
 
--- *ARGS **KWARGS
+## -- *ARGS **KWARGS
 
  *args is simply shortened for arguments. It is used as an argument when we are not sure how many arguments should we 
  pass in the function. By using *args, you are allowed to pass any number of arguments when calling a function.
@@ -1487,14 +1499,14 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   arg3: 3
 
 
--- COMMON METHODS
+## -- COMMON METHODS
 
 
+## ---
+# **INTERMEDIATE**
+## ---
 
-*****INTERMEDIATE******
-
-
--- OOP
+## -- OOP
 
   Object-oriented programming (OOP) is a method of structuring a program by bundling related
  properties and behaviors into individual objects. Conceptually, objects are like the components
@@ -2087,7 +2099,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         print(a is b)   # True — both are the same instance
 
 
--- MIXIN 
+## -- MIXIN 
 
   A mixin is a class that provides method implementations for reuse by multiple related child classes. However, 
   the inheritance is not implying an is-a relationship.
@@ -2108,7 +2120,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     pass
 
 
--- MRO (diamond  problem)
+## -- MRO (diamond  problem)
 
   1. The class of the object itself.
   2. The first parent class (from left to right in the inheritance declaration).
@@ -2141,7 +2153,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     3. Parent class fields.(recursivly)
 
 
--- COMPREHENTIONS
+## -- COMPREHENTIONS
 
  Comprehensions in Python provide us with a short and concise way to construct new sequences 
  (such as lists, sets, dictionaries, etc.) using previously defined sequences. Python supports the 
@@ -2176,7 +2188,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         [5, 10, 15, 20, 25]]
 
 
--- LAMBDA MAP/FILTER/ZIP
+## -- LAMBDA MAP/FILTER/ZIP
 
  A lambda function is a small anonymous function. Meaning they are not given a specific name unless assigned to a variable.
  A lambda function can take any number of arguments, but can only have one expression.
@@ -2213,13 +2225,13 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   end create tuple on each iteration.
 
 
--- ADVENSED CLASS
--- DANDER METHOD
--- PIP/PYPI
--- MAKING OWN MODULE
+## -- ADVENSED CLASS
+## -- DANDER METHOD
+## -- PIP/PYPI
+## -- MAKING OWN MODULE
 
 
--- VIRTUAL ENVIRONMENT
+## -- VIRTUAL ENVIRONMENT
 
   A virtual environment is (amongst other things):
 
@@ -2242,19 +2254,19 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     pip install -r requirements.txt
 
 
+## ---
+# **ADVENCED**
+## ---
 
-******ADVENCED*******
 
-
-
--- POETRY
+## -- POETRY
 
  is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends 
  on and it will manage (install/update) them for you.
  Alternative for pip package manager. Pip download packagees from Pypi.
 
 
--- BIG O NOTATION
+## -- BIG O NOTATION
 
   An algorithm is little more than a series of steps required to perform some task. If we treat each step as a basic unit of 
  computation, then an algorithm’s execution time can be expressed as the number of steps required to solve the problem.
@@ -2302,7 +2314,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   iteration	     O(n)
 
 
--- CLOSURE
+## -- CLOSURE
 
   In Python, a closure is a function that retains access to its lexical scope, even after the scope has finished 
   executing. In simpler terms, a closure "remembers" the variables that were in its surrounding scope when it was 
@@ -2388,7 +2400,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   They provide flexibility and can greatly simplify code, especially when working with higher-order functions and decorators.
 
 
--- DECORATORS
+## -- DECORATORS
 
   A Python decorator is a function or a class that modifies the behavior of another function or method. Decorators are a 
   way to "wrap" a function or a method in additional functionality without changing its actual code. They use the @decorator_name 
@@ -2571,11 +2583,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   decorator with parametrs looks like this fu = dec_factory(param)(fu)
 
 
--- CONTEXT MENEGER(WITH)
--- METACLASSES
+## -- CONTEXT MENEGER(WITH)
+## -- METACLASSES
 
 
--- THREAD
+## -- THREAD
 
   The threads may be running on different processors, but with GIL they will only be running one at a time.
   Tasks that spend much of their time waiting for external events are generally good candidates
@@ -2704,7 +2716,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         p.join()
 
 
---- CONCURENCY
+## -- CONCURENCY
 
   Python with GIL limits amount of concurrency on a single thread on a single process.
 
@@ -2837,11 +2849,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   other non-CPU-intensive tasks, where you can avoid the GIL limitations and achieve highly efficient concurrency.
 
 
--- PARALELISM
--- MULTIPROCESSING
+## -- PARALELISM
+## -- MULTIPROCESSING
 
 
--- GIL
+## -- GIL
 
   Python Global Interpreter Lock (GIL) is a type of process lock which is used by python whenever it deals 
   with processes. Generally, Python only uses only one thread to execute the set of written statements. This 
@@ -2876,22 +2888,22 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   They appear to run “at the same time” through task switching, but only one thread executes Python code at any given moment.
 
 
--- RAISE CONDITION
+## -- RAISE CONDITION
 
   A race condition happens when two or more threads (or processes) access shared resources concurrently and the final 
   outcome of the execution depends on the specific timing or interleaving of their execution. This can lead to inconsistent 
   or incorrect results, especially if the shared resources are not properly synchronized.
 
 
--- TESTING
+## -- TESTING
   pytest
   unittest
 
 
--- BUILD AND MANIPULATE PAKEGES
+## -- BUILD AND MANIPULATE PAKEGES
 
 
--- CPYTHON
+## -- CPYTHON
 
   When Python code is executed, it goes through a multi-step process:
 
@@ -2911,15 +2923,13 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   interprets and runs the bytecode.
 
 
+---
+# **ADDITIONAL**
+---
 
-***** ADDITIONAL ******
+## -- ALGORITMS
 
-
-
--- ALGORITMS
-
-
--- DS
+## -- DS
 
   "ds is a collection of data values the relations among them and functions that can be applied to them."
 
@@ -3008,7 +3018,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
         print("Queue Rear : " + str(q.rear.data if q.rear != None else -1))
 
 
--- MODULES AND PACKEGES
+## -- MODULES AND PACKEGES
 
   The module is a simple Python file that contains collections of functions and global variables and with having a .py 
   extension file. It is an executable file and to organize all the modules we have the concept called Package in Python. 
@@ -3061,7 +3071,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   __all__ = [module1, module2] - define list of modules that been imported when: import * from package/module
   
 
--- BEST PRACTICES
+## -- BEST PRACTICES
 
   - DRY
     Don't repeat yourself
@@ -3188,16 +3198,16 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
 
 
--- ANTIPATTERN
+## -- ANTIPATTERN
 
   - ITM
     Initiate then modify
 
 
--- PROBLEM SOLVING
+## -- PROBLEM SOLVING
 
 
--- DESIGN PATTERNS
+## -- DESIGN PATTERNS
 
   Creational patterns
     These patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
@@ -3227,7 +3237,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     ConcreteDecorator: The specific wrapper that adds or modifies behavior.
 
 
--- OSI
+## -- OSI
 
   - Application Layer: Applications create the data.
       Examples: HTTP (Hypertext Transfer Protocol), FTP (File Transfer Protocol), SMTP (Simple Mail Transfer Protocol),
@@ -3280,14 +3290,14 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     At Layer 1 (Physical layer), the PDU is called a Bit.
     
 
--- TCP/IP
+## -- TCP/IP
 
   - Aplication (7,6,5 in OSI)
   - Transport
   - Internetwork
   - Network Access / Link Layer (1,2 in OSI)
 
--- HTTP/HTTPS
+## -- HTTP/HTTPS
 
   The HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It is a 
   protocol used for transferring data between a client (usually a web browser) and a server (hosting a website). 
@@ -3353,10 +3363,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     504 Gateway Timeout: The server, acting as a gateway or proxy, did not receive a timely response from the upstream server.
 
 
--- TCP/UDP
+## -- TCP/UDP
 
 
--- SERALIZATION
+## -- SERALIZATION
 
   Serialization is the process of converting an object into a format that can be easily stored or transmitted. This format is typically 
   a byte stream or a string. The serialized data can then be saved to a file, sent over a network, or stored in a database.
@@ -3376,7 +3386,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   This allows the object to be reconstructed and used in the application as if it were the original.
 
 
--- GIT
+## -- GIT
 
  help
   git <command> --help  # Откроет информацию по запрашиваемой команде
@@ -3550,7 +3560,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   git reset HEAD~1
 
 
--- LINUX
+## -- LINUX
 
   man hier
   /bin (Binaries)
@@ -3840,7 +3850,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     for i in $(seq -w 0000 9999);  = for i in {0..9}{0..9}{0..9}{0..9};
     
 
--- CC
+## -- CC
 
   Common Ports and Protocols
 
@@ -3856,7 +3866,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     DNS(53)
 
 
--- REGULAR EXPRESSION
+## -- REGULAR EXPRESSION
 
   Character	  Legend	                                             Example	                Sample Match
   \d	        Most engines: one digit from 0 to 9	                 file_\d\d	              file_25
@@ -3924,11 +3934,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   re.findall(r'\b\w+\b', line) -> list of words without punctuations simbols from line of text.
 
 
--- MATH
--- STATISTIC
+## -- MATH
+## -- STATISTIC
 
 
--- DJANGO
+## -- DJANGO
 
   - Model
     Object-Relational Mapping (ORM) system. Allows you to define models as Python classes, which are then mapped to database tables. 
@@ -3997,10 +4007,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   AUTH_USER_MODEL = 'users.CustomUser'
 
 
--- FLASK
+## -- FLASK
 
 
--- DOCKER
+## -- DOCKER
 
   Docker is a platform that uses containers to run applications. Containers are lightweight, standalone, 
   and executable units that include everything needed to run a piece of software, such as the code, runtime, 
@@ -4160,7 +4170,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
      none
 
 
--- LOGGING
+## -- LOGGING
 
   logging.NOTSET [0] When set on a logger, indicates that ancestor loggers are to be consulted to determine
    the effective level. If that still resolves to NOTSET, then all events are logged. When set on a handler, all events are handled.
@@ -4174,7 +4184,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   Logger receives a log request, creates a log record -> send it to handler thet formatter transforms data and -> send it to target
   - Logger and handler can have filters
 
--- nginx
+## -- nginx
 
   Is a high-performance web server and reverse proxy server. It's widely used for various purposes in 
   modern web applications due to its efficiency, scalability, and versatility.
@@ -4197,7 +4207,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Increase application scalability and reliability.
 
 
--- GUNICORN
+## -- GUNICORN
 
   Is a Python WSGI (Web Server Gateway Interface) server that runs Python web applications, such as Django 
   or Flask. It acts as a bridge between your Python application and a web server like Nginx or Apache, 
@@ -4215,7 +4225,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Ease of Deployment: Lightweight and easy to integrate into existing projects.
 
 
--- REST API
+## -- REST API
 
   Representational State Transfer (REST) is an architectural style that defines a set of constraints 
   to be used for creating web services. REST API is a way of accessing web services in a simple and flexible 
@@ -4240,10 +4250,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   and these are the four basic operations that we perform on persistence storage.) Http methods POST, GET, PUT/PATCH, DELETE
 
 
--- AJAX
+## -- AJAX
 
 
--- ACID 
+## -- ACID 
 
   -Atomicity: Atomicity ensures that a transaction is treated as a single, indivisible unit of work. Either all 
   the operations within the transaction are completed successfully, or none of them are. If any part of the 
@@ -4259,10 +4269,10 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   the changes remain intact and can be recovered.
 
 
--- BASE
+## -- BASE
 
 
--- SQL
+## -- SQL
 
   SQL Data Querying Keywords
 
@@ -4651,7 +4661,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   The main difference between unique and primary is the primary key identifies each record in the table, 
   and the unique key prevents duplicate entries in a column.
 
--- SQLITE
+## -- SQLITE
 
   sqlite3 <path to db>
   .tables
@@ -4671,7 +4681,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   INSERT INTO tasks (user, text, active) VALUES (1, 'user 1 task', TRUE);
 
 
--- PSQL
+## -- PSQL
 
   sudo -i -u postgres
   sudo -u postgres psql
@@ -4793,7 +4803,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   sudo systemctl enable postgresql
 
 
--- MONOLITH MICROSERVISES DECOMPOSED MONOLITH
+## -- MONOLITH MICROSERVISES DECOMPOSED MONOLITH
 
   Comparative table for Monolith, Decomposed Monolith, and Microservices:
 
@@ -4847,11 +4857,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     individually, but at the cost of higher operational complexity.
 
 
--- PANDAS
--- Matplotlib
+## -- PANDAS
+## -- Matplotlib
 
 
--- ngrok
+## -- ngrok
 
   ngrok config add-authtoken YOUR_AUTH_TOKEN
   ngrok http 8001
@@ -4896,11 +4906,6 @@ Click Edit
 a window pops up, click New
 Type the Directory path of your .exe or batch file ( Directory means exclude the file name from path)
 Click Ok on all open windows and restart your system restart the command prompt.
-
-Debian
-sudo systemctl start bluetooth
-sudo systemctl enable Bluetooth
-ibus-setup　
 
 
 * constant integers between -5 and 256 in python alredy in cache.
