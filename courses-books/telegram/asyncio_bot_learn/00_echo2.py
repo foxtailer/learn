@@ -1,7 +1,7 @@
 import asyncio
 import threading
 
-from IPython import embed
+# from IPython import embed
 
 from aiogram import Bot, types, Dispatcher
 
@@ -16,7 +16,7 @@ dp = Dispatcher()
 async def echo_message(msg: types.Message):
     message = await bot.send_message(chat_id=msg.chat.id,
                                      text=msg.text)
-    print(message.model_dump())
+    #print(message.model_dump())
 
 
 async def main():
@@ -29,7 +29,7 @@ def start_repl():
 
 
 if __name__ == '__main__':
-    threading.Thread(target=start_repl, daemon=True).start()
+    # threading.Thread(target=start_repl, daemon=True).start()
     asyncio.run(main())
 
 

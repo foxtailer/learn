@@ -10,7 +10,7 @@ handlers:
   simple_file:
     formatter: file_formatter
     class: logging.FileHandler
-    filename: logs/example4.log
+    filename: example4.log
     mode: a
 
 loggers:

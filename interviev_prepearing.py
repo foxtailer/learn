@@ -96,7 +96,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
     Value – This refers to the value stored by the object. For example – List=[1,2,3] 
     would hold the numbers 1,2 and 3
 
-    Reference counter
+    Reference counter  x = 1; import sys; sys.getrefcount(x);
 
  While ID and Type cannot be changed once it’s created, values can be changed for Mutable objects.
 
@@ -200,11 +200,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
     a = 1
     b = a
-
- Note:
-    a = 1
-    b = a
     a = 'Hello World'
+
   And it is important to highlight that in this case, the value of variable b remains unchanged.
  object 1 stil exist cose b reffer to it. refer a to 1 remove and a start refer to Hello World
 
@@ -3380,13 +3377,11 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
 
  help
   git <command> --help  # Откроет информацию по запрашиваемой команде
-  git commit --help  # Пример
   git --help --all  # All commands
 
  init
   git init  # Создать репозиторий. In current folder.
   git init <name>  # Создать репозиторий в директории с именем <name> or create it if not exist.
-  git init basic-git  # Пример
 
  clone
   git clone <remote-url>
@@ -3394,11 +3389,16 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   git clone git@github.com:LpilinAlexandr/basic-git.git  # Пример через ssh
 
  remote
-  git remote set-url origin https://github.com/LpilinAlexandr/basic-git123.git  # Изменить в origin remote адрес
+    origin	        Name of a remote repo
+    main(master)    A branch
+    HEAD	        Pointer to your current branch
+    origin/main	    Remote branch snapshot
+
+  git remote set-url origin https://github.com/LpilinAlexandr/basic-git123.git  # Set URL as adress to origin o curent repo
   git remote add test https://github.com/LpilinAlexandr/basic-git123.git  # Установить новый remote адрес
   git remote -v  # Посмотреть список всех remote адресов
 
-  git rm -r --cached *.sqlite3
+  git rm -r --cached *.sqlite3  # Remove files from tracking and add to .gitignore
   git rm -r --cached **/__pycache__/
 
   git status --ignored
@@ -3470,10 +3470,6 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   git reset --soft HEAD~  # Сбросить последний коммит в индекс
   git reset --hard HEAD~4  # Убить последние 4 коммита
 
- # squash life-hack
-  git reset --soft HEAD~3  # Сбрасываем 3 последних коммита в 1
-  git commit -m 'Обьединили 3 коммита'  # Коммитим заново, тем самым объединяя 3 коммита в 1
-
  cherry-pick
   git cherry-pick <commit>  # Перенести коммит в HEAD текущей ветки
   git cherry-pick -n <commit>  # Перенести коммит в HEAD текущей ветки, но не делать коммит
@@ -3515,7 +3511,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
  push
   git push <remote> <branch>  # Отправить локальную ветку на remote 
   git push -f <remote> <branch>  # Отправить принудительно локальную ветку на remote, перезаписав её 
-  git push -u <remote> <branch>  # Отправляем локальную ветку на remote и устанавливаем отслеживание
+  git push -u <remote> <branch>  # Отправляем локальную ветку на remote и устанавливаем отслеживание Upstream default destination for (git push)
  
  reflog
   git reflog  # Показать историю
@@ -3528,6 +3524,7 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   git log --graph --all --oneline
   git checkout [hash]
   git reset --hard [hash]
+  git reset HEAD~1
   
   git restore .
   git checkout master
@@ -3539,15 +3536,8 @@ Bytecode Execution by PVM: The bytecode is then run by the Python Virtual Machin
   git stash
   git stash pop
 
-  git branch
-  git checkout -b branch-name
   git diff branch-name
   git diff commit1 commit2
-  git merge bname
-  git branch -d bnames
-
-  git reset
-  git reset HEAD~1
 
 
 -- LINUX

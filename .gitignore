@@ -1,6 +1,7 @@
 .*
 *.db
 *.sqlite3
+*.log
 __pycache__
 **/__pycache__/
 github_settings.py
