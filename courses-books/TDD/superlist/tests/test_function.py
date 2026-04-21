@@ -42,11 +42,11 @@ def test_can_start_a_list_and_retrieve_it_later(browser):
     # There is still a text box inviting her to add another item. She
     # enters "Use peacock feathers to make a fly" (Edith is very methodical)
     # The page updates again, and now shows both items on her list
-# Edith wonders whether the site will remember her list. Then she sees
-# that the site has generated a unique URL for her -- there is some
-# explanatory text to that effect.
-# She visits that URL - her to-do list is still there.
-# Satisfied, she goes back to sleep
+    # Edith wonders whether the site will remember her list. Then she sees
+    # that the site has generated a unique URL for her -- there is some
+    # explanatory text to that effect.
+    # She visits that URL - her to-do list is still there.
+    # Satisfied, she goes back to sleep
 
 def test_something():
     pytest.fail("Finish the test!")
