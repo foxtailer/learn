@@ -6,19 +6,35 @@ def two_sum(array, target):
     """
     >>> two_sum([1,6,3,5,8,-3],11)
     [6, 5]
+    >>> two_sum([1,6,5,5,8,-3],10)
+    [5, 5]
     >>> two_sum([1,6,2,5,8,-3],15)
     False
     """
-    temp = {}
+    temp = set()
 
-    for i, number in enumerate(array):
-        gift = target - number  # x + y = target
+    for number in array:
+        gift = target - number  # number + gift = target
         if gift in temp:
             return [gift, number]
         else:
-            temp[number] = i
+            temp.add(number)
 
     return False
+'''
+# For indexes
+def two_sum(array, target):
+    seen = {}
+
+    for i, num in enumerate(array):
+        gift = target - num
+        if gift in seen:
+            return [seen[gift], i]
+        seen[num] = i
+
+    return None
+'''
+
 
 # O(nlog(n)) time | O(1) space
 def two_sum2(array:list, target):
@@ -34,12 +50,14 @@ def two_sum2(array:list, target):
 
     while L<R:
         curent_sum = array[L] + array[R]
+        
         if curent_sum < target:
             L += 1
         elif curent_sum > target:
             R -= 1
         else:
             return [array[L], array[R]]
+            
     return False
 
 
@@ -62,9 +80,14 @@ def two_sum3(array:list, target):
     return False
 
 
+def two_sum4(array, target):
+    ...
+    
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    print(two_sum2([1,6,2,5,8,-3],10))
     print(two_sum([1,6,2,5,8,-3],10))
+    print(two_sum2([1,6,2,5,8,-3],10))
     print(two_sum3([1,6,2,5,8,-3],10))
+    print(two_sum4([1,6,2,5,8,-3],10))

@@ -42,6 +42,13 @@ def subsequence2(parent_arr, child_arr):
     return child_pointer == len(child_arr)
 
 
+def subsequence3(parent_arr, child_arr):
+    ...
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+    print(subsequence([1,4,5,2,7,8,3,1,12], [4,7,1]))
+    print(subsequence2([1,4,5,2,7,8,3,1,12], [4,7,1]))
+    print(subsequence3([1,4,5,2,7,8,3,1,12], [4,7,1]))
