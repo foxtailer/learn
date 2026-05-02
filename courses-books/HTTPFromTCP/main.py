@@ -3,22 +3,22 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 with open('messages.txt', 'rb') as f:
-    print('Read by 8 bytes.')
-
-    n = 1
+    # Like if we read file as string
+    # open('messages.txt, 'r') as f
+    
+    tmp = ''
     while True:
-        chunk = f.read(8)
+        chunk = f.read(1)
+
         if not chunk:
             break
         
-        bin_str = ' '.join(f'{b:08b}' for b in chunk)
-        dec_str = ' '.join(f'{b:3d}' for b in chunk)
+        if (str_chunk := chunk.decode('utf-8', errors='replace')) != '\n':
+            tmp += str_chunk
+        else:
+            print(tmp)
+            tmp = ''
 
-        # hex: ' '.join(chunk.hex()[i:i+2] for i in range(0, len(chunk.hex()), 2))
-        print(f'''Chunk #{n}:
-    chunk: {object.__repr__(chunk)};
-    hex: {chunk.hex(' ')};
-    dec: {dec_str};
-    bin: {bin_str};
-    str: {chunk.decode('utf-8', errors='replace')};''') 
-        n += 1
+    # If file doesn't end with new line
+    if tmp:
+        print(tmp) 
