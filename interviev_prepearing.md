@@ -4160,6 +4160,13 @@ The *Python Virtual Machine* (PVM) is the component of the Python interpreter th
      host
      none
 
+     docker run --name my-postgres \
+	-e POSTGRES_PASSWORD=pass123 \
+	-e POSTGRES_USER=user1 \
+	-e POSTGRES_DB=testdb \
+	-p 5432:5432 \
+	-d postgres
+
 
 ## -- LOGGING
 
@@ -4668,112 +4675,166 @@ The *Python Virtual Machine* (PVM) is the component of the Python interpreter th
 
   ALTER TABLE users ADD COLUMN bot_lang TEXT DEFAULT 'ENG';
   UPDATE users SET bot_lang = 'ENG' WHERE bot_lang IS NULL;
-  ALTER TABLE users RENAME TO customers;
+  
   INSERT INTO tasks (user, text, active) VALUES (1, 'user 1 task', TRUE);
 
 
 ## -- PSQL
+  sudo apt install postgresql postgresql-contrib
+  sudo systemctl status postgresql
+  sudo systemctl start postgresql
+  sudo systemctl enable postgresql
+  sudo systemctl stop postgresql
+  sudo systemctl disable postgresql
 
-  sudo -i -u postgres
-  sudo -u postgres psql
+
+  sudo -i -u postgres psql
   psql -U username -d mydatabase -W
-  psql
+  psql -h pg.pg4e.com -p 5432 -U pg4e_c952d0d873 pg4e_c952d0d873 (db username)
 
-  SET ROLE username;
-
-  \l  (list daatabases)
+  \l  (list databases)
   \du  (list users)
-  \dt  (db tables)
-  \d table_name
+  \dt  (list tables)
+  \d | \d+ <table_name>
   \c (conection details)
-  \c dbname (to swap on other db)
-
-  SELECT current_user;
-
-  CREATE DATABASE db_name;
-
-  CREATE USER new_username WITH PASSWORD 'password';
-
-  CREATE TABLE student(
-    student_id INT PRIMARY KEY,      //   student_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL);
-  ALTER TABLE student ADD gpa DECIMAL(3, 2) UNIQUE;
-  ALTER TABLE student ADD age DEFAULT 'immortal';
-  ALTER TABLE student DROP COLUMN gpa;
-  INSERT INTO student(student_id, name) VALUES (3, 'Ivan');
-
-    *bigserial for autoincremented id;
-    FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL
-
-  GRANT ALL PRIVILEGES ON DATABASE database_name TO new_username;
-  ALTER USER new_username WITH SUPERUSER;
-  ALTER USER new_username WITH CREATEDB;
-  ALTER USER django_user PASSWORD 'django_pass';
-
-  psql -h remote_server_address -U your_username -d your_database
-
-  DROP USER username;
-  DROP DATABASE database_name;
-  DROP TABLE IF EXISTS table_name;
-
-  DELEATE FROM student;
-
-  SELECT field, field FROM table ORDER BY field DESC/ASC LIMIT n;
-  SELECT major FROM student WHERE name IN ('dog', 'Lusy');
-  SELECT DISTINCT column_name FROM table_name;
-  functions
-  SELECT COUNT(column_name) FROM table_name;
-         AVG(column_name)
-         SUM(column_name)
-  agregation
-  SELECT COUNT(c_n), c_n FROM t_n GROUP BY c_n;
-  wildcards
-  SELECT * FROM table WHERE name LIKE '%br_;
-  SELECT name FROM table UNION SELECT name2 FROM table2;
+  \c <dbname> (to swap on other db)
+  \i <file.sql> (run sql from file)
+  \q (exit)
   
-  SELECT table.name, table2.name2 
-  FROM table
-  JOIN table2            // LEFT/RIGHT
-  ON table.name = table2.name2;
+	========================
+	DDL — Data Definition Language (structure)
+	========================
 
-  SELECT employee.first_name, eployee.last_name
-  FROM employee
-  WHERE employee.emp_id IN(
-    SELECT words_with.emp_id
-    FROM works_with
-    WHERE works_with.total_sales > 30000
-  );
+	- Create
+	CREATE USER username WITH PASSWORD 'password';
+	CREATE DATABASE db_name WITH OWNER username;
 
-  trigger
-  DELIMITER $$
-  CREATE
-    TRIGGER my_trigger BEFORE INSERT
-    ON employee
-    FOR EACH ROW BEGINER
-      INSERT INTO trigger_test VALUES('New employee added');
-    END$$
-  DELIMITER;
+	CREATE TABLE student (
+	  student_id SERIAL PRIMARY KEY,
+	  name VARCHAR(50) NOT NULL
+	);
 
-  UPDATE student 
-    SET major = 'bio'
-    WHERE major = 'biology';
+	- Alter
+	ALTER TABLE student ADD gpa DECIMAL(3,2) UNIQUE;
+	ALTER TABLE student ADD age INT DEFAULT 0;
+	ALTER TABLE student DROP COLUMN gpa;
+  ALTER TABLE users RENAME TO customers;
+  ALTER TABLE automagic 
+    ALTER COLUMN name TYPE char(32);
+
+	ALTER USER new_username WITH SUPERUSER;
+	ALTER USER new_username WITH CREATEDB;
+	ALTER USER django_user WITH PASSWORD 'django_pass';
+
+	- Drop
+	DROP USER username;
+	DROP DATABASE database_name;
+	DROP TABLE IF EXISTS table_name;
+
+
+	========================
+	DML — Data Manipulation Language (data changes)
+	========================
+
+	- Insert
+	INSERT INTO student(student_id, name) VALUES (3, 'Ivan');
+
+	- Update
+	UPDATE student SET major = 'bio' WHERE major = 'biology';
+
+	- Delete
+	DELETE FROM student WHERE email='some@email.com';
+
+
+	========================
+	DQL — Data Query Language (read data)
+	========================
+
+	- Basic select
+	SELECT * FROM table WHERE email='some@email.com' ;
+	SELECT field, field FROM table 
+		ORDER BY field1 ASC field2 DESC OFSET n LIMIT n;
+
+	- Filtering
+	SELECT major FROM student WHERE name IN ('dog', 'Lusy');
+
+	- Distinct
+	SELECT DISTINCT column_name FROM table_name;
+
+	- Aggregation
+	SELECT COUNT(column_name) FROM table_name;
+	SELECT AVG(column_name) FROM table_name;
+	SELECT SUM(column_name) FROM table_name;
+
+	SELECT COUNT(c_n), c_n
+	FROM t_n
+	GROUP BY c_n;
+
+	- Wildcards
+	SELECT * FROM table WHERE name LIKE '%br_';
+	_ - Onecharacter. % - Any number of characters.
+
+	- Union
+	SELECT name FROM table
+	UNION
+	SELECT name2 FROM table2;
+
+	- Joins
+	SELECT table.name, table2.name2
+	FROM table
+	JOIN table2
+	ON table.name = table2.name2;
+
+	- Subquery
+	SELECT employee.first_name, employee.last_name
+	FROM employee
+	WHERE employee.emp_id IN (
+	  SELECT works_with.emp_id
+	  FROM works_with
+	  WHERE works_with.total_sales > 30000
+	);
+
+
+	========================
+	DCL — Data Control Language (permissions)
+	========================
+
+	GRANT ALL PRIVILEGES ON DATABASE database_name TO new_username;
+	SET ROLE username;
+
+	========================
+	OTHER (constraints, keys, triggers)
+	========================
+
+	- Auto increment
+	- use BIGSERIAL for large autoincrement IDs
+
+	- Foreign key
+	FOREIGN KEY (mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL;
+
+	- Check current user
+	SELECT current_user;
+
+	- Trigger (PostgreSQL syntax)
+	CREATE OR REPLACE FUNCTION log_new_employee()
+	RETURNS trigger AS $$
+	BEGIN
+	  INSERT INTO trigger_test VALUES ('New employee added');
+	  RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+
+	CREATE TRIGGER my_trigger
+	BEFORE INSERT ON employee
+	FOR EACH ROW
+	EXECUTE FUNCTION log_new_employee();
 
   home=>: This is the standard prompt in psql. It shows that you are connected to the home 
     database and psql is ready to accept a new command.
   home->: This prompt indicates that a command is continued on the next line. 
   home'>: This prompt appears when you have an open quote in your command. 
-  giraffe'#  Wait for close quote
-  giraffe=#  Wait for commands
+  *# enstead of > mean you loggin as admin*
 
-  \q
-  exit
-
-  sudo systemctl status postgresql
-  sudo systemctl is-enabled postgresql
-  sudo systemctl disable postgresql
-  sudo systemctl restart postgresql
-  sudo systemctl start postgresql
-  sudo systemctl stop postgresql
   - To change peep authentication when psql user mast be sistem user
   sudo -u postgres psql -c "SHOW config_file;"
     Before:
