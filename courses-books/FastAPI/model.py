@@ -15,3 +15,7 @@ class Explorer(BaseModel):
     description: str
 
 
+class User(BaseModel):
+    name: str
+    hash_: str
+

@@ -26,3 +26,41 @@ def get_db(name: str|None = None, reset: bool = False):
 
 get_db()
 
+
+if __name__ == "__main__":
+    curs.execute("""
+        CREATE TABLE IF NOT EXISTS creature(
+            name UNIQUE,
+            description,
+            country,
+            area,
+            aka
+        )
+    """)
+
+    
+    curs.execute("""
+        CREATE TABLE IF NOT EXISTS explorer(
+                name TEXT PRIMARY KEY,
+                country TEXT,
+                description TEXT
+        )
+    """)
+
+
+
+    curs.execute("""
+        CREATE TABLE IF NOT EXISTS user(
+            name TEXT PRIMARY KEY,
+            hash TEXT
+        )
+    """)
+
+
+    curs.execute("""
+        CREATE TABLE IF NOT EXISTS xuser(
+            name TEXT PRIMARY KEY,
+            hash TEXT
+        )
+    """)
+
