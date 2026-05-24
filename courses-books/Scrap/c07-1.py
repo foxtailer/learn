@@ -16,16 +16,15 @@ def get_soup(url: str):
     return bs
     
 
-class Content:                                                             
-   def __init__(self, url, title, body):                                   
-       self.url = url                                                      
-       self.title = title                                                  
-       self.body = body                                                    
-                                                                           
-   def print(self):                                                        
-       print(f'TITLE: {self.title}')                                       
-       print(f'URL: {self.url}')                                           
-       print(f'BODY:\n {self.body}') 
+class Content:
+    def __init__(self, url, title, body):
+        self.url = url
+        self.title = title
+        self.body = body
+    def print(self):
+        print(f'TITLE: {self.title}')
+        print(f'URL: {self.url}')
+        print(f'BODY:\n {self.body}') 
 
 
 def scrape_cnn(url):
@@ -38,11 +37,11 @@ def scrape_cnn(url):
 def scrape_brookings(url):
     bs = get_soup(url)
     title = bs.find('h1').text
-    body = bs.find('div', {'class': 'post-body'}).text
+    body = bs.find('div', {'class': ['byo-block', '-narrow']}).text
     return Content(url, title, body)
 
 
-cnn, brookings = (
+brookings, cnn = (
     'https://www.brookings.edu/research/robotic-rulemaking/',
     'https://www.cnn.com/2023/04/03/investing/\
 dogecoin-elon-musk-twitter/index.html',
@@ -50,7 +49,6 @@ dogecoin-elon-musk-twitter/index.html',
 
 contents = (scrape_cnn(cnn), scrape_brookings(brookings))
 
-
-for content in contens:
+for content in contents:
     content.print()
 
