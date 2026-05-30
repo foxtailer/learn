@@ -1,19 +1,18 @@
-from scrapy import Spider, Request
+from scrapy import Spider
 
-
+#  scrapy runspider wikiSpider/spiders/articles.py
 class ArticleSpider(Spider):
-    name='article'
+    name = 'article'
 
-    def start_requests(self):
-        urls = [
-            'http://en.wikipedia.org/wiki/Python_%28programming_language%29',
-            'https://en.wikipedia.org/wiki/Functional_programming',
-            'https://en.wikipedia.org/wiki/Monty_Python'
-        ]
-        return [Request(url=url, callback=self.parse) for url in urls]
+    start_urls = [
+        'https://en.wikipedia.org/wiki/Python_%28programming_language%29',
+        'https://en.wikipedia.org/wiki/Functional_programming',
+        'https://en.wikipedia.org/wiki/Monty_Python'
+    ]
 
     def parse(self, response):
         url = response.url
-        title = response.css('h1::text').extract_first()
+        title = response.css('.mw-page-title-main::text').get()
+
         print(f'URL is: {url}')
         print(f'Title is: {title}')

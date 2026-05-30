@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import sys
-from os import getenv
+# from os import getenv
 from typing import Any, Dict
 
 from aiogram import Bot, Dispatcher, F, Router, html
@@ -17,10 +17,10 @@ from aiogram.types import (
     ReplyKeyboardRemove,
 )
 
-import sys; sys.path.append('/home/zoy/vscode')
-import deps
+# import sys; sys.path.append('/home/zoy/vscode')
+# import deps
 
-TOKEN = deps.F
+#TOKEN = deps.F
 
 form_router = Router()
 
@@ -129,7 +129,9 @@ async def show_summary(message: Message, data: Dict[str, Any], positive: bool = 
 
 async def main():
     # Initialize Bot instance with default bot properties which will be passed to all API calls
-    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(token=TOKEN,
+              default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
 
     dp = Dispatcher()
 
