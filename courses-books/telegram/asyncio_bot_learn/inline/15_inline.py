@@ -6,7 +6,7 @@ from aiogram.filters import CommandStart
 from handlers import common, inline_mode, save_images, save_text
     
 
-bot = Bot('7823944712:AAFXzyloveTSPp1fCILkyi3WVX5K4-3oofI')
+bot = Bot('')
 dp = Dispatcher()
 dp.include_routers(
     save_images.router,
