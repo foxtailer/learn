@@ -117,7 +117,7 @@ The **Python Virtual Machine** (PVM) is the component of the Python interpreter 
    - **Role:** Converts the AST into bytecode.
    - **Bytecode:** A lower-level, platform-independent representation of the code. Bytecode is stored in `.pyc` files in the `__pycache__` directory for reuse.
    - **Example Bytecode Instruction:**
-     ```python
+     ```
      LOAD_CONST 5
      LOAD_CONST 3
      BINARY_ADD
@@ -139,6 +139,7 @@ The **Python Virtual Machine** (PVM) is the component of the Python interpreter 
    - **Role:** Ensures only one thread executes Python bytecode at a time.
    - **Purpose:** Simplifies memory management for CPython.
    - **Implication:** Limits true parallelism in multi-threaded Python programs.
+   > However, the GIL is released during I/O operations — so threading is still useful and effective for I/O-bound tasks like network requests or file reading.
 
 7. **Standard Library**
    - **Role:** Provides a rich set of built-in modules and tools (e.g., `os`, `sys`, `math`).
@@ -153,17 +154,17 @@ The **Python Virtual Machine** (PVM) is the component of the Python interpreter 
    - **Purpose:** Enables performance-critical tasks and native integrations.
 
 ```
-Python source code
-    ↓
-Bytecode (.pyc)
-    ↓
-PVM loop (written in C)
-    ↓
-C functions
-    ↓
-Machine instructions
-    ↓
-CPU
+    Python source code
+        ↓
+    Bytecode (.pyc)
+        ↓
+    PVM loop (written in C)
+        ↓
+    C functions
+        ↓
+    Machine instructions
+        ↓
+    CPU
 ```
 
 
@@ -205,11 +206,11 @@ To sum up, every time we assign variables Python undertakes the three following 
 
 > A variable is a symbolic name in a system table that holds links (i.e., references) to objects. In other words, references are pointers from variables to objects (hold the location of objects). In Python though, variables do not have a type. Therefore, it is possible to assign objects of different type to the same variable name, as shown below. Behaves as a value that is contained.
 
-```python
-x = 5
-y = "John"
-print(x)  # 5
-print(y)  # John
+```
+    x = 5
+    y = "John"
+    print(x)  # 5
+    print(y)  # John
 ```
 
 Variables do not need to be declared with any particular type, and can even change type after they have been set. Python makes extensive use of a type system known as **duck typing**. The system is based on objects' behaviors and interfaces.
@@ -218,17 +219,17 @@ Variables do not need to be declared with any particular type, and can even chan
 
 Duck typing is a type system where an object is considered compatible with a given type if it has all the methods and attributes (API) that the type requires.
 
-```python
-x = 4       # x is of type int
-x = "Sally" # x is now of type str
+```
+    x = 4       # x is of type int
+    x = "Sally" # x is now of type str
 ```
 
 > If you want to specify the data type of a variable, this can be done with **casting**.
 
-```python
-x = str(3)    # x will be '3'
-y = int(3)    # y will be 3
-z = float(3)  # z will be 3.0
+```
+    x = str(3)    # x will be '3'
+    y = int(3)    # y will be 3
+    z = float(3)  # z will be 3.0
 ```
 
 When we refer to objects we actually mean a piece of allocated memory that is capable of representing the value we wish. This value can be an integer, a string, or of any other type. Apart from the value, objects also come with a couple of header fields. These fields include the type of the object as well as its reference counter which is used by the Garbage Collector to determine whether it is fine to reclaim the memory of unused objects. And since Python objects are capable of knowing their own type, variables don't have to remember this piece of information.
@@ -237,25 +238,25 @@ When we refer to objects we actually mean a piece of allocated memory that is ca
 
 **Tracking Reference Count:** The `sys` module provides the `getrefcount()` function, which can check the reference count of an object:
 
-```python
-import sys
-a = []
-print(sys.getrefcount(a))  # Output might be 2, as `a` and the argument in getrefcount both reference it
+```
+    import sys
+    a = []
+    print(sys.getrefcount(a))  # Output might be 2, as `a` and the argument in getrefcount both reference it
 ```
 
 While the reference count is a key part of Python's memory management, Python also has a **cyclic garbage collector** to handle cases where objects reference each other in a cycle, which reference counting alone cannot handle.
 
-```python
-class Node:
-    def __init__(self, name):
-        self.name = name
-        self.next = None
+```
+    class Node:
+        def __init__(self, name):
+            self.name = name
+            self.next = None
 
-# Create two objects referencing each other
-a = Node("A")
-b = Node("B")
-a.next = b
-b.next = a
+    # Create two objects referencing each other
+    a = Node("A")
+    b = Node("B")
+    a.next = b
+    b.next = a
 ```
 
 The GC identifies these cycles and can clean them up, provided the objects are not reachable from the rest of the program.
@@ -274,26 +275,26 @@ The Python garbage collector (GC), which is part of the `gc` module, identifies 
 **Weak References:**
 Use weak references (`weakref` module) to break circular dependencies. Weak references do not increase the reference count.
 
-```python
-import weakref
+```
+    import weakref
 
-class Node:
-    def __init__(self, name):
-        self.name = name
-        self.next = None
+    class Node:
+        def __init__(self, name):
+            self.name = name
+            self.next = None
 
-a = Node("A")
-b = Node("B")
-a.next = weakref.ref(b)  # Weak reference prevents circular reference
-b.next = weakref.ref(a)
+    a = Node("A")
+    b = Node("B")
+    a.next = weakref.ref(b)  # Weak reference prevents circular reference
+    b.next = weakref.ref(a)
 ```
 
 In Python, it is possible for multiple variables to reference the same object. This behavior is called a **"shared reference."** For example, consider the code below:
 
-```python
-a = 1
-b = a
-a = 'Hello World'
+```
+    a = 1
+    b = a
+    a = 'Hello World'
 ```
 
 It is important to highlight that in this case, the value of variable `b` remains unchanged. Object `1` still exists because `b` refers to it. The reference from `a` to `1` is removed and `a` starts referring to `'Hello World'`.
@@ -303,30 +304,30 @@ As we have seen in the previous example, the last assignment `a = a - 1` won't m
 
 **Mutable** object types enable in-place changes which means that when their value is modified, there is an impact on all variables referencing that object. Such object types include lists, dictionaries, and sets.
 
-```python
-list_1 = [1, 2, 3]
-list_2 = list_1
-list_1[0] = 0
+```
+    list_1 = [1, 2, 3]
+    list_2 = list_1
+    list_1[0] = 0
 
-print(list_1)
-print(list_2)
-# >>> [0, 2, 3]
-# >>> [0, 2, 3]
+    print(list_1)
+    print(list_2)
+    # >>> [0, 2, 3]
+    # >>> [0, 2, 3]
 ```
 
 ### Copying Objects
 
 Python comes with a built-in package called `copy` that offers functionality for copying objects. The two copy types are **shallow** and **deep**, and their difference relates to whether you have to deal with **compound objects** — that is, objects containing other objects — for instance a list of dictionaries, or a list of lists.
 
-```python
-import copy
-a = [1, 3, 4, 7]
-b = copy.copy(a)
-b[0] = -1
-print(a)
-print(b)
-# >>> [1, 3, 4, 7]
-# >>> [-1, 3, 4, 7]
+```
+    import copy
+    a = [1, 3, 4, 7]
+    b = copy.copy(a)
+    b[0] = -1
+    print(a)
+    print(b)
+    # >>> [1, 3, 4, 7]
+    # >>> [-1, 3, 4, 7]
 ```
 
 > Slicing a mutable object (like a list) creates a shallow copy of the selected portion, not a deep copy. Same as:
@@ -337,7 +338,7 @@ print(b)
 
 However, shallow copies won't do the trick when you have a compound object with nested mutable types — for instance a list of lists. In the example below, we can see that if we take a shallow copy of a list of lists, a change of the original list `a` or the original compound object `c` will have an effect on the copied list `d`:
 
-```python
+```
 import copy
 a = [1, 3, 5, 7]
 b = [2, 4, 6, 8]
@@ -350,7 +351,7 @@ print(d)  # >>> [[-1, -3, 5, 7], [2, 4, 6, 8]]
 
 This is because a shallow copy does not create a new object for the nested instances but instead copies their reference to the original object. In most cases we typically need to create a new object even for nested instances so that the copied compound object is completely independent from the old one. In Python this is called a **deep copy**.
 
-```python
+```
 import copy
 a = [1, 3, 5, 7]
 b = [2, 4, 6, 8]
@@ -366,7 +367,7 @@ print(d)
 - `is` — compares IDs.
 - `==` — compares values.
 
-```python
+```
 import copy
 
 some_list = [1, [2], 3]
@@ -387,13 +388,13 @@ print(some_list[1] is copy.copy(some_list)[1])          # True
 - User-Defined Classes (it purely depends upon the user to define the characteristics)
 
 > We can use `setdefault` in dict to avoid `KeyError`:
-> ```python
+> ```
 > numberOfPets.setdefault('cats', 0)  # Does nothing if 'cats' exists.
 > ```
 
 You can use the `collections.defaultdict` class to eliminate `KeyError` errors entirely.
 
-```python
+```
 import collections
 scores = collections.defaultdict(int)
 scores
@@ -430,14 +431,14 @@ len(booksReadBy['Zophie'])  # The default value is an empty list.
 ### Basic Form
 This form is the most common form.
 
-```python
+```
 student = 'Geeks'
 print(student)  # >> Geeks
 ```
 
 ### Tuple Assignment
 
-```python
+```
 # equivalent to: (x, y) = (50, 100)
 x, y = 50, 100
 
@@ -448,7 +449,7 @@ print('y = ', y)  # >> y = 100
 ### List Assignment
 This works in the same way as the tuple assignment.
 
-```python
+```
 [x, y] = [2, 4]
 
 print('x = ', x)  # >> x = 2
@@ -457,7 +458,7 @@ print('y = ', y)  # >> y = 4
 
 ### Sequence Assignment
 
-```python
+```
 a, b, c = 'HEY'
 
 print('a = ', a)  # >> a = H
@@ -468,7 +469,7 @@ print('c = ', c)  # >> c = Y
 ### Extended Sequence Unpacking
 It allows us to be more flexible in how we select portions of a sequence to assign.
 
-```python
+```
 p, *q = 'Hello'
 
 print('p = ', p)  # >> p = H
@@ -481,7 +482,7 @@ print('q = ', q)  # >> q = ['e', 'l', 'l', 'o']
 
 ### Multiple-Target Assignment
 
-```python
+```
 x = y = 75
 print(x, y)  # >> 75 75
 ```
@@ -491,7 +492,7 @@ In this form, Python assigns a reference to the same object (the object which is
 ### Augmented Assignment
 The augmented assignment is a shorthand assignment that combines an expression and an assignment.
 
-```python
+```
 x = 2
 # equivalent to: x = x + 1
 x += 1
@@ -531,7 +532,7 @@ The `or` keyword allows us to check if one of two conditions is true. If one or 
 
 The `not` keyword allows us to check if an entire condition is false. If the condition is false it will result in a true value. If the condition is true it will give us a false value (you can think of it as reversing the condition).
 
-```python
+```
 True and False   # False
 True and True    # True
 False and False  # False
@@ -556,7 +557,7 @@ Both the `and` and `or` operators in Python are **lazy (short-circuiting)**. Thi
 
 We can also combine the use of these keywords to create longer conditions:
 
-```python
+```
 (True or False) and False   # False
 False and True and True     # False
 (True or False) and True    # True
@@ -610,7 +611,7 @@ Operators are used to perform operations on variables and values. Python divides
 
 The `:=` symbol is the **walrus operator** in Python, introduced in Python 3.8. It allows you to assign a value to a variable as part of an expression, meaning you can both assign and evaluate in a single line.
 
-```python
+```
 # Without :=
 line = input("Enter text: ")
 while line != "quit":
@@ -644,7 +645,7 @@ if (match := re.search(r'\S+@\S+', text)):
 
 **Chain comparison:**
 
-```python
+```
 # Unpythonic Example
 if 42 < spam and spam < 99:
 
@@ -721,13 +722,13 @@ If two operators have the same precedence, the expression is evaluated from left
 
 In Python, the Ternary Operator determines if a condition is `True` or `False` and then returns the appropriate value as the result.
 
-```python
+```
 # Syntax: true_value if condition else false_value
 ```
 
 **Ternary Operator in Nested If-Else:**
 
-```python
+```
 # Syntax: true_value if condition1 else (true_value if condition2 else false_value)
 
 a = 10
@@ -737,7 +738,7 @@ print("Both are equal" if a == b else "a is greater" if a > b else "b is greater
 
 **Ternary Operator using Python Tuple:**
 
-```python
+```
 # Syntax: (false_value, true_value)[condition]
 
 a = 10
@@ -747,13 +748,13 @@ print(("b is minimum(0 False)", "a is minimum(1 True)")[a < b])
 
 **Ternary Operator using Python Dictionary:**
 
-```python
+```
 print({True: "a is minimum", False: "b is minimum"}[a < b])
 ```
 
 **Ternary Operator using Python Lambda:**
 
-```python
+```
 a = 10
 b = 20
 print((lambda: "b is minimum", lambda: "a is minimum")[a < b]())
@@ -762,7 +763,7 @@ print((lambda: "b is minimum", lambda: "a is minimum")[a < b]())
 **Shorthand Ternary:**
 In Python there is also the shorthand ternary tag which is a shorter version of the normal ternary operator you have seen above.
 
-```python
+```
 >>> True or "Some"
 True
 >>> False or "Some"
@@ -801,7 +802,7 @@ Some Decision Control Statements are:
 
 **Simple `if`:** If statements are control flow statements that help us to run a particular code, but only when a condition is met or satisfied. A simple `if` only has one condition to check.
 
-```python
+```
 n = 10
 if n % 2 == 0:
     print("n is an even number")
@@ -810,7 +811,7 @@ print('end')
 
 **`if-else`:** The `if-else` statement evaluates the condition and will execute the body of `if` if the test condition is `True`, but if the condition is `False`, then the body of `else` is executed.
 
-```python
+```
 n = 5
 if n % 2 == 0:
     print("n is even")
@@ -821,7 +822,7 @@ print('end')
 
 **Nested `if`:** Nested `if` statements are an `if` statement inside another `if` statement.
 
-```python
+```
 a = 5
 b = 10
 c = 15
@@ -838,7 +839,7 @@ else:
 
 **`if-elif-else`:** The `if-elif-else` statement is used to conditionally execute a statement or a block of statements.
 
-```python
+```
 x = 15
 y = 12
 if x == y:
@@ -870,7 +871,7 @@ An indefinite loop runs an unknown number of times. The number of iterations is 
 
 **`for` loop:** A `for` loop is used to iterate over a sequence that is either a list, tuple, dictionary, or a set. We can execute a set of statements once for each item in a list, tuple, or dictionary.
 
-```python
+```
 lst = [1, 2, 3, 4, 5]
 for i in range(len(lst)):
     print(lst[i], end=" ")
@@ -884,7 +885,7 @@ else:
 
 **`while` loop:** In Python, `while` loops are used to execute a block of statements repeatedly until a given condition is satisfied. Then, the expression is checked again and, if it is still true, the body is executed again. This continues until the expression becomes false.
 
-```python
+```
 m = 5
 i = 0
 while i < m:
@@ -895,7 +896,7 @@ print("End")
 
 The `else` clause is only executed when your `while` condition becomes `False`. If you `break` out of the loop, or if an exception is raised, it won't be executed.
 
-```python
+```
 count = 0
 while count < 3:
     count = count + 1
@@ -916,7 +917,7 @@ else:
 
 You can define as many exception blocks as you want, e.g., if you want to execute a special block of code for a special kind of error:
 
-```python
+```
 try:
     print(x)
 except NameError:
@@ -927,7 +928,7 @@ except Exception as e:
 
 The `raise` keyword is used to raise an exception. You can define what kind of error to raise, and the text to print to the user.
 
-```python
+```
 x = "hello"
 
 if not type(x) is int:
@@ -936,7 +937,7 @@ if not type(x) is int:
 
 Nested try-except with finally:
 
-```python
+```
 try:
     f = open("demofile.txt")
     try:
@@ -973,7 +974,7 @@ All Python exceptions: https://docs.python.org/3/library/exceptions.html
 
 **`assert`:**
 
-```python
+```
 >>> number = 42
 >>> assert number > 0, f"number greater than 0 expected, got: {number}"
 
@@ -997,7 +998,7 @@ An **iterable** is an object capable of returning its members one by one. Said i
 When you traverse a collection using `__getitem__`, you typically use indexing like `obj[i]` to access elements. This approach requires that the entire data structure be present in memory and available for random access. Each call to `obj[i]` retrieves the element at index `i` directly from the collection.
 
 **Sequence protocol:**
-```python
+```
 class CustomSequence:  # Sequence/Iterable
     def __init__(self, data):
         self.data = data
@@ -1010,7 +1011,7 @@ class CustomSequence:  # Sequence/Iterable
 ```
 
 **Iterator protocol:**
-```python
+```
 class CustomIterable:
     def __init__(self, data):
         self.data = data
@@ -1045,7 +1046,7 @@ class CustomIterable:
 
 Python provides an extremely useful functionality, known as **iterable unpacking**, which allows us to write simple, elegant code:
 
-```python
+```
 >>> my_list = [7, 9, 11]
 >>> x, y, z = my_list
 >>> print(x, y, z)
@@ -1054,7 +1055,7 @@ Python provides an extremely useful functionality, known as **iterable unpacking
 
 The built-in `enumerate` function allows us to iterate over an iterable, while keeping track of the iteration count.
 
-```python
+```
 >>> for entry in enumerate("abcd"):
         print(entry)
 
@@ -1084,13 +1085,13 @@ Python's iterators and iterables are two different but related tools that come i
 An **iterator** is an object that can be iterated upon, meaning that you can traverse through all the values. Technically, in Python, an iterator is an object which implements the **iterator protocol**, which consists of the methods `__iter__()` and `__next__()`.
 
 > `next()` with a second argument returns it when no more items in sequence:
-> ```python
+> ```
 > next(iterator, '@')
 > ```
 
 Lists, tuples, dictionaries, and sets are all iterable objects. They are iterable containers which you can get an iterator from. All these objects have an `iter()` method which is used to get an iterator:
 
-```python
+```
 mytuple = ("apple", "banana", "cherry")
 myit = iter(mytuple)
 
@@ -1103,7 +1104,7 @@ The `for` loop actually creates an iterator object and executes the `next()` met
 
 > **Note:** Every iterator is also an iterable, but not every iterable is an iterator in Python.
 
-```python
+```
 import random
 d = iter(lambda: random.randrange(10), 7)
 list(d)  # >>> [3, 4, 6, 0, 9, 4, 8, 9, 8, 5, 8, 1, 1, 5, 1, 4, 4, 0, 3, 5, 6] or ...
@@ -1130,117 +1131,119 @@ list(d)  # >>> [3, 4, 6, 0, 9, 4, 8, 9, 8, 5, 8, 1, 1, 5, 1, 4, 4, 0, 3, 5, 6] o
 
 A **generator function** in Python is defined like a normal function, but whenever it needs to generate a value, it does so with the `yield` keyword rather than `return`. Python Generator functions return a generator object that is iterable, i.e., can be used as an Iterator. Generator objects are used either by calling the `next` method of the generator object or using the generator object in a "for in" loop.
 
-```python
-def fibonacci_gen():
-    yield 0
-    yield 1
-    prev_prev, prev = 0, 1
+```
+    def fibonacci_gen():
+        yield 0
+        yield 1
+        prev_prev, prev = 0, 1
 
-    while True:
-        result = prev + prev_prev
-        prev_prev, prev = prev, result
-        yield result
+        while True:
+            result = prev + prev_prev
+            prev_prev, prev = prev, result
+            yield result
 
-g = fibonacci_gen()  # Return generator
-for i in g:
-    print(i)
+    g = fibonacci_gen()  # Return generator
+    for i in g:
+        print(i)
 ```
 
 A generator enters the function, runs through lines until it meets `yield`. When `yield` occurs, the function returns some value and remembers the line of execution. After the next `next()` call, the generator returns to that line it remembers.
 
-```python
-def interleave_gen(a, b):
-    a = iter(a)
-    b = iter(b)
-    while True:
-        yield next(a)
-        yield next(b)
+```
+    def interleave_gen(a, b):
+        a = iter(a)
+        b = iter(b)
+        while True:
+            yield next(a)
+            yield next(b)
 ```
 
 **Embedded generator:**
 
-```python
-def join_Generator(a, b):
-    yield from a  # Enter 'a' and next generator call returns values from 'a' until 'a' is exhausted.
-    yield from b
+```
+    def join_Generator(a, b):
+        # Enter 'a' and next generator call returns values from 'a' until 'a' is exhausted.
+        yield from a
+        yield from b
 
-j = join_Generator(range(2), range(3))  # 0, 1, 0, 1, 2, StopIteration
+    j = join_Generator(range(2), range(3))  # 0, 1, 0, 1, 2, StopIteration
 
-# `yield from` is like:
-#     for item in iterable:
-#         yield item
+    # `yield from` is like:
+    #     for item in iterable:
+    #         yield item
 ```
 
-```python
-def flipper_Generator(a, b):
-    while True:
-        yield a
-        yield b
+```
+    def flipper_Generator(a, b):
+        while True:
+            yield a
+            yield b
 
-def counter_Generator():
-    n = 0
-    while True:
-        yield n
-        n += 1
+    def counter_Generator():
+        n = 0
+        while True:
+            yield n
+            n += 1
 
-def cycler_Generator(maximum):
-    n = 0
-    while True:
-        yield n
-        n = n + 1
-        if n >= maximum:
-            n = 0
+    def cycler_Generator(maximum):
+        n = 0
+        while True:
+            yield n
+            n = n + 1
+            if n >= maximum:
+                n = 0
 ```
 
 > `itertools` contains a lot of iterators and generators.
 
-```python
-def bgfun():
-    res = 'Start'
-    while res:
-        res = yield f'/{res}/'
-    yield 'Finish'
+```
+    def bgfun():
+        res = 'Start'
+        while res:
+            res = yield f'/{res}/'
+        yield 'Finish'
 
-ite = bgfun()
-next(ite)      # >>> '/Start/'
-ite.send(123)  # >>> '/123/'
-ite.send('qqq')# >>> '/qqq/'
-ite.send(0)    # >>> 'Finish'
+    ite = bgfun()
+    next(ite)      # >>> '/Start/'
+    ite.send(123)  # >>> '/123/'
+    ite.send('qqq')# >>> '/qqq/'
+    ite.send(0)    # >>> 'Finish'
 ```
 
 ### Generator Expression
 
 In Python, a generator expression is another way of writing the generator function. It uses the Python list comprehension technique but instead of storing the elements in a list in memory, it creates generator objects.
 
-```python
-# Syntax: (expression for item in iterable)
+```
+    # Syntax: (expression for item in iterable)
 
-squares = (x * x for x in range(3))
-print(next(squares))  # Output: 0
-print(next(squares))  # Output: 1
-print(next(squares))  # Output: 4
+    squares = (x * x for x in range(3))
+    print(next(squares))  # Output: 0
+    print(next(squares))  # Output: 1
+    print(next(squares))  # Output: 4
 ```
 
 > `g.send(None) <=> next(g) <=> g.__next__()`
 
+
 ### Generator with `send()`
 
-```python
-def responder():
-    print("Ready to receive")
-    while True:
-        msg = yield  # waits here until .send(value) is called
-        print("Received:", msg)
+```
+    def responder():
+        print("Ready to receive")
+        while True:
+            msg = yield  # waits here until .send(value) is called
+            print("Received:", msg)
 
-g = responder()
-next(g)               # Prime the generator — starts and runs until first `yield`
-g.send("Hello")       # Output: Received: Hello
-g.send("Another one") # Output: Received: Another one
+    g = responder()
+    next(g)               # Prime the generator — starts and runs until first `yield`
+    g.send("Hello")       # Output: Received: Hello
+    g.send("Another one") # Output: Received: Another one
 ```
 
 You must `next()` the generator once before the first `send()` to advance it to the first `yield`.
 
-```python
+```
 def running_average():
     total = 0
     count = 0
@@ -1289,12 +1292,12 @@ print(avg_gen.send(30))  # 20.0
 
 > In Python, an object is considered **hashable** if it has a hash value that remains constant during its lifetime. Hashable objects must implement the `__hash__()` and `__eq__()` methods. The hash value of an object is used in hashing algorithms, such as those implemented by dictionaries and sets, to quickly compare keys and store/retrieve values.
 
-```python
-class HashList(list):
-    def __hash__(self):
-        return 1
-    def __eq__(self, value):
-        return True
+```
+    class HashList(list):
+        def __hash__(self):
+            return 1
+        def __eq__(self, value):
+            return True
 ```
 
 ### Hash Table
@@ -1315,7 +1318,7 @@ In a hash table, every key is unique. We should use this data structure when the
 
 The hash function can produce an index that has already been used in the table, which is called a **collision**.
 
-```python
+```
 index = hash(key) % table_size
 ```
 
@@ -1381,7 +1384,7 @@ Python uses the mechanism of passing arguments **by sharing object reference** d
 
 ### Function Life Cycle
 
-```python
+```
 fu()
 ```
 1. Matches Parameters
@@ -1393,7 +1396,7 @@ fu()
 
 A function is said to have a **side effect** if it changes anything outside of its function definition, like changing arguments passed to the function or changing a global variable.
 
-```python
+```
 def fn_side_effects(fruits):
     print(f"Fruits before change - {fruits} id - {id(fruits)}")
     fruits += ["pear", "banana"]
@@ -1417,7 +1420,7 @@ This function clearly has side effects due to:
 
 **Function without side effect:**
 
-```python
+```
 def fn_no_side_effects(fruits):
     print(f"Fruits before change - {fruits} id - {id(fruits)}")
     fruits = fruits + ["pear", "banana"]
@@ -1449,7 +1452,7 @@ We have the following argument types at our disposal:
 
 The default values are evaluated at the point of function definition in the defining scope:
 
-```python
+```
 i = 5
 
 def f(arg=i):
@@ -1461,7 +1464,7 @@ f()  # will print 5
 
 **Important warning:** The default value is evaluated only once. This makes a difference when the default is a mutable object such as a list, dictionary, or instances of most classes.
 
-```python
+```
 def f(a, L=[]):
     L.append(a)
     return L
@@ -1473,7 +1476,7 @@ print(f(3))  # [1, 2, 3]
 
 If you don't want the default to be shared between subsequent calls:
 
-```python
+```
 def f(a, L=None):
     if L is None:
         L = []
@@ -1485,7 +1488,7 @@ def f(a, L=None):
 
 Are completely optional metadata information about the types used by user-defined functions. Annotations are stored in the `__annotations__` attribute of the function as a dictionary and have no effect on any other part of the function.
 
-```python
+```
 def f(ham: str, eggs: str = 'eggs') -> str:
     print("Annotations:", f.__annotations__)
     print("Arguments:", ham, eggs)
@@ -1508,7 +1511,7 @@ def f(ham: str, eggs: str = 'eggs') -> str:
 
 Namespaces in Python use the **LEGB** (Local, Enclosing, Global, Built-in) rule.
 
-```python
+```
 str = 'global'
 def outer():
     str = 'enclosing'
@@ -1518,7 +1521,7 @@ def outer():
 
 We use the `nonlocal` keyword to create nonlocal variables:
 
-```python
+```
 # outside function
 def outer():
     message = 'local'
@@ -1547,12 +1550,25 @@ The `dir()` function is used to get a list of the names of attributes and method
 
 `__dict__` is a dictionary or mapping object that stores an object's (or class's) writable attributes. It essentially contains all the instance variables (attributes) of an object in the form of key-value pairs, where the key is the attribute's name (as a string), and the value is the corresponding data. (Contains only the object's instance attributes.)
 
+1. If there is a global x declaration, x comes from and is assigned to the x global
+variable module.4
+2. If there is a nonlocal x declaration, x comes from and is assigned to the x local
+variable of the nearest surrounding function where x is defined.
+3. If x is a parameter or is assigned a value in the function body, then x is the local
+variable.
+4. If x is referenced but is not assigned and is not a parameter:
+    - x will be looked up in the local scopes of the surrounding function bodies
+    (nonlocal scopes).
+    - If not found in surrounding scopes, it will be read from the module global
+    scope.
+    - If not found in the global scope, it will be read from __builtins__.__dict__.
+
 
 ## `*ARGS` / `**KWARGS`
 
 `*args` is simply shortened for "arguments." It is used when we are not sure how many arguments we should pass to the function. By using `*args`, you are allowed to pass any number of arguments when calling a function.
 
-```python
+```
 def friends(*args):
     print(args)
 
@@ -1564,7 +1580,7 @@ We get a Tuple because when we use `*args`, the function will get the arguments 
 
 Unlike `*args`, `**kwargs` takes keyword or named arguments. The type of `**kwargs` is Dictionary — the arguments are accepted as key-value pairs. We cannot pass `**kwargs` before `*args` in the function definition; otherwise, we'll get a `SyntaxError`.
 
-```python
+```
 def hello(write, **kwargs):
     print(write)
     for key, value in kwargs.items():
@@ -1580,7 +1596,7 @@ hello(write, One="Red", two="Green", three="Blue")
 # three is Blue.
 ```
 
-```python
+```
 def test_args_kwargs(arg1, arg2, arg3):
     print("arg1:", arg1)
     print("arg2:", arg2)
@@ -1648,7 +1664,7 @@ def test_args_kwargs(arg1, arg2, arg3):
 | **Hierarchical**        | More than one derived class inherits from a single parent class.                            |
 | **Multiple**            | One derived class inherits from more than one base class.                                   |
 
-```python
+```
 # Parent class
 class Person(object):
     # __init__ is known as the constructor
@@ -1697,7 +1713,7 @@ a.details()
 
 Python program to demonstrate error if we forget to invoke `__init__()` of the parent:
 
-```python
+```
 class Person(object):
     # Constructor
     def __init__(self, name):
@@ -1724,7 +1740,7 @@ print(emp.getName(), emp.isEmployee)
 
 The `super()` function is a built-in function that returns the objects that represent the parent class. It allows access to the parent class's methods and attributes in the child class.
 
-```python
+```
 # Parent class
 class Person():
     def __init__(self, name, age):
@@ -1755,7 +1771,7 @@ obj.displayInfo()
 
 We don't always want the instance variables of the parent class to be inherited by the child class. We can make some of the instance variables of the parent class **private**, which won't be available to the child class.
 
-```python
+```
 class C(object):
     def __init__(self):
         self.c = 21
@@ -1775,7 +1791,7 @@ print(object1.c)
 
 To access private members: `self._Base__c`
 
-```python
+```
 # f"_{self.__class__.__name__}__c"          >> "_Derived__c"
 # f'_{type(self).__mro__[1].__name__}__c'
 ```
@@ -1786,7 +1802,7 @@ To access private members: `self._Base__c`
 
 **Composition** is often used to model "has-a" relationships between objects, as opposed to inheritance, which models "is-a" relationships. Composition is a design principle where a class contains instances of other classes to reuse their functionality, rather than inheriting from them. It is an alternative to inheritance and is often preferred because it promotes flexibility, modularity, and maintainability.
 
-```python
+```
 class Engine:
     def start(self):
         print("Engine starts")
@@ -1806,7 +1822,7 @@ my_car.drive()
 
 You can pass different objects dynamically to customize behavior:
 
-```python
+```
 class PetrolEngine:
     def start(self):
         print("Petrol engine starts")
@@ -1847,7 +1863,7 @@ electric_car.drive()
 - **Duck Typing:** Python follows the principle of "duck typing" where the type or class of an object is less important than the methods it defines. If an object implements the necessary methods, it can be used in that context.
 - **Polymorphic Functions:** Functions that can take objects of different types and apply the same operation on them.
 
-```python
+```
 class Bird:
     def intro(self):
         print("There are many types of birds.")
@@ -1892,7 +1908,7 @@ obj_ost.flight()
 - Wrapping one namespace by another (create hierarchy: `obj1.param.name.set()`).
 - It describes the idea of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data. To prevent accidental change, an object's variable can only be changed by an object's method. Those types of variables are known as **private variables**.
 
-```python
+```
 # Python program to demonstrate private members
 class Base:
     def __init__(self):
@@ -1932,7 +1948,7 @@ It hides unnecessary code details from the user. Also, when we do not want to gi
 - Enforce a contract for subclass implementation, ensuring consistency across all derived classes.
 - Python provides the `abc` (Abstract Base Classes) module to define abstract classes.
 
-```python
+```
 from abc import ABC, abstractmethod
 
 class Animal(ABC):  # Abstract base class
@@ -1959,7 +1975,7 @@ print(cat.speak())  # Output: Meow!
 
 **Example of an Error:**
 
-```python
+```
 from abc import ABC, abstractmethod
 
 class Animal(ABC):
@@ -1988,7 +2004,7 @@ In Python, a **descriptor** is an object attribute with "binding behavior," mean
 - `instance` → the actual object you're accessing the attribute from (obj, p).
 - `owner` → the class the descriptor is defined on (MyClass, Person).
 
-```python
+```
 class Descriptor:
     def __init__(self, name):
         self.name = name
@@ -2014,7 +2030,7 @@ print(obj.attribute)  # Output: Getting attribute \n 10
 del obj.attribute  # Output: Deleting attribute
 ```
 
-```python
+```
 class UpperCase:
     def __get__(self, instance, owner):
         return instance.__dict__['name'].upper()
@@ -2038,7 +2054,7 @@ print(p.name)  # HARRY
 
 In Python, the `@property` decorator is used to define methods in a class that act like attributes, allowing for controlled access to instance variables. This allows you to implement getter, setter, and deleter methods for an attribute without directly exposing the attribute itself. It is a way to encapsulate and manage access to the attributes of a class.
 
-```python
+```
 class MyClass:
     def __init__(self, value):
         self._value = value
@@ -2083,7 +2099,7 @@ del obj.value
 
 The `__slots__` mechanism is used to restrict the attributes that an object can have, allowing for more memory-efficient objects. By default, Python objects use a dictionary to store instance attributes, which can take up a lot of memory, especially if many instances are created. When `__slots__` is defined in a class, Python doesn't create the usual dictionary for storing instance attributes, but instead creates a more memory-efficient internal structure. You can define a set of attributes that instances of the class are allowed to have. Any attempt to assign an attribute not listed in `__slots__` will result in an `AttributeError`.
 
-```python
+```
 class A:
     __slots__ = ['a', 'b', 'c']
     a = 1  # read-only attribute
@@ -2097,7 +2113,7 @@ a.b = 2
 
 A class method in Python is a method that is bound to the class, rather than an instance of the class. This means it receives the class itself as its first argument, rather than an instance of the class. It is defined using the `@classmethod` decorator, and the first parameter is typically named `cls` (for class), rather than `self` (which is used for instance methods).
 
-```python
+```
 class Dog:
     species = "Canis familiaris"  # Class-level attribute
 
@@ -2118,7 +2134,7 @@ print(dog.get_species())  # Output: Canis familiaris
 
 Class methods are often used to create **alternative constructors** for a class.
 
-```python
+```
 class Car:
     def __init__(self, brand, model):
         self.brand = brand
@@ -2139,7 +2155,7 @@ print(car.model)  # Output: Camry
 
 A static method in Python is a method that is bound to a class rather than an instance of the class, but unlike a `classmethod`, it does not take the class (`cls`) or instance (`self`) as its first argument. It behaves just like a regular function, but it belongs to the class's namespace and can be called on the class itself or on an instance.
 
-```python
+```
 class MyClass:
     @staticmethod
     def my_static_method(arg1, arg2):
@@ -2151,7 +2167,7 @@ class MyClass:
 
 Use case of `__new__`: Singleton pattern when we need to allow creation of only one instance of an object.
 
-```python
+```
 class Singleton:
     _instance = None  # class-level cache
 
@@ -2181,7 +2197,7 @@ A **mixin** is a class that provides method implementations for reuse by multipl
 - Typically, a child class uses multiple inheritance to combine the mixin classes with a parent class.
 - Since Python doesn't define a formal way to define mixin classes, it's a good practice to name mixin classes with the suffix `Mixin`.
 
-```python
+```
 class Person():
     pass
 
@@ -2200,7 +2216,7 @@ class Employee(Person, SomeMixin):
 3. If the attribute is not found, Python checks the next parent class in the MRO.
 4. If still not found, it continues up through the ancestors (i.e., parents of parents) in the MRO.
 
-```python
+```
 class A:
     def method(self):
         print("Method from A")
@@ -2237,7 +2253,7 @@ Comprehensions in Python provide us with a short and concise way to construct ne
 - Set Comprehensions
 - Generator Comprehensions
 
-```python
+```
 # List comprehension
 output_list = [output_exp for var in input_list if (var satisfies this condition)]
 
@@ -2249,7 +2265,7 @@ dict_using_comp = {key: value for (key, value) in zip(state, capital)}
 
 **Example: Flattening a List of Lists**
 
-```python
+```
 nested_list = [[1, 2], [3, 4], [5, 6]]
 flattened = [item for sublist in nested_list for item in sublist]
 print(flattened)  # [1, 2, 3, 4, 5, 6]
@@ -2257,7 +2273,7 @@ print(flattened)  # [1, 2, 3, 4, 5, 6]
 
 **Creating a Multiplication Table**
 
-```python
+```
 multiplication_table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
 print(multiplication_table)
 # Output:
@@ -2275,7 +2291,7 @@ print(multiplication_table)
 
 A **lambda function** is a small anonymous function. Meaning they are not given a specific name unless assigned to a variable. A lambda function can take any number of arguments, but can only have one expression.
 
-```python
+```
 # Syntax: lambda arguments: expression
 
 >>> lambda x: x + 1
@@ -2405,18 +2421,18 @@ In Python, a **closure** is a function that retains access to its lexical scope,
 
 When Python analyzes inner function code and 'sees' a variable that refers to the parent function scope (nonlocal/enclosing), it saves the value of this variable in `__closure__` of the child function.
 
-```python
-returned_inner_fu.__closure__[0].cell_contents
+```
+    returned_inner_fu.__closure__[0].cell_contents
 
-import inspect
-inspect.getclosurevars(fu)
+    import inspect
+    inspect.getclosurevars(fu)
 ```
 
 ### How Closures Work
 
 Closures are created when a nested function captures variables from its enclosing scope.
 
-```python
+```
 def outer_function(msg):
     def inner_function():
         print(msg)
@@ -2436,25 +2452,53 @@ closure()  # Output: Hello, World!
 
 To modify values of variables within a closure, use the `nonlocal` keyword:
 
-```python
-def outer_function(msg):
-    count = 0
-    def inner_function():
-        nonlocal count
-        count += 1
-        print(f"{msg}, called {count} times")
-    return inner_function
+```
+    def outer_function(msg):
+        count = 0
+        def inner_function():
+            nonlocal count
+            count += 1
+            print(f"{msg}, called {count} times")
+        return inner_function
 
-closure = outer_function("Hello")
-closure()  # Output: Hello, called 1 times
-closure()  # Output: Hello, called 2 times
+    closure = outer_function("Hello")
+    closure()  # Output: Hello, called 1 times
+    closure()  # Output: Hello, called 2 times
+```
+
+```
+    def make_averager():
+        series = []
+
+        # The closure for averager extends the scope of that function 
+        # to include the binding for the free variable series.
+        def averager(new_value):
+            series.append(new_value)
+            total = sum(series)
+            return total / len(series)
+        return averager
+
+    avg = make_averager()
+
+    avg(10)
+    avg(11)
+
+    series = avg.__closure__[0].cell_contents
+    print("outside:", sys.getrefcount(series))
+```
+
+> Within averager, series is a `free variable`. This is a technical term meaning a variable that is not bound in the local scope
+
+```
+    avg.__code__.co_varnames  # ('new_value', 'total')
+    avg.__code__.co_freevars  # ('series',)
 ```
 
 ### Function Factories
 
 Closures are often used to create functions with fixed parameters.
 
-```python
+```
 def power_factory(exp):
     def power(base):
         return base ** exp
@@ -2471,7 +2515,7 @@ print(cube(2))    # Output: 8
 
 Decorators in Python also use closures to add functionality to functions.
 
-```python
+```
 def simple_decorator(func):
     def wrapper():
         print("Something is happening before the function is called.")
@@ -2495,171 +2539,197 @@ say_hello()
 
 A Python **decorator** is a function or a class that modifies the behavior of another function or method. Decorators are a way to "wrap" a function or a method in additional functionality without changing its actual code. They use the `@decorator_name` syntax just before a function definition, allowing you to add reusable features or behaviors to existing code in a clean, readable way. In Python, functions are **first class objects**, which means that functions in Python can be used or passed as arguments.
 
-In Decorators, functions are taken as the argument into another function and then called inside the wrapper function. A decorator encloses (or wraps) a function with additional code. When a decorated function is called, the decorator's logic is executed before (and sometimes after) the actual function's logic.
+> A decorator is a callable that takes another function as an argument.
+>A decorator may perform some processing with the decorated function, and returns it or replaces it with another function or callable object.
+> Decorators run right after the decorated function is defined. That is usually at import time 
 
-```python
-@gfg_decorator
-def hello_decorator():
-    print("Gfg")
+> The target(funnction) name is bound to whatever function is returned by decorator
+```
+    # When we use @decorator sintax we replase teh name of defining function
+    # by result of call the decorator with this function as argument.
+    @gfg_decorator
+    def hello_decorator():
+        print("Gfg")
 
-'''Above code is equivalent to:
-  def hello():
-      print("Gfg")
+    '''Above code is equivalent to:
+    def hello():
+        print("Gfg")
 
-  hello_decorator = gfg_decorator(hello)
-'''
+    hello_decorator = gfg_decorator(hello)
+    '''
 ```
 
-```python
-# Defining a decorator
-def hello_decorator(func):
-    # inner1 is a Wrapper function in which the argument is called
-    # inner function can access the outer local functions like in this case "func"
+```
+    # Defining a decorator
+    def hello_decorator(func):
+        # inner1 is a Wrapper function in which the argument is called
+        # inner function can access the outer local functions like in this case "func"
 
-    def inner1():
-        print("Hello, this is before function execution")
+        def inner1():
+            print("Hello, this is before function execution")
 
-        # calling the actual function now inside the wrapper function.
-        func()
+            # calling the actual function now inside the wrapper function.
+            func()
 
-        print("This is after function execution")
+            print("This is after function execution")
 
-    return inner1
+        return inner1
 
-# defining a function, to be called inside wrapper
-def function_to_be_used():
-    print("This is inside the function !!")
+    # defining a function, to be called inside wrapper
+    def function_to_be_used():
+        print("This is inside the function !!")
 
-# passing 'function_to_be_used' inside the decorator to control its behaviour.
-function_to_be_used = hello_decorator(function_to_be_used)
+    # passing 'function_to_be_used' inside the decorator to control its behaviour.
+    function_to_be_used = hello_decorator(function_to_be_used)
 
-# calling the function
-function_to_be_used()
+    # calling the function
+    function_to_be_used()
 
-# Output:
-# Hello, this is before function execution
-# This is inside the function !!
-# This is after function execution
+    # Output:
+    # Hello, this is before function execution
+    # This is inside the function !!
+    # This is after function execution
 ```
 
-```python
-def hello_decorator(func):
-    def inner1(*args, **kwargs):
-        print("before Execution")
+```
+    def hello_decorator(func):
+        def inner1(*args, **kwargs):
+            print("before Execution")
 
-        # getting the returned value
-        returned_value = func(*args, **kwargs)
-        print("after Execution")
+            # getting the returned value
+            returned_value = func(*args, **kwargs)
+            print("after Execution")
 
-        # returning the value to the original frame
-        return returned_value
+            # returning the value to the original frame
+            return returned_value
 
-    return inner1
+        return inner1
 
-# adding decorator to the function
-@hello_decorator
-def sum_two_numbers(a, b):
-    print("Inside the function")
-    return a + b
+    # adding decorator to the function
+    @hello_decorator
+    def sum_two_numbers(a, b):
+        print("Inside the function")
+        return a + b
 
-a, b = 1, 2
+    a, b = 1, 2
 
-# getting the value through return of the function
-print("Sum =", sum_two_numbers(a, b))
+    # getting the value through return of the function
+    print("Sum =", sum_two_numbers(a, b))
 
-# Output:
-# before Execution
-# Inside the function
-# after Execution
-# Sum = 3
+    # Output:
+    # before Execution
+    # Inside the function
+    # after Execution
+    # Sum = 3
+```
+
+Sinse decorator bind name of function to inner wraper and it masks the __name__ and __doc__ of the decorated function. This behavior can be changed this way:
+
+```
+    import time
+    import functools
+
+    def clock(func):
+        @functools.wraps(func)
+        def clocked(*args, **kwargs):
+            t0 = time.perf_counter()
+            result = func(*args, **kwargs)
+            elapsed = time.perf_counter() - t0
+            name = func.__name__
+            arg_lst = [repr(arg) for arg in args]
+            arg_lst.extend(f'{k}={v!r}' for k, v in kwargs.items())
+            arg_str = ', '.join(arg_lst)
+            print(f'[{elapsed:0.8f}s] {name}({arg_str}) -> {result!r}')
+            return result
+        return clocked
 ```
 
 ### Decorator Chaining
 
-```python
-def decor1(func):
-    def inner():
-        x = func()
-        return x * x
-    return inner
+```
+    def decor1(func):
+        def inner():
+            x = func()
+            return x * x
+        return inner
 
-def decor(func):
-    def inner():
-        x = func()
-        return 2 * x
-    return inner
+    def decor(func):
+        def inner():
+            x = func()
+            return 2 * x
+        return inner
 
-@decor1  # applied second
-@decor   # applied first
-def num():
-    return 10
+    @decor1  # applied second
+    @decor   # applied first
+    def num():
+        return 10
 
-@decor
-@decor1
-def num2():
-    return 10
+    @decor
+    @decor1
+    def num2():
+        return 10
 
-print(num())   # Output: 400
-print(num2())  # Output: 200
+    print(num())   # Output: 400
+    print(num2())  # Output: 200
 ```
 
-```python
-def green(fu):
-    fu.green = True
-    return fu
+```
+    def green(fu):
+        fu.green = True
+        return fu
 
-@green
-def add(a, b):
-    return a + b
+    @green
+    def add(a, b):
+        return a + b
 
-add.green  # >> True
+    add.green  # >> True
 ```
 
-```python
-def to_float(fu):
-    def wrapper(a, b):
-        a = float(a)
-        b = float(b)
-        return fu(a, b)
-    return wrapper
-
-@to_float
-def add(a, b):
-    return a + b
-
-add(1, 2)  # >> 3.0
 ```
-
-```python
-from functools import wraps
-
-def repeater(n):
-    def dec(fu):
-        @wraps(fu)
-        def wrapper(*args):
-            return [fu(*args) for i in range(n)]
+    def to_float(fu):
+        def wrapper(a, b):
+            a = float(a)
+            b = float(b)
+            return fu(a, b)
         return wrapper
-    return dec
 
-@repeater(4)
-def multi(a, b):
-    return a * b
+    @to_float
+    def add(a, b):
+        return a + b
 
-multi(2, 4)  # [8, 8, 8, 8]
+    add(1, 2)  # >> 3.0
 ```
 
-```python
-class repeater4:
-    def __init__(self, fu):
-        self.fu = fu
-    def __call__(self, *args):
-        return [self.fu(*args) for i in range(4)]
+```
+    from functools import wraps
 
-@repeater4
-def multi(a, b):
-    return a * b
+    def repeater(n):
+        def dec(fu):
+            @wraps(fu)
+            def wrapper(*args):
+                return [fu(*args) for i in range(n)]
+            return wrapper
+        return dec
 
-multi(2, 4)  # [8, 8, 8, 8]
+    @repeater(4)
+    def multi(a, b):
+        return a * b
+
+    multi(2, 4)  # [8, 8, 8, 8]
+```
+
+```
+    class repeater4:
+        def __init__(self, fu):
+            self.fu = fu
+        def __call__(self, *args):
+            return [self.fu(*args) for i in range(4)]
+
+    @repeater4
+    def multi(a, b):
+        return a * b
+
+    multi(2, 4)  # [8, 8, 8, 8]
 ```
 
 ### Decorator with Parameters
@@ -2668,6 +2738,34 @@ A decorator with parameters is not a decorator itself; it is a **decorator facto
 
 - Regular decorator: `fu = decorator(fu)`
 - Decorator with parameters: `fu = dec_factory(param)(fu)`
+
+```
+    registry = set()
+    
+    def register(active=True):
+        def decorate(func):
+            print('running register'
+            f'(active={active})->decorate({func})')
+
+            if active:
+                registry.add(func)
+            else:
+                registry.discard(func)
+
+            return func
+        return decorate
+
+    @register(active=False)
+    def f1():
+        print('running f1()')
+
+    @register()
+    def f2():
+        print('runningf2()')
+
+    def f3():
+        print('runningf3()')
+```
 
 
 ## CONTEXT MANAGER (WITH)
@@ -2743,7 +2841,7 @@ Yes, concurrency and threading are indeed ways to achieve the simulation of para
 
 ### Example in Python
 
-```python
+```
 import threading
 import multiprocessing
 
@@ -2781,7 +2879,7 @@ Python with GIL limits the amount of concurrency on a single thread on a single 
 
 **Asynchronous execution** — parallel execution of different code blocks. Asynchronous functions are defined using the `async def` syntax. Instead of blocking the execution (like a normal function), an async function allows other tasks to run while it waits for an operation to complete.
 
-```python
+```
 async def my_async_function():
     print("Start")
     await asyncio.sleep(1)
@@ -2791,7 +2889,7 @@ async def my_async_function():
 **`await` Keyword:**
 The `await` keyword is used to call an asynchronous function and wait for its result without blocking the event loop. It can only be used inside `async` functions.
 
-```python
+```
 async def my_async_function():
     print("Start")
     await asyncio.sleep(1)  # Waits for 1 second without blocking
@@ -2801,7 +2899,7 @@ async def my_async_function():
 **Event Loop:**
 The event loop is the core of the `asyncio` module, responsible for scheduling and running async functions. You can get the event loop using `asyncio.get_event_loop()` and run tasks using `loop.run_until_complete()` or `asyncio.run()`.
 
-```python
+```
 async def my_async_function():
     print("Start")
     await asyncio.sleep(1)
@@ -2814,7 +2912,7 @@ asyncio.run(my_async_function())
 **Tasks:**
 Tasks are used to schedule coroutines (async functions) concurrently. They are created using `asyncio.create_task()`. This allows multiple async functions to run "at the same time," meaning they can execute concurrently.
 
-```python
+```
 async def task1():
     await asyncio.sleep(2)
     print("Task 1 finished")
@@ -2836,7 +2934,7 @@ asyncio.run(main())
 **Coroutines:**
 Coroutines are the result of a call to an asynchronous function. A coroutine is a function that can pause and resume execution, usually using `await`. When you use `async def`, you're defining a coroutine.
 
-```python
+```
 async def my_coroutine():
     await asyncio.sleep(1)
     return "Finished"
@@ -2845,7 +2943,7 @@ async def my_coroutine():
 **Running Multiple Tasks:**
 You can run multiple coroutines concurrently using `asyncio.gather()` or `asyncio.wait()`.
 
-```python
+```
 async def task1():
     await asyncio.sleep(2)
     return "Task 1 finished"
@@ -2863,7 +2961,7 @@ asyncio.run(main())
 
 **Example Scenario: Web Scraper**
 
-```python
+```
 import asyncio
 import aiohttp
 
@@ -2972,7 +3070,7 @@ Operations associated with a queue:
 enqueue -> (rear) | | | | | | | (front) -> dequeue
 ```
 
-```python
+```
 from collections import deque
 q = deque()
 q.append('a')
@@ -2989,7 +3087,7 @@ print("\nQueue after removing elements")
 print(q)
 ```
 
-```python
+```
 class Node:
     def __init__(self, data):
         self.data = data
@@ -3060,7 +3158,7 @@ When the interpreter executes the above `import module` statement, it searches f
 
 The resulting search path is accessible in the Python variable `sys.path`, which is obtained from a module named `sys`:
 
-```python
+```
 >>> import sys
 >>> sys.path
 ['', 'C:\\Users\\john\\Documents\\Python\\doc', 'C:\\Python36\\Lib\\idlelib',
@@ -3070,23 +3168,23 @@ The resulting search path is accessible in the Python variable `sys.path`, which
 
 You can modify `sys.path` at run-time so that it contains your module directory:
 
-```python
+```
 >>> sys.path.append(r'C:\Users\john')
 ```
 
 Once a module has been imported, you can determine the location where it was found with the module's `__file__` attribute:
 
-```python
+```
 >>> import mod
 >>> mod.__file__
 # 'C:\\Users\\john\\mod.py'
 ```
 
-```python
+```
 >>> python -c 'import aiogram; print(aiogram.__file__)
 ```
 
-```python
+```
 >>> import mod
 >>> mod
 # <module 'mod' from 'C:\\Users\\john\\Documents\\Python\\doc\\mod.py'>
@@ -3677,7 +3775,7 @@ screen / screen -ls / screen -r <id>
 
 ### Usage in Python
 
-```python
+```
 re.findall(r'\b\w+\b', line)  # -> list of words without punctuation
 ```
 
@@ -3696,7 +3794,7 @@ Object-Relational Mapping (ORM) system. Allows you to define models as Python cl
 
 A **Model** is a Python class that defines the structure and behavior of the data you work with in your application. It represents a table in the database and maps to fields (columns) in that table.
 
-```python
+```
 from django.db import models
 
 class ExampleModel(models.Model):
