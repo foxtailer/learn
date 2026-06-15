@@ -4,8 +4,11 @@
 void reverse_strint(char string[]) {
     int head = 0;
     int tail = 0;
-
+    
+    // Finde len of the string.
     while (string[tail] != '\0') tail++;
+
+    // Last char is '\0' so we need index -2.
     tail--;
 
     while (tail > head) {

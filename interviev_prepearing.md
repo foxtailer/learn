@@ -206,6 +206,9 @@ To sum up, every time we assign variables Python undertakes the three following 
 
 > A variable is a symbolic name in a system table that holds links (i.e., references) to objects. In other words, references are pointers from variables to objects (hold the location of objects). In Python though, variables do not have a type. Therefore, it is possible to assign objects of different type to the same variable name, as shown below. Behaves as a value that is contained.
 
+*Object is a self-contained unit that bundles related data and behavior together.*
+*Entity that lives in the computer's memory during execution.*
+
 ```
     x = 5
     y = "John"
