@@ -1,32 +1,25 @@
 from datetime import timedelta, datetime
 import os
 from jose import jwt
+from passlib.context import CryptContext
+
 from model import User
-
-
 if os.getenv("CRYPTID_UNIT_TEST"):
     from fake import user as data
 else:
     from data import user as data
 
-# --- New auth stuff
 
-from passlib.context import CryptContext
-
-
-# Change SECRET_KEY for production!
 SECRET_KEY = "keep-it-secret-keep-it-safe"
 ALGORITHM = "HS256"
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def verify_password(plain: str, hash: str) -> bool:
-    """Hash <plain> and compare with <hash> from the database"""
     return pwd_context.verify(plain, hash)
 
 
 def get_hash(plain: str) -> str:
-    """Return the hash of a <plain> string"""
     return pwd_context.hash(plain)
 
 
@@ -52,7 +45,7 @@ def get_current_user(token: str) -> User | None:
 
 def lookup_user(username: str) -> User | None:
     """Return a matching User from the database for <name>"""
-    if (user := data.get(username)):
+    if (user := data.get_one(username)):
         return user
     return None
 
@@ -61,7 +54,7 @@ def auth_user(name: str, plain: str) -> User | None:
     """Authenticate user <name> and <plain> password"""
     if not (user := lookup_user(name)):
         return None
-    if not verify_password(plain, user.hash):
+    if not verify_password(plain, user.hash_):
         return None
     return user
 
@@ -71,6 +64,8 @@ def create_access_token(
         expires: timedelta | None = None
 ):
     """Return a JWT access token"""
+    # JWT: HEADER.PAYLOAD.SIGNATURE
+    # Payload is a dict[data]
 
     src = data.copy()
     now = datetime.utcnow()

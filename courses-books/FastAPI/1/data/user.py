@@ -1,14 +1,16 @@
 from model import User
-from .init import (curs, IntegrityError)
+from .init import curs, conn, IntegrityError
 from .errors import Missing, Duplicate
 
 
 def row_to_model(row: tuple) -> User:
-    name, hash = row
-    return User(name=name, hash=hash)
+    name, hash_ = row
+    return User(name=name, hash_=hash_)
+
 
 def model_to_dict(user: User) -> dict:
     return user.model_dump()
+
 
 def get_one(name: str) -> User:
     qry = "SELECT * FROM user WHERE name=:name"
@@ -32,11 +34,12 @@ def create(user: User, table:str = "user"):
         INSERT INTO {table}
             (name, hash)
         VALUES
-            (:name, :hash)
+            (:name, :hash_)
     """
     params = model_to_dict(user)
     try:
         curs.execute(qry, params)
+        conn.commit()
     except IntegrityError:
         raise Duplicate(msg=
             f"{table}: user {user.name} already exists")
