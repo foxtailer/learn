@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+
+/*Cound digits, space characters and other characters*/
 int main() {
     int c, i, nwhite, nother;
     int ndigit[10];

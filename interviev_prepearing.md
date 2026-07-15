@@ -1548,6 +1548,16 @@ Scopes aren't stored in a single physical location but exist in Python's **symbo
 - **Built-ins** are kept in the built-in namespace (usually loaded when Python starts).
 
 You can view the names available in the current scope using the built-in functions `locals()` and `globals()`. The built-in scope can be accessed through the `__builtins__` module. You can list all built-in names by looking at `dir(__builtins__)`.
+```
+globals() ->
+    {
+        '__name__': '__main__',
+        'x': 10,
+        'f': <function f at ...>,
+    }
+
+globals()["y"] = 20  # create new global variable
+```
 
 The `dir()` function is used to get a list of the names of attributes and methods associated with an object. Without arguments, `dir()` returns the list of names in the current local scope.
 

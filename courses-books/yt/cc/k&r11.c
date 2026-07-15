@@ -4,7 +4,10 @@
 #define NO 0
 
 
+// 1.5.4(1)
+
 int main () {
+/* count lines, words, chars in input */
     int c, nc, nw, nl, inword;
 
     inword = NO;
@@ -24,3 +27,4 @@ int main () {
 
     printf("Chr: %d, Word: %d, Line: %d\n", nc, nw, nl);
 }
+
