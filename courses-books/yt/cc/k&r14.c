@@ -1,9 +1,13 @@
 #include <stdio.h>
 
 
-/*Print lenght ghist of words from iinput
- one _ for each character*/
+// Esercise 1.13
+
 int main() {
+/*
+ * Print lenght ghist of words from input
+ * one _ for each character.
+ */
     int c;
 
     while ((c = getchar()) != EOF) {
@@ -13,3 +17,4 @@ int main() {
             putchar('*');
     }
 }
+
