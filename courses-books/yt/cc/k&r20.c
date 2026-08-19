@@ -1,6 +1,10 @@
 #include <stdio.h>
 
-int main() /* count characters in input */
+
+// Exercise 1.18
+
+int main()
+/* Deleate extra blank(space) char */
 {
     int wi;  // write index
     char c[1000];
@@ -27,3 +31,4 @@ int main() /* count characters in input */
     printf("\nOutput: \n");
     printf("%s\n", c);
 }
+

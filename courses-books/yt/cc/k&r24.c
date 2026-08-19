@@ -1,7 +1,13 @@
 #include <stdio.h>
+
 #define TABW 8
 
-int main() {
+
+// Exercise 1.21
+
+int main()
+/* entab */
+{
     int c, pos;
     int nb = 0; // count of consecutive blanks (spaces)
     int nt = 0; // count of tabs we can use
@@ -9,16 +15,20 @@ int main() {
     for (pos = 1; (c = getchar()) != EOF; ++pos) {
         if (c == ' ') {
             if ((pos % TABW) != 0) {
-                ++nb; // just a space, wait to see if it reaches a stop
+                // just a space, wait to see if it reaches a stop
+                ++nb;             
             } else {
-                nb = 0; // we hit a tab stop! convert the pending spaces...
+                // we hit a tab stop! convert the pending spaces...
+                nb = 0;
                 ++nt;   // ...into a tab
             }
         } else {
-            // Before printing the non-space char, "flush" our saved tabs/spaces
+        // Before printing the non-space char, 
+        // "flush" our saved tabs/spaces
             for (; nt > 0; --nt)
                 putchar('\t');
-            if (c == '\t') // if the char itself is a tab, clear pending spaces
+            // if the char itself is a tab, clear pending spaces
+            if (c == '\t')       
                 nb = 0;
             else
                 for (; nb > 0; --nb)
@@ -35,3 +45,4 @@ int main() {
     }
     return 0;
 }
+

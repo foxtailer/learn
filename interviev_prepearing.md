@@ -4394,5 +4394,17 @@ ngrok http 8001
 ### Python Notes
 
 - Constant integers between -5 and 256 in Python are already cached.
-- `type(obj)` returns the constructor of the object. `obj2 = type(obj)()` creates a new object of the same type.
+- `type(obj)` returns the constructor of the object. `obj2 = type(obj)()`
+    creates a new object of the same type.
 - `from inspect import signature; signature(fu)` — inspect function signature.
+
+### Httpie
+- key=value	body field (JSON by default, form-encoded with -f)
+- key==value	query string parameter (goes in the URL)
+- key:=value	body field as raw JSON (e.g. count:=5 sends 5 not "5")
+- Header:value	HTTP header
+
+
+
+
+

@@ -2,6 +2,9 @@
 
 #define MAXLINE 1000  /* maximum input line size */
 
+
+// 1.10(1)
+
 char line[MAXLINE];
 char save[MAXLINE];
 int max;
@@ -13,7 +16,7 @@ int get_line() {
 
    for (i = 0; i < MAXLINE - 1 &&
            (c = getchar()) != EOF &&
-           c != '\n'; ++i)
+            c != '\n'; ++i)
         line[i] = c;
 
    if (c == '\n') {
@@ -37,6 +40,7 @@ void copy() {
 
 
 int main() {
+/* Print longest line from input */
     int len;
     extern int max;
     extern char save[];
@@ -53,3 +57,4 @@ int main() {
 
     return 0;
 }
+
